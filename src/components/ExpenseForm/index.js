@@ -63,7 +63,6 @@ class ExpenseForm extends Component {
           id="method"
           value={ method }
           onChange={ this.handleChange }
-          data-testid="method-input"
         >
           { payforms.map(({ id, label }) => (
             <option value={ label } key={ id }>{ label }</option>
@@ -84,7 +83,6 @@ class ExpenseForm extends Component {
           name="currency"
           id="currency"
           value={ currency }
-          data-testid="currency-input"
           onChange={ this.handleChange }
         >
           { currenciesList.map((currencyItem) => (
@@ -104,7 +102,6 @@ class ExpenseForm extends Component {
           name="tag"
           id="tag"
           value={ tag }
-          data-testid="tag-input"
           onChange={ this.handleChange }
         >
           { tags.map(({ id, label }) => (
@@ -128,7 +125,6 @@ class ExpenseForm extends Component {
             value={ value }
             onChange={ this.handleChange }
             className="clean"
-            dataTest="value-input"
           />
         </div>
         { this.renderCurrency(currency) }
@@ -142,7 +138,6 @@ class ExpenseForm extends Component {
             name="description"
             value={ description }
             onChange={ this.handleChange }
-            dataTest="description-input"
             placeholder="&nbsp;&nbsp;&nbsp;Ex.: Cachorro quente"
           />
         </div>
