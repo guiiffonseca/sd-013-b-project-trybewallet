@@ -8,9 +8,16 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit() {
+    console.log('cliquei');
   }
 
   handleChange(event) {
+    const { email, password } = this.state;
+    console.log(email, password);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
@@ -37,7 +44,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button type="button">Entrar</button>
+        <button type="button" onClick={ this.onSubmit }>Entrar</button>
       </fieldset>
     );
   }
