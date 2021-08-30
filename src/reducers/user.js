@@ -7,7 +7,7 @@ const INITIAL_USER_STATE = {
 };
 
 const user = (state = INITIAL_USER_STATE, action) => {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
   case '':
     return state;

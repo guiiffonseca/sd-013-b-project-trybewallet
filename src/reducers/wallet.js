@@ -8,7 +8,7 @@ const INITIAL_WALLET_STATE = {
 };
 
 const wallet = (state = INITIAL_WALLET_STATE, action) => {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
   case 'value':
     return state;
