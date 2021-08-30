@@ -48,7 +48,7 @@
 }
 
 .login-container button:disabled:hover {
-  transform: scale(1.0);
+  transform: scale(1);
 }
 
 .login-container input {
@@ -61,8 +61,8 @@
 }
 
 .login-container input:focus {
-  outline: none;
   border: 2px solid rgba(0, 110, 255, 0.295);
+  outline: none;
   padding: 6px 0;
 }
 
