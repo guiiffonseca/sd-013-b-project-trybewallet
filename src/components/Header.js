@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 class Header extends Component {
   constructor() {
     super();
-    this.totalDispense = this.totalDispense.bind(this);
+    this.totalDispense = this.totalExpense.bind(this);
   }
 
-  totalDispense() {
+  totalExpense() {
     const { expenses } = this.props;
     return expenses.reduce((acc, { value, currency, exchangeRates }) => {
       const { ask } = exchangeRates[currency];
@@ -24,7 +24,7 @@ class Header extends Component {
       <header>
         <div>
           <p data-testid="email-field">{ `Email: ${email}` }</p>
-          <p data-testid="total-field">{ `Despesa Total: ${this.totalDispense()}` }</p>
+          <p data-testid="total-field">{ `Despesa Total: ${this.totalExpense()}` }</p>
           <p data-testid="header-currency-field">{ currency }</p>
         </div>
       </header>
