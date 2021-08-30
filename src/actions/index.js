@@ -1,17 +1,18 @@
 // Coloque aqui suas actions
 
 export const LOADING = 'LOADING';
-export const SAVE_EMAIL = 'SAVE_EMAIL';
+export const USER_LOGIN = 'USER_LOGIN';
 export const FETCH_ERROR = 'FETCH_ERROR';
 export const SAVE_COINS = 'SAVE_COINS';
+export const LOGIN = 'LOGIN';
 
 export const loading = () => ({
   type: LOADING,
 });
 
-export const saveEmail = (email) => ({
-  type: SAVE_EMAIL,
-  payload: { email },
+export const userLogin = (email) => ({
+  type: USER_LOGIN,
+  payload: email,
 });
 
 export const saveCoins = (currency) => ({
