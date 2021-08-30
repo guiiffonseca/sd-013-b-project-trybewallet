@@ -1,4 +1,5 @@
 import React from 'react';
+// import history from ''
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,10 +10,25 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.validateLogin = this.validateLogin.bind(this);
   }
 
   onSubmit() {
+    // history.push('/carteira');
     console.log('cliquei');
+  }
+
+  validateLogin() {
+    const { email, password } = this.state;
+    const passwordMinLength = 6;
+    let validatedLogin = true;
+
+    if (email.includes('@' && '.com') && password.length >= passwordMinLength) {
+      validatedLogin = false;
+    } else {
+      validatedLogin = true;
+    }
+    return validatedLogin;
   }
 
   handleChange(event) {
@@ -30,6 +46,7 @@ class Login extends React.Component {
           Login
           <input
             id="email"
+            name="email"
             type="email"
             data-testid="email-input"
             onChange={ this.handleChange }
@@ -39,12 +56,19 @@ class Login extends React.Component {
           Senha
           <input
             id="password"
+            name="password"
             type="password"
             data-testid="password-input"
             onChange={ this.handleChange }
           />
         </label>
-        <button type="button" onClick={ this.onSubmit }>Entrar</button>
+        <button
+          type="button"
+          onClick={ this.onSubmit }
+          disabled={ this.validateLogin() }
+        >
+          Entrar
+        </button>
       </fieldset>
     );
   }

@@ -7,6 +7,7 @@ class App extends React.Component {
   render() {
     return (
 
+      
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/carteira" component={ Wallet } />
