@@ -1,41 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
   align-items: center;
-  background-color: #282c34;
-  color: white;
+  display: flex;
+  flex-flow: column wrap;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.login-card {
+  align-items: center;
+  border: 1px solid grey;
+  display: flex;
+  flex-flow: column wrap;
+  height: 20rem;
+  justify-content: center;
+  padding: 3rem;
+  width: 20rem;
+}
+
+.login-card * {
+  width: 100%;
+}
+
+.login-card input {
+  padding: 0.5rem;
+}
+
+.login-card label{
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+  font-size: 1rem;
+  margin: 0.5rem 0 0.5rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.login-card button {
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin: 1rem 0 1rem;
 }
