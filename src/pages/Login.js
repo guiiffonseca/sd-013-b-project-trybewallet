@@ -1,4 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -6,23 +11,46 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
+      validateEmail: false,
       password: '',
+      validatePassword: false,
     };
 
     this.onChange = this.onChange.bind(this);
+    this.validateField = this.validateField.bind(this);
   }
 
   onChange({ target: { value, name } }) {
+    this.validateField({ name, value });
+
     this.setState({
       [name]: value,
     });
   }
 
+  validateField({ name, value }) {
+    if (name === 'email') {
+      const validation = value.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/g);
+
+      return this.setState({
+        validateEmail: !!validation,
+      });
+    }
+    if (name === 'password') {
+      const validation = value.match(/^.{6,}$/g);
+
+      return this.setState({
+        validatePassword: !!validation,
+      });
+    }
+  }
+
   render() {
-    const { email, password } = this.state;
+    const { email, password, validateEmail, validatePassword } = this.state;
+    const { submit } = this.props;
 
     return (
-      <form className="login-container">
+      <fieldset className="login-container">
         <input
           data-testid="email-input"
           type="email"
@@ -41,10 +69,26 @@ class Login extends React.Component {
           value={ password }
           onChange={ this.onChange }
         />
-        <button type="submit">Entrar</button>
-      </form>
+        <Link to="/carteira">
+          <button
+            type="submit"
+            disabled={ !(validateEmail && validatePassword) }
+            onClick={ () => submit(email) }
+          >
+            Entrar
+          </button>
+        </Link>
+      </fieldset>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  submit: (email) => dispatch(login(email)),
+});
+
+Login.propTypes = {
+  submit: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
