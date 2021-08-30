@@ -19,7 +19,8 @@ class Login extends React.Component {
 
   onSubmitLogin() {
     const { history, valueLogin } = this.props;
-    valueLogin(this.state);
+    const { email } = this.state;
+    valueLogin(email);
     history.push('/carteira');
   }
 
