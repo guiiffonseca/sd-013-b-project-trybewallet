@@ -1,5 +1,12 @@
-// import user from './user';
-// import wallet from './wallet';
-
 // Configure os seus reducers.
-// ATENÇÃO: você obrigatoriamente tem que utilizar as chaves "user" e "wallet" no seu estado global
+import { combineReducers } from 'redux';
+// import user from './user';
+import userReducer from './user';
+
+const rootReducer = combineReducers({
+  // ATENÇÃO: você obrigatoriamente tem que utilizar as chaves "user" e "wallet" no seu estado global
+  user: userReducer,
+  // import wallet from './wallet';
+});
+
+export default rootReducer;
