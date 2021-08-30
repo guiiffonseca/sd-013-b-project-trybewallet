@@ -33,37 +33,37 @@
   color: white;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
-  padding: 8px 0px;
+  font-weight: 600;
+  padding: 8px 0;
   transition: all 0.2s;
   width: 90%;
-}
-
-.login-container button:disabled {
-  background-color: rgba(97, 158, 95, 0.76);
-}
-
-.login-container button:disabled:hover {
-  transform: scale(1.0);
 }
 
 .login-container button:hover {
   transform: scale(1.03);
 }
 
+.login-container button:disabled {
+  background-color: rgba(97, 158, 95, 0.7);
+}
+
+.login-container button:disabled:hover {
+  transform: scale(1.0);
+}
+
 .login-container input {
   border: 1px solid rgba(128, 128, 128, 0.315);
   border-radius: 5px;
   font-size: 16px;
-  padding: 8px 0px;
+  padding: 8px 0;
   text-align: center;
   width: 90%;
 }
 
 .login-container input:focus {
   outline: none;
-  padding: 6px 0px;
   border: 2px solid rgba(0, 110, 255, 0.295);
+  padding: 6px 0;
 }
 
 .login-container h1 span {
