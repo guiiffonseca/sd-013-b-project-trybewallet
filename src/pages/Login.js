@@ -27,6 +27,7 @@ class Login extends React.Component {
           type="email"
           id="email"
           value={ email }
+          placeholder="exemplo@exemplo.com"
           testId="email-input"
           onChange={ this.handleChange }
         />
