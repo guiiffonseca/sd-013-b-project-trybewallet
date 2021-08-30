@@ -5,44 +5,26 @@ import PropTypes from 'prop-types';
 import Input from '../Input';
 import Select from '../Select';
 
-import {
-  setExpenseThunk,
-  fetchCurrencies as fetchCurrenciesThunk,
-} from '../../actions';
+import { editExpense as editExpenseAction } from '../../actions';
 
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
-const INITIAL_STATE = {
-  value: '',
-  description: '',
-  currency: 'USD',
-  method: '',
-  tag: '',
-};
+class EditCurrencyForm extends Component {
+  constructor(props) {
+    super(props);
 
-class CurrencyForm extends Component {
-  constructor() {
-    super();
+    const expense = props.expenses.find(({ id }) => id === props.idToEdit);
 
-    this.state = INITIAL_STATE;
+    this.state = {
+      ...expense,
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
-  }
-
-  componentDidMount() {
-    this.fetchCurrencies();
-  }
-
-  async fetchCurrencies() {
-    const { fetchCurrencies } = this.props;
-
-    await fetchCurrencies();
   }
 
   handleChange({ target }) {
@@ -54,19 +36,11 @@ class CurrencyForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
-    const { setExpense, expenses } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    const { editExpense } = this.props;
 
-    setExpense({
-      id: expenses.length,
-      value,
-      description,
-      currency,
-      method,
-      tag,
+    editExpense({
+      ...this.state,
     });
-
-    this.setState(INITIAL_STATE);
   }
 
   renderInputs() {
@@ -142,28 +116,28 @@ class CurrencyForm extends Component {
         {this.renderSelects()}
 
         <button type="submit" onClick={ this.handleClick }>
-          Adicionar despesa
+          Editar despesa
         </button>
       </form>
     );
   }
 }
 
-CurrencyForm.propTypes = {
-  setExpense: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+EditCurrencyForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  fetchCurrencies: PropTypes.func.isRequired,
+  idToEdit: PropTypes.number.isRequired,
+  editExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
-  expenses: wallet.expenses,
   currencies: wallet.currencies,
+  idToEdit: wallet.idToEdit,
+  expenses: wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setExpense: (expense) => dispatch(setExpenseThunk(expense)),
-  fetchCurrencies: (expense) => dispatch(fetchCurrenciesThunk(expense)),
+  editExpense: (expense) => dispatch(editExpenseAction(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencyForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditCurrencyForm);
