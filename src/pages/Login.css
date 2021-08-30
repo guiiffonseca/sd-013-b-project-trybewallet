@@ -5,12 +5,12 @@
 }
 
 body {
-  background-color: #280B45;
+  background-color: #280b45;
 }
 
 .login-card {
   align-items: center;
-  background-color: #FFE98A;
+  background-color: #ffe98a;
   border-radius: 60px;
   display: flex;
   flex-flow: column wrap;
@@ -39,10 +39,10 @@ body {
 .login-card button {
   border-radius: 8px;
   height: auto;
-  width: auto;
   padding: 4px;
+  width: auto;
 }
 
 .login-card img {
-  height: 100px
+  height: 100px;
 }
