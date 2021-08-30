@@ -1,10 +1,9 @@
 import actions from '../actions';
 
 const INICIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
+  totalExpenses: 0,
 };
 
 const walletReduce = (state = INICIAL_STATE, action) => {
