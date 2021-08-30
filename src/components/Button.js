@@ -3,15 +3,23 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
   render() {
-    const { text } = this.props;
+    const { text, active, onClick } = this.props;
     return (
-      <button type="button">{ text }</button>
+      <button
+        onClick={ onClick }
+        type="button"
+        disabled={ active ? 'disabled' : undefined }
+      >
+        { text }
+      </button>
     );
   }
 }
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Button;
