@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  moeda: {},
+  currency: {},
+  expenses: [],
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -7,7 +8,12 @@ function wallet(state = INITIAL_STATE, action) {
   case 'responseCurrency':
     return {
       ...state,
-      moeda: action.state,
+      currency: action.state,
+    };
+  case 'adicionarDespesa':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
     };
   default:
     return state;

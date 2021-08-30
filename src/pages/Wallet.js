@@ -1,85 +1,129 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrency } from '../actions';
+import { expensesAction, fetchCurrency } from '../actions';
+import Header from '../components/Header';
+import Payment from '../components/Payment';
 
 class Wallet extends React.Component {
   constructor() {
     super();
 
+    this.handleChange = this.handleChange.bind(this);
+    this.addWithClick = this.addWithClick.bind(this);
+    this.sumTotal = this.sumTotal.bind(this);
+
     this.state = {
-      totalValue: 0,
-      exchange: 'BRL',
+      id: -1,
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      exchangeRates: {},
     };
   }
 
   componentDidMount() {
-    const { moeda } = this.props;
-    moeda();
+    const { currency } = this.props;
+    currency();
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  async addWithClick() {
+    const { currency, expenses } = this.props;
+    const res = await currency();
+    await this.setState((estadoAnterior) => ({
+      exchangeRates: res.state,
+      id: estadoAnterior.id + 1,
+    }));
+    await expenses(this.state);
+  }
+
+  sumTotal() {
+    const { totalExpenses } = this.props;
+    if (totalExpenses.length !== 0) {
+      const accValueExpenses = totalExpenses
+        .reduce((acc, curr) => {
+          acc += curr.value * curr.exchangeRates[curr.currency].ask;
+          return acc;
+        }, 0);
+      return accValueExpenses;
+    }
+    return 0;
   }
 
   render() {
     const { email, coin } = this.props;
-    const { totalValue, exchange } = this.state;
+    const sum = this.sumTotal();
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <>
-        <header data-testid="email-field">{`Email Logado: ${email}`}</header>
-        <p data-testid="total-field">{`Valor total das despesas: R$${totalValue}`}</p>
-        <p data-testid="header-currency-field">{`Câmbio usado: ${exchange}`}</p>
+        <Header email={ email } totalValue={ sum } />
         <form>
-          <label htmlFor="valor">
+          <label htmlFor>
             Valor:
-            <input type="text" name="valor" id="valor" />
+            <input type="text" name="value" onChange={ this.handleChange } />
           </label>
-          <label htmlFor="Descrição">
+          <label htmlFor>
             Descrição:
-            <input type="text" name="Descrição" id="Descrição" />
+            <input type="text" name="description" onChange={ this.handleChange } />
           </label>
-          <label htmlFor="Moeda">
+          <label htmlFor>
             Moeda:
-            <select name="Moeda" id="Moeda">
+            <select name="currency" onChange={ this.handleChange }>
               {coin && Object.keys(coin).filter((money) => money !== 'USDT')
                 .map((money) => <option key={ money } value={ money }>{money}</option>)}
             </select>
           </label>
-          <label htmlFor="Método de pagamento">
-            Método de pagamento:
-            <select name="Método de pagamento" id="Método de pagamento">
-              <option>Selecione</option>
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="Tag">
+          <Payment handleChange={ this.handleChange } />
+          <label htmlFor>
             Tag:
-            <select name="Tag" id="Tag">
-              <option value="">Selecione</option>
+            <select name="tag" onChange={ this.handleChange }>
+              <option>Selecione</option>
               {tagOptions.map((text) => (
                 <option key={ text } value={ text }>{text}</option>
               ))}
             </select>
           </label>
         </form>
+        <button
+          type="button"
+          onClick={ this.addWithClick }
+        >
+          Adicionar despesa
+        </button>
       </>
     );
   }
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-  moeda: PropTypes.func.isRequired,
   coin: PropTypes.objectOf(PropTypes.string).isRequired,
+  currency: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.func.isRequired,
+  totalExpenses: PropTypes.shape({
+    length: PropTypes.number,
+    reduce: PropTypes.func,
+  }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  moeda: () => dispatch(fetchCurrency()),
+  currency: () => dispatch(fetchCurrency()),
+  expenses: (state) => dispatch(expensesAction(state)),
 });
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  coin: state.wallet.moeda,
+  coin: state.wallet.currency,
+  totalExpenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

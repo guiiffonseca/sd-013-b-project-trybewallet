@@ -21,7 +21,13 @@ function fetchCurrency() {
   };
 }
 
+const expensesAction = (state) => ({
+  type: 'adicionarDespesa',
+  state,
+});
+
 export {
   emailAction,
   fetchCurrency,
+  expensesAction,
 };
