@@ -1,32 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from './Components/Input';
 import validateEmail from './Helper/ValidaçãoEmail';
+import { setUser } from '../../actions';
+import Button from './Components/button';
 
-export default function Login() {
-  // Obs estou usando Funcionais, pois estou praticando (não entendo Muito, porém o codigo é 100% meu com consulta a Documentação, link https://pt-br.reactjs.org/docs/hooks-state.html)
-  const [email, setEmail] = useState(false);
-  const [password, setPassword] = useState(false);
+function Login({ setEmailAction }) {
+  const [email, setEmail] = useState('');
+  const [emailVerific, setEmailVerific] = useState(false);
+  const [passwordVerific, setPasswordVerific] = useState(false);
   const [button, setButton] = useState(true);
 
   function hadlerChange({ target: { name, value } }) {
-    // Object Literal: https://blog.rocketseat.com.br/substituindo-a-instrucao-switch-por-object-literal/
     const actions = {
       email() {
-        if (validateEmail(value)) { setEmail(true); } else { setEmail(false); }
+        setEmail(value);
+        if (validateEmail(value)) {
+          setEmailVerific(true);
+        } else { setEmailVerific(false); }
       },
       password() {
         const minCaracter = 5;
         if (value.length > minCaracter) {
-          setPassword(true);
-        } else { setPassword(false); }
+          setPasswordVerific(true);
+        } else { setPasswordVerific(false); }
       },
     };
     actions[name]();
   }
 
   useEffect(() => {
-    if (email && password) { setButton(false); } else { setButton(true); }
-  }, [email, password]);
+    if (passwordVerific && emailVerific) { setButton(false); } else { setButton(true); }
+  }, [passwordVerific, emailVerific]);
 
   return (
     <div>
@@ -45,8 +51,18 @@ export default function Login() {
           data="password-input"
           hadlerChange={ hadlerChange }
         />
-        <input type="button" value="Entrar" disabled={ button } />
+        <Button click={ setEmailAction } email={ email } button={ button } />
       </form>
     </div>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  setEmailAction: (payload) => dispatch(setUser(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setEmailAction: PropTypes.func.isRequired,
+};
