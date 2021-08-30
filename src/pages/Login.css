@@ -65,3 +65,7 @@
 .login-main button:hover {
   background-color: var(--dark-olive-green);
 }
+
+.login-main button:disabled {
+  background-color: var(--lavender-gray);
+}
