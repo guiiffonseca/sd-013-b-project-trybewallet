@@ -1,16 +1,19 @@
 import React from 'react';
-import Header from '../components/Header';
-import WalletForm from '../components/WalletForm';
+import { connect } from 'react-redux';
+import Header from '../components/std/Header';
+import Forms from '../components/wallet/Forms';
+import Table from '../components/std/Table';
 
 class Wallet extends React.Component {
   render() {
     return (
-      <div>
+      <>
         <Header />
-        <WalletForm />
-      </div>
+        <Forms />
+        <Table />
+      </>
     );
   }
 }
 
-export default Wallet;
+export default connect(null, null)(Wallet);

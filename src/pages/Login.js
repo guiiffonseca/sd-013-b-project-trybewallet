@@ -1,76 +1,76 @@
 import React from 'react';
+import '../App.css';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEmailAction } from '../actions';
+import ButtonEnter from '../components/login/ButtonEnter';
+import InputEmail from '../components/login/InputEmail';
+import InputPassword from '../components/login/InputPassword';
 
-const VALID_CARACTERS = 6;
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
     this.state = {
       email: '',
       password: '',
       shouldRedirect: false,
     };
+  }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+  handleChange({ target: { name, type, value, checked } }) {
+    function newValue() {
+      switch (type) {
+      case 'checkbox': return checked;
+      case 'number': return +value;
+      default: return value;
+      }
+    }
+    this.setState((state) => ({ ...state, [name]: newValue() }));
   }
 
   handleClick() {
-    const { state: { email }, props: { emailDispatch } } = this;
+    const {
+      state: { email },
+      props: { emailDispatch },
+    } = this;
+
     emailDispatch(email);
     this.setState((state) => ({ ...state, shouldRedirect: true }));
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
-
   render() {
-    const { handleClick, handleChange } = this;
-    const { email, password, shouldRedirect } = this.state;
+    const {
+      state: { email, password, shouldRedirect },
+      handleChange,
+      handleClick,
+    } = this;
 
+    const VALID_CARACTERES = 6;
     const emailValidation = email.includes('@' && '.com');
-    const passwordValidation = password.length >= VALID_CARACTERS;
+    const passwordValidation = password.length >= VALID_CARACTERES;
+
     return (
       <section>
         { shouldRedirect && <Redirect to="/carteira" /> }
         <h1>Login</h1>
         <form>
-          <label htmlFor="email">
-            Email:
-            <input
-              type="email"
-              id="email"
-              name="email"
-              data-testid="email-input"
-              value={ email }
-              onChange={ handleChange }
-              placeholder="Email"
-            />
-          </label>
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              id="password"
-              name="password"
-              data-testid="password-input"
-              value={ password }
-              onChange={ handleChange }
-              placeholder="Password"
-            />
-          </label>
-          <button
-            type="button"
+          <InputEmail
+            value={ email }
+            handleChange={ handleChange }
+          />
+          <InputPassword
+            value={ password }
+            handleChange={ handleChange }
+          />
+          <ButtonEnter
             disabled={ !(passwordValidation && emailValidation) }
-            onClick={ handleClick }
-          >
-            Entrar
-          </button>
+            handleClick={ handleClick }
+          />
         </form>
       </section>
     );
