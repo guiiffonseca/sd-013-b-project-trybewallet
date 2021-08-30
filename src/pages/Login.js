@@ -1,6 +1,7 @@
 import React from 'react';
 
 class Login extends React.Component {
+
   render() {
     return (
       <div>
@@ -22,7 +23,12 @@ class Login extends React.Component {
             type="text"
           />
         </label>
-        <button type="button">Entrar</button>
+        <button
+          type="submit"
+
+        >
+          Entrar
+        </button>
       </div>
     );
   }
