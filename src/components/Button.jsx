@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class Button extends React.Component {
   render() {
     const { text, handleClick, status } = this.props;
-    console.log(status);
     return (
       <button
         type="button"
