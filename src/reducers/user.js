@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 
 const ESTADO_INICIAL = {
+
   email: '',
 };
 function userReducer(state = ESTADO_INICIAL, action) {
@@ -13,7 +14,7 @@ function userReducer(state = ESTADO_INICIAL, action) {
     };
 
   default:
-    return { state };
+    return state;
   }
 }
 

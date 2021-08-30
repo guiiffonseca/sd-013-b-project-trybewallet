@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { ClickButtonLogin as ClickButtonLoginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class Login extends React.Component {
     this.StateChangeEmail = this.StateChangeEmail.bind(this);
     this.StateChangePassword = this.StateChangePassword.bind(this);
     this.verificaButton = this.verificaButton.bind(this);
+    this.ClickButton = this.ClickButton.bind(this);
   }
 
   StateChangeEmail(event) {
@@ -57,8 +60,12 @@ class Login extends React.Component {
     }
   }
 
-  CLickButton() {
-    console.log('botao clicado');
+  ClickButton() {
+    const { history, ClickButtonLogin } = this.props;
+    const { email } = this.state;
+    ClickButtonLogin(email);
+
+    history.push('/carteira');
   }
 
   render() {
@@ -83,7 +90,7 @@ class Login extends React.Component {
 
         <button
           type="button"
-          onClick={ this.CLickButton }
+          onClick={ this.ClickButton }
           disabled={ button }
         >
           Entrar
@@ -94,4 +101,10 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+function MapDispatchToProps(dispatch) {
+  return {
+    ClickButtonLogin: (email) => dispatch(ClickButtonLoginAction(email)),
+  };
+}
+
+export default connect(null,MapDispatchToProps)(Login);

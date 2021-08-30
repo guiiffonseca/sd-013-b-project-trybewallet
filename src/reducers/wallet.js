@@ -15,7 +15,7 @@ function walletReducer(state = ESTADO_INICIAL_WALLET, action) {
     };
 
   default:
-    return { state };
+    return state;
   }
 }
 
