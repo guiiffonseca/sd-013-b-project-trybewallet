@@ -7,10 +7,6 @@ const INICIAL_STATE = {
   },
 };
 
-const walletReduce = () => {
-  console.log(INICIAL_STATE);
-};
-/*
 const walletReduce = (state = INICIAL_STATE, action) => {
   switch (action.type) {
   case actions.walletCurrencies:
@@ -19,5 +15,5 @@ const walletReduce = (state = INICIAL_STATE, action) => {
     return state;
   }
 };
-*/
+
 export default walletReduce;
