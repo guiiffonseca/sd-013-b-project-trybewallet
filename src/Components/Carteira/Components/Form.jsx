@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Form() {
+export default function Form({ coins }) {
   return (
     <form>
       <label htmlFor="valor">
@@ -14,7 +15,13 @@ export default function Form() {
       <label htmlFor="coin">
         Moeda:
         <select name="" id="coin">
-          <option value="" />
+          {
+            coins.map((coin) => (
+              <option value={ coin.key } key={ coin.key }>
+                {coin.code}
+              </option>
+            ))
+          }
         </select>
       </label>
       <label htmlFor="pagamento">
@@ -38,3 +45,7 @@ export default function Form() {
     </form>
   );
 }
+
+Form.propTypes = {
+  coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
