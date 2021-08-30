@@ -3,17 +3,58 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ExpenseInput from './ExpenseInput';
 import ExpenseOption from './ExpenseOption';
-import { paymentMethod, paymentTag } from '../data';
-import { currencyFetchAction } from '../actions';
+import { paymentMethodArray, paymentTagArray } from '../data';
+import { currencyFetchAction, saveExpenseAction } from '../actions';
+import AddExpenseButton from './AddExpenseButton';
 
 class AddExpenseBar extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      value: '',
+      currency: '',
+      method: paymentMethodArray[0],
+      tag: paymentTagArray[0],
+      description: '',
+      exchangeRates: null,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.updateLocalCurrencyState = this.updateLocalCurrencyState.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  async componentDidMount() {
     const { currencyFetch } = this.props;
-    currencyFetch();
+    await currencyFetch();
+    this.updateLocalCurrencyState();
+  }
+
+  updateLocalCurrencyState() {
+    const { currencies } = this.props;
+    this.setState({
+      currency: Object.keys(currencies)[0],
+    });
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
+  async handleClick() {
+    const { saveExpense, currencyFetch } = this.props;
+    await currencyFetch();
+    const { currencies } = this.props;
+    this.setState({ exchangeRates: currencies });
+    saveExpense(this.state);
+    this.setState((previState) => ({ id: previState.id + 1 }));
   }
 
   render() {
     const { currencies } = this.props;
+    const { value, description } = this.state;
     const currenciesArray = Object.keys(currencies);
     currenciesArray.splice(currenciesArray.indexOf('USDT'), 1);
     return (
@@ -21,25 +62,39 @@ class AddExpenseBar extends Component {
         <ExpenseInput
           labelContent="Valor"
           type="number"
-          name="expense-value"
+          name="value"
+          handleChange={ this.handleChange }
+          value={ value }
         />
         <ExpenseOption
           labelContent="Moeda"
-          name="moeda"
+          name="currency"
           values={ currenciesArray }
+          handleChange={ this.handleChange }
+
         />
         <ExpenseOption
           labelContent="Método de pagamento"
-          name="metodo-de-pagamento"
-          values={ paymentMethod }
+          name="method"
+          values={ paymentMethodArray }
+          handleChange={ this.handleChange }
+
         />
-        <ExpenseOption labelContent="Tag" name="tag" values={ paymentTag } />
+        <ExpenseOption
+          labelContent="Tag"
+          name="tag"
+          values={ paymentTagArray }
+          handleChange={ this.handleChange }
+        />
         <ExpenseInput
           labelContent="Descrição"
           type="text"
-          name="expense-description"
+          name="description"
+          handleChange={ this.handleChange }
+          value={ description }
+
         />
-        <button type="button">Adicionar Despesa</button>
+        <AddExpenseButton handleClick={ this.handleClick } />
       </div>
     );
   }
@@ -51,6 +106,7 @@ const mapStateToProps = ({ wallet: { currencies } }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   currencyFetch: () => dispatch(currencyFetchAction()),
+  saveExpense: (payload) => dispatch(saveExpenseAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseBar);

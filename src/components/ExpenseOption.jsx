@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 class ExpenseOption extends Component {
   render() {
-    const { labelContent, name, values } = this.props;
+    const { labelContent, name, values, handleChange } = this.props;
     return (
       <label htmlFor={ name }>
         { labelContent }
-        <select name={ name } id={ name }>
+        <select name={ name } id={ name } onChange={ handleChange }>
           { values.map((value, index) => (
             <option key={ index } value={ value }>{value}</option>
           ))}

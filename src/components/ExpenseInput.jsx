@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 
 class ExpenseInput extends Component {
   render() {
-    const { labelContent, type, name } = this.props;
+    const { labelContent, type, name, handleChange, value } = this.props;
     return (
       <label htmlFor={ name }>
         { labelContent }
-        <input type={ type } name={ name } id={ name } />
+        <input
+          type={ type }
+          name={ name }
+          id={ name }
+          onChange={ handleChange }
+          value={ value }
+        />
       </label>
     );
   }

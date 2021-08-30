@@ -1,5 +1,6 @@
 export const LOGIN = 'LOGIN';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
 export const loginAction = (payload) => ({
   type: LOGIN,
@@ -16,3 +17,8 @@ export const currencyFetchAction = () => async (dispatch) => {
   const data = await response.json();
   dispatch(getCurrencySuccessAction(data));
 };
+
+export const saveExpenseAction = (payload) => ({
+  type: SAVE_EXPENSE,
+  payload,
+});

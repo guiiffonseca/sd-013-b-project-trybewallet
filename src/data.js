@@ -1,10 +1,10 @@
-export const paymentMethod = [
+export const paymentMethodArray = [
   'Dinheiro',
   'Cartão de crédito',
   'Cartão de débito',
 ];
 
-export const paymentTag = [
+export const paymentTagArray = [
   'Alimentação',
   'Lazer',
   'Trabalho',
