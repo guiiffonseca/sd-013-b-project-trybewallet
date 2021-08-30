@@ -8,13 +8,16 @@ class Header extends Component {
     return (
       <header>
         <div>
-          <span data-testid="email-field">
+          <h4 data-testid="email-field">
             { email }
-          </span>
+          </h4>
         </div>
-        <span>
-          wallet
+        <span data-testid="total-field">
+          0
         </span>
+        <p data-testid="header-currency-field">
+          BRL
+        </p>
       </header>
     );
   }
