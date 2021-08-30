@@ -1,8 +1,14 @@
 // Coloque aqui suas actions
 
-const USER_TYPE = 'TEST';
+export const USER_TYPE = 'user';
+export const WALLET_TYPE = 'user';
 
-const userAction = () => ({
+export const userAction = (email) => ({
   type: USER_TYPE,
-  payload: {},
+  payload: email,
+});
+
+export const walletAction = (currencies, expenses) => ({
+  type: WALLET_TYPE,
+  payload: { currencies, expenses },
 });
