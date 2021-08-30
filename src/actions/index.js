@@ -1,26 +1,26 @@
 import fetchAPI from '../services/fetchApi';
 
 // Coloque aqui suas actions
-export const GET_EMAIL = 'GET_EMAIL';
-export const GET_WALLET = 'GET_WALLET';
-export const GET_AWESOMEAPI = 'GET_AWESOMEAPI';
+export const SET_EMAIL = 'GET_EMAIL';
+export const SET_WALLET = 'GET_WALLET';
+export const SET_AWESOMEAPI = 'GET_AWESOMEAPI';
 
-export const getEmail = (payload) => ({
-  type: GET_EMAIL,
+export const setEmail = (email) => ({
+  type: SET_EMAIL,
+  email,
+});
+
+export const setWallet = (payload) => ({
+  type: SET_WALLET,
   payload,
 });
 
-export const getWallet = (payload) => ({
-  type: GET_WALLET,
+export const setAwesomeapi = (payload) => ({
+  type: SET_AWESOMEAPI,
   payload,
 });
 
-export const getAwesomeapi = (payload) => ({
-  type: GET_AWESOMEAPI,
-  payload,
-});
-
-export const getFetchAwesomeapi = (search) => async (dispatch) => {
+export const setFetchAwesomeapi = (search) => async (dispatch) => {
   try {
     const results = await fetchAPI(search);
     const payload = {
@@ -29,7 +29,7 @@ export const getFetchAwesomeapi = (search) => async (dispatch) => {
         expenses: results.expenses,
       },
     };
-    dispatch(getAwesomeapi(payload));
+    dispatch(setAwesomeapi(payload));
   } catch (error) {
     console.error(error);
   }

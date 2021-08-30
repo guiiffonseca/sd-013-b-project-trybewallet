@@ -1,11 +1,11 @@
-const URL_API = 'aqui';
+const URL_API = 'https://economia.awesomeapi.com.br/json/all';
 
-const fetchAPI = (search) => {
-  fetch(`${URL_API}${search}`)
+const fetchAPI = () => {
+  fetch(`${URL_API}`)
     .then((response) => (
       response
         .json()
-        .then((data) > (response.ok ? Promise.resolve(data) : Promise.reject(data)))
+        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
     ));
 };
 
