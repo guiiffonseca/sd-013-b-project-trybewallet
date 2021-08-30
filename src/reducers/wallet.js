@@ -2,9 +2,6 @@
 import { WALLET_TYPE } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
   wallet: {
     currencies: [],
     expenses: [],
