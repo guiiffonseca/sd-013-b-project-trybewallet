@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import logIn from '../actions/index';
 
@@ -11,6 +12,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      shouldRedirect: false,
     };
 
     this.renderPasswordInput = this.renderPasswordInput.bind(this);
@@ -70,7 +72,10 @@ class Login extends React.Component {
       <div>
         <button
           type="button"
-          onClick={ () => logInProp({ email, password }) }
+          onClick={ () => {
+            logInProp({ email, password });
+            this.setState({ shouldRedirect: true });
+          } }
         >
           Entrar
         </button>
@@ -83,6 +88,10 @@ class Login extends React.Component {
       renderPasswordInput,
       renderSubmitButton } = this;
 
+    const { shouldRedirect } = this.state;
+    if (shouldRedirect === true) {
+      return <Redirect to="/carteira" />;
+    }
     return (
       <form>
         {renderEmailInput()}
