@@ -1,20 +1,27 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Input extends Component {
   render() {
-    const { id, type, name, value, handleChange, children } = this.props;
+    const {
+      id,
+      type,
+      name,
+      value,
+      handleChange,
+      children,
+    } = this.props;
 
     return (
       <div>
-        <label htmlFor={id}>
-          {children}
+        <label htmlFor={ id }>
+          { children }
           <input
-            data-testid={id}
-            type={type}
-            name={name}
-            value={value}
-            onChange={handleChange}
+            data-testid={ id }
+            type={ type }
+            name={ name }
+            value={ value }
+            onChange={ handleChange }
           />
         </label>
       </div>
@@ -22,7 +29,7 @@ class Input extends Component {
   }
 }
 
-Input.defaultProps = { type: "text" };
+Input.defaultProps = { type: 'text' };
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,

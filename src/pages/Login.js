@@ -1,4 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import Input from '../components/Input';
+import getEmail from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -6,17 +11,39 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      emailInput: "",
-      passwordInput: "",
+      emailInput: '',
+      passwordInput: '',
+      redirect: false,
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.enableButton = this.enableButton.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
-  render() {
+  enableButton() {
     const { emailInput, passwordInput } = this.state;
+    const minPasswordLength = 6;
+    if (passwordInput.length >= minPasswordLength) {
+      const validFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      if (validFormat.test(emailInput)) return true;
+    }
+    return false;
+  }
+
+  handleSubmit() {
+    const { emailInput } = this.state;
+    const { handleEmail } = this.props;
+    handleEmail(emailInput);
+    this.setState({ redirect: true });
+  }
+
+  render() {
+    const { emailInput, passwordInput, redirect } = this.state;
 
     return (
       <div>
@@ -26,10 +53,10 @@ class Login extends React.Component {
             id="email-input"
             type="email"
             name="emailInput"
-            value={emailInput}
-            handleChange={(e) => {
+            value={ emailInput }
+            handleChange={ (e) => {
               this.handleChange(e);
-            }}
+            } }
           >
             Email
           </Input>
@@ -37,20 +64,33 @@ class Login extends React.Component {
             id="password-input"
             type="password"
             name="passwordInput"
-            value={passwordInput}
-            handleChange={(e) => {
+            value={ passwordInput }
+            handleChange={ (e) => {
               this.handleChange(e);
-            }}
+            } }
           >
             Senha
           </Input>
         </section>
-        <button type="button" onClick={this.handleSubmit}>
+        <button
+          type="button"
+          onClick={ this.handleSubmit }
+          disabled={ !this.enableButton() }
+        >
           Entrar
         </button>
+        {redirect && <Redirect to="/carteira" />}
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  handleEmail: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  handleEmail: (payload) => dispatch(getEmail(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
