@@ -1,2 +1,2 @@
 // Coloque aqui suas actions
-//  export const addExpense = (value) => 
+//  export const addExpense = (value) =>
