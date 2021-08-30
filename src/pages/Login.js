@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Input from '../components/Input';
-import getEmail from '../actions/index';
+import getEmail from '../actions/getEmail';
 
 class Login extends React.Component {
   constructor() {
