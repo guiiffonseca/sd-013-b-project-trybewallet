@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Login from './pages/Login'
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Route exact path="/" component={ Login } />
       </switch>
     </div>
-  ) 
+  );
 }
 
 export default App;
