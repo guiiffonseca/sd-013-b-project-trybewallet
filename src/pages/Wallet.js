@@ -3,6 +3,42 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      moedas: [],
+    };
+    this.buscaMoedas = this.buscaMoedas.bind(this);
+    this.createOptions = this.createOptions.bind(this);
+  }
+
+  componentDidMount() {
+    this.buscaMoedas();
+  }
+
+  async buscaMoedas() {
+    const moedasAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const moedasJson = await moedasAPI.json();
+    const moedas = Object.keys(moedasJson).filter((moeda) => moeda !== 'USDT');
+    this.setState({
+      moedas,
+    });
+  }
+
+  createOptions() {
+    const { moedas } = this.state;
+    return (
+      moedas.map((moeda, index) => (
+        <option
+          key={ index }
+          value={ moeda }
+        >
+          {moeda}
+        </option>
+      ))
+    );
+  }
+
   render() {
     const { userEmail } = this.props;
     return (
@@ -24,7 +60,7 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda
             <select name="moeda" id="moeda">
-              moedas
+              { this.createOptions() }
             </select>
           </label>
           <label htmlFor="metodo-pagamento">
