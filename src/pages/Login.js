@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   checkingInputs() {
     const { email, password } = this.state;
-    const numMax = 6;
+    const numMax = 5;
     const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
     // Regex pego no internet
     const enable = emailIsValid.test(email) && password.length >= numMax;
