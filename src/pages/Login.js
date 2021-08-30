@@ -9,6 +9,13 @@ class Login extends React.Component {
       disabled: true,
     };
     this.validation = this.validation.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
+    }, () => this.validation());
   }
 
   validation() { // regex from stackoverflow
@@ -29,14 +36,17 @@ class Login extends React.Component {
     return (
       <form>
         <input
-          id="email"
           name="email"
           type="email"
           data-testid="email-input"
+          onChange={ this.handleChange }
         />
         <input
+          name="password"
+          type="password"
           type="password"
           data-testid="password-input"
+          onChange={ this.handleChange }
         />
         <button
           type="button"
