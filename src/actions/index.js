@@ -1,1 +1,6 @@
-// Coloque aqui suas actions
+const emailAction = (state) => ({
+  type: 'email',
+  state,
+});
+
+export default emailAction;
