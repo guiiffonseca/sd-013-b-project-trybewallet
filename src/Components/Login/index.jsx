@@ -6,7 +6,7 @@ import validateEmail from './Helper/ValidaçãoEmail';
 import { setUser } from '../../actions';
 import Button from './Components/button';
 
-function Login({ setEmailAction }) {
+function LoginComponent({ setEmailAction }) {
   const [email, setEmail] = useState('');
   const [emailVerific, setEmailVerific] = useState(false);
   const [passwordVerific, setPasswordVerific] = useState(false);
@@ -61,8 +61,8 @@ const mapDispatchToProps = (dispatch) => ({
   setEmailAction: (payload) => dispatch(setUser(payload)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(LoginComponent);
 
-Login.propTypes = {
+LoginComponent.propTypes = {
   setEmailAction: PropTypes.func.isRequired,
 };
