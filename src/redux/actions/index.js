@@ -1,1 +1,4 @@
-// Coloque aqui suas actions
+const allActions = {
+};
+
+export default allActions;
