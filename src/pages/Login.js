@@ -36,7 +36,7 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, disabled } = this.state;
+    const { email, disabled } = this.state;
     const { check } = this.props;
     return (
       <form>
@@ -56,7 +56,7 @@ class Login extends Component {
           <button
             type="button"
             disabled={ disabled }
-            onClick={ () => check({ email, password }) }
+            onClick={ () => check({ email }) }
           >
             Entrar
           </button>
@@ -66,7 +66,7 @@ class Login extends Component {
     );
   }
 }
-
+// check email on backend??
 const mapDispatchToProps = (dispatch) => ({
   check: (payload) => dispatch(setUser(payload)),
 });

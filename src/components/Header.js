@@ -13,13 +13,18 @@ class Header extends Component {
 
   render() {
     const { email } = this.props;
+    const { currency } = this.state;
 
     return (
       <header>
         <p data-testid="email-field">{`email: ${email}`}</p>
         <div>
           <p data-testid="total-field">{`despesa total: ${this.state.total} `}</p>
-          <p data-testid="header-currency-field">{`cambio usado:${this.state.currency} `}</p>
+          <p
+            data-testid="header-currency-field"
+          >
+            {`cambio usado:${currency}`}
+          </p>
         </div>
       </header>
     );
