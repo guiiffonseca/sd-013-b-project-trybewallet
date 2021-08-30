@@ -26,7 +26,9 @@ class Table extends Component {
             <td>{element.value}</td>
             <td>{element.currency}</td>
             <td>{element.exchangeRates[element.currency].name.split('/')[0]}</td>
-            <td>5.58</td>
+            <td>{parseFloat(element.exchangeRates[element.currency].ask).toFixed(2)}</td>
+            <td>{element.exchangeRates[element.currency].ask * element.value}</td>
+            <td>Real</td>
           </React.Fragment>))}
       </table>
     );
