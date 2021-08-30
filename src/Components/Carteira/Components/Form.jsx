@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Form({ coins }) {
+export default function Form({ coins, handlerChange }) {
   return (
     <form>
       <label htmlFor="valor">
         Valor:
-        <input id="valor" type="text" name="name" />
+        <input onChange={ handlerChange } id="valor" type="text" name="value" />
       </label>
       <label htmlFor="describe">
         Descrição:
-        <input type="text" id="describe" name="name" />
+        <input onChange={ handlerChange } type="text" id="describe" name="description" />
       </label>
       <label htmlFor="coin">
         Moeda:
-        <select name="" id="coin">
+        <select onChange={ handlerChange } name="currency" id="coin">
           {
             coins.map((coin) => (
               <option value={ coin.key } key={ coin.key }>
@@ -25,21 +25,21 @@ export default function Form({ coins }) {
         </select>
       </label>
       <label htmlFor="pagamento">
-        Método de pagamento:
-        <select name="" id="pagamento">
-          <option value="">Dinheiro</option>
-          <option value="">Cartão de crédito</option>
-          <option value="">Cartão de débito</option>
+        Método de Pagamento
+        <select onChange={ handlerChange } name="method" id="pagamento">
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
       <label htmlFor="tag">
         Tag:
-        <select name="" id="tag">
-          <option value="">Alimentação</option>
-          <option value="">Lazer</option>
-          <option value="">Trabalho</option>
-          <option value="">Transporte</option>
-          <option value="">Saúde</option>
+        <select onChange={ handlerChange } name="tag" id="tag">
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     </form>
@@ -48,4 +48,5 @@ export default function Form({ coins }) {
 
 Form.propTypes = {
   coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handlerChange: PropTypes.func.isRequired,
 };
