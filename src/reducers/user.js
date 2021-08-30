@@ -1,7 +1,7 @@
 import ACTIONS from '../actions/index';
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'alguem@email.com',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

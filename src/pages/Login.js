@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Input from '../components/Input';
-import { setEmail as setEmailAction } from '../actions/index';
+import { setEmail as setEmailAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -12,36 +12,36 @@ class Login extends React.Component {
     this.state = {
       email: '',
       senha: '',
-      validEmail: false,
-      validPassword: false,
+      emailValid: false,
+      passwordValid: false,
     };
 
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   handleEmail({ target }) {
-    const emailInput = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g;
-    const validEmail = emailInput.test(target.value);
+    const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g;
+    const emailValid = email.test(target.value);
 
     this.setState({
       email: target.value,
-      validEmail,
+      emailValid,
     });
   }
 
   handlePassword({ target: { value } }) {
-    const MIN_SENHA = 6;
-    const validPassword = value.length >= MIN_SENHA;
+    const NUMBER_PASSOWORD = 6;
+    const passwordValid = value.length >= NUMBER_PASSOWORD;
 
     this.setState({
       senha: value,
-      validPassword,
+      passwordValid,
     });
   }
 
-  handleClick() {
+  handleButtonClick() {
     const { history, setEmail } = this.props;
     const { email } = this.state;
 
@@ -50,20 +50,20 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, senha, validEmail, validPassword } = this.state;
+    const { email, senha, emailValid, passwordValid } = this.state;
     return (
       <div className="Login">
         <Input
-          data-testid="email-input"
+          dataTestid="email-input"
           id="email"
           name="email"
           type="email"
-          onChange={ this.handleChange }
+          onChange={ this.handleEmail }
           placeholder="email@example.com"
           value={ email }
         />
         <Input
-          data-testid="password-input"
+          dataTestid="password-input"
           id="senha"
           name="senha"
           type="password"
@@ -72,9 +72,9 @@ class Login extends React.Component {
           value={ senha }
         />
         <button
-          disabled={ !validEmail || !validPassword }
+          disabled={ !emailValid || !passwordValid }
           type="button"
-          onClick={ this.handleClick }
+          onClick={ this.handleButtonClick }
         >
           Entrar
         </button>
