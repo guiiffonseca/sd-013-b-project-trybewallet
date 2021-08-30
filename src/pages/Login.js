@@ -53,15 +53,14 @@ class Login extends React.Component {
     return (
       <div>
         <Input
-          type="text"
-          text="Email"
+          label="Email"
           name="email"
           value={ email }
           onChange={ this.handleEmail }
         />
         <Input
           type="password"
-          text="Senha"
+          label="Senha"
           name="password"
           value={ password }
           onChange={ this.handlePassword }
