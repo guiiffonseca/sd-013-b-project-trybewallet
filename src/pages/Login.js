@@ -1,5 +1,10 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+import { saveEmailAction } from '../actions';
+import '../App.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,23 +38,25 @@ class Login extends React.Component {
 
   handleClick() {
     const { email } = this.state;
-    console.log(email);
-    // const { saveEmail } = this.props;
+    const { saveEmail } = this.props;
 
-    // saveEmail(email);
+    saveEmail(email);
   }
 
   render() {
     const { pwdIsBad, emailIsBad } = this.state;
 
     return (
-      <form>
+      <form
+        className="login"
+      >
         <label
           htmlFor="email"
         >
           Email:
           <input
             type="email"
+            data-testid="email-input"
             name="email"
             onChange={ this.verifyEmail }
           />
@@ -60,24 +67,33 @@ class Login extends React.Component {
           Password:
           <input
             type="password"
+            data-testid="password-input"
             name="password"
             onChange={ this.verifyPwd }
           />
         </label>
-        <button
-          type="button"
-          disabled={ pwdIsBad || emailIsBad }
-          // onClick={ this.handleClick }
+        <Link
+          to="/carteira"
         >
-          Entrar
-        </button>
+          <button
+            type="button"
+            disabled={ pwdIsBad || emailIsBad }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-// Login.propTypes = {
-//   saveEmail: PropTypes.func.isRequired,
-// };
+const mapDispatchToProps = (dispatch) => ({
+  saveEmail: (email) => dispatch(saveEmailAction(email)),
+});
 
-export default Login;
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
