@@ -12,10 +12,10 @@ class Wallet extends Component {
     this.state = {
       id: 0,
       value: 0,
-      description: 'Dez dólares',
-      currency: 'USD',
-      method: 'Cartão de crédito',
-      tag: 'Lazer',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.sendToGlobal = this.sendToGlobal.bind(this);
