@@ -74,7 +74,7 @@ class Login extends React.Component {
           <input
             value={ password }
             data-testid="password-input"
-            type="text"
+            type="password"
             name="password"
             id="password"
             placeholder="******"
