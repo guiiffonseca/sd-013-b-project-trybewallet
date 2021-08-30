@@ -1,5 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Input from '../components/Input';
+import { submitLogin } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,13 +15,20 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkLogin = this.checkLogin.bind(this);
+    this.onSubmitLogin = this.onSubmitLogin.bind(this);
+  }
+
+  onSubmitLogin() {
+    const { history, submitUser } = this.props;
+    submitUser(this.state);
+    history.push('/carteira');
   }
 
   checkLogin() {
-    const { password, email } = this.state;
+    const { password } = this.state;
     const MIN_LENGTH = 6;
 
-    if (password.length >= MIN_LENGTH && email === 'alguem@email.com') {
+    if (password.length >= MIN_LENGTH) {
       this.setState({
         validLogin: true,
       });
@@ -33,8 +44,13 @@ class Login extends React.Component {
 
   render() {
     const { email, password, validLogin } = this.state;
+    const checkEmail = () => {
+      const regexEmail = /\S+@\S+\.\S+/;
+      const check = regexEmail.test(email);
+      return check;
+    };
     return (
-      <div>
+      <form>
         <Input
           name="email"
           type="email"
@@ -53,15 +69,29 @@ class Login extends React.Component {
           testId="password-input"
           onChange={ this.handleChange }
         />
-        <button
-          type="button"
-          disabled={ !validLogin }
-        >
-          Entrar
-        </button>
-      </div>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !validLogin || !checkEmail() }
+            onClick={ this.onSubmitLogin }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  submitUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  submitUser: (value) => dispatch(submitLogin(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
