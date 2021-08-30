@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { updateUser as updateUserAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -6,6 +10,7 @@ class Login extends React.Component {
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       email: '',
@@ -18,7 +23,7 @@ class Login extends React.Component {
   async handleEmailChange({ target }) {
     const { value } = target;
     this.setState({ email: value });
-    // função includes foi sugerida por Nikolai, em monitoria
+    // Função includes() sugerida por Nikolai, em monitoria
     if (value.includes('@' && '.com')) {
       this.setState({ emailOk: true });
     }
@@ -31,6 +36,12 @@ class Login extends React.Component {
     if (value.length >= minLenght) {
       this.setState({ passwordOk: true });
     }
+  }
+
+  handleClick() {
+    const { updateUser, history } = this.props;
+    updateUser(this.state);
+    history.push('/carteira');
   }
 
   render() {
@@ -60,6 +71,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ !(emailOk && passwordOk) }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -67,4 +79,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (state) => dispatch(updateUserAction(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  updateUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf().isRequired,
+};

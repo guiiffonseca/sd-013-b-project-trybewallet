@@ -1,13 +1,14 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
+const UPDATE_USER = 'UPDATE_USER';
+
 const INITIAL_STATE = {
-  login: '',
-  password: '',
+  email: '',
 };
 
-function userReducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'X':
-    return ({ ...state, X: action.payload });
+function userReducer(state = INITIAL_STATE, { type, payload }) {
+  switch (type) {
+  case UPDATE_USER:
+    return ({ ...state, email: payload.email });
   default:
     return state;
   }
