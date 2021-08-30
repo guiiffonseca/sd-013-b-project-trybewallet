@@ -1,9 +1,15 @@
 :root {
+
   --asparagus: rgba(138, 170, 121, 1);
+
   --bgdark: rgb(30, 30, 30, 1);
+
   --dark-olive-green: rgba(101, 113, 83, 1);
+
   --lavender-gray: rgba(183, 182, 194, 1);
+
   --light-gray: rgba(209, 213, 222, 1);
+
   --shadow: rgba(131, 117, 105, 1);
 }
 
