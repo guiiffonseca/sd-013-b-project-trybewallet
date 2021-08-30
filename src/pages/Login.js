@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './Login.css';
+import wallet from '../wallet.svg';
+
 // import Input from '../components/Input'; Não passa no teste :(
 // import Button from '../components/Button'; Não funciona com o disabled
 
@@ -47,7 +50,11 @@ class Login extends React.Component {
     const { email, password, buttonOff } = this.state;
     return (
       <div>
-        <form>
+        <form className="login-card">
+          <img
+            src={ wallet }
+            alt="wallet icon"
+          />
           <input
             data-testid="email-input"
             type="email"

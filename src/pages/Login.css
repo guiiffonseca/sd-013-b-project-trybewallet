@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #280B45;
+}
+
+.login-card {
+  align-items: center;
+  background-color: #FFE98A;
+  border-radius: 60px;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 6vw auto;
+  max-width: 30%;
+  padding: 50px;
+  width: auto;
+}
+
+.login-card form {
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+}
+
+.login-card input {
+  border-radius: 8px;
+  flex-wrap: wrap;
+  height: auto;
+  margin: 5px;
+  padding: 5px;
+  width: auto;
+}
+
+.login-card button {
+  border-radius: 8px;
+  height: auto;
+  width: auto;
+  padding: 4px;
+}
+
+.login-card img {
+  height: 100px
+}
