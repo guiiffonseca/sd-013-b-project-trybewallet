@@ -4,7 +4,6 @@ const LOGIN = 'LOGIN';
 
 const INITIAL_STATE = {
   email: '',
-  logou: false,
 };
 
 function userReducer(state = INITIAL_STATE, action) {
@@ -14,7 +13,6 @@ function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       email: payload.email,
-      logou: true,
     };
   default:
     return state;
