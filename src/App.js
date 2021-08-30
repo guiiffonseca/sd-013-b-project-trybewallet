@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Carteira from './pages/carteira';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 
@@ -8,8 +7,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route exact path="/wallet" component={ Wallet } />
-      <Route exact path="/carteira" component={ Carteira } />
+      <Route exact path="/carteira" component={ Wallet } />
     </Switch>
   );
 }
