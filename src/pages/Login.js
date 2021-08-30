@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../components/Button';
 import Input from '../components/Input';
 
 class Login extends React.Component {
@@ -7,20 +6,33 @@ class Login extends React.Component {
     super(props);
     this.state = {
       email: '',
-      senha: '',
+      password: '',
+      validLogin: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.checkLogin = this.checkLogin.bind(this);
+  }
+
+  checkLogin() {
+    const { password, email } = this.state;
+    const MIN_LENGTH = 6;
+
+    if (password.length >= MIN_LENGTH && email === 'alguem@email.com') {
+      this.setState({
+        validLogin: true,
+      });
+    }
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    });
+    }, () => this.checkLogin());
   }
 
   render() {
-    const { email, senha } = this.state;
+    const { email, password, validLogin } = this.state;
     return (
       <div>
         <Input
@@ -36,14 +48,17 @@ class Login extends React.Component {
           name="password"
           type="password"
           id="password"
-          value={ senha }
+          value={ password }
           placeholder="senha"
           testId="password-input"
           onChange={ this.handleChange }
         />
-        <Button
-          text="Entrar"
-        />
+        <button
+          type="button"
+          disabled={ !validLogin }
+        >
+          Entrar
+        </button>
       </div>
     );
   }
