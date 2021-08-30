@@ -1,7 +1,11 @@
-import ACTIONS from '../actions/index';
+import { ACTIONS } from '../actions/index';
 
 const INITIAL_STATE = {
-  email: 'alguem@email.com',
+  email: '',
+  wallet: {
+    currencies: [],
+    expenses: [],
+  },
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

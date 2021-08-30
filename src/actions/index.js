@@ -1,4 +1,4 @@
-const ACTIONS = {
+export const ACTIONS = {
   SET_EMAIL: 'SET_EMAIL',
 };
 
