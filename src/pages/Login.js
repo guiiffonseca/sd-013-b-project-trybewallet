@@ -1,4 +1,8 @@
 import React from 'react';
+import Proptypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { userLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -17,6 +21,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { setUserInfo } = this.props;
     const { email, password } = this.state;
     const passwordLengthMin = 6;
     const checkEmail = () => {
@@ -49,17 +54,30 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button
-          type="submit"
-          disabled={ !(checkEmail() && checkPassword) }
+        <Link
+          onClick={ () => (setUserInfo(email)) }
+          to="/carteira"
         >
-          Entrar
-        </button>
+          <button
+            type="submit"
+            disabled={ !(checkEmail() && checkPassword) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchProps = (dispatch) => ({
+  setUserInfo: (email) => dispatch(userLogin(email)),
+});
+
+Login.propTypes = {
+  setUser: Proptypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchProps)(Login);
 
 //  https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/
