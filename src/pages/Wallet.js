@@ -7,7 +7,14 @@ class Wallet extends React.Component {
     const { userEmail } = this.props;
     return (
       <div>
-        {`TrybeWallet ${userEmail}`}
+        <header>
+          <p data-testid="email-field">{userEmail}</p>
+          <p data-testid="total-field">0</p>
+          <p data-testid="header-currency-field">BRL</p>
+        </header>
+        <div>
+          TrybeWallet
+        </div>
       </div>
     );
   }
