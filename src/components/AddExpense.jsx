@@ -1,11 +1,24 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-// import Input from './Input';
+import { connect } from 'react-redux';
+import { fetchApi } from '../actions';
 
 class AddExpense extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const { getInitial } = this.props;
+    getInitial();
+  }
+
   render() {
+    const { initial } = this.props;
+    console.log(initial);
     return (
       <form>
-        {/* <Input /> */}
         <label htmlFor="valor">
           valor
           <input
@@ -26,7 +39,7 @@ class AddExpense extends Component {
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda">
-            <option value="">BRL</option>
+            <option value="usd">USD</option>
           </select>
         </label>
         <label htmlFor="method">
@@ -52,4 +65,17 @@ class AddExpense extends Component {
   }
 }
 
-export default AddExpense;
+AddExpense.propTypes = {
+  getInitial: PropTypes.func.isRequired,
+  initial: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+const mapStateToProps = ({ wallet }) => ({
+  initial: wallet.initial,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getInitial: (value) => dispatch(fetchApi(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
