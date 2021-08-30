@@ -1,5 +1,6 @@
 import React from 'react';
-// import history from ''
+// import { history } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Login extends React.Component {
   }
 
   onSubmit() {
-    // history.push('/carteira');
+    const { history } = this.props;
+    history.push('/carteira');
     console.log('cliquei');
   }
 
@@ -32,8 +34,6 @@ class Login extends React.Component {
   }
 
   handleChange(event) {
-    const { email, password } = this.state;
-    console.log(email, password);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
@@ -75,3 +75,7 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.func.isRequired,
+};
