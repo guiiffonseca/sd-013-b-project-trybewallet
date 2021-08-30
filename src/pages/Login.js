@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import saveEmail from '../actions/index';
 
 class Login extends React.Component {
@@ -82,7 +83,7 @@ class Login extends React.Component {
         </label>
         <button
           disabled={ this.validateLogin() }
-          type="button"
+          type="submit"
           onClick={ this.loginToPage }
         >
           Entrar
@@ -95,5 +96,10 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   sendEmailToGlobalState: (state) => dispatch(saveEmail(state)),
 });
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.func).isRequired,
+  sendEmailToGlobalState: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
