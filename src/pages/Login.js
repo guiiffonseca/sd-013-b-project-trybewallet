@@ -14,17 +14,17 @@ class Login extends React.Component {
       validLogin: false,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.checkLogin = this.checkLogin.bind(this);
+    this.validatePassword = this.validatePassword.bind(this);
     this.onSubmitLogin = this.onSubmitLogin.bind(this);
   }
 
   onSubmitLogin() {
-    const { history, submitUser } = this.props;
-    submitUser(this.state);
+    const { history, valueLogin } = this.props;
+    valueLogin(this.state);
     history.push('/carteira');
   }
 
-  checkLogin() {
+  validatePassword() {
     const { password } = this.state;
     const MIN_LENGTH = 6;
 
@@ -39,7 +39,7 @@ class Login extends React.Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    }, () => this.checkLogin());
+    }, () => this.validatePassword());
   }
 
   render() {
@@ -69,15 +69,13 @@ class Login extends React.Component {
           testId="password-input"
           onChange={ this.handleChange }
         />
-        <Link to="/carteira">
-          <button
-            type="button"
-            disabled={ !validLogin || !checkEmail() }
-            onClick={ this.onSubmitLogin }
-          >
-            Entrar
-          </button>
-        </Link>
+        <button
+          type="button"
+          disabled={ !validLogin || !checkEmail() }
+          onClick={ this.onSubmitLogin }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
@@ -87,11 +85,13 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  submitUser: PropTypes.func.isRequired,
+  valueLogin: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  submitUser: (value) => dispatch(submitLogin(value)),
+  valueLogin: (email) => dispatch(submitLogin(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+// validacao do email exemplo pego em https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/

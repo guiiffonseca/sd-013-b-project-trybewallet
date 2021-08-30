@@ -5,16 +5,16 @@ const INNITTIAL_STATE = {
   email: '',
 };
 
-function reducerLogin(state = INNITTIAL_STATE, action) {
+function user(state = INNITTIAL_STATE, action) {
   switch (action.type) {
   case SUBMIT_LOGIN:
     return {
       ...state,
-      email: action.payload,
+      email: action.email,
     };
   default:
     return state;
   }
 }
 
-export default reducerLogin;
+export default user;
