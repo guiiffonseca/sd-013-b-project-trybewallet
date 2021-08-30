@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
 import ExpenseForm from '../components/ExpenseForm';
@@ -36,9 +36,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { history, logged } = this.props;
-    const { seconds } = this.state;
-    const ZERO = 0;
+    const { history } = this.props;
+    // const { seconds } = this.state;
+    // const ZERO = 0;
 
     // if (logged) {
     return (
