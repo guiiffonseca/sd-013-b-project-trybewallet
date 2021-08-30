@@ -8,6 +8,34 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.checkInputEmail = this.checkInputEmail.bind(this);
+    this.checkInputPassWord = this.checkInputPassWord.bind(this);
+    this.validateLogin = this.validateLogin.bind(this);
+  }
+
+  checkInputEmail(email) {
+    if (email.includes('@' && '.com')) {
+      return true;
+    }
+    return false;
+  }
+
+  checkInputPassWord(password) {
+    const MIN_VALUE_PASSWORD = 6;
+    if (password.length >= MIN_VALUE_PASSWORD) {
+      return true;
+    }
+    return false;
+  }
+
+  validateLogin() {
+    const { email, password } = this.state;
+    const correctEmail = this.checkInputEmail(email);
+    const correctPassword = this.checkInputPassWord(password);
+    if (correctEmail === true && correctPassword === true) {
+      return false;
+    }
+    return true;
   }
 
   handleChange({ target }) {
@@ -43,7 +71,12 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button type="submit">Entrar</button>
+        <button
+          disabled={ this.validateLogin() }
+          type="submit"
+        >
+          Entrar
+        </button>
       </form>
     );
   }
