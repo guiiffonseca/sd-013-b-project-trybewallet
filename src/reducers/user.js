@@ -2,19 +2,21 @@
 import { SET_USER } from '../actions/index';
 
 const INITIAL_STATE_USER = {
-  user: '',
+  email: '',
   password: '',
 };
 
-function userReducer(state = INITIAL_STATE_USER, action) {
+function user(state = INITIAL_STATE_USER, action) {
   switch (action.type) {
   case SET_USER:
     return {
-      state,
+      ...state,
+      email: action.payload.email,
+      password: action.payload.password,
     };
   default:
     return state;
   }
 }
 
-export default userReducer;
+export default user;
