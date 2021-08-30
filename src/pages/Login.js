@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import saveEmail from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Login extends React.Component {
     this.checkInputEmail = this.checkInputEmail.bind(this);
     this.checkInputPassWord = this.checkInputPassWord.bind(this);
     this.validateLogin = this.validateLogin.bind(this);
+    this.loginToPage = this.loginToPage.bind(this);
   }
 
   checkInputEmail(email) {
@@ -45,6 +48,12 @@ class Login extends React.Component {
     });
   }
 
+  loginToPage() {
+    const { history, sendEmailToGlobalState } = this.props;
+    sendEmailToGlobalState(this.state);
+    history.push('/carteira');
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -73,7 +82,8 @@ class Login extends React.Component {
         </label>
         <button
           disabled={ this.validateLogin() }
-          type="submit"
+          type="button"
+          onClick={ this.loginToPage }
         >
           Entrar
         </button>
@@ -82,4 +92,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendEmailToGlobalState: (state) => dispatch(saveEmail(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
