@@ -1,9 +1,17 @@
-const INITIAL_STATE = [];
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+};
 
-const user = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case 'some':
-    return [...state, action.value];
+const LOG_IN = 'LOG_IN';
+const user = (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
+  case LOG_IN:
+    return ({
+      ...state,
+      email: payload.email,
+      password: payload.password,
+    });
   default:
     return state;
   }
