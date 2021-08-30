@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import loginAction from '../actions';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor() {
@@ -10,7 +11,7 @@ class Login extends React.Component {
       email: '',
       password: '',
       button: true,
-    }
+    };
 
     this.loginChanges = this.loginChanges.bind(this);
   }
@@ -21,8 +22,11 @@ class Login extends React.Component {
       [name]: value,
     });
     const { email, password } = this.state;
-    if(email.indexOf('@') !== -1 && password.length >= 5) {
-      if(email.indexOf('.com') !== -1) this.setState({ button: false });
+    const number = [-1, 5];
+    if (email.indexOf('@') !== number[0] && password.length >= number[1]) {
+      if (email.indexOf('.com') !== number[0]) {
+        this.setState({ button: false });
+      };
     }
     else this.setState({ button: true });
   }
@@ -30,7 +34,7 @@ class Login extends React.Component {
   render() {
     const { email, password, button } = this.state;
     const { loginValues, history } = this.props;
-    return <div className="login-field">
+    return (<div className="login-field">
       <form>
         <input
           type="email"
@@ -59,12 +63,17 @@ class Login extends React.Component {
           Entrar
         </button>
       </form>
-    </div>;
+    </div>)
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
   loginValues: (email) => dispatch(loginAction(email)),
 })
+
+Login.propTypes = {
+  loginValues: PropTypes.func.isRequired,
+  history: PropTypes.arrayOf(PropTypes.object).isRequired,
+}
 
 export default connect(null, mapDispatchToProps)(Login);
