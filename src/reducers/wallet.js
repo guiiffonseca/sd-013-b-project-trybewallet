@@ -30,6 +30,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       error: action.error,
       isFetching: false,
     };
+  case 'DELETE_ITEM':
+    return {
+      ...state,
+      /** Source: https://stackoverflow.com/questions/57519905/how-delete-item-from-redux-state */
+      expenses: state.expenses.filter((item) => item.id !== action.id),
+    };
   default:
     return state;
   }

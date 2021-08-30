@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { deleteItem } from '../actions/index';
 
 class Table extends Component {
   render() {
-    const { expensesFromGlobal } = this.props;
+    const { expensesFromGlobal, funcDelete } = this.props;
     return (
       <table>
         <tbody>
@@ -29,6 +30,13 @@ class Table extends Component {
             <td>{parseFloat(element.exchangeRates[element.currency].ask).toFixed(2)}</td>
             <td>{element.exchangeRates[element.currency].ask * element.value}</td>
             <td>Real</td>
+            <button
+              type="button"
+              onClick={ () => funcDelete(index) }
+              data-testid="delete-btn"
+            >
+              Excluir
+            </button>
           </React.Fragment>))}
       </table>
     );
@@ -37,10 +45,15 @@ class Table extends Component {
 
 Table.propTypes = {
   expensesFromGlobal: PropTypes.string.isRequired,
+  funcDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
   expensesFromGlobal: wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  funcDelete: (id) => dispatch(deleteItem(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

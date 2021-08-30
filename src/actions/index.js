@@ -30,7 +30,10 @@ export const actionExpenses = (allExpenses) => ({
     allExpenses,
   },
 });
-
+export const deleteItem = (id) => ({
+  type: 'DELETE_ITEM',
+  id,
+});
 const fetchApi = (stateForms) => async (dispatch) => {
   dispatch(beginFetch());
   try {
