@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { Component } from 'react';
 // import Input from './Input';
 
@@ -26,10 +25,9 @@ class AddExpense extends Component {
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select
-            name="moeda"
-            id="moeda"
-          />
+          <select name="moeda" id="moeda">
+            <option value="">BRL</option>
+          </select>
         </label>
         <label htmlFor="method">
           Método de pagamento
