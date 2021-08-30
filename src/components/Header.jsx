@@ -10,9 +10,17 @@ export class Header extends React.Component {
   render() {
     const { UserEmail } = this.props;
     return (
-      <div>
-        Welcome {UserEmail}
-      </div>
+      <header>
+        <div data-testid="email-field">
+          Welcome {UserEmail}
+        </div>
+        <div data-testid="total-field">
+          Despesas: R$ 0
+        </div>
+        <div data-testid="header-currency-field">
+          BRL
+        </div>
+      </header>
     );
   }
 }
