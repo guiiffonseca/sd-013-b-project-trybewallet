@@ -8,10 +8,10 @@
 }
 
 .formAdd {
+  align-content: center;
+  align-items: center;
+  background-color: blue;
   display: flex;
   justify-content: space-around;
-  background-color: blue;
-  align-items: center;
   padding: 1%;
-  align-content: center;
 }
