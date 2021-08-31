@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Td({ name }) {
   return (
@@ -7,3 +8,7 @@ export default function Td({ name }) {
     </td>
   );
 }
+
+Td.proTypes = {
+  name: PropTypes.string.isRequired,
+};
