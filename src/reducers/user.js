@@ -8,7 +8,7 @@ export const INITIAL_STATE = {
 export default function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case INITIAL_STATE:
-    return state;
+    return { ...state };
   default:
     return state;
   }
