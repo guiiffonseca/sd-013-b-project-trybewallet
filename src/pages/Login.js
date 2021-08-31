@@ -33,7 +33,6 @@ class Login extends React.Component {
     this.setState({
       [target.name]: target.value,
       [target.id]: target.checkValidity(),
-      disableButton: true,
     });
 
     this.enableOrDisableButton();
