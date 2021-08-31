@@ -1,31 +1,43 @@
 import searchAPI from '../services/fetchApi';
-
 // Coloque aqui suas actions
 export const SET_EMAIL = 'GET_EMAIL';
-export const SET_WALLET = 'GET_WALLET';
-export const SET_AWESOMEAPI = 'GET_AWESOMEAPI';
+export const SET_CURRENCIES = 'GET_WALLET';
+export const SET_EXPENSES = 'GET_AWESOMEAPI';
 
 export const setEmail = (email) => ({
   type: SET_EMAIL,
   email,
 });
 
-export const setWallet = (payload) => ({
-  type: SET_WALLET,
-  payload,
-});
-
-export const setAwesomeapi = (currencies) => ({
-  type: SET_AWESOMEAPI,
+export const setCurrencies = (currencies) => ({
+  type: SET_CURRENCIES,
   currencies,
 });
 
-export const setFetchAwesomeapi = () => async (dispatch) => {
+export const setExpenses = (newExpenses) => ({
+  type: SET_EXPENSES,
+  newExpenses,
+});
+
+export const setFetchCurrencies = () => async (dispatch) => {
   try {
     const response = await searchAPI();
-    const dataArray = Object.entries(response)
-      .filter((item) => item[0] !== 'USDT');
-    dispatch(setAwesomeapi(dataArray));
+    const dataArray = Object.keys(response)
+      .filter((item) => item !== 'USDT');
+    dispatch(setCurrencies(dataArray));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const setFetchExpenses = (expenses) => async (dispatch) => {
+  try {
+    const response = await searchAPI();
+    const newExpenses = {
+      ...expenses,
+      exchangeRates: response,
+    };
+    dispatch(setExpenses(newExpenses));
   } catch (error) {
     console.error(error);
   }
