@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './Wallet.css';
+// import './Wallet.css';
 
 class Wallet extends React.Component {
   render() {
@@ -19,19 +19,16 @@ class Wallet extends React.Component {
             Valor:
             <input id="value" type="text" name="value" />
           </label>
-          <br />
           <label htmlFor="description">
             Descrição:
             <input id="description" type="text" name="description" />
           </label>
-          <br />
           <label htmlFor="currency">
             Moeda:
             <select id="currency">
               <option>Moedas</option>
             </select>
           </label>
-          <br />
           <label htmlFor>
             Método de pagamento:
             <select>
@@ -40,7 +37,6 @@ class Wallet extends React.Component {
               <option>Cartão de débito</option>
             </select>
           </label>
-          <br />
           <label htmlFor="tag">
             Tag:
             <select id="tag">
@@ -50,6 +46,7 @@ class Wallet extends React.Component {
               <option>Saúde</option>
             </select>
           </label>
+          <button type="button">Adicionar despesa</button>
         </form>
       </div>
     );
