@@ -12,7 +12,7 @@ class ExpensesForm extends React.Component {
           Descrição:
           <input type="text" name="Descrição" id="Descrição" />
         </label>
-        <label htmlFor="Moeda">
+        <label htmlFor="Moeda" role="label">
           Moeda:
           <select name="Moeda" id="Moeda" />
           <option>BRL</option>
@@ -20,18 +20,18 @@ class ExpensesForm extends React.Component {
         <label htmlFor="Método de pagamento">
           Método de pagamento:
           <select name="Método de pagamento" id="Método de pagamento">
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="Tag">
           <select name="Tag" id="Tag">
-          <option>Alimentação</option>
-          <option>Lazer</option>
-          <option>Trabalho</option>
-          <option>Transporte</option>
-          <option>Saúde</option>
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
           </select>
         </label>
       </form>
