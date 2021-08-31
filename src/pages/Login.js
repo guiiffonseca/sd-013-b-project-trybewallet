@@ -32,7 +32,7 @@ class Login extends React.Component {
     const { inputPassword, inputEmail } = this.state;
     let validInput = false;
     // ref: https://regexlib.com/Search.aspx?k=&c=1&m=-1&ps=20
-    const validEmail = inputEmail.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+    const validEmail = inputEmail.includes(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
     const validPassword = inputPassword.length > PASSWORD_LENGTH;
     if (validEmail && validPassword) validInput = !validInput;
     return (

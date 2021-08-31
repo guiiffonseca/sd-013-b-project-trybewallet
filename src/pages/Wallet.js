@@ -1,13 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { getCurrencyThunk } from '../actions';
+import Form from './Utils/Form';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { setCurrency } = this.props;
+    setCurrency();
+  }
+
   render() {
-    const { userEmail } = this.props;
+    const { state: { user, wallet: { currencies } } } = this.props;
+    const currenciesArray = Object.keys(currencies);
+    currenciesArray.splice(1, 1);
     return (
       <>
-        <p data-testid="email-field">{userEmail.email}</p>
+        <p data-testid="email-field">{user.email}</p>
         <p>
           Gastos: R$
           <span data-testid="total-field">0</span>
@@ -16,51 +25,20 @@ class Wallet extends React.Component {
           Câmbio:
           <span data-testid="header-currency-field">BRL</span>
         </p>
-        <form>
-          <label htmlFor="expenseValue">
-            Valor
-            <input type="text" name="expenseValue" id="expenseValue" />
-          </label>
-          <label htmlFor="expenseDescription">
-            Descrição
-            <input type="text" name="expenseDescription" id="expenseDescription" />
-          </label>
-          <label htmlFor="selectCurrency">
-            Moeda
-            <select name="selectCurrency" id="selectCurrency">
-              <option value="PVU">PVU</option>
-            </select>
-          </label>
-          <label htmlFor="paymentMethod">
-            Método de Pagamento
-            <select name="paymentMethod" id="paymentMethod">
-              <option value="cash">Dinheiro</option>
-              <option value="creditCard">Cartão de crédito</option>
-              <option value="debitCard">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="expenseTag">
-            Tag
-            <select name="selectExpenseType" id="expenseTag">
-              <option value="alimentation">Alimentação</option>
-              <option value="leisure">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="health">Saúde</option>
-              <option value="transport">Transporte</option>
-            </select>
-          </label>
-        </form>
+        <Form currencies={ currenciesArray } />
       </>
     );
   }
 }
 
 Wallet.propTypes = {
-  userEmail: PropTypes.string.isRequired,
+  setCurrency: PropTypes.func.isRequired,
+  state: PropTypes.arrayOf().isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  userEmail: state.user,
+const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = (dispatch) => ({
+  setCurrency: () => dispatch(getCurrencyThunk()),
 });
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
