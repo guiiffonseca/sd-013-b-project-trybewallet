@@ -14,8 +14,9 @@ class ExpensesForm extends React.Component {
         </label>
         <label htmlFor="Moeda" role="label">
           Moeda:
-          <select name="Moeda" id="Moeda" />
-          <option>BRL</option>
+          <select name="Moeda" id="Moeda">
+            <option>BRL</option>
+          </select>
         </label>
         <label htmlFor="Método de pagamento">
           Método de pagamento:
