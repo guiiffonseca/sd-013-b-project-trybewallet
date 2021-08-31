@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import addValue from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, validLogin } = this.state;
+    const { addEmail } = this.props;
     return (
       <div>
         <input
@@ -51,10 +54,20 @@ class Login extends React.Component {
           data-testid="password-input"
           onChange={ this.handleChange }
         />
-        <button type="button" disabled={ !validLogin }>Entrar</button>
+        <button
+          type="button"
+          disabled={ !validLogin }
+          onClick={ ()=> addEmail('LOGIN_EMAIL', email) }
+        >
+          Entrar
+        </button>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (type, value) => dispatch(addValue(type, value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
