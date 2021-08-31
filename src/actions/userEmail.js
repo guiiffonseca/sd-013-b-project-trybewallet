@@ -1,5 +1,5 @@
 // Coloque aqui suas actions
-const USER_EMAIL = 'USER_EMAIL';
+export const USER_EMAIL = 'USER_EMAIL';
 
 const userEmail = (payload) => ({
   type: USER_EMAIL,

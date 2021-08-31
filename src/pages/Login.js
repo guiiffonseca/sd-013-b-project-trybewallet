@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import userEmail from '../actions/userEmail';
 
 class Login extends React.Component {
@@ -13,6 +14,7 @@ class Login extends React.Component {
 
     this.desabledButton = this.desabledButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -20,6 +22,12 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    const { emailValid } = this.props;
+    const { email } = this.state;
+    emailValid(email);
   }
 
   desabledButton() {
@@ -60,7 +68,11 @@ class Login extends React.Component {
           />
         </label>
         <Link to="/carteira">
-          <button type="button" disabled={ !this.desabledButton() }>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+            disabled={ !this.desabledButton() }
+          >
             Entrar
           </button>
         </Link>
@@ -70,6 +82,10 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   emailValid: (email) => dispatch(userEmail(email)),
+});
+
+Login.propTypes = ({
+  emailValid: PropTypes.func.isRequired,
 });
 
 export default connect(null, mapDispatchToProps)(Login);
