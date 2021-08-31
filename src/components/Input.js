@@ -18,6 +18,7 @@ class Input extends Component {
           { label }
         </label>
         <input
+          id={ name }
           name={ name }
           data-testid={ testid }
           type={ inputType }
@@ -33,11 +34,15 @@ class Input extends Component {
 Input.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  testid: PropTypes.string.isRequired,
+  testid: PropTypes.string,
   inputType: PropTypes.string.isRequired,
   inputPlaceholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+};
+
+Input.defaultProps = {
+  testid: '',
 };
 
 export default Input;
