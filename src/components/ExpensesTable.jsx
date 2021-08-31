@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { tableHeaderContent, currenciesExplicitName } from '../data';
-import { removeExpenseAction } from '../actions';
+import { editExpenseAction, removeExpenseAction } from '../actions';
 
 class ExpensesTable extends Component {
   constructor(props) {
     super(props);
     this.handleRemoveExpense = this.handleRemoveExpense.bind(this);
+    this.handleEditExpense = this.handleEditExpense.bind(this);
   }
 
   handleRemoveExpense(index) {
@@ -15,6 +16,11 @@ class ExpensesTable extends Component {
     const deepCopy = [...expenses];
     deepCopy.splice(index, 1);
     removeExpense(deepCopy);
+  }
+
+  handleEditExpense(index) {
+    const { editExpense } = this.props;
+    editExpense(index);
   }
 
   render() {
@@ -30,13 +36,7 @@ class ExpensesTable extends Component {
         </thead>
         <tbody>
           { expenses.map(({
-            id,
-            description,
-            value,
-            tag,
-            method,
-            currency,
-            exchangeRates,
+            id, description, value, tag, method, currency, exchangeRates,
           }, index) => (
             <tr key={ id }>
               <td>{description}</td>
@@ -48,7 +48,13 @@ class ExpensesTable extends Component {
               <td>{ (Number(exchangeRates[currency].ask) * Number(value)).toFixed(2)}</td>
               <td>{currenciesExplicitName.BRL}</td>
               <td>
-                <button type="button">Editar</button>
+                <button
+                  data-testid="edit-btn"
+                  type="button"
+                  onClick={ () => this.handleEditExpense(index) }
+                >
+                  Editar
+                </button>
                 <button
                   data-testid="delete-btn"
                   type="button"
@@ -71,6 +77,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (payload) => dispatch(removeExpenseAction(payload)),
+  editExpense: (payload) => dispatch(editExpenseAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class AddExpenseButton extends Component {
   render() {
-    const { handleClick } = this.props;
+    const { handleClick, content } = this.props;
     return (
-      <button type="button" onClick={ handleClick }>Adicionar despesa</button>
+      <button type="button" onClick={ handleClick }>{ content }</button>
     );
   }
 }

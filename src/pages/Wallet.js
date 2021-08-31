@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AddExpenseBar from '../components/AddExpenseBar';
 import Header from '../components/Header';
 import ExpensesTable from '../components/ExpensesTable';
@@ -14,5 +15,8 @@ class Wallet extends Component {
     );
   }
 }
+const mapStateToProps = ({ edit: { isEditing } }) => ({
+  isEditing,
+});
 
-export default Wallet;
+export default connect(mapStateToProps)(Wallet);

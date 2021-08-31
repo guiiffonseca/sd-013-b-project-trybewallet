@@ -8,6 +8,7 @@ class ExpenseInput extends Component {
       <label htmlFor={ name }>
         { labelContent }
         <input
+          placeholder={ value }
           type={ type }
           name={ name }
           id={ name }

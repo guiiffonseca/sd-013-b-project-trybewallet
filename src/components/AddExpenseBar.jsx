@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import ExpenseInput from './ExpenseInput';
 import ExpenseOption from './ExpenseOption';
 import { paymentMethodArray, paymentTagArray } from '../data';
-import { currencyFetchAction, saveExpenseAction } from '../actions';
+import { currencyFetchAction, removeExpenseAction,
+  saveEditedExpenseAction, saveExpenseAction } from '../actions';
 import AddExpenseButton from './AddExpenseButton';
 
 class AddExpenseBar extends Component {
@@ -33,7 +34,7 @@ class AddExpenseBar extends Component {
   updateLocalCurrencyState() {
     const { currencies } = this.props;
     this.setState({
-      currency: Object.keys(currencies)[0],
+      currency: Object.keys(currencies)[1],
     });
   }
 
@@ -44,7 +45,18 @@ class AddExpenseBar extends Component {
   }
 
   async handleClick() {
-    const { saveExpense, currencyFetch } = this.props;
+    const { saveExpense, updateExpense,
+      currencyFetch, isEditing, id, expenses, saveEditedExpense } = this.props;
+
+    if (isEditing) {
+      await currencyFetch();
+      this.setState({ exchangeRates: expenses[id].exchangeRates });
+      const deepCopy = [...expenses];
+      deepCopy.splice(id, 1, this.state);
+      updateExpense(deepCopy);
+      saveEditedExpense();
+      return;
+    }
     await currencyFetch();
     const { currencies } = this.props;
     this.setState({ exchangeRates: currencies });
@@ -53,10 +65,10 @@ class AddExpenseBar extends Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, isEditing } = this.props;
     const { value, description } = this.state;
     const currenciesArray = Object.keys(currencies);
-    currenciesArray.splice(currenciesArray.indexOf('USDT'), 1);
+    // currenciesArray.splice(currenciesArray.indexOf('USDT'), 1);
     return (
       <div>
         <ExpenseInput
@@ -94,19 +106,27 @@ class AddExpenseBar extends Component {
           value={ description }
 
         />
-        <AddExpenseButton handleClick={ this.handleClick } />
+        <AddExpenseButton
+          handleClick={ this.handleClick }
+          content={ isEditing ? 'Editar despesa' : 'Adicionar despesa' }
+        />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
-  currencies,
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+  id: state.edit.id,
+  isEditing: state.edit.isEditing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   currencyFetch: () => dispatch(currencyFetchAction()),
   saveExpense: (payload) => dispatch(saveExpenseAction(payload)),
+  updateExpense: (payload) => dispatch(removeExpenseAction(payload)),
+  saveEditedExpense: () => dispatch(saveEditedExpenseAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseBar);
