@@ -1,14 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { loginEmail as loginEmailAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleDisabled = this.handleDisabled.bind(this);
+    this.handleButton = this.handleButton.bind(this);
     this.state = {
       email: '',
       senha: '',
-      // button: 'true',
     };
   }
 
@@ -20,12 +23,20 @@ class Login extends React.Component {
   }
 
   handleDisabled() {
+    // https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/
     const { senha, email } = this.state;
     const rgx = /\S+@\S+\.\S+/;
     const lengthPassword = 5;
     if (rgx.test(email) && senha.length > lengthPassword) {
       return true;
     }
+  }
+
+  handleButton() {
+    const { loginEmail, history } = this.props;
+    const { email } = this.state;
+    loginEmail(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -50,17 +61,23 @@ class Login extends React.Component {
             name="senha"
             type="password"
           />
+          {/* <Link to="/carteira"> */}
           <button
-            type="submit"
-            label="button"
+            onClick={ this.handleButton }
+            type="button"
             disabled={ !this.handleDisabled() }
           >
             Entrar
           </button>
+          {/* </Link> */}
         </fieldset>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginEmail: (email) => dispatch(loginEmailAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
