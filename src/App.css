@@ -6,3 +6,12 @@
 .header {
   background-color: red;
 }
+
+.formAdd {
+  display: flex;
+  justify-content: space-around;
+  background-color: blue;
+  align-items: center;
+  padding: 1%;
+  align-content: center;
+}

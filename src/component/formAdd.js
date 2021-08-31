@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class FormAdd extends Component {
+class FormAdd extends Component {
   render() {
+    const { currencies } = this.props;
     return (
-      <form>
+      <form className="formAdd">
         <label htmlFor="value">
           Valor:
           <input type="number" id="value" />
         </label>
-
         <label htmlFor="describe">
           descrição:
           <textarea id="describe" />
@@ -17,7 +19,11 @@ export default class FormAdd extends Component {
         <label htmlFor="currency">
           Moeda:
           <select id="currency">
-            <option value="volvo">Volvo</option>
+            {
+              Object.keys(currencies)
+                .filter((currencyToFilter) => currencyToFilter !== 'USDT')
+                .map((currency) => (<option key={ currency }>{ currency }</option>))
+            }
           </select>
         </label>
 
@@ -44,3 +50,13 @@ export default class FormAdd extends Component {
     );
   }
 }
+
+FormAdd.propTypes = {
+  currencies: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
+});
+
+export default connect(mapStateToProps)(FormAdd);

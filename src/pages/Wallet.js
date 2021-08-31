@@ -2,11 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormAdd from '../component/formAdd';
+import { fetchApi as fetchApiAction } from '../actions/index';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchApi } = this.props;
+    fetchApi();
+  }
+
   render() {
     // eslint-disable-next-line react/prop-types
-    const { email } = this.props;
+    const { email, isLoading } = this.props;
+
+    if (isLoading) {
+      return (<p>Carregando...</p>);
+    }
     return (
       <div>
         <header className="header">
@@ -30,10 +40,18 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  isLoading: state.wallet.isLoading,
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchApi: () => dispatch(fetchApiAction())
+  }
+};
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  fetchApi: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
