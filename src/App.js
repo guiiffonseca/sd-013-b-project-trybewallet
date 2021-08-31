@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       Hello, TrybeWallet!
       <switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/carteira" component={ Wallet } />
       </switch>
     </div>
   );

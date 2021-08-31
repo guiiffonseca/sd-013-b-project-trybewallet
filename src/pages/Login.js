@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { emailLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,6 +14,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.submitEmail = this.submitEmail.bind(this);
   }
 
   handleChange(e) {
@@ -27,6 +31,12 @@ class Login extends React.Component {
     if (password.length >= minSize && re.test(email)) {
       return true;
     }
+  }
+
+  submitEmail() {
+    const { loginData } = this.props;
+    const { email } = this.state;
+    loginData(email);
   }
 
   render() {
@@ -59,6 +69,7 @@ class Login extends React.Component {
             <button
               type="submit"
               disabled={ !this.validateLogin() }
+              onClick={ this.submitEmail() }
             >
               Entrar
             </button>
@@ -69,4 +80,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginData: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  loginData: (email) => dispatch(emailLogin(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
