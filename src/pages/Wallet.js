@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import NewExpense from '../components/NewExpense';
+import Table from '../components/Table';
 
 class Wallet extends Component {
   totalExpenses() {
@@ -11,11 +12,11 @@ class Wallet extends Component {
       .reduce((acc, expense) => acc
       + parseFloat(expense.value)
       * parseFloat(expense.exchangeRates[expense.currency].ask), 0);
-    return total;
+    return (Math.floor(total * 100) / 100);
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     return (
       <div>
         <Header
@@ -24,6 +25,7 @@ class Wallet extends Component {
           currency="BRL"
         />
         <NewExpense />
+        <Table expenses={ expenses } />
       </div>
     );
   }
