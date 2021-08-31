@@ -10,6 +10,12 @@ class Wallet extends React.Component {
       currency: 'BRL',
     };
     this.renderHeader = this.renderHeader.bind(this);
+    this.renderAddForm = this.renderAddForm.bind(this);
+    this.renderCostInput = this.renderCostInput.bind(this);
+    this.renderDescriptionInput = this.renderDescriptionInput.bind(this);
+    this.renderCurrenciesSelect = this.renderCurrenciesSelect.bind(this);
+    this.renderPaymentMethodSelect = this.renderPaymentMethodSelect.bind(this);
+    this.renderTagSelect = this.renderTagSelect.bind(this);
   }
 
   renderHeader(email, totalOutgoing, currency) {
@@ -28,6 +34,75 @@ class Wallet extends React.Component {
     );
   }
 
+  renderCostInput() {
+    return (
+      <label htmlFor="valorId">
+        Valor
+        <input type="text" id="valorId" />
+      </label>
+    );
+  }
+
+  renderDescriptionInput() {
+    return (
+      <label htmlFor="descriçãoId">
+        Descrição
+        <input type="text" id="descriçãoId" />
+      </label>
+    );
+  }
+
+  renderCurrenciesSelect() {
+    return (
+      <label htmlFor="moedaId">
+        Moeda
+        <select name="moedas" id="moedaId">
+          <option> </option>
+        </select>
+      </label>
+    );
+  }
+
+  renderPaymentMethodSelect() {
+    return (
+      <label htmlFor="pagamentoId">
+        Método de pagamento
+        <select name="pagamento" id="pagamentoId">
+          <option value="dinheiro">Dinheiro</option>
+          <option value="crédito">Cartão de crédito</option>
+          <option value="débito">Cartão de débito</option>
+        </select>
+      </label>
+    );
+  }
+
+  renderTagSelect() {
+    return (
+      <label htmlFor="tagId">
+        Tag
+        <select name="tag" id="tagId">
+          <option value="alimentação">Alimentação</option>
+          <option value="lazer">Lazer</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="transporte">Transporte</option>
+          <option value="saúde">Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
+  renderAddForm() {
+    return (
+      <form>
+        {this.renderCostInput()}
+        {this.renderDescriptionInput()}
+        {this.renderCurrenciesSelect()}
+        {this.renderPaymentMethodSelect()}
+        {this.renderTagSelect()}
+      </form>
+    );
+  }
+
   render() {
     const { userEmail } = this.props;
     const { totalOutgoing, currency } = this.state;
@@ -36,6 +111,7 @@ class Wallet extends React.Component {
         {this.renderHeader(userEmail,
           totalOutgoing,
           currency)}
+        {this.renderAddForm()}
       </div>
     );
   }
