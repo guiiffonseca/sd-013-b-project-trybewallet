@@ -1,7 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: '',
+      password: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  validateLogin() {
+    // Retirado de https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/
+    const { email, password } = this.state;
+    const re = /\S+@\S+\.\S+/;
+    const minSize = 6;
+    if (password.length >= minSize && re.test(email)) {
+      return true;
+    }
+  }
+
   render() {
+    const { email, password } = this.state;
     return (
       <div>
         <h2>Login</h2>
@@ -10,17 +39,30 @@ class Login extends React.Component {
             Email
             <input
               type="email"
+              name="email"
+              value={ email }
               data-testid="email-input"
+              onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="password-input">
             Senha
             <input
               type="password"
+              name="password"
+              value={ password }
               data-testid="password-input"
+              onChange={ this.handleChange }
             />
           </label>
-          <button type="button">Entrar</button>
+          <Link to="/carteira">
+            <button
+              type="submit"
+              disabled={ !this.validateLogin() }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
