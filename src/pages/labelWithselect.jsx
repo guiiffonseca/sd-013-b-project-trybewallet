@@ -9,7 +9,6 @@ class LabelWithselect extends Component {
         <label htmlFor={ id }>
           { valueLabel }
           <select name={ name } value={ value } id={ id } onChange={ onChange }>
-            {/* <option value=" "> </option> */}
             {options.map((string, index) => (
               <option key={ index } value={ string }>{ string }</option>
             ))}

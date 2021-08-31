@@ -4,69 +4,50 @@ import LabelWithInput from './labelWithInput';
 import LabelWithselect from './labelWithselect';
 
 class AddExpense extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      valor: '',
-      desc: '',
-      moeda: '',
-      pagamento: '',
-      categoria: '',
-    };
-
-    this.handleChanges = this.handleChanges.bind(this);
-  }
-
-  handleChanges({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
-
   render() {
-    const { valor, desc, moeda, pagamento, categoria } = this.state;
-    const { currencies } = this.props;
+    const { currencies,
+      handleState, valor, desc, moeda, pagamento, categoria } = this.props;
     return (
       <form>
         <LabelWithInput
-          name="valor"
+          name="value"
           valueLabel="Valor"
           value={ valor }
           type="text"
           id="valor-input"
-          onChange={ this.handleChanges }
+          onChange={ handleState }
         />
         <LabelWithInput
-          name="desc"
+          name="description"
           valueLabel="Descrição"
           value={ desc }
           type="text"
           id="desc-input"
-          onChange={ this.handleChanges }
+          onChange={ handleState }
         />
         <LabelWithselect
           id="moeda-input"
           valueLabel="Moeda"
           value={ moeda }
-          name="moeda"
+          name="currency"
           options={ currencies }
-          onChange={ this.handleChanges }
+          onChange={ handleState }
         />
         <LabelWithselect
           id="pagamento-input"
           valueLabel="Método de pagamento"
           value={ pagamento }
-          name="pagamento"
-          options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
-          onChange={ this.handleChanges }
+          name="method"
+          options={ ['', 'Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+          onChange={ handleState }
         />
         <LabelWithselect
           id="categoria-input"
           valueLabel="Tag"
           value={ categoria }
-          name="categoria"
-          options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
-          onChange={ this.handleChanges }
+          name="tag"
+          options={ ['', 'Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+          onChange={ handleState }
         />
       </form>
     );
@@ -75,6 +56,12 @@ class AddExpense extends Component {
 
 AddExpense.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleState: PropTypes.func.isRequired,
+  valor: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  moeda: PropTypes.string.isRequired,
+  pagamento: PropTypes.string.isRequired,
+  categoria: PropTypes.string.isRequired,
 };
 
 export default AddExpense;
