@@ -3,6 +3,7 @@ import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userLogin } from '../actions';
+import '../App.css';
 
 class Login extends React.Component {
   constructor() {
@@ -31,41 +32,46 @@ class Login extends React.Component {
     };
     const checkPassword = password.length >= passwordLengthMin;
     return (
-      <form>
-        <label htmlFor="email">
-          Email:
-          <input
-            value={ email }
-            id="email"
-            type="email"
-            name="email"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="password">
-          Senha:
-          <input
-            value={ password }
-            id="password"
-            type="password"
-            name="password"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <Link
-          onClick={ () => (setUserInfo(email)) }
-          to="/carteira"
-        >
-          <button
-            type="submit"
-            disabled={ !(checkEmail() && checkPassword) }
+      <div className="divLogin">
+        <h1>Carteira Online</h1>
+        <img className="imgLogin" src="https://st2.depositphotos.com/2197700/12281/i/600/depositphotos_122815918-stock-photo-concept-of-digital-wallet-and.jpg"></img>
+        <form className="FormLogin">
+          <label htmlFor="email">
+            <input
+              className="Inputs"
+              value={ email }
+              id="email"
+              type="email"
+              name="email"
+              data-testid="email-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password">
+            <input
+              className="Inputs"
+              value={ password }
+              id="password"
+              type="password"
+              name="password"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <Link
+            onClick={ () => (setUserInfo(email)) }
+            to="/carteira"
           >
-            Entrar
-          </button>
-        </Link>
-      </form>
+            <button
+              className="Button"
+              type="submit"
+              disabled={ !(checkEmail() && checkPassword) }
+            >
+              Entrar
+            </button>
+          </Link>
+        </form>
+      </div>
     );
   }
 }
