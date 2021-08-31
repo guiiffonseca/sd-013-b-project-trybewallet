@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
+import Login from './pages/Login';
+import Wallet from './pages/Wallet';
+
+class App extends Component {
+  render() {
+    return (
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={ () => <Login /> }
+        />
+        <Route
+          exact
+          path="/cateira"
+          render={ () => <Wallet /> }
+        />
+      </Switch>
+    );
+  }
 }
 
 export default App;
