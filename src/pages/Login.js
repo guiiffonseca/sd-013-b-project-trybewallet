@@ -54,8 +54,8 @@ class Login extends React.Component {
               type="email"
               id="email"
               name="email"
-              value={email}
-              onChange={this.handleChange}
+              value={ email }
+              onChange={ this.handleChange }
             />
           </label>
           <br />
@@ -66,14 +66,14 @@ class Login extends React.Component {
               type="password"
               id="password"
               name="password"
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
             />
           </label>
           <br />
           <button
             type="submit"
-            disabled={btn}
-            onClick={this.onSubmitForm}
+            disabled={ btn }
+            onClick={ this.onSubmitForm }
           >
             Entrar
           </button>

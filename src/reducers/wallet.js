@@ -6,12 +6,12 @@ const initialState = {};
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case RESPONSE_API:
-      return { ...state, moeda: action.payload };
-    case RESPONSE_ERROR:
-      return { ...state, error: action.payload };
-    default:
-      return state;
+  case RESPONSE_API:
+    return { ...state, currencies: action.payload };
+  case RESPONSE_ERROR:
+    return { ...state, error: action.payload };
+  default:
+    return state;
   }
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actionFunctionThunk } from '../actions';
+import { FormWallet } from '../components/FormWallet';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
@@ -15,10 +16,11 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { respostaAPI } = this.props;
     return (
       <div>
-        <div>Wallet</div>
         <Header />
+        <FormWallet respostaAPI={ respostaAPI }/>
       </div>
     );
   }
@@ -28,4 +30,8 @@ const mapDispatchToProps = (dispatch) => ({
   functionThunk: () => dispatch(actionFunctionThunk()),
 });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+const mapStateToProps = (state) => ({
+  respostaAPI: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Wallet);

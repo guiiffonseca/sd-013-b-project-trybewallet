@@ -20,12 +20,14 @@ export const actionErrorAPI = (payload) => ({
 export const actionFunctionThunk = () => async (dispatch) => {
   try {
     const response = await getAPI();
-    const payload = { response };
-    dispatch(actionSuccessAPI(payload));
+    const payload = response;
+    const arrayPayload = Object.entries(payload);
+    dispatch(actionSuccessAPI(arrayPayload));
   } catch (error) {
     dispatch(actionErrorAPI(error));
   }
 };
+
 // OBJ RETORNO API
 // {
 //   {

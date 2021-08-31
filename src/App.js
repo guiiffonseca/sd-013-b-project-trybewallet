@@ -8,8 +8,8 @@ function App() {
     <div>
       <h2>Hello, TrybeWallet!</h2>
       <Switch>
-        <Route path="/carteira" component={Wallet} />
-        <Route exact path="/" component={Login} />
+        <Route path="/carteira" component={ Wallet } />
+        <Route exact path="/" component={ Login } />
       </Switch>
     </div>
   );
