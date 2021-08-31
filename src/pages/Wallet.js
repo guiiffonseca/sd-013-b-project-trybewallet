@@ -1,19 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import thunkAPI from '../actions';
+import thunkAPI, { addExpense } from '../actions';
 
 const number3 = 3;
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: '0',
+      description: '',
+      currency: 'USD',
+      paymentMethod: 'cash',
+      category: 'food',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentDidMount() {
     const { saveCoins } = this.props;
     saveCoins('https://economia.awesomeapi.com.br/json/all');
   }
 
+  handleClick() {
+    const { dispatchSetValue } = this.props;
+    console.log(dispatchSetValue);
+    dispatchSetValue(this.state);
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
   render() {
     const { email, currencies } = this.props;
-    // console.log(this.props);
     return (
       <div>
         <header data-testid="email-field">
@@ -24,23 +49,23 @@ class Wallet extends React.Component {
         <form>
           <label htmlFor="value">
             Valor:
-            <input type="number" id="value" name="value" />
+            <input type="number" id="value" name="value" onChange={ this.handleChange } />
           </label>
           <label htmlFor="description">
             Descrição:
-            <input type="text" name="description" id="description" />
+            <input type="text" name="description" id="description" onChange={ this.handleChange } />
           </label>
           <label htmlFor="currency">
             Moeda
-            <select name="currency" id="currency" value="currency">
+            <select onChange={ this.handleChange } name="currency" id="currency">
               {Object.keys(currencies)
                 .filter((moeda) => (moeda.length <= number3))
-                .map((moeda) => <option key={ moeda }>{moeda}</option>)}
+                .map((moeda) => <option value={ moeda } key={ moeda }>{moeda}</option>)}
             </select>
           </label>
           <label htmlFor="paymentMethod">
             Método de pagamento
-            <select name="paymentMethod" id="paymentMethod">
+            <select onChange={ this.handleChange } name="paymentMethod" id="paymentMethod">
               <option value="cash">Dinheiro</option>
               <option value="credit">Cartão de crédito</option>
               <option value="debit">Cartão de débito</option>
@@ -48,7 +73,7 @@ class Wallet extends React.Component {
           </label>
           <label htmlFor="category">
             Tag:
-            <select name="category" id="category">
+            <select onChange={ this.handleChange } name="category" id="category">
               <option value="food">Alimentação</option>
               <option value="leisure">Lazer</option>
               <option value="work">Trabalho</option>
@@ -56,6 +81,7 @@ class Wallet extends React.Component {
               <option value="health">Saúde</option>
             </select>
           </label>
+          <button type="button" onClick={ this.handleClick }>Adiconar despesa</button>
         </form>
       </div>
     );
@@ -74,6 +100,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveCoins: (url) => dispatch(thunkAPI(url)) });
+  saveCoins: (url) => dispatch(thunkAPI(url)),
+  dispatchSetValue: (localStorage) => dispatch(addExpense(localStorage)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

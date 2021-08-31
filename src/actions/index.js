@@ -5,6 +5,7 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const FETCH_ERROR = 'FETCH_ERROR';
 export const SAVE_COINS = 'SAVE_COINS';
 export const LOGIN = 'LOGIN';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const loading = () => ({
   type: LOADING,
@@ -23,6 +24,11 @@ export const saveCoins = (currency) => ({
 export const fetchError = (error) => ({
   type: FETCH_ERROR,
   payload: { error },
+});
+
+export const addExpense = (expense) => ({
+  type: ADD_EXPENSE,
+  payload: { expense },
 });
 
 const thunkAPI = (URL) => async (dispatch) => {
