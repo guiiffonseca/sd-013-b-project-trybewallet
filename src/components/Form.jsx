@@ -13,8 +13,10 @@ class Form extends Component {
           <input type="text" id="Descrição" value="Digite" />
         </label>
         <label htmlFor="Moeda">
-          Moeda:
-          <select type="text" id="Moeda" />
+          Moeda
+          <select id="Moeda">
+            <option value="BRL">BRL </option>
+          </select>
         </label>
         <label htmlFor="Método de pagamento">
           Método de Pagamento:
