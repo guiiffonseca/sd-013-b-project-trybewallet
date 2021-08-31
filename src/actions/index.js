@@ -41,5 +41,6 @@ export const fetchCotaçãoMomento = (payload) => async (dispatch) => {
 
 export const fetchMoedas = () => async (dispatch) => {
   const moedas = await filterCoins();
-  dispatch(setCurrencies(moedas));
+  const codeMoedas = moedas.map(({ code }) => code);
+  dispatch(setCurrencies(codeMoedas));
 };

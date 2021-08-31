@@ -8,8 +8,8 @@ export default function SelectCoins({ handlerChange, coins, Value }) {
       <select onChange={ handlerChange } name="currency" id="coin" value={ Value }>
         {
           coins.map((coin) => (
-            <option value={ coin.code } key={ coin.key }>
-              {coin.code}
+            <option value={ coin } key={ coin }>
+              {coin}
             </option>
           ))
         }

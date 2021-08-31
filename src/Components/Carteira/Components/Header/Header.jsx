@@ -5,6 +5,7 @@ import Form from './Form';
 import {
   fetchCotaçãoMomento, fetchMoedas, setExpensiveEdit, resetEditInfos,
 } from '../../../../actions';
+import removeEnabled from '../../Helper/removeEnabled';
 
 // eslint-disable-next-line max-lines-per-function
 function Header(
@@ -14,6 +15,7 @@ function Header(
   const [form, setForms] = useState(infosEdit);
   const [total, setTotal] = useState(0);
   const [editInfos, setEdit] = useState(infosEdit.enabled);
+  const [index, setIndex] = useState(0);
   useEffect(() => { setForms(infosEdit); setEdit(infosEdit.enabled); }, [infosEdit]);
   useEffect(() => { setCurrencies(); }, [setCurrencies]);
   useEffect(() => {
@@ -34,20 +36,20 @@ function Header(
   }
 
   function handlerClick() {
-    const some = expenses.some((expense) => expense.id === expenses.length);
-    let globalForm = { id: expenses.length, ...form };
-    if (some) { globalForm = { id: expenses.length + 1, ...form }; }
-    const verification = expenses.some((expense) => expense.id === globalForm.id);
-    if (verification && infosEdit.enabled) {
+    let globalForm = { id: index, ...form };
+    if (infosEdit.enabled) {
+      const newForm = removeEnabled(form);
       const filterExpenses = expenses
         .filter(({ id }) => id !== globalForm.id);
-      globalForm = [...filterExpenses, { ...form, id: infosEdit.id }];
+      globalForm = [...filterExpenses, { ...newForm, id: infosEdit.id }];
+      console.log(globalForm);
       setExpensesEdit(globalForm.sort((a, b) => a.id - b.id));
       resetInfos();
     } else {
       setExpenses(globalForm);
     }
     setEdit(false);
+    setIndex(index + 1);
   }
 
   return (
