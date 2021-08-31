@@ -5,15 +5,22 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Login</h2>
-        <label htmlFor="email-input">
-          E-mail:
-          <input type="email" data-testid="email-input" />
-        </label>
+        <div>
+          <label htmlFor="email-input">
+            E-mail:
+            <input type="email" data-testid="email-input" />
+          </label>
+        </div>
 
-        <label htmlFor="password-input">
-          Senha:
-          <input type="password" data-testid="password-input" />
-        </label>
+        <div>
+          <label htmlFor="password-input">
+            Senha:
+            <input type="password" data-testid="password-input" />
+          </label>
+        </div>
+        <div>
+          <input type="button" value="Entrar" />
+        </div>
       </div>
     );
   }
