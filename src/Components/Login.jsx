@@ -5,28 +5,28 @@ import { login as userLogin } from '../actions/index';
 import '../CSS/login.css';
 
 class Login extends React.Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.state = {
-          buttonIsDisabled: true,
-          email: '',
-          password: '',
-        }
-
-        this.handleChange =  this.handleChange.bind(this);
-        this.enableButton = this.enableButton.bind(this);
-        this.handleClick =  this.handleClick.bind(this);
+    this.state = {
+      buttonIsDisabled: true,
+      email: '',
+      password: '',
     }
-  
-  handleChange(event) {
-   this.setState({ [event.target.name]: event.target.value, });
-   this.enableButton();
+
+    this.handleChange =  this.handleChange.bind(this);
+    this.enableButton = this.enableButton.bind(this);
+    this.handleClick =  this.handleClick.bind(this);
   }
-  
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value, });
+    this.enableButton();
+  }
+
   handleClick(event) {
     event.preventDefault();
-    const history = this.props.history;
+    const { history } = this.props;
     history.push('/carteira');
     const { email } = this.state;
     const { login } = this.props;
@@ -39,38 +39,40 @@ class Login extends React.Component {
     const passwordLength = 5;
     const enableButton = emailIsValid.test(email) && password.length >= passwordLength;
     this.setState({ buttonIsDisabled: !enableButton });
-   }
+    }
 
   render() {
-      const { buttonIsDisabled } = this.state;
-      return (
-        <form className='login-page'>
+    const { buttonIsDisabled } = this.state;
+    return (
+      <form className="login-page">
           <div className='login'>
-              E-mail:<input 
-              type="email" 
-              name= 'email'
-              placeholder='example@example.com'
-              data-testid="email-input"
-              onChange={ this.handleChange } 
-              />
-              Senha:<input 
-              type="password" 
-              name= 'password'
-              data-testid="password-input" 
-              onChange={ this.handleChange }
-              />
-              <button 
-              type='submit'
-              disabled= { buttonIsDisabled } 
-              onChange={ this.handleChange }
-              onClick= { this.handleClick }
-              > 
-                Entrar
-              </button>
+            E-mail:
+            <input
+            type="email" 
+            name= 'email'
+            placeholder='example@example.com'
+            data-testid="email-input"
+            onChange={ this.handleChange } 
+            />
+          Senha:
+            <input 
+            type="password" 
+            name= 'password'
+            data-testid="password-input" 
+            onChange={ this.handleChange }
+            />
+            <button 
+            type='submit'
+            disabled= { buttonIsDisabled } 
+            onChange={ this.handleChange }
+            onClick= { this.handleClick }
+            > 
+          Entrar
+            </button>
           </div>
-        </form>
-      )
-  }
+      </form>
+    )
+  };
 }
 
 Login.propTypes = {
