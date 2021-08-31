@@ -3,8 +3,30 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currencys: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getCurrencys();
+  }
+
+  async getCurrencys() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const object = await response.json();
+    const arrayCurrencys = Object.keys(object);
+    this.setState({
+      currencys: arrayCurrencys,
+    });
+  }
+
   render() {
     const { email } = this.props;
+    const { currencys } = this.state;
     return (
       <div>
         <header>
@@ -24,14 +46,22 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select role="combobox" name="currency" id="currency">
-              <option value="real">Real</option>
+              {currencys
+                .filter((currency) => currency !== 'USDT')
+                .map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency}
+                  </option>
+                ))}
             </select>
           </label>
           <label htmlFor="payment">
             Método de pagamento
             <select role="combobox" name="payment" id="payment">
               <option value="dinheiro">Dinheiro</option>
-              <option value="credito" selected>Cartão de crédito</option>
+              <option value="credito" selected>
+                Cartão de crédito
+              </option>
               <option value="debito">Cartão de débito</option>
             </select>
           </label>
@@ -39,7 +69,9 @@ class Wallet extends React.Component {
             Tag
             <select role="combobox" name="despesa" id="despesa">
               <option value="aliimentacao">Alimentação</option>
-              <option value="lazer" selected>Lazer</option>
+              <option value="lazer" selected>
+                Lazer
+              </option>
               <option value="trabalho">Trabalho</option>
               <option value="transporte">Transporte</option>
               <option value="saude">Saúde</option>
