@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Input from './Input';
 import Select from './Select';
 
@@ -23,9 +25,8 @@ class AddExpenses extends React.Component {
 
   render() {
     const { value, description, currency, payment, tag } = this.state;
-    const currencyOptions = [];
-    const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { currencies } = this.props;
+    const currenciesNameArray = currencies.map((item) => item.name);
     return (
       <form>
         <Input
@@ -50,7 +51,7 @@ class AddExpenses extends React.Component {
           value={ currency }
           label="Moeda:"
           name="currency"
-          options={ currencyOptions }
+          options={ currenciesNameArray }
         />
         <Select
           id="input-payment"
@@ -58,7 +59,7 @@ class AddExpenses extends React.Component {
           value={ payment }
           label="Método de pagamento:"
           name="payment"
-          options={ paymentOptions }
+          options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
         />
         <Select
           id="input-tag"
@@ -66,11 +67,20 @@ class AddExpenses extends React.Component {
           value={ tag }
           label="Tag:"
           name="tag"
-          options={ tagOptions }
+          options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
         />
       </form>
     );
   }
 }
+
+AddExpenses.propTypes = {
+  currencies: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    data: PropTypes.shape({ }).isRequired,
+    map: PropTypes.func,
+  }).isRequired,
+};
 
 export default AddExpenses;
