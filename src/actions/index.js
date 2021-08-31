@@ -2,6 +2,7 @@
 export const LOGIN = 'LOGIN';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const SET_EXPENSE = 'SET_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -19,6 +20,11 @@ export const setExpense = (data, expense) => ({
     ...expense,
     exchangeRates: data,
   },
+});
+
+export const removeExpenseAction = (expense) => ({
+  type: REMOVE_EXPENSE,
+  expense,
 });
 
 export const getCurrenciesThunk = () => async (dispatch) => {

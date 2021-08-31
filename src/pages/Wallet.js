@@ -5,7 +5,20 @@ import PropTypes from 'prop-types';
 import AddExpense from '../components/AddExpense';
 import ExpenseBoard from '../components/ExpenseBoard';
 
+import { removeExpenseAction } from '../actions';
+
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(expense) {
+    const { removeExpense } = this.props;
+    removeExpense(expense);
+  }
+
   render() {
     const { email, expenses } = this.props;
     const convertedValue = expenses.map(
@@ -25,7 +38,10 @@ class Wallet extends React.Component {
             </p>
           </header>
           <AddExpense />
-          <ExpenseBoard />
+          <ExpenseBoard
+            expenses={ expenses }
+            handleClick={ this.handleClick }
+          />
         </>);
     } total = convertedValue.reduce((acc, curr) => acc + curr).toFixed(2);
     return (
@@ -40,6 +56,7 @@ class Wallet extends React.Component {
         <AddExpense />
         <ExpenseBoard
           expenses={ expenses }
+          handleClick={ this.handleClick }
         />
       </>
     );
@@ -49,6 +66,7 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
@@ -56,4 +74,8 @@ const mapStateToProps = ({
   wallet: { expenses },
 }) => ({ email, expenses });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expense) => dispatch(removeExpenseAction(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

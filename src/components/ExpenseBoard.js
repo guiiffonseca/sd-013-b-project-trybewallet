@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import TableHeader from './TableHeader';
 
 class ExpenseBoard extends React.Component {
   render() {
-    const { expenses = [] } = this.props;
-    if (expenses.length !== 0) {
-      console.log((Number(expenses[0].exchangeRates.USD.ask).toFixed(2)));
-    }
+    const { expenses = [], handleClick } = this.props;
     return (
       <table>
         <TableHeader />
@@ -18,7 +16,9 @@ class ExpenseBoard extends React.Component {
               <td>{ expense.tag }</td>
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
-              <td>{ expense.exchangeRates[expense.currency].name }</td>
+              <td>
+                { expense.exchangeRates[expense.currency].name.replace(/\/.{1,}/, '') }
+              </td>
               <td>
                 { Number(expense.exchangeRates[expense.currency].ask).toFixed(2) }
               </td>
@@ -27,7 +27,15 @@ class ExpenseBoard extends React.Component {
                   .toFixed(2) }
               </td>
               <td>Real</td>
-              <td>Editar/Excluir</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => handleClick(expense) }
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -38,6 +46,7 @@ class ExpenseBoard extends React.Component {
 
 ExpenseBoard.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default ExpenseBoard;
