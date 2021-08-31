@@ -23,3 +23,13 @@ export default function HeaderComponent(
     </header>
   );
 }
+
+HeaderComponent.propTypes = {
+  email: PropTypes.string.isRequired,
+  total: PropTypes.string.isRequired,
+  coins: PropTypes.arrayOf(String).isRequired,
+  handlerChange: PropTypes.func.isRequired,
+  form: PropTypes.objectOf(String).isRequired,
+  editInfos: PropTypes.bool.isRequired,
+  handlerClick: PropTypes.func.isRequired,
+};

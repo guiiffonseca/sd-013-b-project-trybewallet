@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cabeçalho from './Cabeçalho';
@@ -7,17 +7,11 @@ import { setRemoveExpensive, editInfos as editInfosAction } from '../../../../ac
 
 // Link referencia Estrutura de tables https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_tbody
 
-function Table({ expenses, removeItem, editInfos, infosEdit }) {
-  const [enableButtonDelete, setEnabled] = useState(infosEdit.enabled);
-
+function Table({ expenses, removeItem, editInfos }) {
   function hadlerClickDelete({ target }) {
     const { id } = target.parentElement.parentElement;
     const newExpenses = expenses.filter((expense) => parseInt(id, 10) !== expense.id);
-    // .map((expense) => {
 
-    //   if (expense.id > id) { return { ...expense, id: expense.id - 1 }; }
-    //   return expense;
-    // });
     removeItem(newExpenses);
   }
   function hadlerClickEdit({ target }) {
@@ -35,14 +29,15 @@ function Table({ expenses, removeItem, editInfos, infosEdit }) {
           expenses={ expenses }
           hadlerClickDelete={ hadlerClickDelete }
           hadlerClickEdit={ hadlerClickEdit }
-          enabledButton={ enableButtonDelete }
         />
       </tbody>
     </table>
   );
 }
 
-const mapStateToProps = ({ wallet: { expenses }, infosEdit }) => ({ expenses, infosEdit });
+const mapStateToProps = (
+  { wallet: { expenses }, infosEdit },
+) => ({ expenses, infosEdit });
 const mapDispatchToProps = (dispatch) => ({
   removeItem: (payload) => dispatch(setRemoveExpensive(payload)),
   editInfos: (payload) => dispatch(editInfosAction(payload)),

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Td from './Td';
 
-export default function TableBody({ expenses, hadlerClickDelete, hadlerClickEdit, enabledButton }) {
+export default function TableBody({ expenses, hadlerClickDelete, hadlerClickEdit }) {
   function removeName(name) {
     const campo = name.split('/');
     return campo[0];
@@ -38,7 +38,6 @@ export default function TableBody({ expenses, hadlerClickDelete, hadlerClickEdit
                 value="Excluir"
                 data-testid="delete-btn"
                 onClick={ hadlerClickDelete }
-                disabled={ enabledButton }
               />
             </td>
           </tr>
