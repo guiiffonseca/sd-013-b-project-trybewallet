@@ -6,7 +6,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ pages.Login } />
-      <Route exact path="/wallet" component={ pages.Wallet } />
+      <Route exact path="/carteira" component={ pages.Wallet } />
     </Switch>
   );
 }

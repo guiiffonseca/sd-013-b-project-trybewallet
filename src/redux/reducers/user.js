@@ -7,4 +7,13 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export default INITIAL_STATE;
+const userReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case 'USER':
+    return state + action.payload;
+  default:
+    return state;
+  }
+};
+
+export default userReducer;
