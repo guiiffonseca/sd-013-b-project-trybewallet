@@ -12,7 +12,7 @@ class ExpensesForm extends React.Component {
           Descrição:
           <input type="text" name="Descrição" id="Descrição" />
         </label>
-        <label htmlFor="Moeda" role="label">
+        <label htmlFor="Moeda">
           Moeda:
           <select name="Moeda" id="Moeda">
             <option>BRL</option>
