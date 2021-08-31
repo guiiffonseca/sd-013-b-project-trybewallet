@@ -36,7 +36,7 @@ class Login extends React.Component {
   enableButton() {
     const { email, password } = this.state;
     const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
-    //expresao pesquisada aqui https://stackoverflow.com/questions/22683358/email-validation-expression-w-w-w-w-w-w-allows
+    //  expresao pesquisada aqui https://stackoverflow.com/questions/22683358/email-validation-expression-w-w-w-w-w-w-allows
     const passwordLength = 5;
     const enableButton = emailIsValid.test(email) && password.length >= passwordLength;
     this.setState({ buttonIsDisabled: !enableButton });
@@ -68,7 +68,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
             onClick={ this.handleClick }
           >
-          Entrar
+            Entrar
           </button>
         </div>
       </form>
