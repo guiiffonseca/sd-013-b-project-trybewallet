@@ -1,8 +1,20 @@
 // Coloque aqui suas actions
 
-const saveEmail = (state) => ({
+export const saveEmail = (state) => ({
   type: 'SAVE_EMAIL',
   email: state.email,
 });
 
-export default saveEmail;
+export const saveExpenses = (state) => ({
+  type: 'SAVE_EXPENSES',
+  state,
+});
+
+export const fetchMoney = (state) => (dispatch) => {
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((resolve) => resolve.json())
+    .then((money) => {
+      const actualState = { exchangeRates: { ...money }, ...state };
+      dispatch(saveExpenses(actualState));
+    });
+};

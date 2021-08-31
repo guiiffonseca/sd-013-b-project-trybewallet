@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import saveEmail from '../actions/index';
+import { saveEmail } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.func).isRequired,
+  history: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   sendEmailToGlobalState: PropTypes.func.isRequired,
 };
 
