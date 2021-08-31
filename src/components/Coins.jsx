@@ -3,18 +3,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Coins extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.createOption = this.createOption.bind(this);
+  }
+
+  createOption() {
     const { initial } = this.props;
-    console.log(initial);
+    return (
+      initial.map((code, index) => (
+        <option value={ code } key={ index }>
+          { code }
+        </option>
+      ))
+    );
+  }
+
+  render() {
     return (
       <label htmlFor="coin">
         Moeda
         <select name="coin" id="coin">
-          { initial.map((code, index) => (
-            <option value={ code } key={ index }>
-              { code }
-            </option>
-          ))}
+          { this.createOption() }
         </select>
       </label>
     );
@@ -26,8 +37,12 @@ const mapStateToProps = ({ wallet }) => ({
 });
 
 Coins.propTypes = {
-  initial: PropTypes.arrayOf(PropTypes.string).isRequired,
+  initial: PropTypes.string,
 
+};
+
+Coins.defaultProps = {
+  initial: [],
 };
 
 export default connect(mapStateToProps, null)(Coins);
