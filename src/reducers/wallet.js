@@ -13,7 +13,13 @@ const INITIAL_STATE = {
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'WALLET':
-    return state + action.payload;
+    return {
+      ...state,
+      wallet: {
+        currencies: action.currency,
+        expenses: action.expenses,
+      },
+    };
   default:
     return state;
   }

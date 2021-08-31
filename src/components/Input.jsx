@@ -6,13 +6,15 @@ class Input extends React.Component {
     const { inputId, testId, type, onChange, labelText } = this.props;
     return (
       <div>
-        <label
-          htmlFor={ inputId }
+        <label htmlFor={ inputId }>{labelText}</label>
+        <input
           data-testid={ testId }
-        >
-          {labelText}
-        </label>
-        <input id={ inputId } type={ type } onChange={ onChange } />
+          id={ inputId }
+          type={ type }
+          onChange={ onChange }
+          required
+          minLength="6"
+        />
       </div>
     );
   }
