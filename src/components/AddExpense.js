@@ -2,17 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCurrenciesThunk } from '../actions';
+import { getCurrenciesThunk, setExpenseThunk } from '../actions';
+
+import SelectInput from './SelectInput';
+
+const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+
+const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class AddExpense extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      selectedCurrency: 'USD',
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -20,54 +31,65 @@ class AddExpense extends React.Component {
     getCurrencies();
   }
 
-  handleChange({ target: { value } }) {
-    this.setState({ selectedCurrency: value });
+  handleChange({ target: { value, name } }) {
+    this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { setExpense, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const expense = {
+      id: expenses.length,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    };
+    setExpense(expense);
   }
 
   render() {
     const { currencies = [] } = this.props;
-    const { selectedCurrency } = this.state;
     return (
       <form action="">
-        <label htmlFor="value-input">
+        <label htmlFor="value">
           Valor
-          <input type="text" id="value-input" />
-        </label>
-        <label htmlFor="description-input">
-          Descrição
-          <input type="text" id="description-input" />
-        </label>
-        <label htmlFor="currency">
-          Moeda
-          <select
-            name="currency"
-            id="currency"
-            value={ selectedCurrency }
+          <input
+            name="value"
+            id="value"
+            type="text"
             onChange={ this.handleChange }
-          >
-            {currencies.map((currency) => (
-              <option key={ currency } value={ currency }>{currency}</option>
-            ))}
-          </select>
+          />
         </label>
-        <label htmlFor="payment-method">
-          Método de pagamento
-          <select name="paymentMethod" id="payment-method">
-            <option value="money">Dinheiro</option>
-            <option value="credit-card">Cartão de crédito</option>
-            <option value="debit-card">Cartão de débito</option>
-          </select>
+        <label htmlFor="description">
+          Descrição
+          <input
+            name="description"
+            id="description"
+            type="text"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" id="tag">
-            <option value="food">Alimentação</option>
-            <option value="recreation">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transportation">Transporte</option>
-            <option value="healthcare">Saúde</option>
-          </select>
-        </label>
+        <SelectInput
+          label="Moeda"
+          inputValue="currency"
+          optionsArray={ currencies }
+          handleChange={ this.handleChange }
+        />
+        <SelectInput
+          label="Método de pagamento"
+          inputValue="method"
+          optionsArray={ paymentOptions }
+          handleChange={ this.handleChange }
+        />
+        <SelectInput
+          label="Tag"
+          inputValue="tag"
+          optionsArray={ tagOptions }
+          handleChange={ this.handleChange }
+        />
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );
   }
@@ -76,14 +98,18 @@ class AddExpense extends React.Component {
 AddExpense.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
+const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
+  expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrenciesThunk()),
+  setExpense: (expense) => dispatch(setExpenseThunk(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
