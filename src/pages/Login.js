@@ -7,7 +7,7 @@ class Login extends React.Component {
     const EMAIL_INPUT_TEST_ID = 'email-input';
     const PASSWORD_INPUT_TEST_ID = 'password-input';
     // const VALID_EMAIL = 'alguem@email.com';
-    // const VALID_PASSWORD = '123456';
+    // const VALID_PASSWORD = '123456'bob;
     const onChange = () => {
       console.log('digitou');
     };
