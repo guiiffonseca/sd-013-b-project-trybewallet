@@ -20,7 +20,7 @@ class Login extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value, })
+    this.setState({ [event.target.name]: event.target.value });
     this.enableButton();
   }
 
@@ -35,7 +35,8 @@ class Login extends React.Component {
 
   enableButton() {
     const { email, password } = this.state;
-    const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i; //expresao pesquisada aqui https://stackoverflow.com/questions/22683358/email-validation-expression-w-w-w-w-w-w-allows
+    const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
+    //expresao pesquisada aqui https://stackoverflow.com/questions/22683358/email-validation-expression-w-w-w-w-w-w-allows
     const passwordLength = 5;
     const enableButton = emailIsValid.test(email) && password.length >= passwordLength;
     this.setState({ buttonIsDisabled: !enableButton });
@@ -46,32 +47,32 @@ class Login extends React.Component {
     return (
       <form className="login-page">
         <div className="login">
-            E-mail:
+          E-mail:
           <input
-              type="email"
-              name="email"
-              placeholder="example@example.com"
-              data-testid="email-input"
-              onChange={ this.handleChange }
-            />
+            type="email"
+            name="email"
+            placeholder="example@example.com"
+            data-testid="email-input"
+            onChange={ this.handleChange }
+          />
           Senha:
           <input
-              type="password"
-              name="password"
-              data-testid="password-input"
-              onChange={ this.handleChange }
+            type="password"
+            name="password"
+            data-testid="password-input"
+            onChange={ this.handleChange }
           />
           <button
-              type="submit"
-              disabled={ buttonIsDisabled }
-              onChange={ this.handleChange }
-              onClick={ this.handleClick }
-          > 
+            type="submit"
+            disabled={ buttonIsDisabled }
+            onChange={ this.handleChange }
+            onClick={ this.handleClick }
+          >
           Entrar
           </button>
         </div>
       </form>
-    )
+    );
   }
 }
 
