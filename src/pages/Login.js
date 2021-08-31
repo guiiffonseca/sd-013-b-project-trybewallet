@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+// Styling:
 import './Login.css';
 import wallet from '../wallet.svg';
+import loginAction from '../actions';
 
 // import Input from '../components/Input'; Não passa no teste :(
 // import Button from '../components/Button'; Não funciona com o disabled
@@ -29,19 +32,25 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { history } = this.props;
+    const { email, login } = this.state;
+    const { history, currentEmail } = this.props;
+    currentEmail(email, login);
     history.push('/carteira');
   }
 
   handleButton() {
-    const { email, password, buttonOff } = this.state;
+    const { email, password } = this.state;
     const regex = /\S+@\S+\.\S+/; // Font: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
     const testEmail = regex.test(email);
     const minLength = 5;
     const testPassword = (password.length >= minLength);
-    if (testEmail && testPassword && buttonOff) {
+    if (testEmail && testPassword) {
       this.setState({
         buttonOff: false,
+      });
+    } else {
+      this.setState({
+        buttonOff: true,
       });
     }
   }
@@ -86,8 +95,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  currentEmail: (email, login) => dispatch(loginAction(email, login)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   history: PropTypes.string.isRequired,
+  currentEmail: PropTypes.string.isRequired,
 };
