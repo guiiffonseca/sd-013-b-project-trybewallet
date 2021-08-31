@@ -15,9 +15,8 @@ class NewExpense extends Component {
       description: '',
       exchangeRates: {},
       currency: 'USD',
-      method: 'dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
-      id: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
