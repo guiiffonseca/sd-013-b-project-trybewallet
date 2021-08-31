@@ -2,21 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line max-lines-per-function
-export default function TableBody({ expenses }) {
-  function removeName(name, index) {
+export default function TableBody({ expenses, hadlerClick }) {
+  function removeName(name) {
     const campo = name.split('/');
-    console.log(campo);
-    console.log(campo[index]);
-    if (campo[index] === 'Real Brasileiro') { return 'Real'; }
-    return campo[index];
+    return campo[0];
   }
   return (
     <>
       {
         expenses.map((
-          { currency, description, tag, method, value, exchangeRates }, index,
+          { currency, description, tag, method, value, exchangeRates, id },
         ) => (
-          <tr key={ index }>
+          <tr key={ id } id={ id }>
             <td>
               {description}
             </td>
@@ -30,7 +27,7 @@ export default function TableBody({ expenses }) {
               {value}
             </td>
             <td>
-              {removeName(exchangeRates[currency].name, 0)}
+              {removeName(exchangeRates[currency].name)}
             </td>
             <td>
               {parseFloat(exchangeRates[currency].ask).toFixed(2)}
@@ -45,7 +42,12 @@ export default function TableBody({ expenses }) {
             </td>
             <td className="buttons">
               <input type="button" value="Editar" />
-              <input type="button" value="Excluir" />
+              <input
+                type="button"
+                value="Excluir"
+                data-testid="delete-btn"
+                onClick={ hadlerClick }
+              />
             </td>
           </tr>
         ))

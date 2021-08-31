@@ -1,4 +1,4 @@
-import { SET_EXPENSIVE, SET_CURRENCIES } from '../actions';
+import { SET_EXPENSIVE, SET_CURRENCIES, SET_REMOVE_EXPENSIVE } from '../actions';
 
 const INITIAL_WALLET_STATE = {
   currencies: [],
@@ -12,11 +12,12 @@ const wallet = (state = INITIAL_WALLET_STATE, action) => {
   case SET_EXPENSIVE:
     return {
       ...state,
-      expenses: [...expenses.concat({ ...payload, id: expenses.length })],
+      expenses: [...expenses.concat({ id: expenses.length, ...payload })],
     };
-
   case SET_CURRENCIES:
     return { ...state, currencies: payload };
+  case SET_REMOVE_EXPENSIVE:
+    return { ...state, expenses: payload };
   default:
     return state;
   }
