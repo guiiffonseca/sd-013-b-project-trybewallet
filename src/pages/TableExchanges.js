@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class TableExchanges extends React.Component {
   constructor(props) {
@@ -53,5 +54,9 @@ class TableExchanges extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+TableExchanges.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps)(TableExchanges);
