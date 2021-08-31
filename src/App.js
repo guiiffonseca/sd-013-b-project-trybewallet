@@ -15,7 +15,7 @@ class App extends Component {
         />
         <Route
           exact
-          path="/cateira"
+          path="/carteira"
           render={ () => <Wallet /> }
         />
       </Switch>
