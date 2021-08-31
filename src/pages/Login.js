@@ -25,8 +25,8 @@ class Login extends React.Component {
 
   checkValidityOfInputs() {
     const passwordMinimum = 6;
-    const email = document.getElementById('email').value; // Special Thanks: Victor Mendonça - Turma 13 - Tribo B
-    const password = document.getElementById('password').value; // Pq verificando o estado {email e password} não vai?? Só passa verificando o input
+    const email = document.getElementById('emailId').value; // Special Thanks: Victor Mendonça - Turma 13 - Tribo B
+    const password = document.getElementById('passwordId').value; // Pq verificando o estado {email e password} não vai?? Só passa verificando o input
     console.log(email);
     const arrayOfAtSigns = email.match(/@/g);
     if (email.includes('@') === true
@@ -53,13 +53,13 @@ class Login extends React.Component {
     const { email } = this.state;
     return (
       <div>
-        <label htmlFor="email-input">
+        <label htmlFor="emailId">
           Email
           <input
             type="email"
             name="email"
             value={ email }
-            id="email"
+            id="emailId"
             data-testid="email-input"
             onChange={ this.handleChange }
           />
@@ -73,13 +73,13 @@ class Login extends React.Component {
     const { password } = this.state;
     return (
       <div>
-        <label htmlFor="password-input">
+        <label htmlFor="passwordId">
           Password
           <input
             type="password"
             name="password"
             value={ password }
-            id="password"
+            id="passwordId"
             data-testid="password-input"
             onChange={ this.handleChange }
           />
