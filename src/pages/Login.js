@@ -1,7 +1,59 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
+import { createUser } from '../actions';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.validInput = this.validInput.bind(this);
+
+    this.state = {
+      email: '',
+      password: '',
+      validation: false,
+    };
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { createEmail, history } = this.props;
+    const { email } = this.state;
+    createEmail(email);
+    history.push('/carteira');
+  }
+
+  async validInput() {
+    const { email, password } = this.state;
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const lengthSix = 6;
+    console.log(re.test(email));
+    console.log(password.length >= lengthSix);
+    if (re.test(email) && password.length >= lengthSix) {
+      await this.setState({
+        validation: true,
+      });
+    } else {
+      await this.setState({
+        validation: false,
+      });
+    }
+    console.log(this.state);
+  }
+
+  async handleChange({ target: { id, value } }) {
+    await this.setState({
+      [id]: value,
+    });
+    await this.validInput();
+  }
+
   render() {
+    // const { createEmail } = this.props;
+    const { validation } = this.state;
     return (
       <div>
         <label htmlFor="email">
@@ -11,6 +63,7 @@ class Login extends React.Component {
             placeholder="Insira seu email"
             id="email"
             type="email"
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="password">
@@ -20,11 +73,13 @@ class Login extends React.Component {
             placeholder="Insira uma senha"
             id="password"
             type="text"
+            onChange={ this.handleChange }
           />
         </label>
         <button
           type="submit"
-
+          onClick={ this.handleClick }
+          disabled={ !validation }
         >
           Entrar
         </button>
@@ -32,4 +87,10 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+Login.propTypes = {
+  createEmail: func,
+}.isRequired;
+const mapDispatchToProps = (dispatch) => ({
+  createEmail: (state) => dispatch(createUser(state)) });
+
+export default connect(null, mapDispatchToProps)(Login);
