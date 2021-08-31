@@ -1,4 +1,4 @@
-import utils from '../../services';
+import utils from '../services';
 
 export const GET_ISS_LOCATION_SUCCESS = 'GET_ISS_LOCATION_SUCCESS';
 export const GET_ISS_LOCATION_ERROR = 'GET_ISS_LOCATION_ERROR';
