@@ -39,3 +39,26 @@
     transform: rotate(360deg);
   }
 }
+
+.forms {
+  display: flex;
+  
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin-left:50px;
+  width: 350px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+h1 {
+  margin-left: 60px;
+}
