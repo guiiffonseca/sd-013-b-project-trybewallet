@@ -45,7 +45,7 @@ describe('11 - Crie um botão para editar uma despesa da tabela contendo as segu
     userEvent.type(descriptionInput, 'Cem dólares canadenses');
 
     fireEvent.click(editButton);
-
+    console.log(store.getState().wallet);
     await waitFor(() => {
       expect(
         screen.getByRole('cell', { name: 'Cem dólares canadenses' }),

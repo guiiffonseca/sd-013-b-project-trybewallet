@@ -308,7 +308,6 @@ describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seg
         exchangeRates: mockData,
       },
     ];
-
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 

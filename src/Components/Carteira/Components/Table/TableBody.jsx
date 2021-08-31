@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Td from './Td';
 
-export default function TableBody({ expenses, hadlerClick }) {
+export default function TableBody({ expenses, hadlerClickDelete, hadlerClickEdit, enabledButton }) {
   function removeName(name) {
     const campo = name.split('/');
     return campo[0];
@@ -27,12 +27,18 @@ export default function TableBody({ expenses, hadlerClick }) {
             />
             <Td name="Real" />
             <td className="buttons">
-              <input type="button" value="Editar" />
+              <input
+                type="button"
+                value="Editar"
+                onClick={ hadlerClickEdit }
+                data-testid="edit-btn"
+              />
               <input
                 type="button"
                 value="Excluir"
                 data-testid="delete-btn"
-                onClick={ hadlerClick }
+                onClick={ hadlerClickDelete }
+                disabled={ enabledButton }
               />
             </td>
           </tr>
@@ -43,13 +49,7 @@ export default function TableBody({ expenses, hadlerClick }) {
 }
 
 TableBody.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.shape({
-    currency: PropTypes.string,
-    description: PropTypes.string,
-    tag: PropTypes.string,
-    method: PropTypes.string,
-    value: PropTypes.string,
-    exchangeRates: PropTypes.objectOf(PropTypes.string),
-  })).isRequired,
-  hadlerClick: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  hadlerClickDelete: PropTypes.func.isRequired,
+  hadlerClickEdit: PropTypes.func.isRequired,
 };

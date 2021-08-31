@@ -9,6 +9,10 @@ export default function Td({ name }) {
   );
 }
 
+// One Type, Inspirado no codigo: https://stackoverflow.com/questions/41808428/react-proptypes-allow-different-types-of-proptypes-for-one-prop
 Td.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
