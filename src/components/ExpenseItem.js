@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { removeExpense as removeExpenseAction } from '../actions';
+import Button from './Button';
 
 class ExpenseItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.removeItem = this.removeItem.bind(this);
+    this.editItem = this.editItem.bind(this);
+  }
+
+  editItem() {
+    console.log('xablau');
+  }
+
+  removeItem({ target }) {
+    const { removeExpense } = this.props;
+    removeExpense(target.value);
+  }
+
   render() {
     const { expense } = this.props;
-    const { description, method, tag, value, currency, exchangeRates } = expense;
+    const { id, description, method, tag, value, currency, exchangeRates } = expense;
 
     const [currencyName] = exchangeRates[currency].name.split('/');
     const ask = parseFloat(exchangeRates[currency].ask);
@@ -20,6 +40,20 @@ class ExpenseItem extends Component {
         <td>{ fixedAsk }</td>
         <td>{ value * ask }</td>
         <td>Real</td>
+        <td>
+          <Button
+            value={ id }
+            onClick={ this.editItem }
+            text="Editar"
+            testId="edit-btn"
+          />
+          <Button
+            value={ id }
+            onClick={ this.removeItem }
+            text="X"
+            testId="delete-btn"
+          />
+        </td>
       </tr>
     );
   }
@@ -27,30 +61,11 @@ class ExpenseItem extends Component {
 
 ExpenseItem.propTypes = {
   expense: PropTypes.objectOf(PropTypes.any).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
-export default ExpenseItem;
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
+});
 
-// {
-//   "id": 0,
-//   "value": "1",
-//   "description": "gjgghjg",
-//   "currency": "USD",
-//   "method": "Dinheiro",
-//   "tag": "Alimentação",
-//   "exchangeRates": {
-//       "USD": {
-//           "code": "USD",
-//           "codein": "BRL",
-//           "name": "Dólar Americano/Real Brasileiro",
-//           "high": "5.1853",
-//           "low": "5.1845",
-//           "varBid": "0.0005",
-//           "pctChange": "0.01",
-//           "bid": "5.184",
-//           "ask": "5.185",
-//           "timestamp": "1630357203",
-//           "create_date": "2021-08-30 18:00:03"
-//       }
-//   }
-// }
+export default connect(null, mapDispatchToProps)(ExpenseItem);

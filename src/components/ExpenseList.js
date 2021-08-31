@@ -13,7 +13,8 @@ const tableHeaders = [
   'Câmbio utilizado',
   'Valor convertido',
   'Moeda de conversão',
-  'Editar/Excluir'];
+  'Editar/Excluir',
+];
 
 class ExpenseList extends Component {
   render() {
