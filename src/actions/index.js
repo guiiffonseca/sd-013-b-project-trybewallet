@@ -2,6 +2,7 @@
 export const USER_LOGIN = 'USER_LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const SEND_EXPENSES = 'SEND_EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const loginAction = (email) => ({
   type: USER_LOGIN,
@@ -27,6 +28,11 @@ export const sendExpenses = (expense, exchangeRates) => ({
   type: SEND_EXPENSES,
   expense,
   exchangeRates,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 export const fetchExpenses = (state) => async (dispatch) => {
