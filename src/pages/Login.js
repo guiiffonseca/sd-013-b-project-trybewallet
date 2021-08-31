@@ -14,7 +14,7 @@ class Login extends React.Component {
     this.enableComeInButton = this.enableComeInButton.bind(this);
   }
 
-  // event.target.name / value 
+  // event.target.name / value
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -29,8 +29,10 @@ class Login extends React.Component {
     const { email, pass } = this.state;
     const emailRegExValidation = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
     const passValidationLength = 5; // o pass.value começa em [0]
-    
-    const emailIsValid = emailRegExValidation.test(email) && pass.length >= passValidationLength;
+
+    const emailIsValid = emailRegExValidation.test(email) === true
+      && pass.length >= passValidationLength;
+
     this.setState({ btnDisable: !emailIsValid });
   }
 
@@ -40,42 +42,41 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Login</h2>
-          <form>
+        <form>
 
-            <div>
-              <label htmlFor="email-input">
-                E-mail:
-                <input
-                  type="email"
-                  data-testid="email-input"
-                  name="email"
-                  value={ email }
-                  onChange= { this.handleChange }
-                />
-              </label>
-            </div>
-
-            <div>
-              <label htmlFor="password-input">
-                Senha:
-                <input
-                id="password-input"
-                  type="password"
-                  data-testid="password-input"
-                  name="pass"
-                  value={ pass }
-                  onChange= { this.handleChange }
-                />
-              </label>
-            </div>
-
-            <div>
+          <div>
+            <label htmlFor="email-input">
+              E-mail:
               <input
-                type="button"
-                value="Entrar"
-                disabled={ btnDisable }
+                type="email"
+                data-testid="email-input"
+                name="email"
+                value={ email }
+                onChange={ this.handleChange }
               />
-            </div>
+            </label>
+          </div>
+
+          <div>
+            <label htmlFor="password-input">
+              Senha:
+              <input
+                type="password"
+                data-testid="password-input"
+                name="pass"
+                value={ pass }
+                onChange={ this.handleChange }
+              />
+            </label>
+          </div>
+
+          <div>
+            <input
+              type="button"
+              value="Entrar"
+              disabled={ btnDisable }
+            />
+          </div>
 
         </form>
       </div>

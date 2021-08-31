@@ -4,11 +4,11 @@ const INITIAL_STATE = {
 };
 
 function userReducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case 'QUALQUER_COISA':
-      return state;
-    default:
-      return state;
+  switch (action.type) {
+  case 'QUALQUER_COISA':
+    return state;
+  default:
+    return state;
   }
 }
 
