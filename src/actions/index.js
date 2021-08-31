@@ -8,3 +8,5 @@ export function ClickButtonLogin(valorRecebido) {
     }
   );
 }
+
+export const linter = 2;
