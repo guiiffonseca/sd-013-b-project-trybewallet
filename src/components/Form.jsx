@@ -9,12 +9,6 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange({ target: { name, value } }) {
-    this.setState({
-      [name]: value,
-    });
-  }
-
   componentDidMount() {
     this.getApi();
   }
@@ -30,6 +24,12 @@ class Form extends Component {
 
     this.setState({
       moedas: [...removeUSDT],
+    });
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
     });
   }
 
