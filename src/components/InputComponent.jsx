@@ -10,6 +10,7 @@ export default class InputComponent extends Component {
         <input
           type={ type }
           name={ name }
+          id={ name }
           data-testid={ datatestid }
           value={ value }
           onChange={ onChange }
@@ -22,7 +23,10 @@ export default class InputComponent extends Component {
 InputComponent.propTypes = ({
   type: PropTypes.string,
   name: PropTypes.string,
-  datatestid: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 }.isRequired);
+
+InputComponent.defaultProps = {
+  datatestid: '',
+};
