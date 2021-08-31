@@ -13,20 +13,37 @@ class Login extends React.Component {
   }
 
   onclick() {
-    // const { email, senha } = this.state;
-    // console.log(email);
-    // console.log(senha);
+    // const { history } = this.props;
+    // history.push = '/carteira';
+  }
+
+  verifyInfos() {
+    const { email, senha } = this.state;
+    const condition = 6;
+
+    if (email.includes('.com') && senha.length >= condition) {
+      this.setState({
+        ableButton: false,
+      });
+      // console.log(ableButton);
+    } else {
+      this.setState({
+        ableButton: true,
+      });
+    }
   }
 
   handleChange({ target }) {
-    const { email } = this.state;
-    const condition = 4;
+    const { senha } = this.state;
+    // const condition = 4;
     // console.log(ableButton);
-    const able = email.length < condition;
+    // const able = email.length < condition;
     this.setState({
       [target.name]: target.value,
-      ableButton: able,
-    });
+      // ableButton: this.verifyInfos(),
+    }, this.verifyInfos);
+
+    console.log(senha);
   }
 
   render() {
@@ -38,8 +55,9 @@ class Login extends React.Component {
           value={ email }
           onChange={ this.handleChange }
           data-testid="email-input"
-          type="text"
+          type="email"
           placeholder="Email"
+          required="true"
         />
         <input
           name="senha"
@@ -48,6 +66,7 @@ class Login extends React.Component {
           data-testid="password-input"
           type="text"
           placeholder="Senha"
+          required="true"
         />
         <button
           disabled={ ableButton }
