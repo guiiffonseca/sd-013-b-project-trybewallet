@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { saveEmail } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -47,7 +51,8 @@ class Login extends React.Component {
   }
 
   renderFormFields() {
-    const { disable } = this.state;
+    const { disable, emailInput } = this.state;
+    const { saveUserEmail } = this.props;
     return (
       <form>
         <input
@@ -64,7 +69,15 @@ class Login extends React.Component {
           onChange={ ({ target }) => this
             .holdFieldValue(target.name, target.value.length) }
         />
-        <button type="button" disabled={ disable }>Entrar</button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ disable }
+            onClick={ () => saveUserEmail(emailInput) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
@@ -74,4 +87,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  saveUserEmail: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveUserEmail: (state) => dispatch(saveEmail(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
