@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Input from '../components/input';
 
 class Wallet extends React.Component {
   constructor() {
@@ -65,18 +66,7 @@ class Wallet extends React.Component {
               <option value="debito">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="despesa">
-            Tag
-            <select role="combobox" name="despesa" id="despesa">
-              <option value="aliimentacao">Alimentação</option>
-              <option value="lazer" selected>
-                Lazer
-              </option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
-            </select>
-          </label>
+          <Input name="despesas" role="combobox" />
         </form>
       </div>
     );
