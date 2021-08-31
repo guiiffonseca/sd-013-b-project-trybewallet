@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Input extends Component {
   render() {
-    const { type, id, label, testid, change, minLength, name } = this.props;
+    const { type, id, label, testid, change, minLength, name, step } = this.props;
     return (
       <label htmlFor={ id }>
         { label }
@@ -14,6 +14,7 @@ export default class Input extends Component {
           name={ name }
           onChange={ change }
           minLength={ minLength }
+          step={ step }
           required
         />
       </label>
@@ -29,10 +30,12 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   minLength: PropTypes.number,
   name: PropTypes.string,
+  step: PropTypes.string,
 };
 
 Input.defaultProps = {
   testid: '',
   minLength: 1,
   name: '',
+  step: '1',
 };

@@ -7,7 +7,6 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <div>Hello, TrybeWallet!</div>
       <Switch>
         <Route
           exact
