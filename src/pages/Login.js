@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { ClickButtonLogin as ClickButtonLoginAction } from '../actions';
 
 class Login extends React.Component {
@@ -107,4 +108,12 @@ function MapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null,MapDispatchToProps)(Login);
+Login.propTypes = {
+  ClickButtonLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+
+};
+
+export default connect(null, MapDispatchToProps)(Login);
