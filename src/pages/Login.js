@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Input from '../components/Input';
-import { setEmail as setEmailAction } from '../actions';
+import { setEmail as setEmailAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -43,9 +43,7 @@ class Login extends React.Component {
 
   handleButtonClick() {
     const { history, setEmail } = this.props;
-    const { email } = this.state;
-
-    setEmail(email);
+    setEmail(this.state);
     history.push('/carteira');
   }
 
@@ -82,14 +80,13 @@ class Login extends React.Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (state) => dispatch(setEmailAction(state)),
+});
 
 Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.func).isRequired,
   setEmail: PropTypes.func.isRequired,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmailAction(email)),
-});
 
 export default connect(null, mapDispatchToProps)(Login);
