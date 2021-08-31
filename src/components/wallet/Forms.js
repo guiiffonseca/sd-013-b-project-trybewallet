@@ -46,15 +46,9 @@ class Forms extends React.Component {
     );
   }
 
-  handleChange({ target: { name, type, value, checked } }) {
-    function newValue() {
-      switch (type) {
-      case 'checkbox': return checked;
-      case 'number': return +value;
-      default: return value;
-      }
-    }
-    this.setState((state) => ({ ...state, [name]: newValue() }));
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   async handleClick() {

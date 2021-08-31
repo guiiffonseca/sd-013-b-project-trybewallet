@@ -62,10 +62,10 @@ class Table extends React.Component {
           <td>{ roundedConversion }</td>
           <td>Real</td>
           <td>
-            <ButtonDelete handleClick={ () => setId(id) } />
+            <ButtonEdit handleClick={ () => setId(id) } />
           </td>
           <td>
-            <ButtonEdit handleClick={ () => setId(id) } />
+            <ButtonDelete handleClick={ () => setId(id) } />
           </td>
         </tr>
       );
