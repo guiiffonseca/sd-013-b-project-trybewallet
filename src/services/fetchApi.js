@@ -1,12 +1,12 @@
-const URL_API = 'https://economia.awesomeapi.com.br/json/all';
+const APIURL = 'https://economia.awesomeapi.com.br/json/all';
 
-const fetchAPI = () => {
-  fetch(`${URL_API}`)
+const searchAPI = () => (
+  fetch(APIURL)
     .then((response) => (
       response
         .json()
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ));
-};
+    ))
+);
 
-export default fetchAPI;
+export default searchAPI;

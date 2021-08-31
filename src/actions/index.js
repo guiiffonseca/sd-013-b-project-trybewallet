@@ -1,4 +1,4 @@
-import fetchAPI from '../services/fetchApi';
+import searchAPI from '../services/fetchApi';
 
 // Coloque aqui suas actions
 export const SET_EMAIL = 'GET_EMAIL';
@@ -15,21 +15,17 @@ export const setWallet = (payload) => ({
   payload,
 });
 
-export const setAwesomeapi = (payload) => ({
+export const setAwesomeapi = (currencies) => ({
   type: SET_AWESOMEAPI,
-  payload,
+  currencies,
 });
 
-export const setFetchAwesomeapi = (search) => async (dispatch) => {
+export const setFetchAwesomeapi = () => async (dispatch) => {
   try {
-    const results = await fetchAPI(search);
-    const payload = {
-      wallet: {
-        currencies: results.currencies,
-        expenses: results.expenses,
-      },
-    };
-    dispatch(setAwesomeapi(payload));
+    const response = await searchAPI();
+    const dataArray = Object.entries(response)
+      .filter((item) => item[0] !== 'USDT');
+    dispatch(setAwesomeapi(dataArray));
   } catch (error) {
     console.error(error);
   }

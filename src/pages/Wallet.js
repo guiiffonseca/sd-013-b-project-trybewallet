@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/form';
+import { setFetchAwesomeapi } from '../actions';
+// import { fetchAPI } from '../services/fetchApi';
 
 class Wallet extends React.Component {
   constructor() {
@@ -11,6 +13,17 @@ class Wallet extends React.Component {
       despesaTotal: 0,
       cambio: 'BRL',
     };
+
+    this.fetchAwesomeApi = this.fetchAwesomeApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchAwesomeApi();
+  }
+
+  async fetchAwesomeApi() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   render() {
@@ -37,8 +50,13 @@ const mapStateToProps = (state) => ({
   getEmail: state.user.email,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(setFetchAwesomeapi()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
+  setCurrencies: PropTypes.func.isRequired,
 };
