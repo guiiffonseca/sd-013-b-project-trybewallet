@@ -36,6 +36,7 @@ class FormWallet extends React.Component {
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
+            <option>Transporte</option>
             <option>Saúde</option>
           </select>
         </label>
