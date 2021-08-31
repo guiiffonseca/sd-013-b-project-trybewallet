@@ -1,15 +1,15 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
   currencies: [],
-  expenses: []
+  expenses: [],
 };
 
-function user(state = INITIAL_STATE, action){
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'QUALQUER_COISA':
-      return state;
-    default:
-      return state;
+  case 'QUALQUER_COISA':
+    return state;
+  default:
+    return state;
   }
 }
 
