@@ -14,6 +14,11 @@ const wallet = (state = INITIAL_STATE, action) => {
         action.state,
       ],
     };
+  case 'GET_CURRENCY':
+    return {
+      ...state,
+      currencies: [...action.state],
+    };
   default:
     return state;
   }

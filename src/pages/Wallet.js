@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchMoney } from '../actions';
+import { fetchMoney, getCurrencies } from '../actions';
 import Selects from './Selects';
+import TableExchanges from './TableExchanges';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: 0,
-      moedas: [],
       value: 0,
       description: '',
       currency: 'USD',
@@ -28,18 +28,17 @@ class Wallet extends React.Component {
   }
 
   async buscaMoedas() {
+    const { saveCurrencies } = this.props;
     const moedasAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
     const moedasJson = await moedasAPI.json();
     const moedas = Object.keys(moedasJson).filter((moeda) => moeda !== 'USDT');
-    this.setState({
-      moedas,
-    });
+    saveCurrencies(moedas);
   }
 
   createOptions() {
-    const { moedas } = this.state;
+    const { currencies } = this.props;
     return (
-      moedas.map((moeda, index) => (
+      currencies.map((moeda, index) => (
         <option
           key={ index }
           value={ moeda }
@@ -63,6 +62,11 @@ class Wallet extends React.Component {
     saveValues(filteredState);
     this.setState((state) => ({
       id: state.id + 1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     }));
   }
 
@@ -85,7 +89,7 @@ class Wallet extends React.Component {
     return (
       <div>
         <header>
-          <p data-testid="email-field">{userEmail}</p>
+          <p data-testid="email-field">{`Email: ${userEmail}`}</p>
           <p data-testid="total-field">{`R$ ${this.calculateExchanges()}`}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
@@ -125,6 +129,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <TableExchanges />
       </div>
     );
   }
@@ -133,15 +138,19 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   exchanges: state.wallet.expenses,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveValues: (state) => dispatch(fetchMoney(state)),
+  saveCurrencies: (state) => dispatch(getCurrencies(state)),
 });
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   saveValues: PropTypes.func.isRequired,
+  saveCurrencies: PropTypes.func.isRequired,
   exchanges: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 

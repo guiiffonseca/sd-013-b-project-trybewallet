@@ -10,6 +10,11 @@ export const saveExpenses = (state) => ({
   state,
 });
 
+export const getCurrencies = (state) => ({
+  type: 'GET_CURRENCY',
+  state,
+});
+
 export const fetchMoney = (state) => (dispatch) => {
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((resolve) => resolve.json())
