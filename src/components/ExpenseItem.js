@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { removeExpense as removeExpenseAction } from '../actions';
+import {
+  editExpense as editExpenseAction,
+  removeExpense as removeExpenseAction,
+} from '../actions';
+
 import Button from './Button';
 
 class ExpenseItem extends Component {
@@ -13,8 +17,9 @@ class ExpenseItem extends Component {
     this.editItem = this.editItem.bind(this);
   }
 
-  editItem() {
-    console.log('xablau');
+  editItem({ target }) {
+    const { editExpense } = this.props;
+    editExpense(target.value);
   }
 
   removeItem({ target }) {
@@ -62,10 +67,12 @@ class ExpenseItem extends Component {
 ExpenseItem.propTypes = {
   expense: PropTypes.objectOf(PropTypes.any).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(removeExpenseAction(id)),
+  editExpense: (id) => dispatch(editExpenseAction(id)),
 });
 
 export default connect(null, mapDispatchToProps)(ExpenseItem);

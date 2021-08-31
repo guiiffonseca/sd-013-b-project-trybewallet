@@ -5,6 +5,8 @@ export const ACTIONS = {
   LOGIN: 'LOGIN',
   GET_CURRENCIES: 'GET_CURRENCIES',
   ADD_EXPENSE: 'ADD_EXPENSE',
+  EDIT_EXPENSE: 'EDIT_EXPENSE',
+  CONFIRM_EDIT_EXPENSE: 'CONFIRM_EDIT_EXPENSE',
   REMOVE_EXPENSE: 'REMOVE_EXPENSE',
 };
 
@@ -17,6 +19,16 @@ const getCurrencies = (currencies) => ({
 
 const addExpense = (expense) => ({
   type: ACTIONS.ADD_EXPENSE,
+  payload: expense,
+});
+
+export const editExpense = (expenseId) => ({
+  type: ACTIONS.EDIT_EXPENSE,
+  payload: parseInt(expenseId, 10),
+});
+
+const confirmEditExpense = (expense) => ({
+  type: ACTIONS.CONFIRM_EDIT_EXPENSE,
   payload: expense,
 });
 
@@ -43,4 +55,13 @@ export const addExpenseThunk = (expense) => async (dispatch) => {
   expense.exchangeRates = data;
 
   dispatch(addExpense(expense));
+};
+
+export const confirmEditExpenseThunk = (expense) => (dispatch, getState) => {
+  const { wallet: { expenses } } = getState();
+  const { exchangeRates } = expenses.find(({ id }) => id === expense.id);
+
+  expense.exchangeRates = exchangeRates;
+
+  dispatch(confirmEditExpense(expense));
 };

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpenseThunk, getCurrenciesThunk } from '../actions';
+import {
+  getCurrenciesThunk,
+  addExpenseThunk,
+  confirmEditExpenseThunk,
+} from '../actions';
 
 import Input from './Input';
 import Select from './Select';
@@ -22,9 +26,10 @@ class ExpenseForm extends Component {
       tag: tags[0],
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClickAdd = this.handleClickAdd.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
   componentDidMount() {
@@ -42,12 +47,40 @@ class ExpenseForm extends Component {
     });
   }
 
-  handleClick() {
+  handleClickAdd() {
     const { addExpense } = this.props;
     addExpense(this.state);
     this.setState((prevState) => ({
       id: prevState.id + 1,
     }));
+  }
+
+  handleClickEdit() {
+    const { confirmEditExpense, idToEdit } = this.props;
+    const editExpense = this.state;
+    editExpense.id = idToEdit;
+    confirmEditExpense(editExpense);
+  }
+
+  chooseButton() {
+    const { editor } = this.props;
+
+    if (editor) {
+      return (
+        <button
+          type="button"
+          onClick={ this.handleClickEdit }
+        >
+          Editar despesa
+        </button>);
+    }
+    return (
+      <button
+        type="button"
+        onClick={ this.handleClickAdd }
+      >
+        Adicionar despesa
+      </button>);
   }
 
   render() {
@@ -90,7 +123,7 @@ class ExpenseForm extends Component {
             value={ tag }
             onChange={ this.handleChange }
           />
-          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          { this.chooseButton() }
         </form>
       </div>
     );
@@ -101,15 +134,21 @@ ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   getCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
+  confirmEditExpense: PropTypes.func.isRequired,
+  editor: PropTypes.bool.isRequired,
+  idToEdit: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
   currencies: wallet.currencies,
+  editor: wallet.editor,
+  idToEdit: wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrenciesThunk()),
   addExpense: (state) => dispatch(addExpenseThunk(state)),
+  confirmEditExpense: (state) => dispatch(confirmEditExpenseThunk(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
