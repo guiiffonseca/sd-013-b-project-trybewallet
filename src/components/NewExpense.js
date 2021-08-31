@@ -9,12 +9,26 @@ class NewExpense extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
+      currency: 'USD',
+      currencies: [],
       payment: 'dinheiro',
       tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrency();
+  }
+
+  async fetchCurrency() {
+    const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    const currencies = Object.keys(data)
+      .filter((currency) => currency !== 'USDT');
+    this.setState({ currencies });
   }
 
   handleChange({ target }) {
@@ -55,6 +69,7 @@ class NewExpense extends Component {
 
   renderSelects() {
     const {
+      currencies,
       currency,
       payment,
       tag,
@@ -63,7 +78,7 @@ class NewExpense extends Component {
     return (
       <div>
         <Select
-          options={ [] }
+          options={ currencies }
           labelText="Moeda:"
           name="currency"
           value={ currency }
