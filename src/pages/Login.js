@@ -21,9 +21,9 @@ class Login extends React.Component {
   }
 
   handleClick() {
+    const { inputEmail } = this.state;
     const { history, setUserLogin } = this.props;
-    console.log(this.props);
-    setUserLogin(this.state);
+    setUserLogin(inputEmail);
     history.push('/carteira');
   }
 
@@ -61,13 +61,6 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ state });
-const mapDispatchToProps = (dispatch) => ({
-  setUserLogin: (value) => dispatch(setLogin(value)),
-});
-
-connect(mapStateToProps, mapDispatchToProps)(Login);
-
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -75,4 +68,9 @@ Login.propTypes = {
   setUserLogin: PropTypes.func.isRequired,
 };
 
-export default Login;
+// const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = (dispatch) => ({
+  setUserLogin: (value) => dispatch(setLogin(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

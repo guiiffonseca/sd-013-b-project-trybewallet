@@ -1,20 +1,16 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 import { LOGIN } from '../actions/index';
 
-export const DEFAULT_STATE = {
-  user: {
-    email: '',
-  },
-};
+export const DEFAULT_USER_STATE = { email: '' };
 
-function amarelo(state = DEFAULT_STATE, action) {
+function globalEmail(state = DEFAULT_USER_STATE, action) {
   switch (action.type) {
   case LOGIN:
-    return { ...state, ...action.payload };
+    return { ...state, email: action.payload };
 
   default:
     return state;
   }
 }
 
-export default amarelo;
+export default globalEmail;
