@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Td from './Td';
 
-// eslint-disable-next-line max-lines-per-function
 export default function TableBody({ expenses, hadlerClick }) {
   function removeName(name) {
     const campo = name.split('/');
@@ -14,32 +14,18 @@ export default function TableBody({ expenses, hadlerClick }) {
           { currency, description, tag, method, value, exchangeRates, id },
         ) => (
           <tr key={ id } id={ id }>
-            <td>
-              {description}
-            </td>
-            <td>
-              {tag}
-            </td>
-            <td>
-              {method}
-            </td>
-            <td>
-              {value}
-            </td>
-            <td>
-              {removeName(exchangeRates[currency].name)}
-            </td>
-            <td>
-              {parseFloat(exchangeRates[currency].ask).toFixed(2)}
-            </td>
-            <td>
-              {parseFloat(
+            <Td name={ description } />
+            <Td name={ tag } />
+            <Td name={ method } />
+            <Td name={ value } />
+            <Td name={ removeName(exchangeRates[currency].name) } />
+            <Td name={ parseFloat(exchangeRates[currency].ask).toFixed(2) } />
+            <Td
+              name={ parseFloat(
                 exchangeRates[currency].ask * value,
-              ).toFixed(2)}
-            </td>
-            <td>
-              Real
-            </td>
+              ).toFixed(2) }
+            />
+            <Td name="Real" />
             <td className="buttons">
               <input type="button" value="Editar" />
               <input
