@@ -19,6 +19,7 @@ class Select extends Component {
         <select
           id={ name }
           value={ value }
+          name={ name }
           data-testid={ testid }
           onChange={ onChange }
         >
