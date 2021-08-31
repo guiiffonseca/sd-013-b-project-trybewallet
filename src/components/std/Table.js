@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteDataForm } from '../../actions';
 import ButtonDelete from '../wallet/ButtonDel';
+import ButtonEdit from '../wallet/ButtonEdit';
 
 const HEADERS_TABLE = [
   'Descrição',
@@ -62,6 +63,9 @@ class Table extends React.Component {
           <td>Real</td>
           <td>
             <ButtonDelete handleClick={ () => setId(id) } />
+          </td>
+          <td>
+            <ButtonEdit handleClick={ () => setId(id) } />
           </td>
         </tr>
       );
