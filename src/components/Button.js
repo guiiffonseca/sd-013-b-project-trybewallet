@@ -7,7 +7,7 @@ class Button extends Component {
     return (
       <div>
         <button
-          type="submit"
+          type="button"
           onClick={ onClick }
           disabled={ disabled }
         >
