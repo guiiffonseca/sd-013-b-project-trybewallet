@@ -1,24 +1,20 @@
-// import React from 'react';
+import React from 'react';
 
-// class Button extends React.Component {
-// constructor(props) {
-//   super(props);
-// }
+class Button extends React.Component {
+  render() {
+    const onClick = () => {
+      console.log('clicou');
+    };
 
-//   onClick = () => {
-//   console.log('onClick')
-// }
-//   render() {
-//     const { onClick, labelText, testId } = this.props;
-//     return (
-//       <button
-//         type="button"
-//       >
-//         onClick=
-//         { onClick }
-//       </button>
-//     );
-//   }
-// }
+    return (
+      <button
+        type="button"
+        onClick={ onClick }
+      >
+        Entrar
+      </button>
+    );
+  }
+}
 
-// export default Button;
+export default Button;

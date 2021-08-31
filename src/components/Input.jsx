@@ -1,29 +1,29 @@
-// import React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// class Input extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
+class Input extends React.Component {
+  render() {
+    const { inputId, testId, type, onChange, labelText } = this.props;
+    return (
+      <div>
+        <label
+          htmlFor={ inputId }
+          data-testid={ testId }
+        >
+          {labelText}
+        </label>
+        <input id={ inputId } type={ type } onChange={ onChange } />
+      </div>
+    );
+  }
+}
 
-//   //   onChange = (event) => {
-//   //   console.log(event.target.value)
-//   // }
-//   render() {
-//     const { inputId, type, onChange, labelText, testId } = this.props;
-//     return (
-//       <label>
-//         htmlFor="er"
-//         data-testid=
-//         { testId }
-//         { labelText }
-//         <input
-//           id="er"
-//           type={ type }
-//           onChange={ onChange }
-//           />
-//           </label>
-//     );
-//   }
-// }
+Input.propTypes = {
+  labelText: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  inputId: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
-// export default Input;
+export default Input;
