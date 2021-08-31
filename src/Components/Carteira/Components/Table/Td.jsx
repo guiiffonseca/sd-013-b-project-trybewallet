@@ -9,6 +9,6 @@ export default function Td({ name }) {
   );
 }
 
-Td.proTypes = {
+Td.propTypes = {
   name: PropTypes.string.isRequired,
 };
