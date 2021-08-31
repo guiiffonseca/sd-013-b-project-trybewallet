@@ -2,14 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { fetchCotaçãoMomento, fetchMoedas } from '../../../actions';
+import { fetchCotaçãoMomento, fetchMoedas } from '../../../../actions';
 
 function Header({ email, setExpenses, setCurrencies, currencies, expenses }) {
   const [coins, setCoins] = useState([]);
-  const [form, setForms] = useState({});
-  const [total, setTotal] = useState(0);
+  const [form, setForms] = useState({
+    description: '',
+    value: 0,
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+  });
+  const [total,
+    setTotal] = useState(0);
 
-  useEffect(() => { setCurrencies(); }, []);
+  useEffect(() => { setCurrencies(); }, [setCurrencies]);
   useEffect(() => {
     const totalGlobal = expenses.reduce((acc, { currency, value, exchangeRates }) => {
       const cotação = exchangeRates[currency].ask;
@@ -26,7 +33,7 @@ function Header({ email, setExpenses, setCurrencies, currencies, expenses }) {
   }
 
   return (
-    <div>
+    <header>
       <h3 data-testid="email-field">{email}</h3>
       <h3 data-testid="total-field">{total}</h3>
       <h3 data-testid="header-currency-field">BRL</h3>
@@ -36,7 +43,7 @@ function Header({ email, setExpenses, setCurrencies, currencies, expenses }) {
         value="Adicionar Despesa"
         onClick={ () => setExpenses(form) }
       />
-    </div>
+    </header>
   );
 }
 
