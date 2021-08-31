@@ -1,0 +1,16 @@
+img {
+  max-width: 5%;
+  margin-left: 2%;
+}
+
+.head {
+  background-color: cadetblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.head h4 {
+  margin-right: 3%;
+}
