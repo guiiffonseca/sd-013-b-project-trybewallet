@@ -1,69 +1,63 @@
 body {
-  background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
 }
 
 .divLogin {
+  align-items: center;
+  background-color: white;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 10%;
-  width: 400px;
-  min-height: 460px;    
-  margin: 7% auto;
-  position: relative;
-  border-radius: 6px;
   font-family: Arial, sans-serif;
-  background-color: white;
+  margin: 7% auto;
+  min-height: 460px;
+  position: relative;
+  width: 400px;
 }
 
-
-
 .Inputs {
-  top:0px;
-	left:0px;
-	font-size:16px;
-	color:rgb#2C5364;	
-	transition: all 0.5s ease-in-out;
+  color: #2b5263;
+  font-size: 16px;
+  transition: all 0.5s ease-in-out;
 }
 
 .Button {
-  color:#fff;
-	background-color:#2f5e72;
-	outline: none;
+  background-color: #2f5e72;
   border: 0;
-	padding:10px 20px;
-	text-transform:uppercase;
-	margin-top:10px;
-	border-radius:2px;
-	cursor:pointer;
-	position:relative;
-  transition: .4s;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  outline: none;
+  padding: 10px 20px;
+  position: relative;
+  text-transform: uppercase;
+  transition: 0.4s;
 }
 
 .Button:hover {
   background: #074c61;
 }
 
-h1{
+h1 {
+  color: #203a43;
+  font-family: Arial, sans-serif;
   font-size: 48px;
-  color: #203A43;
-  padding: 2px 0 10px 0;
-  font-family: Arial,sans-serif;
-  font-weight: bold;
-  text-align: center;
+  padding: 2px 0 10px;
   padding-bottom: 30px;
+  text-align: center;
 }
 
 .FormLogin {
-  font-family: Arial, sans-serif;
+  align-items: center;
   display: flex;
   flex-direction: column;
+  font-family: Arial, sans-serif;
   justify-content: center;
-  align-items: center;
   padding: 20px;
 }
 
 .imgLogin {
-  width:200px;
-  height:200px;
+  height: 200px;
+  width: 200px;
 }
