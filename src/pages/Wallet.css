@@ -40,16 +40,20 @@
   width: 100%;
 }
 
-.wallet-form label *:nth-child(1) {
-  margin-left: 6px ;
+.wallet-form label *:nth-child( 1 ) {
+  margin-left: 6px;
 }
 
-.wallet-form input, select {
+.wallet-form input , select {
   border: 1px solid grey;
   border-radius: 5px;
   font-size: 16px;
   height: 2.5rem;
   padding: 0 6px;
+}
+
+.amount input {
+  width: 5rem;
 }
 
 .wallet-form input:focus {
@@ -73,8 +77,4 @@
 
 .wallet-form button:hover {
   background: #228dff;
-}
-
-.amount input {
-  width: 5rem;
 }
