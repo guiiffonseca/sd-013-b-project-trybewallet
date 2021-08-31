@@ -1,19 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchCurrencyThunk } from '../actions';
+import Header from '../components/Header';
 // import './Wallet.css';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrency } = this.props;
+    fetchCurrency();
+  }
+
   render() {
-    const { user } = this.props;
+    const { user, wallet } = this.props;
     const { email } = user;
+    const { currencies } = wallet;
+    // const { currencies } = this.state;
     return (
       <div>
-        <header id="header-wallet">
-          <h3 data-testid="email-field">{ email }</h3>
-          <p data-testid="total-field"> 0 </p>
-          <p data-testid="header-currency-field">BRL</p>
-        </header>
+        <Header email={ email } />
         <form id="form-currency">
           <label htmlFor="value">
             Valor:
@@ -26,7 +31,11 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency">
-              <option>Moedas</option>
+              {
+                Object.keys(currencies)
+                  .filter((currencyToFilter) => currencyToFilter !== 'USDT')
+                  .map((currency) => (<option key={ currency }>{ currency }</option>))
+              }
             </select>
           </label>
           <label htmlFor>
@@ -54,12 +63,16 @@ class Wallet extends React.Component {
   }
 }
 
+// Códigos abaixo foram retirados do repositorio
+// live lecture referente ao dia 16.3
+
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.string).isRequired,
-  // walllet: PropTypes.arrayOf(shape({
-  //   currencies: PropTypes.array,
-  //   expenses: PropTypes.array,
-  // })).isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
+  wallet: PropTypes.arrayOf(PropTypes.shape({
+    currencies: PropTypes.arrayOf(PropTypes.string),
+    // expenses: PropTypes.array,
+  })).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -67,4 +80,8 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
 });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrency: () => dispatch(fetchCurrencyThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
