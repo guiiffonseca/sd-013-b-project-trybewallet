@@ -21,7 +21,9 @@ export function fetchApi() {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      dispatch(getInitial(data));
+      const filterCoins = await Object.keys(data)
+        .filter((coin) => coin !== 'USDT');
+      dispatch(getInitial(filterCoins));
     } catch (error) {
       console.log(error);
     }

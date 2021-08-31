@@ -3,7 +3,7 @@ import { GET_INITIALS, REQUEST_API } from '../actions';
 
 const INITTIAL_STATE = {
   isLoading: false,
-  initial: {},
+  initial: [],
 };
 
 export default function wallet(state = INITTIAL_STATE, action) {

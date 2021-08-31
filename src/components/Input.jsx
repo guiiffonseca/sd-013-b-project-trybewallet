@@ -6,9 +6,10 @@ export default class Input extends Component {
     const { name,
       type, id,
       onChange, value,
-      placeholder, testId } = this.props;
+      placeholder, testId, label } = this.props;
     return (
       <label htmlFor={ id }>
+        { label }
         <input
           type={ type }
           name={ name }
@@ -31,8 +32,10 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   testId: PropTypes.string,
+  label: PropTypes.string,
 };
 
 Input.defaultProps = {
   testId: '',
+  label: '',
 };

@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Input from './Input';
 import { fetchApi } from '../actions';
+import TextArea from './TextArea';
+import Coins from './Coins';
 
 class AddExpense extends Component {
   constructor(props) {
@@ -15,33 +18,16 @@ class AddExpense extends Component {
   }
 
   render() {
-    const { initial } = this.props;
-    console.log(initial);
     return (
       <form>
-        <label htmlFor="valor">
-          valor
-          <input
-            type="text"
-            name="valor"
-            id="valor"
-          />
-        </label>
-        <label htmlFor="Descrição">
-          Descrição
-          <textarea
-            name="description"
-            id="Descrição"
-            cols="30"
-            rows="10"
-          />
-        </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select name="moeda" id="moeda">
-            <option value="usd">USD</option>
-          </select>
-        </label>
+        <Input
+          type="text"
+          name="valor"
+          id="valor"
+          label="valor"
+        />
+        <TextArea name="description" id="Descrição" label="Descrição" />
+        <Coins />
         <label htmlFor="method">
           Método de pagamento
           <select name="method" id="method">
@@ -67,15 +53,10 @@ class AddExpense extends Component {
 
 AddExpense.propTypes = {
   getInitial: PropTypes.func.isRequired,
-  initial: PropTypes.objectOf(PropTypes.string).isRequired,
 };
-
-const mapStateToProps = ({ wallet }) => ({
-  initial: wallet.initial,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   getInitial: (value) => dispatch(fetchApi(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
+export default connect(null, mapDispatchToProps)(AddExpense);
