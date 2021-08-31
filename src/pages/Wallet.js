@@ -1,8 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { addExpense } from '../actions/index';
+
+import Table from '../components/Table/Table';
 
 import './Wallet.css';
 
@@ -15,12 +17,14 @@ class Wallet extends React.Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Lazer',
+      displayMenu: false,
     };
 
     this.changeHandler = this.changeHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
+    this.displaySideMenu = this.displaySideMenu.bind(this);
   }
 
   componentDidMount() {
@@ -66,12 +70,16 @@ class Wallet extends React.Component {
           value: 3,
           description: '',
           currency: 'USD',
-          method: '',
-          tag: '',
+          method: 'Dinheiro',
+          tag: 'Lazer',
         });
 
         addToWallet(expense);
       });
+  }
+
+  displaySideMenu() {
+    this.setState((prevState) => ({ displayMenu: !prevState.displayMenu }));
   }
 
   renderHeader() {
@@ -94,24 +102,34 @@ class Wallet extends React.Component {
           BE
         </h1>
         <div className="right-content">
-          <h4 data-testid="email-field">{ `Email: ${email}` }</h4>
+          <h4 className="email" data-testid="email-field">{ `Email: ${email}` }</h4>
           <h4>
             {'Despesa Total: '}
             <span data-testid="total-field">{totalAmount}</span>
             <span data-testid="header-currency-field"> BRL</span>
           </h4>
+          <div
+            role="button"
+            tabIndex={ 0 }
+            onClick={ this.displaySideMenu }
+            onKeyPress={ () => 1 }
+          >
+            <i
+              className="fas fa-bars"
+            />
+          </div>
         </div>
       </header>
     );
   }
 
   render() {
-    const { currencies } = this.state;
+    const { currencies, displayMenu } = this.state;
 
     return (
       <>
         { this.renderHeader() }
-        <form className="wallet-form">
+        <form className={ `wallet-form ${displayMenu ? 'display' : 'hide'}` }>
           <label htmlFor="value" className="value">
             Valor:
             <input onChange={ this.changeHandler } type="number" min="0" id="value" />
@@ -144,10 +162,14 @@ class Wallet extends React.Component {
             Descrição:
             <input onChange={ this.changeHandler } type="text" id="description" />
           </label>
-          <button onClick={ this.addHandler } type="submit">
-            Adicionar despesa
-          </button>
+          <div className="btn-container">
+            Fill-up
+            <button onClick={ this.addHandler } type="submit">
+              Adicionar despesa
+            </button>
+          </div>
         </form>
+        <Table />
       </>
     );
   }
@@ -165,7 +187,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   addToWallet: PropTypes.func.isRequired,
-  expenses: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

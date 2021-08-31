@@ -1,0 +1,73 @@
+.wallet-table {
+  margin-top: 10rem;
+  min-width: 780px;
+  width: 100%;
+}
+
+.wallet-table button {
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  height: 2rem;
+  text-align: center;
+}
+
+.wallet-table header {
+  align-items: center;
+  background-color: #434647;
+  color: white;
+  display: flex;
+  height: 3rem;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  height: 3rem;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.row * {
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  height: 100%;
+  justify-content: center;
+  width: calc(87% / 7);
+}
+
+.row *:nth-child( 4 ) {
+  width: 7%;
+}
+
+.row *:nth-child( 6 ) {
+  width: 6%;
+}
+
+.row p {
+  border-right: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.btn-delete {
+  background: red;
+  font-size: 18px;
+  margin-left: 2px;
+  width: 2rem;
+}
+
+.btn-edit {
+  background: rgb(209, 161, 30);
+  font-size: 18px;
+  width: 2rem;
+}
+
+@media ( max-width : 780px ) {
+
+  .wallet-table {
+    margin-top: 5rem;
+  }
+}
