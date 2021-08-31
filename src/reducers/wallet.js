@@ -1,4 +1,6 @@
-import { SET_EXPENSIVE, SET_CURRENCIES, SET_REMOVE_EXPENSIVE, SET_EXPENSIVE_EDIT } from '../actions';
+import {
+  SET_EXPENSIVE, SET_CURRENCIES, SET_REMOVE_EXPENSIVE, SET_EXPENSIVE_EDIT,
+} from '../actions';
 
 const INITIAL_WALLET_STATE = {
   currencies: [],

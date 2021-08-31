@@ -53,7 +53,7 @@ export default function Form({ coins, handlerChange, form }) {
 }
 
 Form.propTypes = {
-  coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  coins: PropTypes.arrayOf(PropTypes.string).isRequired,
   handlerChange: PropTypes.func.isRequired,
   form: PropTypes.shape({
     value: PropTypes.number,

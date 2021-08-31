@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Form from './Form';
 import {
   fetchCotaçãoMomento, fetchMoedas, setExpensiveEdit, resetEditInfos,
 } from '../../../../actions';
 import removeEnabled from '../../Helper/removeEnabled';
+import totalFunction from '../../Helper/Total';
+import HeaderComponent from './HeaderComponent';
 
-// eslint-disable-next-line max-lines-per-function
-function Header(
-  { email, setExpenses, setCurrencies, currencies, expenses, infosEdit, setExpensesEdit, resetInfos },
-) {
+function Header({
+  email,
+  setExpenses,
+  setCurrencies, currencies, expenses, infosEdit, setExpensesEdit, resetInfos,
+}) {
   const [coins, setCoins] = useState([]);
   const [form, setForms] = useState(infosEdit);
   const [total, setTotal] = useState(0);
@@ -18,31 +20,23 @@ function Header(
   const [index, setIndex] = useState(0);
   useEffect(() => { setForms(infosEdit); setEdit(infosEdit.enabled); }, [infosEdit]);
   useEffect(() => { setCurrencies(); }, [setCurrencies]);
-  useEffect(() => {
-    const totalGlobal = expenses.reduce((acc, { currency, value, exchangeRates }) => {
-      const cotação = exchangeRates[currency].ask;
-      acc += value * cotação;
-      return acc;
-    }, 0);
-    setTotal(parseFloat(totalGlobal).toFixed(2));
-  }, [expenses]);
+  useEffect(() => { setTotal(parseFloat(totalFunction(expenses)).toFixed(2)); },
+    [expenses]);
   useEffect(() => { setCoins(currencies); }, [currencies]);
   useEffect(() => {
     setForms(infosEdit);
   }, [expenses]);
 
-  function handlerChange({ target: { name, value } }) {
-    setForms({ ...form, [name]: value });
-  }
+  const handlerChange = ({ target: { name, value } }) => setForms(
+    { ...form, [name]: value },
+  );
 
   function handlerClick() {
     let globalForm = { id: index, ...form };
     if (infosEdit.enabled) {
       const newForm = removeEnabled(form);
-      const filterExpenses = expenses
-        .filter(({ id }) => id !== globalForm.id);
+      const filterExpenses = expenses.filter(({ id }) => id !== globalForm.id);
       globalForm = [...filterExpenses, { ...newForm, id: infosEdit.id }];
-      console.log(globalForm);
       setExpensesEdit(globalForm.sort((a, b) => a.id - b.id));
       resetInfos();
     } else {
@@ -53,21 +47,15 @@ function Header(
   }
 
   return (
-    <header>
-      <h3 data-testid="email-field">{email}</h3>
-      <h3 data-testid="total-field">{total}</h3>
-      <h3 data-testid="header-currency-field">BRL</h3>
-      <Form
-        coins={ coins }
-        handlerChange={ handlerChange }
-        form={ form }
-      />
-      <input
-        type="button"
-        value={ editInfos ? 'Editar Despesas' : 'Adicionar Despesas' }
-        onClick={ handlerClick }
-      />
-    </header>
+    <HeaderComponent
+      email={ email }
+      total={ total }
+      coins={ coins }
+      handlerChange={ handlerChange }
+      form={ form }
+      editInfos={ editInfos }
+      handlerClick={ handlerClick }
+    />
   );
 }
 
@@ -89,7 +77,7 @@ Header.propTypes = {
   email: PropTypes.string.isRequired,
   setExpenses: PropTypes.func.isRequired,
   setCurrencies: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   infosEdit: PropTypes.shape({
     description: PropTypes.string,
@@ -97,5 +85,9 @@ Header.propTypes = {
     currency: PropTypes.string,
     method: PropTypes.string,
     tag: PropTypes.string,
+    enabled: PropTypes.bool,
+    id: PropTypes.number,
   }).isRequired,
+  resetInfos: PropTypes.func.isRequired,
+  setExpensesEdit: PropTypes.func.isRequired,
 };

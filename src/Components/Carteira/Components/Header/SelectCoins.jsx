@@ -20,6 +20,6 @@ export default function SelectCoins({ handlerChange, coins, Value }) {
 
 SelectCoins.propTypes = {
   handlerChange: PropTypes.func.isRequired,
-  coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  coins: PropTypes.arrayOf(String).isRequired,
   Value: PropTypes.string.isRequired,
 };
