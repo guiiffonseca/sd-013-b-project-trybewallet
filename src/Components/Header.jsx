@@ -8,9 +8,9 @@ import '../CSS/header.css';
 class Header extends React.Component {
   render() {
     const { email } = this.props;
-    return(
+    return (
       <header className="head">
-        <img src={ WalletLogo } alt="carteira"/>
+        <img src={ WalletLogo } alt="carteira" />
         <h2 data-testid="email-field">{ email }</h2>
         <h3 data-testid="total-field">Total Expenses: 0</h3>
         <h4 data-testid="header-currency-field">BRL</h4>
@@ -24,7 +24,7 @@ Header.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-    email: state.user.email,
+  email: state.user.email,
 });
 
 export default connect(mapStateToProps, null)(Header);
