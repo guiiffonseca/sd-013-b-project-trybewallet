@@ -6,17 +6,11 @@ class Form extends Component {
       <form>
         <label htmlFor="field-valor">
           Valor
-          <input
-            id="field-valor"
-            type="text"
-          />
+          <input id="field-valor" type="text" />
         </label>
         <label htmlFor="field-desc">
           Descrição
-          <input
-            id="field-desc"
-            type="text"
-          />
+          <input id="field-desc" type="text" />
         </label>
         <label htmlFor="select-moeda">
           Moeda
