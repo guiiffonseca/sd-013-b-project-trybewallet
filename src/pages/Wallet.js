@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import './Wallet.css';
+import AddExpenses from '../components/AddExpenses';
 
 class Wallet extends React.Component {
   render() {
@@ -13,9 +14,8 @@ class Wallet extends React.Component {
       //   ? <Redirect to="/" />
       //   : <div>TrybeWallet</div>
       <div className="wallet-main">
-        <Header
-          email={ email }
-        />
+        <Header email={ email } />
+        <AddExpenses />
         <div>TrybeWallet</div>
       </div>
     );
