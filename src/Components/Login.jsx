@@ -12,15 +12,15 @@ class Login extends React.Component {
       buttonIsDisabled: true,
       email: '',
       password: '',
-    }
+    };
 
-    this.handleChange =  this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.enableButton = this.enableButton.bind(this);
-    this.handleClick =  this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value, });
+    this.setState({ [event.target.name]: event.target.value, })
     this.enableButton();
   }
 
@@ -39,40 +39,40 @@ class Login extends React.Component {
     const passwordLength = 5;
     const enableButton = emailIsValid.test(email) && password.length >= passwordLength;
     this.setState({ buttonIsDisabled: !enableButton });
-    }
+  }
 
   render() {
     const { buttonIsDisabled } = this.state;
     return (
       <form className="login-page">
-          <div className='login'>
+        <div className="login">
             E-mail:
-            <input
-            type="email" 
-            name= 'email'
-            placeholder='example@example.com'
-            data-testid="email-input"
-            onChange={ this.handleChange } 
+          <input
+              type="email"
+              name="email"
+              placeholder="example@example.com"
+              data-testid="email-input"
+              onChange={ this.handleChange }
             />
           Senha:
-            <input 
-            type="password" 
-            name= 'password'
-            data-testid="password-input" 
-            onChange={ this.handleChange }
-            />
-            <button 
-            type='submit'
-            disabled= { buttonIsDisabled } 
-            onChange={ this.handleChange }
-            onClick= { this.handleClick }
-            > 
+          <input
+              type="password"
+              name="password"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+          />
+          <button
+              type="submit"
+              disabled={ buttonIsDisabled }
+              onChange={ this.handleChange }
+              onClick={ this.handleClick }
+          > 
           Entrar
-            </button>
-          </div>
+          </button>
+        </div>
       </form>
     )
-  };
+  }
 }
 
 Login.propTypes = {
