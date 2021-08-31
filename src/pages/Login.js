@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login as loginAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -37,7 +39,6 @@ class Login extends React.Component {
       [name]: value,
     });
     if (password.length >= minCaracteres && emailRegex.test(email)) {
-      console.log('deu certo');
       this.setState({
         disabled: false,
       });
@@ -45,8 +46,11 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
-    const { history } = this.props;
-    history.push('/wallet');
+    const { history, login } = this.props;
+    const { email } = this.state;
+    history.push('/carteira');
+
+    login(email);
   }
 
   render() {
@@ -92,9 +96,18 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  login: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
 
-export default Login;
+// const mapStateToProps = (state) => ({
+//   email: state.userReducer.email,
+// });
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(loginAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
