@@ -1,10 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import thunkAPI from '../actions';
+
+const number3 = 3;
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { saveCoins } = this.props;
+    saveCoins('https://economia.awesomeapi.com.br/json/all');
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, currencies } = this.props;
+    // console.log(this.props);
     return (
       <div>
         <header data-testid="email-field">
@@ -24,7 +33,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select name="currency" id="currency" value="currency">
-              <option value="BRL">BRL</option>
+              {Object.keys(currencies)
+                .filter((moeda) => (moeda.length <= number3))
+                .map((moeda) => <option key={ moeda }>{moeda}</option>)}
             </select>
           </label>
           <label htmlFor="paymentMethod">
@@ -52,11 +63,17 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
+  saveCoins: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  saveCoins: (url) => dispatch(thunkAPI(url)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -16,7 +16,7 @@ export const userLogin = (email) => ({
 });
 
 export const saveCoins = (currency) => ({
-  typeof: SAVE_COINS,
+  type: SAVE_COINS,
   payload: { currency },
 });
 
@@ -30,6 +30,7 @@ const thunkAPI = (URL) => async (dispatch) => {
   try {
     const response = await fetch(URL);
     const moedas = await response.json();
+    // console.log(moedas);
     dispatch(saveCoins(moedas));
   } catch (error) {
     dispatch(fetchError(error));
