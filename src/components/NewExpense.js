@@ -34,17 +34,17 @@ class NewExpense extends Component {
     return (
       <div>
         <Input
-          labelText="Valor:"
+          label="valor:"
           name="value"
-          InputType="text"
+          inputType="text"
           inputPlaceholder="Valor da Compra"
           value={ value }
           onChange={ this.handleChange }
         />
         <Input
-          labelText="Descrição:"
+          label="Descrição:"
           name="description"
-          InputType="text"
+          inputType="text"
           inputPlaceholder="Descrição da Compra"
           value={ description }
           onChange={ this.handleChange }
@@ -53,7 +53,7 @@ class NewExpense extends Component {
     );
   }
 
-  rendeSelects() {
+  renderSelects() {
     const {
       currency,
       payment,
@@ -71,14 +71,14 @@ class NewExpense extends Component {
         />
         <Select
           options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
-          labelText="Método de pagamento:"
+          labelText="Método de Pagamento"
           name="payment"
           value={ payment }
           onChange={ this.handleChange }
         />
         <Select
           options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
-          labelText="Tag:"
+          labelText="tag"
           name="tag"
           value={ tag }
           onChange={ this.handleChange }
@@ -90,8 +90,8 @@ class NewExpense extends Component {
   render() {
     return (
       <form>
-        { this.renderInputs }
-        { this.rendeSelects }
+        { this.renderInputs() }
+        { this.renderSelects() }
       </form>
     );
   }
