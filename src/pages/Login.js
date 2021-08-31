@@ -11,7 +11,8 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.enableComeInButton = this.enableComeInButton.bind(this);
+    this.enableToComeInButton = this.enableToComeInButton.bind(this);
+    this.toComeIn = this.toComeIn.bind(this);
   }
 
   // event.target.name / value
@@ -21,11 +22,16 @@ class Login extends React.Component {
       [name]: value,
     });
 
-    this.enableComeInButton();
+    this.enableToComeInButton();
+  }
+
+  toComeIn() {
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
   // baseada no CR de @raugusto96
-  enableComeInButton() {
+  enableToComeInButton() {
     const { email, pass } = this.state;
     const emailRegExValidation = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
     const passValidationLength = 5; // o pass.value começa em [0]
@@ -75,6 +81,7 @@ class Login extends React.Component {
               type="button"
               value="Entrar"
               disabled={ btnDisable }
+              onClick={ this.toComeIn }
             />
           </div>
 
