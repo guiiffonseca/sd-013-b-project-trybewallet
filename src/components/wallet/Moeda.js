@@ -16,7 +16,6 @@ class Moeda extends React.Component {
     const optionsArray = Object.keys(coins)
       .filter((coin) => coin !== 'USDT')
       .map((coin) => ({ value: coin, text: coin }));
-
     return (
       <Select
         name="currency"
