@@ -1,0 +1,18 @@
+#header-wallet {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: aquamarine;
+  width: 100%;
+}
+
+#form-currency {
+  display: flex;
+  align-items: center;
+  border: black solid 2px;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 300px;
+  height: 200px;
+  margin-left: 40%;
+  margin-top: 200px;
+}

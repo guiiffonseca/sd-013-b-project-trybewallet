@@ -1,0 +1,23 @@
+#container-login {
+  display: flex;
+  align-items:center;
+  justify-content:space-between;
+  height: 150px;
+  width: 250px;
+  padding: 15px;
+  margin-left: 45%;
+  margin-top: 300px;
+  border: solid black 2px;
+}
+
+#email-input {
+  margin: 15px;
+}
+
+#password-input {
+  margin: 15px;
+}
+
+#btn-login {
+  margin-left: 35%;
+}
