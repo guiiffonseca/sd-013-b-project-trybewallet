@@ -12,7 +12,7 @@ class Login extends React.Component {
           coisas
         </div>
         <div className="main-content">
-          <LoginForm />
+          <LoginForm props={ this.props } />
         </div>
       </div>
     );

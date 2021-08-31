@@ -11,7 +11,7 @@
 }
 
 .header-main-page {
-  background-color: #1abc9c;
+  background-color: #1a8ebc;
   height: 5em;
   position: absolute;
   top: 0;
@@ -41,6 +41,33 @@
   width: 350px;
 }
 
+.error {
+  align-items: center;
+  background-color: rgb(243, 98, 98);
+  border-radius: 20px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.253);
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  justify-content: center;
+  max-width: 50%;
+  width: 350px;
+}
+
+.success {
+  align-items: center;
+  background-color: rgb(98, 243, 154);
+  border-radius: 20px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.253);
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  justify-content: center;
+  max-width: 50%;
+  width: 350px;
+}
+
+
 .main-form {
   align-items: center;
   display: flex;
@@ -50,11 +77,16 @@
   width: 100%;
 }
 
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
 .input-form-base {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1a8ebc 4%);
   border: none;
-  border-bottom: solid 1px #1abc9c;
-  color: #0e6252;
+  border-bottom: solid 1px #1a8ebc;
+  color: #0e4762;
   display: block;
   margin: 15px;
   padding: 10px 0;
@@ -63,7 +95,7 @@
 }
 
 .pr-color::placeholder {
-  color: #0e6252;
+  color: #1a8ebc;
 }
 
 .input-form-base:focus {
@@ -75,4 +107,24 @@
 .input-form-base:valid {
   border: none;
   box-shadow: none;
+}
+
+.login-button {
+  border-radius: 5px;
+  margin-top: 1em;
+  padding: 1em 2em;
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+.login-button:hover {
+  background-color: #0e6252;
+  transform: scale(1);
+  transition: 0.2s;
+}
+
+.login-button:active {
+  background-color: #0e6252;
+  transform: scale(1);
+  transition: 0.2s;
 }
