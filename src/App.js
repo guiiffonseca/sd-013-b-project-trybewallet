@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div>
-        <h1>Exercise_Forms_Redux</h1>
+        <h1>HEADER</h1>
       </div>
       <Switch>
         <Route exact path="/" component={ Login } />
