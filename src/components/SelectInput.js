@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class SelectInput extends React.Component {
   render() {
-    const { label, inputValue, optionsArray, handleChange } = this.props;
+    const { label, inputValue, optionsArray, handleChange, placeholder } = this.props;
     return (
       <label htmlFor={ inputValue }>
         { label }
@@ -11,6 +11,7 @@ class SelectInput extends React.Component {
           name={ inputValue }
           id={ inputValue }
           onChange={ handleChange }
+          value={ placeholder }
         >
           { optionsArray.map((option) => (
             <option key={ option } value={ option }>{option}</option>
@@ -26,6 +27,7 @@ SelectInput.propTypes = {
   inputValue: PropTypes.string.isRequired,
   optionsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default SelectInput;
