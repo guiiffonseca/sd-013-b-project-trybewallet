@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AddExpense from '../components/AddExpense';
+import ExpenseBoard from '../components/ExpenseBoard';
 
 class Wallet extends React.Component {
   render() {
@@ -10,7 +11,6 @@ class Wallet extends React.Component {
     const convertedValue = expenses.map(
       (expense) => expense.value * expense.exchangeRates[expense.currency].ask,
     );
-    console.log(convertedValue);
     let total = 0;
     if (convertedValue.length === 0) {
       return (
@@ -25,6 +25,7 @@ class Wallet extends React.Component {
             </p>
           </header>
           <AddExpense />
+          <ExpenseBoard />
         </>);
     } total = convertedValue.reduce((acc, curr) => acc + curr).toFixed(2);
     return (
@@ -37,6 +38,9 @@ class Wallet extends React.Component {
           </p>
         </header>
         <AddExpense />
+        <ExpenseBoard
+          expenses={ expenses }
+        />
       </>
     );
   }
