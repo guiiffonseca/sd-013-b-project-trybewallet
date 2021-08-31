@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionFunctionThunk } from '../actions';
 import { FormWallet } from '../components/FormWallet';
 import Header from '../components/Header';
@@ -20,11 +21,16 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        <FormWallet respostaAPI={ respostaAPI }/>
+        <FormWallet respostaAPI={ respostaAPI } />
       </div>
     );
   }
 }
+
+Wallet.propTypes = {
+  respostaAPI: PropTypes.shape({}).isRequired,
+  functionThunk: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   functionThunk: () => dispatch(actionFunctionThunk()),
@@ -34,4 +40,4 @@ const mapStateToProps = (state) => ({
   respostaAPI: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
