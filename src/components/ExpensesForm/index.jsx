@@ -1,6 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import { getCurrencies } from '../../actions';
 import FormHandler from '../FormHandler';
 
 const PAYMENT_METHODS = {
@@ -30,6 +32,13 @@ class ExpensesForm extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.renderHandler = this.renderHandler.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+
+    fetchCurrencies();
   }
 
   onChange({ target: { name, value } }) {
@@ -38,30 +47,38 @@ class ExpensesForm extends React.Component {
     });
   }
 
+  renderHandler({ label, name, value, type, options = {}, ...rest }) {
+    return (<FormHandler
+      label={ label }
+      name={ name }
+      type={ type }
+      value={ value }
+      onChange={ this.onChange }
+      options={ options }
+      { ...rest }
+    />);
+  }
+
   render() {
     const { price, description, currency, payment, tag } = this.state;
+    const { currencies } = this.props;
 
     return (
       <form>
-        <FormHandler
-          label="Valor:"
-          type="number"
-          name="price"
-          min="0"
-          step="0.01"
-          value={ price }
-          onChange={ this.onChange }
-        />
-        <FormHandler
-          label="Descrição:"
-          name="description"
-          value={ description }
-          onChange={ this.onChange }
-        />
+        { this.renderHandler({
+          label: 'Valor', type: 'number', name: 'price', value: price,
+        })}
+        { this.renderHandler({
+          label: 'Descrição:', name: 'description', value: description,
+        })}
         <FormHandler
           label="Moeda:"
           type="select"
           name="currency"
+          options={ currencies.reduce((acc, { code }) => ({
+            ...acc,
+            [code]: code,
+          }), {}) }
           value={ currency }
           onChange={ this.onChange }
         />
@@ -87,4 +104,15 @@ class ExpensesForm extends React.Component {
   }
 }
 
-export default ExpensesForm;
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(getCurrencies()),
+});
+
+const mapStateToProps = ({ wallet: currencies }) => currencies;
+
+ExpensesForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

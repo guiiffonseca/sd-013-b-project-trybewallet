@@ -5,7 +5,6 @@ const FormHandler = ({ label, name, value, type, onChange, options = {}, ...rest
   const handlers = {
     select: (
       <select id={ name } name={ name } value={ value } onChange={ onChange } { ...rest }>
-        <option value="">Selecione uma opção</option>
         {
           Object.entries(options).map(([optionValue, optionName]) => (
             <option key={ optionName } value={ optionValue }>{ optionName }</option>
