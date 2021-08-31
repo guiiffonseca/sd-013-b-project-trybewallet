@@ -10,8 +10,13 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      coins: [],
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.coinsFatch();
   }
 
   handleChange({ target }) {
@@ -21,13 +26,23 @@ class Wallet extends React.Component {
     });
   }
 
+  async coinsFatch() {
+    const linkApi = 'https://economia.awesomeapi.com.br/json/all';
+    const response = await (await fetch(linkApi)).json();
+    const currencyLength = 3;
+    const filterCoins = Object.keys(response)
+      .filter((currency) => currency.length === currencyLength);
+    this.setState({
+      coins: filterCoins,
+    });
+  }
+
   render() {
     const { email } = this.props;
-    const coins = ['Moeda'];
     const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagSelect = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
-    const { value } = this.state;
+    const { value, coins } = this.state;
     return (
       <>
         <Header email={ email } />
