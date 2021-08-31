@@ -1,12 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { walletActionThunk } from '../actions';
+import { walletActionThunk, expensesActionThunk } from '../actions';
 
 class WalletForm extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.handleChange = this.handleChange.bind(this);
+    this.buttonChange = this.buttonChange.bind(this);
+    this.htmlRender = this.htmlRender.bind(this);
+
+    this.state = {
+      id: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      payment: 'dinheiro',
+      tag: 'alimentação',
+    };
   }
 
   componentDidMount() {
@@ -14,46 +25,94 @@ class WalletForm extends React.Component {
     add();
   }
 
+  handleChange({ target }) {
+    const { value, id } = target;
+    this.setState({ [id]: value });
+  }
+
+  buttonChange() {
+    const { id, value, description, currency, payment, tag } = this.state;
+    const { expensesAdd } = this.props;
+    expensesAdd({
+      id,
+      value,
+      description,
+      currency,
+      method: payment,
+      tag,
+    });
+
+    this.setState({ id: id + 1, value: '', description: '' });
+  }
+
+  htmlRender() {
+    const { value, description } = this.state;
+    return (
+      <>
+        <label htmlFor="value">
+          Valor:
+          <input
+            id="value"
+            value={ value }
+            onChange={ this.handleChange }
+            type="text"
+            name="name"
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <input
+            id="description"
+            value={ description }
+            onChange={ this.handleChange }
+            type="text"
+            name="name"
+          />
+        </label>
+      </>
+    );
+  }
+
   render() {
     const { currencies } = this.props;
     return (
       <form>
-        <label htmlFor="value">
-          Valor:
-          <input id="value" type="text" name="name" />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input id="description" type="text" name="name" />
-        </label>
+        { this.htmlRender() }
         <label htmlFor="currency">
           Moeda:
-          <select id="currency">
+          <select
+            onChange={ this.handleChange }
+            id="currency"
+          >
             {
               Object.keys(currencies).map((currency) => (
-                <option key={ currency } value={ currency }>{ currency }</option>
+                <option key={ currency }>{ currency }</option>
               ))
             }
           </select>
         </label>
         <label htmlFor="payment">
           Método de pagamento:
-          <select id="payment">
-            <option>dinheiro</option>
-            <option>cartão de crédito</option>
-            <option>cartão de débito</option>
+          <select
+            onChange={ this.handleChange }
+            id="payment"
+          >
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
-          <select id="tag">
-            <option>alimentação</option>
-            <option>lazer</option>
-            <option>trabalho</option>
-            <option>transporte</option>
-            <option>saúde</option>
+          <select onChange={ this.handleChange } id="tag">
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
           </select>
         </label>
+        <button onClick={ this.buttonChange } type="button">Adicionar despesa</button>
       </form>
     );
   }
@@ -61,11 +120,13 @@ class WalletForm extends React.Component {
 
 WalletForm.propTypes = {
   add: PropTypes.func,
+  expensesAdd: PropTypes.func,
   currencies: PropTypes.objectOf(PropTypes.string),
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
   add: () => dispatch(walletActionThunk()),
+  expensesAdd: (stateComponent) => dispatch(expensesActionThunk(stateComponent)),
 });
 
 const mapStateToProps = ({ wallet }) => ({
