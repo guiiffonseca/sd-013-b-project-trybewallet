@@ -1,5 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login as userLogin } from '../actions/index';
 import '../CSS/login.css';
 
 class Login extends React.Component {
@@ -10,7 +12,6 @@ class Login extends React.Component {
           buttonIsDisabled: true,
           email: '',
           password: '',
-          logged: false,
         }
 
         this.handleChange =  this.handleChange.bind(this);
@@ -23,10 +24,13 @@ class Login extends React.Component {
    this.enableButton();
   }
   
-  handleClick() { // exemplo retirado daqui https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
-   const history = useHistory();
-   history.push('/carteira');
-   this.setState({ logged: true });
+  handleClick(event) {
+    event.preventDefault();
+    const history = this.props.history;
+    history.push('/carteira');
+    const { email } = this.state;
+    const { login } = this.props;
+    login(email);
   }
 
   enableButton() {
@@ -56,6 +60,7 @@ class Login extends React.Component {
               onChange={ this.handleChange }
               />
               <button 
+              type='submit'
               disabled= { buttonIsDisabled } 
               onChange={ this.handleChange }
               onClick= { this.handleClick }
@@ -68,4 +73,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: propTypes.func,
+  history: propTypes.objectOf(propTypes.func),
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(userLogin(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
