@@ -58,7 +58,7 @@ class FormExpenses extends React.Component {
         <label htmlFor="currency-input">
           Moeda:
           <select name="currency" id="currency-input">
-            {currencies.map((currency) => ( 
+            {currencies.map((currency) => (
               <option key={ currency } value={ currency }>{currency}</option>
             ))}
           </select>
