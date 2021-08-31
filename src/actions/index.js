@@ -1,6 +1,5 @@
 // Coloque aqui suas actions
 
-// Coloque aqui suas actions
 export const beginFetch = () => ({
   type: 'BEGIN_FETCH',
 });

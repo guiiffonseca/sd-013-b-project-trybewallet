@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { deleteItem } from '../actions/index';
 
@@ -20,7 +20,7 @@ class Table extends Component {
           <th>Editar/Excluir</th>
         </tbody>
         {expensesFromGlobal.map((element, index) => (
-          <React.Fragment key={ index }>
+          <Fragment key={ index }>
             <td>{element.description}</td>
             <td>{element.tag}</td>
             <td>{element.method}</td>
@@ -37,7 +37,7 @@ class Table extends Component {
             >
               Excluir
             </button>
-          </React.Fragment>))}
+          </Fragment>))}
       </table>
     );
   }
@@ -53,7 +53,7 @@ const mapStateToProps = ({ wallet }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  funcDelete: (id) => dispatch(deleteItem(id)),
+  funcDelete: (index) => dispatch(deleteItem(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
