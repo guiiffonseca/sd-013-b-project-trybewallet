@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginEmail as loginEmailAction } from '../actions/index';
@@ -33,10 +34,10 @@ class Login extends React.Component {
   }
 
   handleButton() {
-    const { loginEmail, history } = this.props;
+    const { loginEmail /* history */ } = this.props;
     const { email } = this.state;
     loginEmail(email);
-    history.push('/carteira');
+    // history.push('/carteira');
   }
 
   render() {
@@ -61,15 +62,15 @@ class Login extends React.Component {
             name="senha"
             type="password"
           />
-          {/* <Link to="/carteira"> */}
-          <button
-            onClick={ this.handleButton }
-            type="button"
-            disabled={ !this.handleDisabled() }
-          >
-            Entrar
-          </button>
-          {/* </Link> */}
+          <Link to="/carteira">
+            <button
+              onClick={ this.handleButton }
+              type="button"
+              disabled={ !this.handleDisabled() }
+            >
+              Entrar
+            </button>
+          </Link>
         </fieldset>
       </div>
     );
@@ -79,5 +80,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   loginEmail: (email) => dispatch(loginEmailAction(email)),
 });
+
+Login.propTypes = {
+  loginEmail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
