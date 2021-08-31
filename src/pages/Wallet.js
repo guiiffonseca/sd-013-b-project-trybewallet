@@ -40,7 +40,7 @@ class Wallet extends React.Component {
           <label htmlFor="tag">
             Tag:
             <select id="tag">
-              <option>Alimmentação</option>
+              <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
               <option>Transporte</option>
