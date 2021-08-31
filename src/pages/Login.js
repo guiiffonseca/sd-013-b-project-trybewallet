@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import addValue from '../actions';
 
 class Login extends React.Component {
@@ -9,9 +11,11 @@ class Login extends React.Component {
       email: '',
       password: '',
       validLogin: false,
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validLogin = this.validLogin.bind(this);
+    this.handelClick = this.handelClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -33,9 +37,16 @@ class Login extends React.Component {
     else this.setState({ validLogin: false });
   }
 
-  render() {
-    const { email, password, validLogin } = this.state;
+  handelClick() {
+    const { email } = this.state;
     const { addEmail } = this.props;
+    this.setState({ redirect: true });
+    return addEmail('LOGIN_EMAIL', email);
+  }
+
+  render() {
+    const { email, password, validLogin, redirect } = this.state;
+    if (redirect) return <Redirect to="/carteira" />;
     return (
       <div>
         <input
@@ -57,7 +68,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ !validLogin }
-          onClick={ ()=> addEmail('LOGIN_EMAIL', email) }
+          onClick={ this.handelClick }
         >
           Entrar
         </button>
@@ -71,3 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  addEmail: PropTypes.func.isRequired,
+};
