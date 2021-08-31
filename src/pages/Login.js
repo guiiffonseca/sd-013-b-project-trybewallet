@@ -21,6 +21,19 @@ class Login extends React.Component {
     });
   }
 
+  isToActivateButton() {
+    const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    const minimumPasswordLength = 6;
+    const { email, password } = this.state;
+    const isValidEmail = regex.test(email);
+    const isValidPassword = password.length >= minimumPasswordLength;
+
+    if (isValidEmail && isValidPassword) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -44,7 +57,7 @@ class Login extends React.Component {
             placeholder="senha"
             onChange={ this.handleChanges }
           />
-          <button type="submit">
+          <button type="submit" disabled={ !this.isToActivateButton() }>
             Entrar
           </button>
         </form>
