@@ -3,12 +3,18 @@ import actions from '../actions';
 const INICIAL_STATE = {
   currencies: [],
   expenses: [],
+  error: '',
+  loading: false,
 };
 
 const walletReduce = (state = INICIAL_STATE, action) => {
   switch (action.type) {
-  case actions.walletCurrencies:
-    return { ...state, wallet: { currencies: action.payload } };
+  case actions.REQUEST_API:
+    return { ...state, loading: true };
+  case actions.CURRENCIES:
+    return { ...state, loading: false, currencies: action.payload, error: '' };
+  case actions.FAILED_REQUEST:
+    return { ...state, loading: false, error: action.payload };
   default:
     return state;
   }
