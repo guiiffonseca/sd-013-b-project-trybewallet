@@ -41,6 +41,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
+    console.log(email);
     return (
       <div>
         <h2>Login</h2>
@@ -67,7 +68,7 @@ class Login extends React.Component {
           </label>
           <Link to="/carteira">
             <button
-              type="submit"
+              type="button"
               disabled={ !this.validateLogin() }
               onClick={ this.submitEmail() }
             >
