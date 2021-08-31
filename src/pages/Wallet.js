@@ -12,14 +12,14 @@ class Wallet extends React.Component {
     return (
       <div>
 
-        <header data-testid="header-currency-field">
+        <header>
           <p data-testid="email-field">{user.email}</p>
           <p data-testid="total-field">
             Despesa total:
             {despesa}
 
           </p>
-          <p data-testid="total-field">BRL</p>
+          <p data-testid="header-currency-field">BRL</p>
         </header>
         <FormWallet />
       </div>

@@ -62,6 +62,8 @@ export default class FormWallet extends Component {
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
+            <option value="transporte">Transporte</option>
+            <option value="saude">Saúde</option>
           </select>
         </label>
 
