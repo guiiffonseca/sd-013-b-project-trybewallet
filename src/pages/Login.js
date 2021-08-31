@@ -34,14 +34,13 @@ class Login extends React.Component {
     return (
       <div className="divLogin">
         <h1>Carteira Online</h1>
-        <img className="imgLogin" src="https://st2.depositphotos.com/2197700/12281/i/600/depositphotos_122815918-stock-photo-concept-of-digital-wallet-and.jpg"></img>
+        <img className="imgLogin" src="https://st2.depositphotos.com/2197700/12281/i/600/depositphotos_122815918-stock-photo-concept-of-digital-wallet-and.jpg" alt="carteiraImg" />
         <form className="FormLogin">
           <label htmlFor="email">
             <input
               className="Inputs"
               value={ email }
               id="email"
-              type="email"
               name="email"
               data-testid="email-input"
               onChange={ this.handleChange }
@@ -58,10 +57,7 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <Link
-            onClick={ () => (setUserInfo(email)) }
-            to="/carteira"
-          >
+          <Link onClick={ () => (setUserInfo(email)) } to="/carteira">
             <button
               className="Button"
               type="submit"
