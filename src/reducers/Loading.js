@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 function loading(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOADING:
-    return { isFatching: !state.isFatching };
+    return { isFatching: false };
   default:
     return state;
   }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Input from './Inputs';
 import Select from './select';
 import Button from './Button';
-import { expense } from '../actions';
+import { expense, fetchApi } from '../actions';
 
 class HeaderForm extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class HeaderForm extends React.Component {
 
     this.state = {
       currency: 'USD',
-      payment: 'Cartão de crédito',
+      method: 'Cartão de crédito',
       tag: 'Alimentação',
     };
 
@@ -20,18 +20,30 @@ class HeaderForm extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  getExchange() {
+    const { allCurrency } = this.props;
+    const initials = Object.keys(allCurrency);
+
+    return initials.reduce((acc, currency) => {
+      acc[currency] = allCurrency[currency];
+      return acc;
+    }, {});
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
   handleClick() {
-    const { addExpense } = this.props;
-    const test = this.state;
-    addExpense(test);
+    const { addExpense, fetchCurrency, expenses } = this.props;
+    fetchCurrency();
+    const exchangeRates = this.getExchange();
+    const infos = { id: expenses.length, ...this.state, exchangeRates };
+    addExpense(infos);
   }
 
   displayForm() {
-    const { currency, payment, tag } = this.state;
+    const { currency, method, tag } = this.state;
     const { allCurrency } = this.props;
     const initials = Object.keys(allCurrency);
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -60,10 +72,10 @@ class HeaderForm extends React.Component {
         />
         <Select
           text="Método de pagamento"
-          name="payment"
+          name="method"
           item={ pagamento }
           handleChange={ this.handleChange }
-          value={ payment }
+          value={ method }
         />
         <Select
           text="Tag"
@@ -90,10 +102,12 @@ class HeaderForm extends React.Component {
 const mapStateToProps = (state) => ({
   allCurrency: state.wallet.currencies[0],
   loading: state.loading.isFatching,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (infos) => dispatch(expense(infos)),
+  fetchCurrency: () => dispatch(fetchApi()),
 });
 
 HeaderForm.defaultProps = {
@@ -104,6 +118,8 @@ HeaderForm.propTypes = {
   allCurrency: PropTypes.objectOf(PropTypes.object),
   loading: PropTypes.bool.isRequired,
   addExpense: PropTypes.func.isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderForm);

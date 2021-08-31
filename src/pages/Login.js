@@ -40,6 +40,8 @@ class Login extends React.Component {
     const PASSWORD_CONDITION = 6;
     if (value.length >= PASSWORD_CONDITION) {
       this.setState({ passwordStatus: false });
+    } else {
+      this.setState({ passwordStatus: true });
     }
   }
 
