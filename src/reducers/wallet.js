@@ -1,12 +1,17 @@
+import { ADD_EXPENSE } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+  case ADD_EXPENSE:
+    action.expense.exchangeRates = action.exchangeRates;
+    return { ...state, expenses: [...state.expenses, action.expense] };
   default: return state;
   }
 };
 
-export default user;
+export default wallet;
