@@ -1,5 +1,3 @@
-import { initialStateHeader } from "./tests/mockData";
-
 export const paymentMethodArray = [
   'Dinheiro',
   'Cartão de crédito',

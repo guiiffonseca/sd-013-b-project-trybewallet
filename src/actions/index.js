@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const loginAction = (payload) => ({
   type: LOGIN,
@@ -20,5 +21,10 @@ export const currencyFetchAction = () => async (dispatch) => {
 
 export const saveExpenseAction = (payload) => ({
   type: SAVE_EXPENSE,
+  payload,
+});
+
+export const removeExpenseAction = (payload) => ({
+  type: REMOVE_EXPENSE,
   payload,
 });
