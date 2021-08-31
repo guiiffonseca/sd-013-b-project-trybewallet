@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/form';
 import { setFetchCurrencies } from '../actions';
+import Table from '../components/table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -52,6 +53,9 @@ class Wallet extends React.Component {
         </header>
         <section>
           <Form amountExpenses={ this.amountExpenses } />
+        </section>
+        <section>
+          <Table />
         </section>
       </>
     );
