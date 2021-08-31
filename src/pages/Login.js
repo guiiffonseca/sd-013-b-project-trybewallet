@@ -46,6 +46,7 @@ class Login extends Component {
             name="email"
             data-testid="email-input"
             onChange={ this.handleChange }
+            placeholder="Email..."
           />
         </label>
         <label htmlFor="senha">
@@ -55,6 +56,7 @@ class Login extends Component {
             name="senha"
             data-testid="password-input"
             onChange={ this.handleChange }
+            placeholder="Senha..."
           />
         </label>
         <Link to="/carteira">
