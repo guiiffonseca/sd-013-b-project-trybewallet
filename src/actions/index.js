@@ -10,6 +10,11 @@ export const saveExpenses = (state) => ({
   state,
 });
 
+export const updateExpenses = (state) => ({
+  type: 'UPDATE_EXPENSES',
+  state,
+});
+
 export const getCurrencies = (state) => ({
   type: 'GET_CURRENCY',
   state,
