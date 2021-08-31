@@ -1,9 +1,11 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 
 const LOGIN = 'LOGIN';
+const GET_CURRENCIES = 'GET_CURRENCIES';
 
 const INITIAL_STATE = {
   email: '',
+  moedas: [],
 };
 
 function userReducer(state = INITIAL_STATE, action) {
@@ -13,6 +15,11 @@ function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       email: payload.email,
+    };
+  case GET_CURRENCIES:
+    return {
+      ...state,
+      moedas: payload.moedas,
     };
   default:
     return state;

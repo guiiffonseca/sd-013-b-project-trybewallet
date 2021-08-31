@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import loginAction from '../actions';
+import loginAction, { fetchCurencies } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +16,14 @@ class Login extends React.Component {
     this.login = this.login.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
     this.verifyPassword = this.verifyPassword.bind(this);
+  }
+
+  async componentDidMount() {
+    const { fetchCurencies: getCurrencies } = this.props;
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    delete data.USDT;
+    getCurrencies(data);
   }
 
   login() {
@@ -84,10 +92,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(loginAction(email)),
+  fetchCurencies: (data) => dispatch(fetchCurencies(data)),
 });
 
 Login.propTypes = {
   login: propTypes.func.isRequired,
+  fetchCurencies: propTypes.func.isRequired,
   history: propTypes.objectOf(propTypes.func).isRequired,
 };
 
