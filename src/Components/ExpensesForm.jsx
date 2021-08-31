@@ -5,7 +5,7 @@ class ExpensesForm extends React.Component {
     return (
       <form>
         <label htmlFor="Valor">
-          Despesas:
+          Valor:
           <input type="text" name="Valor" id="Valor" />
         </label>
         <label htmlFor="Descrição">
