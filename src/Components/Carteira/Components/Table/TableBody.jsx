@@ -65,4 +65,5 @@ TableBody.propTypes = {
     value: PropTypes.string,
     exchangeRates: PropTypes.objectOf(PropTypes.string),
   })).isRequired,
+  hadlerClick: PropTypes.func.isRequired,
 };
