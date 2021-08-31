@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { saveUser as saveUserAction } from '../actions';
 import './Login.css';
 import walletimg from '../images/wallet.png';
 
@@ -21,7 +24,9 @@ class Login extends React.Component {
   }
 
   onSubmitForm() {
-    console.log('clique no botão');
+    const { saveUser } = this.props;
+    const { email } = this.state;
+    saveUser(email);
   }
 
   handleChange({ target }) {
@@ -53,15 +58,11 @@ class Login extends React.Component {
   }
 
   // https://www.devmedia.com.br/validando-e-mail-em-inputs-html-com-javascript/26427
-  // validateInput({ target }) {
   validateInput(name, value) {
     const NUMBER_SIX = 6;
-    // const { name, value } = target;
     if (name === 'email') {
       const user = value.substring(0, value.indexOf('@'));
       const domain = value.substring(value.indexOf('@') + 1, value.length);
-      console.log(user);
-      console.log(domain);
       if (this.validateUserEmail(user) && this.validateDomainEmail(domain)) {
         this.setState({
           emailValid: true,
@@ -127,4 +128,14 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  saveUser: (email) => dispatch(
+    saveUserAction(email),
+  ),
+});
+
+Login.propTypes = {
+  saveUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
