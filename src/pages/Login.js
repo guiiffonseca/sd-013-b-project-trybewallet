@@ -1,12 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import userLogin from '../actions';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+
+    this.handleLogin = this.handleLogin.bind(this);
+    this.state = {
+      email: '',
+    };
+  }
+
+  handleLogin({ target }) {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
+    const { email } = this.state;
+    const userEmail = this.props;
     return (
       <div>
         <input
           data-testid="email-input"
           type="email"
+          name="email"
           onChange={ this.handleLogin }
           placeholder="insira seu email"
           required
@@ -14,12 +36,14 @@ class Login extends React.Component {
         <input
           data-testid="password-input"
           type="password"
+          name="password"
           onChange={ this.handleLogin }
           placeholder="insira sua senha"
           required
         />
         <button
           type="button"
+          onClick={ () => userEmail(email) }
         >
           Entrar
         </button>
@@ -27,7 +51,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchtoProps = (dispatch) => ({
+  userEmail: (email) => dispatch(userLogin(email)),
+});
+
+export default connect(null, mapDispatchtoProps)(Login);
 
 /* #### 1. Crie uma página inicial de login com os seguintes campos e características:
 
