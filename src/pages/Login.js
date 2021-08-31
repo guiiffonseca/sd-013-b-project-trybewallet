@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setUserInfo } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,6 +14,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.checkButton = this.checkButton.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidUpdate() {
@@ -28,8 +32,18 @@ class Login extends React.Component {
   }
 
   handleChange({ target: { name, value } }) {
-    this.setState({ [name]: value });
-    this.setState({ buttonDisabled: true });
+    this.setState({
+      [name]: value,
+      buttonDisabled: true,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { history, setUser } = this.props;
+    const { email } = this.state;
+    setUser(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -60,4 +74,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (email) => dispatch(setUserInfo(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
