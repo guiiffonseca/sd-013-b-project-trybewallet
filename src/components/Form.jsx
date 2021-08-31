@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 
 class Form extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       moedas: [],
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
   }
 
   componentDidMount() {
