@@ -1,0 +1,182 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Cabeçalho */
+.login-header {
+
+  /* background-color: red; */
+  display: flex;
+  height: 70px;
+}
+
+.login-header img {
+  align-self: center;
+  margin-left: 50px;
+  max-height: 60%;
+  width: 50px;
+}
+
+.login-header p {
+  align-self: center;
+  color: #0d6efd;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Container principal */
+.main-container {
+  display: flex;
+  flex-direction: row;
+
+}
+
+/* Container esquerda */
+.left-container {
+
+  /* background-color: blue; */
+  display: flex;
+  flex: 0.5;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+}
+
+.left-container h1 {
+  align-self: center;
+  font-weight: 700;
+}
+
+.left-container img {
+  align-self: center;
+  height: 60%;
+  margin-bottom: 35px;
+  width: 55%;
+}
+
+.left-container p {
+  align-self: center;
+  font-size: 15;
+  line-height: 25px;
+  text-align: center;
+}
+
+/* Container direita */
+.right-container {
+
+  /* background-color: yellow; */
+  display: flex;
+  flex: 0.5;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+  justify-content: flex-start;
+}
+
+.form-container {
+
+  /* background-color: red; */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  justify-content: flex-start;
+}
+
+.login-register-buttons {
+  display: flex;
+  height: 30px;
+  margin-top: 30px;
+  text-align: center;
+  width: 230px;
+}
+
+.login-register-buttons :nth-child( 1 ) {
+  border-bottom: 1px solid #0d6efd;
+  width: 50%;
+}
+
+.login-register-buttons :nth-child( 2 ) {
+  width: 50%;
+
+  /* border-bottom: 3px solid red; */
+}
+
+/* Social Buttons */
+.social-login {
+  display: flex;
+  margin: 30px;
+}
+
+.social-login div {
+  border-radius: 20px;
+  box-shadow: 2px 5px 10px black;
+  display: flex;
+  height: 35px;
+  justify-content: center;
+  margin-right: 10px;
+  width: 115px;
+}
+
+.social-login div img {
+  align-self: center;
+  height: 20px;
+  margin: 5px;
+}
+
+.social-login div span {
+  align-self: center;
+  font-size: 15px;
+}
+
+.google {
+  background-color: white;
+}
+
+.facebook {
+  background-color: rgb(60, 90, 154);
+}
+
+.apple {
+  background-color: black;
+  color: white;
+}
+
+/* Inputs de login e button */
+.login-input {
+
+  /* border: none; */
+  height: 40px;
+  margin-top: 15px;
+  padding: 8px 24px;
+  width: 350px;
+}
+
+.login-button {
+  align-items: center;
+  background-color: #0d6efd;
+  border-radius: 20px;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  margin-left: 150px;
+  margin-top: 30px;
+  width: 130px;
+}
+
+.login-button p {
+  color: white;
+  font-size: 20px;
+}
+
+/*
+Design baseado no site da Mobills:
+
+https://web.mobills.com.br/auth
+
+OBSERVAÇÃO: retirar a margem do botão e alinhar por flexbox;
+*/
+
