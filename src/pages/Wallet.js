@@ -32,8 +32,8 @@ class Wallet extends React.Component {
           id="input-pagamento"
           value={ pagamento }
         >
-          { payments.map(({ method }) => (
-            <option value={ method }>
+          { payments.map(({ method, key }) => (
+            <option value={ method } key={ key }>
               { method }
             </option>)) }
         </select>
@@ -46,8 +46,8 @@ class Wallet extends React.Component {
       <label htmlFor="input-tag">
         Tag:
         <select id="input-tag" value={ tag }>
-          { tags.map(({ type }) => (
-            <option value={ type }>
+          { tags.map(({ type, key }) => (
+            <option value={ type } key={ key }>
               { type }
             </option>)) }
         </select>

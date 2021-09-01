@@ -1,8 +1,23 @@
 export const tags = [
-  { type:'Alimentação', },
-  { type:'Lazer', },
-  { type:'Trabalho', },
-  { type:'Transporte', },
-  { type:'Saúde', },
+  { 
+    key: 1,
+    type:'Alimentação',
+  },
+  { 
+    key: 2,
+    type:'Lazer',
+  },
+  { 
+    key: 3,
+    type:'Trabalho',
+  },
+  { 
+    key: 4,
+    type:'Transporte',
+  },
+  { 
+    key: 5,
+    type:'Saúde',
+  },
 ];
 
