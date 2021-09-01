@@ -51,7 +51,6 @@ class EditForm extends Component {
 
   renderCurrency(currency) {
     const { currencies } = this.props;
-    const currenciesList = Object.keys(currencies);
     return (
       <label htmlFor="currency" className="select-currency">
         Moeda:
@@ -62,7 +61,7 @@ class EditForm extends Component {
           value={ currency }
           onChange={ this.handleChange }
         >
-          { currenciesList.map((currencyItem) => (
+          { currencies.map((currencyItem) => (
             <option key={ currencyItem } value={ currencyItem }>{currencyItem}</option>
           ))}
         </select>
@@ -133,7 +132,7 @@ EditForm.propTypes = {
 }.isRequired;
 
 const mapStateToProps = ({ wallet }) => ({
-  currencies: wallet.currencies[0],
+  currencies: wallet.currencies,
   expenses: wallet.expenses,
   idToEdit: wallet.idToEdit,
 });
