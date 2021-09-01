@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN_ACTION';
 export const WALLET_CURRENCY = 'WALLET_CURRENCY';
+export const CREATE_EXPENCE = 'CREATE_EXPENCE';
 
 const setLogin = (payload) => ({
   type: LOGIN,
@@ -9,6 +10,11 @@ const setLogin = (payload) => ({
 
 export const setCurrency = (payload) => ({
   type: WALLET_CURRENCY,
+  payload,
+});
+
+export const listExpenses = (payload) => ({
+  type: CREATE_EXPENCE,
   payload,
 });
 
