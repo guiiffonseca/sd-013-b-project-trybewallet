@@ -145,7 +145,7 @@ class AddExpenses extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className="expenses-form">
         {this.renderValueInput()}
         {this.renderDescriptionInput()}
         {this.renderCurrencySelect()}

@@ -42,3 +42,46 @@
   margin: 5px;
   text-align: right;
 }
+
+.expenses-form {
+  align-items: center;
+  background-color: var(--bgdark);
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+}
+
+.expenses-form input {
+  margin: 0 10px 0 3px;
+  padding: 5px;
+}
+
+.expenses-form select {
+  margin: 0 10px 0 3px;
+  padding: 5px;
+}
+
+.expenses-form label {
+  color: white;
+  font-size: 10px;
+}
+
+.expenses-form button {
+  background-color: var(--asparagus);
+  border: 1px solid var(--dark-olive-green);
+  border-radius: 5px;
+  color: var(--bgdark);
+  font-weight: 600;
+  margin: 5px;
+  padding: 5px;
+  width: 253px;
+}
+
+.expenses-form button:hover {
+  background-color: var(--dark-olive-green);
+  color: var(--light-gray);
+}
+
+.expenses-form button:disabled {
+  background-color: var(--lavender-gray);
+}
