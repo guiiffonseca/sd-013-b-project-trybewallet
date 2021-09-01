@@ -43,15 +43,14 @@ const mapStateToProps = (state) => ({
   isLoading: state.wallet.isLoading,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchApi: () => dispatch(fetchApiAction())
-  }
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchApi: () => dispatch(fetchApiAction()),
+});
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   fetchApi: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
