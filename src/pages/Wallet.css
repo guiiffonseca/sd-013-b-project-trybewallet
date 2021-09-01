@@ -85,3 +85,21 @@
 .expenses-form button:disabled {
   background-color: var(--lavender-gray);
 }
+
+.table-expenses {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-expenses th {
+  background-color: var(--bgdarksoft);
+  color: var(--light-gray);
+  font-size: 12px;
+  padding: 8px 2px;
+}
+
+.table-expenses td {
+  border: 1px dotted var(--lavender-gray);
+  font-size: 14px;
+  padding: 8px 5px;
+}

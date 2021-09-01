@@ -21,8 +21,10 @@ class Header extends React.Component {
         <div className="header-expenses">
           <h3 className="header-info">
             {'Despesa Total: R$ '}
-            <span data-testid="total-field">{ totalExpenses }</span>
-            <span data-testid="header-currency-field">BRL</span>
+            <span data-testid="total-field">
+              { parseFloat((Number(totalExpenses)).toFixed(2)) }
+            </span>
+            <span data-testid="header-currency-field">{' BRL'}</span>
           </h3>
         </div>
       </div>

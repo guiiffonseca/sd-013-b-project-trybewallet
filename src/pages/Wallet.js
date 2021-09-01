@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import Header from '../components/Header';
 import AddExpenses from '../components/AddExpenses';
+import TableExpenses from '../components/TableExpenses';
+
 import { getCurrenciesListThunk } from '../actions';
 
 import './Wallet.css';
@@ -61,7 +63,9 @@ class Wallet extends React.Component {
           id={ id }
           exchangeRatesNow={ exchangeRatesNow }
         />
-        <div>TrybeWallet</div>
+        <TableExpenses
+          expenses={ expenses }
+        />
       </div>
     );
   }
