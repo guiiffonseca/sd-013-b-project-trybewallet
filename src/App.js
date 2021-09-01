@@ -10,9 +10,6 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/carteira" component={ Wallet } />
-        {/* <Route exact path="/movies/:id" component={ MovieDetails } />
-        <Route exact path="/movies/:id/edit" component={ EditMovie } />
-        <Route path="*" component={ NotFound } /> */}
       </Switch>
     </>
   );
