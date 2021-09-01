@@ -1,4 +1,6 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
+import { LOGIN } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -6,11 +8,11 @@ const INITIAL_STATE = {
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'QUALQUER_COISA':
+  case LOGIN:
     return state;
   default:
     return state;
   }
-}
+};
 
 export default user;

@@ -1,7 +1,7 @@
 // Coloque aqui suas actions.
-export const GET_USERNAME = 'GET_USERNAME';
+export const LOGIN = 'LOGIN';
 
-export const getUsername = (payload) => ({
-  type: GET_USERNAME,
-  payload,
+export const actionLogin = (email) => ({
+  type: LOGIN,
+  email,
 });
