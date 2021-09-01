@@ -5,17 +5,29 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.handleTotalDespesas = this.handleTotalDespesas.bind(this);
+  }
+
+  handleTotalDespesas() {
+    const { despesa } = this.props;
+    const total = [];
+    despesa.forEach(desp => {
+      const objExchangeRates = desp.exchangeRates;
+      total.push(objExchangeRates[desp.currency].ask * desp.value);
+    });
+    const totalDespesa = total.reduce((acc, value) => acc + value, 0)
+    return `Total de Despesas RS: ${totalDespesa.toFixed(2)}`;
   }
 
   render() {
-    const { UserEmail } = this.props;
+    const { userEmail, despesa } = this.props;
     return (
       <header>
         <div data-testid="email-field">
-          Welcome {UserEmail}
+          Welcome {userEmail}
         </div>
         <div data-testid="total-field">
-          Despesas: R$ 0
+          { this.handleTotalDespesas() }
         </div>
         <div data-testid="header-currency-field">
           BRL
@@ -25,9 +37,9 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user: { email } }) => ({
-  UserEmail: email,
-
+const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
+  userEmail: email,
+  despesa: expenses,
 });
 
 export default connect(mapStateToProps)(Header);

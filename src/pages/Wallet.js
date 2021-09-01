@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionFunctionThunk } from '../actions';
-import { FormWallet } from '../components/FormWallet';
+import FormWallet from '../components/FormWallet';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {

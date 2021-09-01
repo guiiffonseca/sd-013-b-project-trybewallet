@@ -3,7 +3,9 @@ import { getAPI } from '../services/moedasAPI';
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN';
 export const RESPONSE_API = 'RESPONSE_API';
+export const RESPONSE_API2 = 'RESPONSE_API2';
 export const RESPONSE_ERROR = 'RESPONSE_ERROR';
+export const ADD_DESPESA = 'ADD_DESPESA';
 
 export const fazerLogin = (payload) => ({ type: LOGIN, payload });
 
@@ -28,22 +30,19 @@ export const actionFunctionThunk = () => async (dispatch) => {
   }
 };
 
-// OBJ RETORNO API
-// {
-//   {
-//     "USD": {
-//       "code":"USD",
-//       "codein":"BRL",
-//       "name":"Dólar Comercial",
-//       "high":"5.6689",
-//       "low":"5.6071",
-//       "varBid":"-0.0166",
-//       "pctChange":"-0.29",
-//       "bid":"5.6173",
-//       "ask":"5.6183",
-//       "timestamp":"1601476370",
-//       "create_date":"2020-09-30 11:32:53"
-//       },
-//      ...
-//   }
-// }
+export const ActionAddDespesa = (payload, fetch) => ({
+  type: ADD_DESPESA,
+  payload,
+  fetch,
+});
+
+export const actionFunctionThunk2 = (state) => async (dispatch) => {
+  try {
+    const response = await getAPI();
+    const payload = response;
+    // const arrayPayload = Object.entries(payload);
+    dispatch(ActionAddDespesa(state, payload));
+  } catch (error) {
+    dispatch(actionErrorAPI(error));
+  }
+};
