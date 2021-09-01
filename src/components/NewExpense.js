@@ -1,37 +1,47 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
 import Button from './Button';
-import { fetchExpense, ENDPOINT } from '../actions/index';
+import { fetchExpense, ENDPOINT, applyEddit, addCurrencies } from '../actions';
+
+const INITIAL_STATE = {
+  value: '',
+  description: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
+  id: 0,
+};
 
 class NewExpense extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      value: '',
-      description: '',
-      exchangeRates: {},
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    this.state = INITIAL_STATE;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.fetchCurrency = this.fetchCurrency.bind(this);
+    this.editRender = this.editRender.bind(this);
   }
 
   componentDidMount() {
     this.fetchCurrency();
   }
 
+  componentDidUpdate() {
+    this.editRender();
+  }
+
   async fetchCurrency() {
+    const { addCurrency } = this.props;
     const response = await fetch(ENDPOINT);
     const data = await response.json();
-    this.setState({ exchangeRates: data });
+    const currencies = Object.keys(data)
+      .filter((actualCurrency) => actualCurrency !== 'USDT');
+    addCurrency(currencies);
   }
 
   handleChange({ target }) {
@@ -43,9 +53,51 @@ class NewExpense extends Component {
   }
 
   handleClick() {
-    const { add } = this.props;
-    const { id } = this.props;
-    add({ ...this.state, id });
+    const { add, id } = this.props;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
+
+    add({
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      id,
+    });
+  }
+
+  handleEdit(id) {
+    const { edit } = this.props;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
+
+    edit({
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      id,
+    });
+  }
+
+  editRender() {
+    const { editor, expenses, idToEdit } = this.props;
+    const { id } = this.state;
+    if (editor && id !== idToEdit) {
+      this.setState(expenses.find((expense) => expense.id === idToEdit));
+    }
   }
 
   renderInputs() {
@@ -57,10 +109,11 @@ class NewExpense extends Component {
     return (
       <div>
         <Input
-          label="valor:"
+          label="Valor:"
           name="value"
           inputType="text"
           inputPlaceholder="Valor da Compra"
+          testid="value-input"
           value={ value }
           onChange={ this.handleChange }
         />
@@ -69,6 +122,7 @@ class NewExpense extends Component {
           name="description"
           inputType="text"
           inputPlaceholder="Descrição da Compra"
+          testid="description-input"
           value={ description }
           onChange={ this.handleChange }
         />
@@ -78,21 +132,20 @@ class NewExpense extends Component {
 
   renderSelects() {
     const {
-      exchangeRates,
       currency,
       method,
       tag,
     } = this.state;
 
+    const { currencies } = this.props;
+
     return (
       <div>
         <Select
-          options={
-            Object.keys(exchangeRates)
-              .filter((actualCurrency) => actualCurrency !== 'USDT')
-          }
+          options={ currencies }
           labelText="Moeda:"
           name="currency"
+          testid="currency-input"
           value={ currency }
           onChange={ this.handleChange }
         />
@@ -100,6 +153,7 @@ class NewExpense extends Component {
           options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
           labelText="Método de Pagamento"
           name="method"
+          testid="method-input"
           value={ method }
           onChange={ this.handleChange }
         />
@@ -107,6 +161,7 @@ class NewExpense extends Component {
           options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
           labelText="tag"
           name="tag"
+          testid="tag-input"
           value={ tag }
           onChange={ this.handleChange }
         />
@@ -114,13 +169,23 @@ class NewExpense extends Component {
     );
   }
 
-  renderButton() {
+  renderButtons() {
+    const { editor, idToEdit } = this.props;
+    if (editor) {
+      return (
+        <Button
+          buttonText="Editar despesa"
+          onClick={ () => this.handleEdit(idToEdit) }
+          disabled={ false }
+        />
+      );
+    }
+
     return (
       <Button
-        button="Adicionar despesa"
+        buttonText="Adicionar despesa"
         onClick={ () => this.handleClick() }
         disabled={ false }
-
       />
     );
   }
@@ -130,7 +195,7 @@ class NewExpense extends Component {
       <form>
         { this.renderInputs() }
         { this.renderSelects() }
-        { this.renderButton() }
+        { this.renderButtons() }
       </form>
     );
   }
@@ -138,15 +203,29 @@ class NewExpense extends Component {
 
 NewExpense.propTypes = {
   add: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
+  editor: PropTypes.bool.isRequired,
+  addCurrency: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  idToEdit: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(
+    PropTypes.object.isRequired,
+  ).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.string.isRequired,
+  ).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   add: (expense) => dispatch(fetchExpense(expense)),
+  edit: (expense) => dispatch(applyEddit(expense)),
+  addCurrency: (currencies) => dispatch(addCurrencies(currencies)),
 });
 
 const mapStateToProps = (state) => ({
   id: state.wallet.expenses.length,
+  expenses: state.wallet.expenses,
+  currencies: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewExpense);
