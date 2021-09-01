@@ -20,10 +20,8 @@ class Header extends Component {
         <div>
           <p data-testid="total-field">
             {`despesa total: ${expenses
-              .reduce((acc, currVal) => acc + currVal.value * currVal.exchangeRates[currVal.currency].ask, 0)
+              .reduce((acc, cV) => acc + cV.value * cV.exchangeRates[cV.currency].ask, 0)
               .toFixed(2)} `}
-            {/* despesa total:
-            {console.log(expenses)} */}
           </p>
           <p
             data-testid="header-currency-field"

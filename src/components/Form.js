@@ -113,6 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
 Form.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
   addExpenseAction: PropTypes.func.isRequired,
+  getCurrReq: PropTypes.func.isRequired,
 
 };
 
