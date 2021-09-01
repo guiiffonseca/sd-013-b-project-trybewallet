@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from '../components/Form';
 import Header from '../components/Header';
+import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -32,8 +33,13 @@ class Wallet extends React.Component {
     const { currencies } = this.state;
     return (
       <div>
-        <Header />
-        <Form currencies={ currencies } />
+        <div>
+          <Header />
+          <Form currencies={ currencies } />
+        </div>
+        <div>
+          <ExpenseTable />
+        </div>
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { dispatchApi } from '../actions';
 import { connect } from 'react-redux';
-import ExpensesButton from './Expense';
+import ExpensesButton from './ExpenseButton';
 
 class Form extends Component {
   constructor(props) {
