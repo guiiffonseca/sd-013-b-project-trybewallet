@@ -6,22 +6,44 @@ class WalletHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalOutgoing: 0,
       currency: 'BRL',
     };
     this.renderHeader = this.renderHeader.bind(this);
+    this.renderTotalOutgoing = this.renderTotalOutgoing.bind(this);
   }
 
-  renderHeader(email, totalOutgoing, currency) {
+  renderTotalOutgoing() {
+    const { expenses } = this.props;
+    if (expenses.length > 0) {
+      const array = [];
+      expenses.forEach((expense) => array.push({
+        value: parseFloat(expense.value),
+        conversion: parseFloat(expense.exchangeRates[expense.currency].ask),
+      }));
+      // conversion: (((parseFloat(expense.exchangeRates[expense.currency].high))
+      // + (parseFloat(expense.exchangeRates[expense.currency].low))) / 2),
+      // }));
+      const secondArray = [];
+      array.forEach((expense) => {
+        secondArray.push(((expense.value) * (expense.conversion)));
+      });
+      const totalAmount = secondArray.reduce((total, price) => total + price, 0);
+      console.log(Math.round(totalAmount * 100) / 100);
+      return (Math.round(totalAmount * 100) / 100);
+    }
+    return 0;
+  }
+
+  renderHeader(email, currency) {
     return (
       <header>
         <h4 data-testid="email-field">{email}</h4>
         <h4 data-testid="total-field">
-          Total Outgoing:
-          {totalOutgoing}
+          Despesa Total:
+          {this.renderTotalOutgoing()}
         </h4>
         <h4 data-testid="header-currency-field">
-          Currency:
+          Moeda:
           {currency}
         </h4>
       </header>
@@ -30,12 +52,10 @@ class WalletHeader extends Component {
 
   render() {
     const { userEmail } = this.props;
-    const { totalOutgoing, currency } = this.state;
+    const { currency } = this.state;
     return (
       <div>
-        {this.renderHeader(userEmail,
-          totalOutgoing,
-          currency)}
+        {this.renderHeader(userEmail, currency)}
       </div>
     );
   }
@@ -43,10 +63,12 @@ class WalletHeader extends Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 WalletHeader.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, null)(WalletHeader);
