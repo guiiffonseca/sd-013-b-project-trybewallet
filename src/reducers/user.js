@@ -4,12 +4,13 @@ import { LOGIN } from '../actions';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  email: '',
 };
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOGIN:
-    return state;
+    return { email: action.email };
   default:
     return state;
   }
