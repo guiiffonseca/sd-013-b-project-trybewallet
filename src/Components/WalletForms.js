@@ -1,4 +1,5 @@
 import React from 'react';
+import CoinApiFilter from './CoinApiFilter';
 
 class WalletForms extends React.Component {
   constructor(props) {
@@ -6,9 +7,8 @@ class WalletForms extends React.Component {
     this.state = {
       value: '',
       description: '',
-      coin: '',
-      payMethod: '',
-      expenseType: '',
+      paymethod: '',
+      expenses: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,7 +21,7 @@ class WalletForms extends React.Component {
   }
 
   render() {
-    const { value, description, coin, payMethod, expenseType } = this.state;
+    const { value, description, paymethod, expenses } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -42,15 +42,10 @@ class WalletForms extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="coin">
-          Moeda:
-          <select id="coin" value={ coin } onChange={ this.handleChange }>
-            <option value="sp">São Paulo</option>
-          </select>
-        </label>
-        <label htmlFor="pay-method">
+        <CoinApiFilter />
+        <label htmlFor="paymethod">
           Método de pagamento:
-          <select id="pay-method" value={ payMethod } onChange={ this.handleChange }>
+          <select id="paymethod" value={ paymethod } onChange={ this.handleChange }>
             <option value="dinheiro">Dinheiro</option>
             <option value="credito">Cartão de crédito</option>
             <option value="debito">Cartão de débito</option>
@@ -58,7 +53,7 @@ class WalletForms extends React.Component {
         </label>
         <label htmlFor="expenses">
           Tag:
-          <select id="expenses" value={ expenseType } onChange={ this.handleChange }>
+          <select id="expenses" value={ expenses } onChange={ this.handleChange }>
             <option value="alimentção">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
