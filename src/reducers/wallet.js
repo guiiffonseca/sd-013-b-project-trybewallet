@@ -2,6 +2,6 @@
 
 // export walletReducer = (state = INITIAL_STATE, action) => {
 //   switch (action.type) {
-//     case 
+//     case
 //   }
 // };
