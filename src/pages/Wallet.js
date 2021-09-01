@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -21,6 +22,10 @@ class Wallet extends React.Component {
     );
   }
 }
+
+Wallet.propTypes = {
+  user: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   user: state.user.email,
