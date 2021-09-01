@@ -5,12 +5,47 @@ import { connect } from 'react-redux';
 class Wallet extends React.Component {
   render() {
     const { user } = this.props;
-    console.log(user);
     return (
       <div>
-        <h2 data-testid="email-field">{ user.email }</h2>
-        <h3 data-testid="total-field">0</h3>
-        <h3 data-testid="header-currency-field">BRL</h3>
+        <section>
+          <h2 data-testid="email-field">{ user.email }</h2>
+          <h3 data-testid="total-field">0</h3>
+          <h3 data-testid="header-currency-field">BRL</h3>
+        </section>
+        <form>
+          <label htmlFor="value">
+            Valor:
+            <input type="number" id="value" />
+          </label>
+          <label htmlFor="description">
+            Descrição:
+            <input type="text" id="description" />
+          </label>
+          <label htmlFor="currency">
+            Moeda:
+            <select id="currency">
+              <option value="teste">teste</option>
+            </select>
+          </label>
+          <label htmlFor="payment">
+            Método de pagamento:
+            <select id="payment">
+              <option value="money">Dinheiro</option>
+              <option value="credit">Cartão de crédito</option>
+              <option value="debit">Cartão de débito</option>
+            </select>
+          </label>
+          <label htmlFor="tag">
+            Tag:
+            <select id="tag">
+              <option value="food">Alimentação</option>
+              <option value="leisure">Lazer</option>
+              <option value="job">Trabalho</option>
+              <option value="job">Transporte</option>
+              <option value="helth">Saúde</option>
+            </select>
+          </label>
+        </form>
       </div>
     );
   }
