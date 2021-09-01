@@ -1,27 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { setEmail as setEmailAction, setLoged as setLogedAction} from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
 
     this.handleButtonLock = this.handleButtonLock.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentDidMount() {
-    const button = document.getElementById('loginButton');
-    button.disabled = true;
-    console.log(this.props);
-  }
-
-  handleClick() {
-    const { setEmail, setLoged } = this.props;
-    const emailInput = document.getElementById('emailInput').value;
-    setEmail(emailInput);
-    setLoged();
   }
 
   handleButtonLock() {
@@ -66,11 +49,11 @@ class Login extends React.Component {
             />
           </label>
           <button
+            disabled
             type="button"
             name="entrar"
             value="Entrar"
             id="loginButton"
-            onClick={ this.handleClick }
           >
             Entrar
           </button>
@@ -78,8 +61,5 @@ class Login extends React.Component {
       </div>);
   }
 }
-const mapDispatchToProps = (dispatch) => ({
-  setEmail: (payload) => dispatch(setEmailAction(payload)),
-  setLoged: () => dispatch(setEmailAction()),
-});
-export default connect(null, mapDispatchToProps)(Login);
+
+export default Login;
