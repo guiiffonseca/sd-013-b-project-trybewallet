@@ -13,7 +13,7 @@ class Formulario extends Component {
       description: '',
       currency: 'USD',
       method: 'MONEY',
-      tag: 'alimentacao',
+      tag: 'Alimentacao',
     };
     this.fetchData = this.fetchData.bind(this);
     this.keyMap = this.keyMap.bind(this);
