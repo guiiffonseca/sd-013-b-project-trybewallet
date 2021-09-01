@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Header extends React.Component {
   constructor() {
     super();
-    this.expensesTotal = this.expensesTotal.bind(this); 
+    this.expensesTotal = this.expensesTotal.bind(this);
   }
 
   expensesTotal() {
