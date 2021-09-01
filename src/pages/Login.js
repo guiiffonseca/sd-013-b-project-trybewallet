@@ -11,9 +11,13 @@ class Login extends Component {
       email: '',
       password: '',
       activateLogin: true,
+      passwordIsValid: false,
+      emailIsValid: false,
+      shouldRedirectToCarteira: false,
     };
     this.handleChangeLogin = this.handleChangeLogin.bind(this);
-    this.letsStart = this.initStart.bind(this);
+    this.initStart = this.initStart.bind(this);
+    this.activateBtnLogin = this.activateBtnLogin.bind(this);
   }
 
   handleChangeLogin({ target }) {
@@ -40,16 +44,21 @@ class Login extends Component {
     if (password.length >= minimumPw && checkEmail.test(email)) {
       this.setState({
         activateLogin: false,
+        passwordIsValid: true,
+        emailIsValid: true,
       });
     } else {
       this.setState({
         activateLogin: true,
+        passwordIsValid: true,
+        emailIsValid: true,
       });
     }
   }
 
   render() {
-    const { email, password, activateLogin, shouldRedirectToCarteira } = this.state;
+    const { email, password, activateLogin, emailIsValid,
+      passwordIsValid, shouldRedirectToCarteira } = this.state;
     if (shouldRedirectToCarteira) {
       return <Redirect to="/carteira" />;
     }
@@ -64,7 +73,7 @@ class Login extends Component {
             onChange={ this.handleChangeLogin }
             data-testid="email-input"
           />
-          Senha
+          { passwordIsValid }
           <input
             id="password"
             name="password"
@@ -72,7 +81,7 @@ class Login extends Component {
             onChange={ this.handleChangeLogin }
             data-testid="password-input"
           />
-          Email
+          { emailIsValid }
           <button
             type="button"
             disabled={ activateLogin }
