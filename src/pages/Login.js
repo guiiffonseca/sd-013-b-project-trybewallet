@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setEmail, setLogged } from '../actions';
+import { setEmail as setEmailAction, setLogged as setLoggedAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -83,8 +83,8 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setEmail: (payload) => dispatch(setEmail(payload)),
-  setLogged: (payload) => dispatch(setLogged(payload)),
+  setEmail: (payload) => dispatch(setEmailAction(payload)),
+  setLogged: (payload) => dispatch(setLoggedAction(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
