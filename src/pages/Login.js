@@ -9,7 +9,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  USER_INFO: dispatch(USER_INFOACTION(payload))
+  USER_INFO: dispatch(USER_INFOACTION(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

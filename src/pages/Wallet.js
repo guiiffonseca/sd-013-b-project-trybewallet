@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  WALLET_INFO: (payload) => dispatch(WALLET_INFOACTION(payload))
+  WALLET_INFO: (payload) => dispatch(WALLET_INFOACTION(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
