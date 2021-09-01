@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.func).isRequired,
+  history: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   setEmail: PropTypes.func.isRequired,
 };
 

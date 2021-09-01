@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApi, getCurrency } from '../actions';
+import { fetchApi } from '../actions';
 
 import Input from '../components/Input';
 import Selects from '../components/Selects';
-import TableExchanges from './TableExchanges';
 
 class Wallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: 0,
+      moedas: [],
       value: 0,
-      descricao: '',
-      currency: 'UDS',
+      description: '',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
 
     this.handleMoedas = this.handleMoedas.bind(this);
-    this.handleOptions = this.createOptions.bind(this);
+    this.createOptions = this.createOptions.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.calcExchanges = this.calcExchanges.bind(this);
@@ -31,17 +31,18 @@ class Wallet extends Component {
   }
 
   async handleMoedas() {
-    const { saveCurrencies } = this.props;
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const moedasTotais = await response.json();
     const moedas = Object.keys(moedasTotais).filter((moeda) => moeda !== 'USDT');
-    saveCurrencies(moedas);
+    this.setState({
+      moedas,
+    });
   }
 
   createOptions() {
-    const { currencies } = this.props;
+    const { moedas } = this.state;
     return (
-      currencies.map((moeda, index) => (
+      moedas.map((moeda, index) => (
         <option
           key={ index }
           value={ moeda }
@@ -60,16 +61,11 @@ class Wallet extends Component {
 
   async submitForm() {
     const { saveValues } = this.props;
-    const { id, value, descricao, currency, tag, method } = this.state;
-    const filteredState = { id, value, descricao, currency, tag, method };
+    const { id, value, description, currency, tag, method } = this.state;
+    const filteredState = { id, value, description, currency, tag, method };
     saveValues(filteredState);
     this.setState((state) => ({
       id: state.id + 1,
-      value: 0,
-      descricao: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
     }));
   }
 
@@ -80,7 +76,7 @@ class Wallet extends Component {
       const numbers = exchanges.map(({ value, currency, exchangeRates }) => (
         exchangeRates[currency].ask * parseFloat(value)
       ));
-      sum = numbers.reduce((acumulator, currentValue) => acumulator + currentValue);
+      sum = numbers.reduce((acc, curr) => acc + curr);
       return sum.toFixed(2);
     }
     return sum;
@@ -88,7 +84,7 @@ class Wallet extends Component {
 
   render() {
     const { userEmail } = this.props;
-    const { value, descricao, currency, tag, method } = this.state;
+    const { value, description, currency, tag, method } = this.state;
     return (
       <>
         <header>
@@ -100,21 +96,21 @@ class Wallet extends Component {
           <Input
             label="Valor"
             value={ value }
-            id="valor"
-            name="valor"
             type="number"
+            name="value"
+            id="value"
             onChange={ this.handleChange }
           />
           <Input
             label="Descrição"
-            value={ descricao }
-            id="descricao"
-            name="descricao"
+            value={ description }
+            id="description"
+            name="description"
             type="text"
             onChange={ this.handleChange }
           />
           <Selects
-            createOptions={ this.handleOptions }
+            createOptions={ this.createOptions }
             handleChange={ this.handleChange }
             currency={ currency }
             method={ method }
@@ -127,7 +123,6 @@ class Wallet extends Component {
             Adicionar despesa
           </button>
         </form>
-        <TableExchanges />
       </>
     );
   }
@@ -136,19 +131,15 @@ class Wallet extends Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   exchanges: state.wallet.expenses,
-  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveValues: (state) => dispatch(fetchApi(state)),
-  saveCurrencies: (state) => dispatch(getCurrency(state)),
 });
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   saveValues: PropTypes.func.isRequired,
-  saveCurrencies: PropTypes.func.isRequired,
   exchanges: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 

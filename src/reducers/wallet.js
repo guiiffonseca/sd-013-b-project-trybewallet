@@ -5,18 +5,13 @@ const INITIAL_STATE = {
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'SAVE_EXPENSES':
+  case 'SET_EXPENSES':
     return {
       ...state,
       expenses: [
         ...state.expenses,
         action.state,
       ],
-    };
-  case 'GET_CURRENCY':
-    return {
-      ...state,
-      currencies: [...action.state],
     };
   default:
     return state;
