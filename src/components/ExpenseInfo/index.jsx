@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import formatCurrency from '../../utils/formatCurrency';
-import { destroyExpense } from '../../actions';
+import { destroyExpense, prepareEditExpense } from '../../actions';
 
 const ExpenseInfo = ({
   expense: {
@@ -16,6 +16,8 @@ const ExpenseInfo = ({
     exchangeRates,
   },
   exclude,
+  goToEdit,
+  isEditing,
 }) => {
   const { name, ask } = exchangeRates[currency];
   const convertedValue = parseFloat(value * ask);
@@ -34,9 +36,18 @@ const ExpenseInfo = ({
         <button
           data-testid="delete-btn"
           type="button"
+          disabled={ isEditing }
           onClick={ () => exclude(id) }
         >
           Delete
+        </button>
+        <button
+          data-testid="edit-btn"
+          type="button"
+          disabled={ isEditing }
+          onClick={ () => goToEdit(id) }
+        >
+          Editar
         </button>
       </td>
     </tr>
@@ -45,10 +56,17 @@ const ExpenseInfo = ({
 
 const mapDispatchToProps = (dispatch) => ({
   exclude: (id) => dispatch(destroyExpense(id)),
+  goToEdit: (id) => dispatch(prepareEditExpense(id)),
+});
+
+const mapStateToProps = ({ wallet: { editor } }) => ({
+  isEditing: editor,
 });
 
 ExpenseInfo.propTypes = {
   exclude: PropTypes.func.isRequired,
+  goToEdit: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
   expense: PropTypes.shape({
     id: PropTypes.number,
     value: PropTypes.string,
@@ -60,4 +78,4 @@ ExpenseInfo.propTypes = {
   }).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(ExpenseInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseInfo);

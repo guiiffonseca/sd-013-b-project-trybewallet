@@ -3,8 +3,11 @@ export const LOGIN = 'LOGIN';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const PREPARE_EDIT_EXPENSE = 'PREPARE_EDIT_EXPENSE';
 export const ADD_EXPENSES_TOTAL = 'ADD_EXPENSES_TOTAL';
 export const SUB_EXPENSES_TOTAL = 'SUB_EXPENSES_TOTAL';
+
 // user actions
 export const login = (email) => ({
   type: LOGIN,
@@ -24,6 +27,16 @@ const addExpense = (expense) => ({
 
 const deleteExpense = (expenseId) => ({
   type: DELETE_EXPENSE,
+  payload: expenseId,
+});
+
+export const editExpense = (expenseToEdit) => ({
+  type: EDIT_EXPENSE,
+  payload: expenseToEdit,
+});
+
+export const prepareEditExpense = (expenseId) => ({
+  type: PREPARE_EDIT_EXPENSE,
   payload: expenseId,
 });
 

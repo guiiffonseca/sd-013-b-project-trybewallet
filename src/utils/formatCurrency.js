@@ -1,3 +1,3 @@
 export default (value) => Intl.NumberFormat(
-  'en-US', { maximumFractionDigits: 2, useGrouping: false },
-).format(value);
+  'en-US', { style: 'currency', currency: 'BRL' },
+).format(value).replace('R$', '').replace('.00', '');

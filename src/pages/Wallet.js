@@ -1,14 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { Header, ExpensesForm, ExpensesTable } from '../components';
+import { Header, ExpensesForm, EditExpenseForm, ExpensesTable } from '../components';
 
 class Wallet extends React.Component {
   render() {
+    const { editor } = this.props;
+
     return (
       <>
         <Header />
         <main>
-          <ExpensesForm />
+          {
+            editor
+              ? <EditExpenseForm />
+              : <ExpensesForm />
+          }
           <ExpensesTable />
         </main>
       </>
@@ -16,4 +24,16 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+const mapStateToProps = ({ wallet: { editor } }) => ({
+  editor,
+});
+
+Wallet.propTypes = {
+  editor: PropTypes.bool,
+};
+
+Wallet.defaultProps = {
+  editor: false,
+};
+
+export default connect(mapStateToProps, null)(Wallet);

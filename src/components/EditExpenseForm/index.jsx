@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCurrencies, createExpense } from '../../actions';
+import { editExpense } from '../../actions';
 import FormHandler from '../FormHandler';
 
 const PAYMENT_METHODS = [
@@ -19,27 +19,17 @@ const TAGS = [
   'Saúde',
 ];
 
-class ExpensesForm extends React.Component {
+class EditExpenseForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: '0',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      ...props.expenseToEdit,
     };
 
     this.onChange = this.onChange.bind(this);
     this.renderHandler = this.renderHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    const { fetchCurrencies } = this.props;
-
-    fetchCurrencies();
   }
 
   onChange({ target: { name, value } }) {
@@ -97,7 +87,7 @@ class ExpensesForm extends React.Component {
         { this.renderHandler({
           label: 'Tag:', type: 'select', name: 'tag', value: tag, options: TAGS })}
         <button type="submit">
-          Adicionar despesa
+          Editar despesa
         </button>
       </form>
     );
@@ -105,16 +95,24 @@ class ExpensesForm extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrencies: () => dispatch(getCurrencies()),
-  submit: (data) => dispatch(createExpense(data)),
+  submit: (data) => dispatch(editExpense(data)),
 });
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({ currencies });
+const mapStateToProps = ({ wallet: { currencies, expenses, idToEdit } }) => ({
+  expenseToEdit: expenses.find(({ id }) => id === idToEdit),
+  currencies,
+});
 
-ExpensesForm.propTypes = {
+EditExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  fetchCurrencies: PropTypes.func.isRequired,
+  expenseToEdit: PropTypes.shape({
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }).isRequired,
   submit: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpenseForm);
