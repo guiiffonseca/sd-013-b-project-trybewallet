@@ -54,6 +54,7 @@ class Form extends Component {
             id="field-valor"
             name="value"
             type="number"
+            min="0"
             step="0.01"
             value={ value }
             onChange={ this.handleChange }

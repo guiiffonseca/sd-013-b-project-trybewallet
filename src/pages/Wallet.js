@@ -35,7 +35,6 @@ class Wallet extends React.Component {
   }
 
   render() {
-    console.log(this.amountExpenses());
     const { cambio } = this.state;
     const { getEmail } = this.props;
     return (

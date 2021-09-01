@@ -3,6 +3,7 @@ import searchAPI from '../services/fetchApi';
 export const SET_EMAIL = 'GET_EMAIL';
 export const SET_CURRENCIES = 'GET_WALLET';
 export const SET_EXPENSES = 'GET_AWESOMEAPI';
+export const SET_NEW_EXPENSES = 'SET_NEW_EXPENSES';
 
 export const setEmail = (email) => ({
   type: SET_EMAIL,
@@ -17,6 +18,11 @@ export const setCurrencies = (currencies) => ({
 export const setExpenses = (newExpenses) => ({
   type: SET_EXPENSES,
   newExpenses,
+});
+
+export const setNewExpenses = (newArrayExpenses) => ({
+  type: SET_NEW_EXPENSES,
+  newArrayExpenses,
 });
 
 export const setFetchCurrencies = () => async (dispatch) => {

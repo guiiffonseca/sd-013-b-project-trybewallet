@@ -1,10 +1,59 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setNewExpenses } from '../actions';
 
 class Table extends Component {
-  render() {
+  constructor() {
+    super();
+    this.onClear = this.onClear.bind(this);
+  }
+
+  onClear({ target }) {
+    const { expenses, setExpenses } = this.props;
+    setExpenses(expenses.filter(({ id }) => id !== Number(target.id)));
+  }
+
+  renderTbody() {
     const { expenses } = this.props;
+    return (
+      <tbody>
+        {
+          expenses.map(({ id, description, tag, method, value, currency, exchangeRates,
+          }) => (
+            <tr key={ id }>
+              <td>{ description }</td>
+              <td>{ tag }</td>
+              <td>{ method }</td>
+              <td>{ value }</td>
+              <td>{ exchangeRates[currency].name.split('/')[0] }</td>
+              <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
+              <td>
+                {
+                  (parseFloat(value) * parseFloat(exchangeRates[currency].ask))
+                    .toFixed(2)
+                }
+              </td>
+              <td>Real</td>
+              <td>
+                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  id={ id }
+                  onClick={ (e) => this.onClear(e) }
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    );
+  }
+
+  render() {
     return (
       <table>
         <thead>
@@ -20,32 +69,7 @@ class Table extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>
-          {
-            expenses.map(({ id, description, tag, method, value, currency, exchangeRates,
-            }) => (
-              <tr key={ id }>
-                <td>{ description }</td>
-                <td>{ tag }</td>
-                <td>{ method }</td>
-                <td>{ value }</td>
-                <td>{ exchangeRates[currency].name.split('/')[0] }</td>
-                <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
-                <td>
-                  {
-                    (parseFloat(value) * parseFloat(exchangeRates[currency].ask))
-                      .toFixed(2)
-                  }
-                </td>
-                <td>Real</td>
-                <tr>
-                  <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
-                </tr>
-              </tr>
-            ))
-          }
-        </tbody>
+        { this.renderTbody() }
       </table>
     );
   }
@@ -55,8 +79,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  setExpenses: (expenses) => dispatch(setNewExpenses(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(String).isRequired,
+  setExpenses: PropTypes.func.isRequired,
 };
