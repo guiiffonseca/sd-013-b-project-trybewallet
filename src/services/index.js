@@ -1,14 +1,14 @@
 import { onePageInputChange } from './onePageInputChange';
 import {
-  getCurrentISSLocation,
+  walletApi,
   TWO_SECONDS,
-} from './getCurrentISSLocation';
+} from './walletApi';
 import loginInputChange from './loginInputChange';
 import loginButtonClick from './loginButtonClick';
 
 const allFunctions = {
   onePageInputChange,
-  getCurrentISSLocation,
+  walletApi,
   TWO_SECONDS,
   loginInputChange,
   loginButtonClick,
