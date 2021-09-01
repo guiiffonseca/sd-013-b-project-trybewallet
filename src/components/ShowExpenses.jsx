@@ -20,9 +20,9 @@ class ShowExpenses extends React.Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <div>
+        <tbody>
           { expenses.map((item, index) => <AddExpense key={ index } expenses={ item } />)}
-        </div>
+        </tbody>
       </table>
     );
   }

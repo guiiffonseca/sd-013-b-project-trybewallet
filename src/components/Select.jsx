@@ -31,7 +31,7 @@ class Select extends React.Component {
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
             <option value="Transporte">Transporte</option>
-            <optin value="Saúde">Saúde</optin>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </>

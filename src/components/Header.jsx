@@ -42,9 +42,15 @@ class Header extends React.Component {
   }
 }
 
+Header.defaultProps = {
+  totalExpense: 0,
+};
+
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  totalExpense: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  sumCurrencies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ user, wallet }) => ({
