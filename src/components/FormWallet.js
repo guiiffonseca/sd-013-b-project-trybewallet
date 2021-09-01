@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class FormWallet extends Component {
   renderValueInput() {
@@ -26,13 +27,14 @@ export default class FormWallet extends Component {
   }
 
   renderCurrencySelect() {
+    const { currencies, renderCurrencies } = this.props;
     return (
       <label htmlFor="currency-select">
         Moeda:
         <select
           id="currency-select"
         >
-          <option>FirstOption</option>
+          {renderCurrencies(currencies)}
         </select>
       </label>
     );
@@ -86,3 +88,8 @@ export default class FormWallet extends Component {
     return this.renderForm();
   }
 }
+
+FormWallet.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  renderCurrencies: PropTypes.func.isRequired,
+};
