@@ -1,7 +1,7 @@
 .header-container {
+  border: 0.2em solid orange;
   display: flex;
   justify-content: flex-end;
-  border: 0.2em solid orange;
 }
 
 .header-container > span {
@@ -9,10 +9,10 @@
 }
 
 .form-container {
+  border: 0.2em solid blue;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
-  border: 0.2em solid blue;
 }
 
 .form-container > label > * {
