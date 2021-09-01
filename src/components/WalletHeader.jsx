@@ -20,9 +20,6 @@ class WalletHeader extends Component {
         value: parseFloat(expense.value),
         conversion: parseFloat(expense.exchangeRates[expense.currency].ask),
       }));
-      // conversion: (((parseFloat(expense.exchangeRates[expense.currency].high))
-      // + (parseFloat(expense.exchangeRates[expense.currency].low))) / 2),
-      // }));
       const secondArray = [];
       array.forEach((expense) => {
         secondArray.push(((expense.value) * (expense.conversion)));
