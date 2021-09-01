@@ -6,7 +6,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currency: 'BRL',
+      currency: 'BOL',
     };
   }
 
@@ -19,12 +19,19 @@ class Header extends Component {
         <p data-testid="email-field">{`email: ${email}`}</p>
         <div>
           <p data-testid="total-field">
-            {`despesa total: ${expenses.reduce((acc, currVal) => acc + currVal.value * currVal.exchangeRates[0].ask, 0)} `}
+            {`despesa total: ${expenses
+              .reduce((acc, currVal) => acc + currVal.value * currVal.exchangeRates[currVal.currency].ask, 0)
+              .toFixed(2)} `}
+            {/* despesa total:
+            {console.log(expenses)} */}
           </p>
           <p
             data-testid="header-currency-field"
           >
-            {`cambio usado:${currency}`}
+            cambio usado:
+            <span id="currency_used">
+              {currency}
+            </span>
           </p>
         </div>
       </header>
@@ -39,6 +46,7 @@ const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

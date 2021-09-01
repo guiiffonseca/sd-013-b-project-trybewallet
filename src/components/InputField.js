@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class InputField extends Component {
   constructor(props) {
@@ -22,5 +23,13 @@ class InputField extends Component {
     );
   }
 }
+
+InputField.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  labelName: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 export default InputField;

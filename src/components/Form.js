@@ -11,7 +11,7 @@ class Form extends Component {
       id: 0,
       value: 3,
       description: 'Hot Dog',
-      currency: 'BRL',
+      currency: 'TST',
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
@@ -24,7 +24,7 @@ class Form extends Component {
     this.setState({
       value: 0,
       description: '',
-      currency: 'CAD',
+      currency: 'TST',
       method: 'Dinheiro',
       tag: 'Lazer',
     });
@@ -40,7 +40,13 @@ class Form extends Component {
     const { addExpenseAction, getCurrReq } = this.props;
     const { value } = this.state;
     getCurrReq();
-    addExpenseAction({ ...this.state, value: Number(value) });
+    addExpenseAction({
+      ...this.state,
+      currency: document.getElementById('pay_currency').value,
+      method: document.getElementById('pay_met').value,
+      tag: document.getElementById('tag').value,
+      value,
+    });
     this.resetState();
   }
 
@@ -59,6 +65,7 @@ class Form extends Component {
   render() {
     const { currencies } = this.props;
     const { value, description } = this.state;
+    const coins = Object.values(currencies);
 
     return (
       <form>
@@ -67,9 +74,7 @@ class Form extends Component {
         <label htmlFor="pay_currency">
           Moeda
           <select name="pay_currency" id="pay_currency">
-            {currencies
-              .filter((currency) => currency.codein !== 'BRLT')
-              .map((currency) => <option key={ currency.code }>{currency.code}</option>)}
+            {coins.map((coin) => <option key={ coin.code }>{coin.code}</option>)}
           </select>
         </label>
         <label htmlFor="pay_met">
@@ -80,9 +85,9 @@ class Form extends Component {
             <option>Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="pay_met">
+        <label htmlFor="tag">
           Tag
-          <select name="pay_met" id="pay_met">
+          <select name="tag" id="tag">
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -90,7 +95,7 @@ class Form extends Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ this.addExpense }>Add expense</button>
+        <button type="button" onClick={ this.addExpense }>adicionar despesa</button>
       </form>
     );
   }
@@ -107,6 +112,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Form.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addExpenseAction: PropTypes.func.isRequired,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

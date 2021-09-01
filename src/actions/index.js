@@ -25,14 +25,15 @@ export const getCurrencyThunk = () => async (dispatch) => {
     const url = 'https://economia.awesomeapi.com.br/json/all';
     const response = await fetch(url);
     const result = await response.json();
-    const currencies = Object.values(result);
-    dispatch(getCurrencySuccess(currencies));
+    // const currencies = Object.values(result);
+    delete result.USDT;
+    dispatch(getCurrencySuccess(result));
   } catch (error) {
     dispatch(getCurrencyError(error));
   }
 };
 
-export const setUser = (payload) => ({
+const setUser = (payload) => ({
   type: SET_USER,
   payload,
 });
