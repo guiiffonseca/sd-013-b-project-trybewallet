@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { expensesActionDelete } from '../actions';
+import { expensesActionDelete, expensesActionEdit } from '../actions';
 
 class WalletTable extends React.Component {
   constructor() {
@@ -11,11 +11,13 @@ class WalletTable extends React.Component {
   }
 
   handleChange({ target }) {
-    const { expenses, removeExpense } = this.props;
+    const { expenses, removeExpense, editExpense } = this.props;
     const { id } = target.parentNode;
-    const expensesFiltered = expenses
-      .filter(({ id: idExpense }) => idExpense !== Number(id));
-    removeExpense(expensesFiltered);
+    if (target.id === 'delete-btn') {
+      const expensesFiltered = expenses
+        .filter(({ id: idExpense }) => idExpense !== Number(id));
+      removeExpense(expensesFiltered);
+    } else editExpense(true, id);
   }
 
   tableRender() {
@@ -28,7 +30,7 @@ class WalletTable extends React.Component {
             <td>{ tag }</td>
             <td>{ method }</td>
             <td>{ value }</td>
-            <td>{ exchangeRates[currency].name }</td>
+            <td>{ exchangeRates[currency].name.split('/')[0] }</td>
             <td>{ (Number(exchangeRates[currency].ask)).toFixed(2) }</td>
             <td>
               { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
@@ -39,6 +41,7 @@ class WalletTable extends React.Component {
                 onClick={ this.handleChange }
                 type="button"
                 data-testid="edit-btn"
+                id="edit-btn"
               >
                 EDIT
               </button>
@@ -46,6 +49,7 @@ class WalletTable extends React.Component {
                 onClick={ this.handleChange }
                 type="button"
                 data-testid="delete-btn"
+                id="delete-btn"
               >
                 X
               </button>
@@ -84,10 +88,13 @@ class WalletTable extends React.Component {
 
 WalletTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string),
+  editExpense: PropTypes.func,
+  removeExpense: PropTypes.func,
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (expenses) => dispatch(expensesActionDelete(expenses)),
+  editExpense: (editValue, id) => dispatch(expensesActionEdit(editValue, id)),
 });
 
 const mapStateToProps = ({ wallet }) => ({

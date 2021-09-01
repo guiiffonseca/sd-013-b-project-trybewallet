@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WalletForm from '../components/WalletForm';
 import WalletTable from '../components/WalletTable';
+import WalletEditForm from '../components/WalletEditForm';
 
 class Wallet extends React.Component {
   render() {
-    const { email, expenses } = this.props;
+    const { email, expenses, editExpense } = this.props;
     const totalField = expenses.reduce(
       (accumulator, { value, exchangeRates, currency }) => (
         accumulator + Number(value) * Number(exchangeRates[currency].ask)
@@ -22,7 +23,8 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </p>
         </header>
-        <WalletForm />
+        {/* <WalletForm /> */}
+        { editExpense ? <WalletEditForm /> : <WalletForm /> }
         <WalletTable />
       </div>
     );
@@ -32,11 +34,13 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   email: PropTypes.string,
   expenses: PropTypes.arrayOf(PropTypes.string),
+  editExpense: PropTypes.bool,
 }.isRequired;
 
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   expenses: wallet.expenses,
+  editExpense: wallet.editExpense,
 });
 
 export default connect(mapStateToProps)(Wallet);

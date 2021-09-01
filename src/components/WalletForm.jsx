@@ -85,7 +85,7 @@ class WalletForm extends React.Component {
             id="currency"
           >
             {
-              Object.keys(currencies).map((currency) => (
+              currencies.map((currency) => (
                 <option key={ currency }>{ currency }</option>
               ))
             }
@@ -121,7 +121,7 @@ class WalletForm extends React.Component {
 WalletForm.propTypes = {
   add: PropTypes.func,
   expensesAdd: PropTypes.func,
-  currencies: PropTypes.objectOf(PropTypes.string),
+  currencies: PropTypes.arrayOf(PropTypes.string),
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
