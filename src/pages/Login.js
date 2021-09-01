@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { login as loginAction } from '../actions';
 import { Input, Button } from '../components/Index';
 
 class Login extends React.Component {
@@ -6,13 +9,14 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      // email: '',
+      email: '',
       // password: '',
       validEmail: false,
       validPassword: false,
       disableButton: true,
     };
 
+    this.handleLogin = this.handleLogin.bind(this);
     this.enableOrDisableButton = this.enableOrDisableButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -26,9 +30,9 @@ class Login extends React.Component {
   }
 
   handleChange({ target }) {
-    // console.log(target.minLength);
-    // console.log(target.value.length);
-    // console.log(target.checkValidity());
+    console.log(`MIN LENGTH: ${target.minLength}`);
+    console.log(`CURRENT: ${target.value.length}`);
+    console.log(`VALID: ${target.checkValidity()}`);
 
     this.setState({
       [target.name]: target.value,
@@ -36,6 +40,14 @@ class Login extends React.Component {
     });
 
     this.enableOrDisableButton();
+  }
+
+  handleLogin() {
+    const { email } = this.state;
+    const { login, history } = this.props;
+
+    login(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -65,10 +77,22 @@ class Login extends React.Component {
         <Button
           label="Entrar"
           disable={ disableButton }
+          click={ this.handleLogin }
         />
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  login: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(loginAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

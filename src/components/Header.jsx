@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
+    const { logedEmail } = this.props;
+
     return (
       <header className="header">
         <div>
@@ -10,16 +13,23 @@ export default class Header extends Component {
 
         <div className="header-infos">
           <div>
-            <span>Email: </span>
-            <span data-testid="email-field"> email@email.com</span>
+            <strong>Email: </strong>
+            <span data-testid="email-field">{ logedEmail }</span>
           </div>
 
           <div>
-            <span>Despesa Total: </span>
-            <span data-testid="total-field">0</span>
+            <strong>Despesa Total: </strong>
+            <span data-testid="total-field">0 </span>
+            <span data-testid="header-currency-field">BRL</span>
           </div>
         </div>
       </header>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  logedEmail: state.user.email,
+});
+
+export default connect(mapStateToProps, null)(Header);

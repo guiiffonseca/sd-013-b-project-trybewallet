@@ -19,7 +19,7 @@ export default class Button extends Component {
 
 Button.propTypes = {
   click: PropTypes.func,
-  disable: PropTypes.bool.isRequired,
+  disable: PropTypes.bool,
   label: PropTypes.string.isRequired,
   testid: PropTypes.string,
   type: PropTypes.string,
@@ -27,6 +27,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   click: () => {},
+  disable: false,
   testid: '',
   type: 'button',
 };

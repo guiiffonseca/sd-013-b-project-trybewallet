@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button';
 import Input from './Input';
 import Select from './Select';
 
@@ -37,6 +38,10 @@ export default class AddExpensesForm extends Component {
           id="tag"
           label="Tag"
           options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+        />
+        
+        <Button
+          label="Adicionar despesa"
         />
       </form>
     );
