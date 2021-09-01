@@ -10,12 +10,13 @@ class Wallet extends React.Component {
     super(props);
     this.state = {
       all: {
+        total: 0,
         id: 0,
-        value: '0',
-        currency: '',
-        method: '',
-        tag: '',
-        description: '',
+        value: 0,
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'tag',
+        description: 'none',
       },
     };
     this.onChange = this.onChange.bind(this);
@@ -33,7 +34,6 @@ class Wallet extends React.Component {
 
   onChange(event) {
     const { name, value: thisValue } = event.target;
-    // const { all: { value, currency, method, tag, description } } = this.state;
     const nameToString = name.toString();
     this.setState(({ all }) => ({
       all: {
@@ -41,7 +41,6 @@ class Wallet extends React.Component {
         [nameToString]: thisValue,
       },
     }));
-    // console.log(value, currency, method, tag, description);
   }
 
   onClick() {
@@ -68,7 +67,16 @@ class Wallet extends React.Component {
       getWallet(getWalletApi);
     };
     awaitForWalletApi();
-    console.log(globalState.getWallet);
+    const convertedValue = parseFloat(
+      globalState.wallet.expenses[id].exchangeRates[currency].ask,
+    );
+    const sum = parseFloat(value * convertedValue).toFixed(2);
+    this.setState(({ all }) => ({
+      all: {
+        ...all,
+        total: parseFloat(all.total) + parseFloat(sum),
+      },
+    }));
   }
 
   labels() {
@@ -101,10 +109,11 @@ class Wallet extends React.Component {
   }
 
   labelsTwo(total) {
-    const result = 187.12;
+    // const result = 187.12;
     return (
       <div>
-        <div data-testid="total-field">{total > 0 ? result : 0}</div>
+        {/* <div data-testid="total-field">{total > 0 ? result : 0}</div> */}
+        <div data-testid="total-field">{total.toFixed(2)}</div>
         <div data-testid="header-currency-field">BRL</div>
         <label htmlFor="input-one" data-testid="value-input">
           Valor
@@ -128,12 +137,8 @@ class Wallet extends React.Component {
     );
   }
 
-  // const { tag, paymentMethod, currency, description } = this.state;
-  // console.log(total, tag, paymentMethod, currency, description);
   render() {
-    const { all: { value: total } } = this.state;
-    // const { all } = this.state;
-    // console.log(all);
+    const { all: { total } } = this.state;
     const {
       globalState: { user, getWallet },
     } = this.props;
@@ -183,8 +188,6 @@ function mapDispatchToProps(dispatch) {
     user: (item) => dispatch(action.user(item)),
     getWallet: (item) => dispatch(action.getWallet(item)),
     wallet: (item) => dispatch(action.wallet(item)),
-    // updateISSLocation: async () => await dispatch(action.updateISSLocation()),
-    // getISSLocation: () => dispatch(action.getISSLocationThunk()),
   };
 }
 
