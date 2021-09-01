@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import userLogin from '../actions';
 
 class Login extends React.Component {
@@ -9,8 +10,11 @@ class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.state = {
       email: '',
+      password: '',
     };
   }
+
+  emailValidation() {}
 
   handleLogin({ target }) {
     const { name, value } = target;
@@ -21,8 +25,18 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email } = this.state;
+    const { email, password } = this.state;
     const userEmail = this.props;
+    const minLength = 6;
+
+    const emailIsValid = () => {
+      const validationRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      const validEmail = validationRegex.test(email);
+      return validEmail;
+    };
+
+    const passwordValidator = password.length >= minLength;
+
     return (
       <div>
         <input
@@ -41,12 +55,17 @@ class Login extends React.Component {
           placeholder="insira sua senha"
           required
         />
-        <button
-          type="button"
-          onClick={ () => userEmail(email) }
+        <Link
+          onClick={ () => (userEmail(email)) }
+          to="/carteira"
         >
-          Entrar
-        </button>
+          <button
+            type="button"
+            disabled={ !(emailIsValid() && passwordValidator) }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>);
   }
 }
@@ -57,17 +76,17 @@ const mapDispatchtoProps = (dispatch) => ({
 
 export default connect(null, mapDispatchtoProps)(Login);
 
-/* #### 1. Crie uma página inicial de login com os seguintes campos e características:
+/* 2. Realize as seguintes verificações nos campos de email, senha e botão:
+O email está no formato válido, como 'alguem@alguem.com'.
 
-  * A rota para esta página deve ser ‘/’.
+A senha possui 6 ou mais caracteres.
 
-  * Você deve criar um local para que a pessoa usuária insira seu email e senha. Utilize o atributo `data-testid="email-input"` para o email e `data-testid="password-input"` para a senha.
+Salve o email no estado da aplicação, com a chave email, assim que a pessoa usuária logar.
 
-  * Crie um botão com o texto ‘Entrar’.
+A rota deve ser mudada para '/carteira' após o clique no botão 'Entrar'.
 
-  O que será testado:
-  ```
-  - A rota para esta página deve ser "/"
-  - Existe um local para que o usuário insira seu email e senha
-  - Existe um botão com o texto "Entrar"
-  ``` */
+O que será testado:
+
+- O botão de "Entrar" está desabilitado ao entrar na página
+- O botão de "Entrar está desabilitado quando um email inválido é digitado
+- O botão de "Entrar" está habilitado quando um email e uma senha válidos são passados */
