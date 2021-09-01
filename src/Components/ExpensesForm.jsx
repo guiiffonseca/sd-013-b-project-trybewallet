@@ -1,7 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getCurrenciesThunk } from '../actions';
 
 class ExpensesForm extends React.Component {
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   render() {
+    
+    const { currencies } = this.props;
+
     return (
       <form>
         <label htmlFor="Valor">
@@ -15,7 +26,7 @@ class ExpensesForm extends React.Component {
         <label htmlFor="Moeda">
           Moeda
           <select name="Moeda" id="Moeda">
-            <option>BRL</option>
+            {currencies.map((currency, index) => (<option key={ index }>{currency.code}</option>))}
           </select>
         </label>
         <label htmlFor="Método de pagamento">
@@ -41,4 +52,10 @@ class ExpensesForm extends React.Component {
   }
 }
 
-export default ExpensesForm;
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+const mapStateToProps = ({ wallet: currencies }) => (currencies);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
