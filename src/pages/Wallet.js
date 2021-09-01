@@ -21,7 +21,6 @@ class Wallet extends React.Component {
     // const { expenses } = wallet;
     // const ArrayEx = expenses;
 
-    console.log(nomeMoeda);
     retorno += Valor;
     this.setState(({
       despesas: retorno,
