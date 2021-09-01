@@ -12,7 +12,7 @@ class Formulario extends Component {
       value: '',
       description: '',
       currency: 'USD',
-      method: 'MONEY',
+      method: 'Dinheiro',
       tag: 'Alimentacao',
     };
     this.fetchData = this.fetchData.bind(this);
@@ -72,7 +72,7 @@ class Formulario extends Component {
       value: '',
       description: '',
       currency: 'USD',
-      method: 'MONEY',
+      method: 'Dinheiro',
       tag: 'alimentacao',
     });
   }

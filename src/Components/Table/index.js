@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { removeExpense } from '../../actions';
+import { removeExpense, editExpense } from '../../actions';
 
 class Table extends Component {
   deleteFromState(index) {
@@ -9,22 +9,35 @@ class Table extends Component {
     removeFromState(index);
   }
 
+  saveExpense(despesa) {
+    const { edit } = this.props;
+    edit(despesa);
+  }
+
+  renderTh() {
+    return (
+      <tr>
+        <th>Descrição</th>
+        <th>Tag</th>
+        <th>Método de pagamento</th>
+        <th>Valor</th>
+        <th>Moeda</th>
+        <th>Câmbio utilizado</th>
+        <th>Valor convertido</th>
+        <th>Moeda de conversão</th>
+        <th>Editar/Excluir</th>
+      </tr>
+    );
+  }
+
   render() {
     const { expenses } = this.props;
     if (expenses.length === 0) return <h1>Sem despesas</h1>;
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
+        {
+          this.renderTh()
+        }
         {
           expenses.map((despesa, index) => (
             <tr key={ despesa.id }>
@@ -50,6 +63,13 @@ class Table extends Component {
                 >
                   Remover
                 </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => this.saveExpense(despesa) }
+                >
+                  Editar
+                </button>
               </td>
             </tr>
           ))
@@ -63,13 +83,15 @@ const mapStateToProps = (dispatch) => ({
   expenses: dispatch.wallet.expenses,
 });
 
-const mapDispatchToProps = (dispatach) => ({
-  removeFromState: (index) => dispatach(removeExpense(index)),
+const mapDispatchToProps = (dispatch) => ({
+  removeFromState: (index) => dispatch(removeExpense(index)),
+  edit: (despesa) => dispatch(editExpense(despesa)),
 });
 
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
   removeFromState: propTypes.func.isRequired,
+  edit: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
