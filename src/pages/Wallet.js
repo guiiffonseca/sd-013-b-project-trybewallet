@@ -21,7 +21,7 @@ class Wallet extends React.Component {
             <p data-testid="email-field">{ email }</p>
           </div>
           <div>
-            <p data-testid="total-field">{user.valueAll}</p>
+            <p data-testid="total-field">{user.valueAll ? user.valueAll : 0}</p>
           </div>
           <div>
             <p data-testid="header-currency-field">BRL</p>
