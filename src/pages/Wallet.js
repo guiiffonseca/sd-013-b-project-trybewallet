@@ -3,12 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
 
+let retorno = 0;
+
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      despesas: 0,
+    };
+    this.despesas = this.despesas.bind(this);
+  }
+
+  despesas(Valor) {
+    retorno += Valor;
+    this.setState(({
+      despesas: retorno,
+    }));
+  }
+
   render() {
     const { email } = this.props;
     const { user } = email;
-    const despesa = 0;
-
+    const { despesas } = this.state;
     return (
       <div>
 
@@ -16,12 +32,12 @@ class Wallet extends React.Component {
           <p data-testid="email-field">{user.email}</p>
           <p data-testid="total-field">
             Despesa total:
-            {despesa}
+            {despesas}
 
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
-        <FormWallet />
+        <FormWallet DespesasSoma={ this.despesas } />
       </div>
 
     );

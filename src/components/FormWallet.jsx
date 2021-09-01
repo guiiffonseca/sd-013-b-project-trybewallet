@@ -1,17 +1,51 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Moedas from '../api';
+import { ClickButtonDespesasThunk } from '../actions';
 
-export default class FormWallet extends Component {
+class FormWallet extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       moedas: [],
+      valor: 0,
+      descricao: '',
+      moeda: '',
+      metodoPagamento: '',
+      tag: '',
     };
+    this.StateChange = this.StateChange.bind(this);
+    this.ClickButton = this.ClickButton.bind(this);
   }
 
   componentDidMount() {
     this.PegaMoedas();
+  }
+
+  ClickButton() {
+    const { valor, tag, descricao, metodoPagamento, moeda } = this.state;
+    const { ClickWallet, DespesasSoma } = this.props;
+    const novoValor = Number(valor);
+    DespesasSoma(novoValor);
+    const Info = {
+      valor,
+      tag,
+      moeda,
+      descricao,
+      metodo: metodoPagamento,
+    };
+    ClickWallet(Info);
+  }
+
+  StateChange(event) {
+    const { name } = event.target;
+    const { value } = event.target;
+
+    this.setState(({
+      [name]: value,
+    }));
   }
 
   async PegaMoedas() {
@@ -25,23 +59,22 @@ export default class FormWallet extends Component {
 
   render() {
     const { moedas } = this.state;
-    console.log(Array.isArray(moedas));
     return (
       <form>
         <label htmlFor="valor">
           Valor
-          <input type="text" id="valor" name="name" />
+          <input type="number" name="valor" id="valor" onChange={ this.StateChange } />
         </label>
         <label htmlFor="desc">
           Descrição
-          <input type="text" id="desc" name="name" />
+          <input type="text" id="desc" name="descricao" onChange={ this.StateChange } />
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda">
+          <select id="moeda" name="moeda" onChange={ this.StateChange }>
             {moedas.map((name) => {
               if (name !== 'USDT') {
-                return <option key={ name } value={ name }>{name}</option>;
+                return (<option key={ name } value={ name }>{name}</option>);
               }
               return '';
             })}
@@ -49,25 +82,38 @@ export default class FormWallet extends Component {
         </label>
         <label htmlFor="Mpagamento">
           Método de pagamento
-          <select name="metodoPagamento" id="Mpagamento">
+          <select name="metodoPagamento" id="Mpagamento" onChange={ this.StateChange }>
             <option value="dinheiro">Dinheiro</option>
-            <option value="CartaoDeCredito">Cartão de crédito</option>
-            <option value="CartaoDeDebito">Cartão de débito</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-
-        <label htmlFor="CategoriaDespesa">
+        <label htmlFor="tag">
           Tag
-          <select name="CategoriaDes" id="CategoriaDespesa">
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+          <select name="tag" onChange={ this.StateChange } id="tag">
+            <option value="Alimentacao">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
-
+        <button type="button" onClick={ this.ClickButton }>Adicionar despesa</button>
       </form>
     );
   }
 }
+
+function MapDispatchToProps(dispatch) {
+  return {
+    ClickWallet: (info) => dispatch(ClickButtonDespesasThunk(info)),
+  };
+}
+
+FormWallet.propTypes = {
+  ClickWallet: PropTypes.func.isRequired,
+  DespesasSoma: PropTypes.func.isRequired,
+
+};
+
+export default connect(null, MapDispatchToProps)(FormWallet);

@@ -2,7 +2,7 @@
 
 const ESTADO_INICIAL_WALLET = {
   currencies: [],
-  expesenses: [],
+  expenses: [],
 };
 function walletReducer(state = ESTADO_INICIAL_WALLET, action) {
   switch (action.type) {
@@ -10,8 +10,8 @@ function walletReducer(state = ESTADO_INICIAL_WALLET, action) {
 
     return {
       ...state,
-      currencies: action.currencies,
-      expesenses: action.expesenses,
+      // currencies: action.currencies,
+      expenses: [...state.expenses, action.expenses],
     };
 
   default:
