@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes, { object } from 'prop-types';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrenciesThunk } from '../actions';
 
@@ -24,9 +24,9 @@ class ExpensesForm extends React.Component {
         <label htmlFor="Moeda">
           Moeda
           <select name="Moeda" id="Moeda">
-              { currencies.map((currency, index) => (<option key={ index }>
-                {currency.code}
-              </option>))}
+            { currencies.map((currency, index) => (<option key={ index }>
+              {currency.code} </option>))
+            }
           </select>
         </label>
         <label htmlFor="Método de pagamento">
