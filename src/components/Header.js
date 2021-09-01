@@ -25,8 +25,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.objectOf(PropTypes.string).isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
