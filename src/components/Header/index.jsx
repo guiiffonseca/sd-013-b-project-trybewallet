@@ -21,9 +21,13 @@ const Header = ({ email, expensesTotal }) => (
   </header>
 );
 
-const mapStateToProps = ({ user: { email }, wallet: { expensesTotal } }) => ({
+const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
   email,
-  expensesTotal,
+  expensesTotal: expenses.reduce(
+    (acc, { value, currency, exchangeRates }) => (
+      acc + parseFloat(value * exchangeRates[currency].ask)
+    ), 0,
+  ),
 });
 
 Header.propTypes = {

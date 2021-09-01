@@ -25,7 +25,7 @@ class ExpensesTable extends React.Component {
         </thead>
         <tbody>
           { expenses.map((expense) => (
-            <ExpenseInfo key={ expense.id } { ...expense } />)) }
+            <ExpenseInfo key={ expense.id } expense={ expense } />)) }
         </tbody>
       </table>
     );

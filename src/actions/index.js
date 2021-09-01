@@ -2,7 +2,9 @@
 export const LOGIN = 'LOGIN';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const ADD_EXPENSES_TOTAL = 'ADD_EXPENSES_TOTAL';
+export const SUB_EXPENSES_TOTAL = 'SUB_EXPENSES_TOTAL';
 // user actions
 export const login = (email) => ({
   type: LOGIN,
@@ -20,9 +22,9 @@ const addExpense = (expense) => ({
   payload: expense,
 });
 
-const addExpensesTotal = (convertedExpense) => ({
-  type: ADD_EXPENSES_TOTAL,
-  payload: convertedExpense,
+const deleteExpense = (expenseId) => ({
+  type: DELETE_EXPENSE,
+  payload: expenseId,
 });
 
 export const getCurrencies = () => async (dispatch) => {
@@ -56,10 +58,9 @@ export const createExpense = (data) => async (dispatch, getState) => {
     };
   }
 
-  const convertedExpense = parseFloat(
-    expense.value * expense.exchangeRates[expense.currency].ask,
-  );
-
   dispatch(addExpense(expense));
-  dispatch(addExpensesTotal(convertedExpense));
+};
+
+export const destroyExpense = (expenseId) => (dispatch) => {
+  dispatch(deleteExpense(expenseId));
 };
