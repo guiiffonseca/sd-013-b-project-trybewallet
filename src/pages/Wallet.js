@@ -1,20 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Input from '../components/input';
+import SelectCurrency from '../components/selectCurrency';
+import SelectPaymentMethod from '../components/selectPaymentMethod';
+import SelectTag from '../components/selectTag';
 
 class Wallet extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     email: '',
-  //     password: '',
-  //     validation: false,
-  //   };
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.validate = this.validate.bind(this);
-  //   this.handleClick = this.handleClick.bind(this);
-  // }
-
   render() {
     const { email } = this.props;
     return (
@@ -25,38 +17,11 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <form>
-          <label htmlFor="value">
-            Valor
-            <input type="text" name="value" id="value" />
-          </label>
-          <label htmlFor="description">
-            Descrição
-            <input type="text" name="description" id="description" />
-          </label>
-          <label htmlFor="currency">
-            Moeda
-            <select name="currency" id="currency">
-              <option>Xablau</option>
-            </select>
-          </label>
-          <label htmlFor="payment-method">
-            Método de pagamento
-            <select name="payment-method" id="payment-method">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select name="tag" id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <Input name="value" label="Valor" />
+          <Input name="description" label="Descrição" />
+          <SelectCurrency />
+          <SelectPaymentMethod />
+          <SelectTag />
         </form>
       </div>
     );
