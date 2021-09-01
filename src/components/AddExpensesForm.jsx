@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Button from './Button';
-import Input from './Input';
-import Select from './Select';
+import { Button, Input, Select } from './Index';
 
 export default class AddExpensesForm extends Component {
   render() {
+    const { moedas } = this.props;
+
     return (
       <form className="add-expenses">
         <Input
@@ -25,7 +26,7 @@ export default class AddExpensesForm extends Component {
         <Select
           id="moeda"
           label="Moeda"
-          options={ [] }
+          options={ moedas }
         />
 
         <Select
@@ -47,3 +48,7 @@ export default class AddExpensesForm extends Component {
     );
   }
 }
+
+AddExpensesForm.propTypes = {
+  moedas: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
