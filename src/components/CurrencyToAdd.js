@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCurrencies } from '../actions';
 
 class CurrencyToAdd extends Component {
+  constructor(props) {
+    super(props);
+    this.loadCurrencies = this.loadCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadCurrencies();
+  }
+
+  loadCurrencies() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   render() {
+    const { currenciesFromState } = this.props;
     return (
       <label
         htmlFor="currency"
@@ -11,11 +29,32 @@ class CurrencyToAdd extends Component {
           id="currency"
           name="currency"
         >
-          <option>Temp</option>
+          {
+            currenciesFromState.map((currency, index) => (
+              <option
+                key={ index }
+              >
+                { currency }
+              </option>
+            ))
+          }
         </select>
       </label>
     );
   }
 }
 
-export default CurrencyToAdd;
+const mapStateToProps = (state) => ({
+  currenciesFromState: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+CurrencyToAdd.propTypes = {
+  currenciesFromState: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencyToAdd);

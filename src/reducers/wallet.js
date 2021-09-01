@@ -1,6 +1,7 @@
-import { EXPENSES } from '../actions';
+import { CURRENCIES, EXPENSES } from '../actions';
 
 const INNITIAL_STATE = {
+  currencies: [],
   expenses: [],
 };
 
@@ -10,6 +11,12 @@ export default function wallet(state = INNITIAL_STATE, action) {
     return {
       ...state,
       expenses: [action.expense],
+    };
+  case CURRENCIES:
+    delete action.currencies.USDT;
+    return {
+      ...state,
+      currencies: Object.keys(action.currencies),
     };
   default:
     return state;
