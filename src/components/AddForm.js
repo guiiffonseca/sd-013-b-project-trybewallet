@@ -8,7 +8,7 @@ export default class AddForm extends React.Component {
   render() {
     const { changeFunc, currencies, toAdd } = this.props;
     const { value, description, currency, method, tag } = toAdd;
-    const methodOptions = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
+    const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>

@@ -3,8 +3,8 @@
 const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 const GET_CURRENCIES_FAIL = 'GET_CURRENCIES_FAIL';
 
-const ADD_EXPENSES = 'ADD_EXPENSES';
-const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
+const ADD_EXPENSE = 'ADD_EXPENSE';
+const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 const INITIAL_STATE = {
   currencies: {},
@@ -18,9 +18,9 @@ function walletReducer(state = INITIAL_STATE, action) {
     return ({ ...state, currencies: action.payload });
   case GET_CURRENCIES_FAIL:
     return ({ ...state, currencies: action.payload });
-  case ADD_EXPENSES:
+  case ADD_EXPENSE:
     return ({ ...state, expenses: [...expenses, action.payload] });
-  case REMOVE_EXPENSES:
+  case REMOVE_EXPENSE:
     return ({
       ...state,
       expenses: expenses.filter((expense) => expense.id !== [action.payload.id]) });

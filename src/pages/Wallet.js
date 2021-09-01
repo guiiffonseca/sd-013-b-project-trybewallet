@@ -1,73 +1,136 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class Wallet extends React.Component {
+import AddForm from '../components/AddForm';
+import {
+  updateCurrenciesThunk,
+  addExpenseAction,
+} from '../actions';
+import ExpensesTable from '../components/ExpensesTable';
+
+class Wallet extends Component {
   constructor() {
     super();
 
     this.state = {
-      currency: [],
+      toAdd: {
+        id: 0,
+        value: 0,
+        description: '',
+        currency: '',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      },
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.getCurrenciesKeys = this.getCurrenciesKeys.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.updateTotal = this.updateTotal.bind(this);
+    this.updateCurrencyState = this.updateCurrencyState.bind(this);
   }
 
   async componentDidMount() {
-    this.updateCurrency();
+    const { updateCurrencies } = this.props;
+    updateCurrencies();
+    this.updateCurrencyState();
   }
 
-  updateCurrency() {
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((data) => data.json())
-      .then((result) => Object.keys(result))
-      .then((all) => all.filter((one) => one !== 'USDT'))
-      .then((final) => this.setState({ currency: final }));
+  componentDidUpdate(prevProps) {
+    const { currencies } = this.props;
+    if (currencies !== prevProps.currencies) {
+      this.updateCurrencyState();
+    }
+  }
+
+  getCurrenciesKeys() {
+    const { currencies } = this.props;
+    let keys = Object.keys(currencies);
+    keys = keys.filter((key) => key !== 'USDT');
+    return keys;
+  }
+
+  updateCurrencyState() {
+    const { currencies } = this.props;
+    const { toAdd } = this.state;
+    const firstCurrency = Object.keys(currencies)[0];
+    this.setState({ toAdd: { ...toAdd, currency: firstCurrency } });
+  }
+
+  handleChange({ target }) {
+    const { value, name } = target;
+    const { toAdd } = this.state;
+    this.setState({ toAdd: { ...toAdd, [name]: value } });
+  }
+
+  handleAdd() {
+    const { updateCurrencies, currencies, addExpense } = this.props;
+    updateCurrencies();
+    const { toAdd } = this.state;
+    const { id, value, description, currency, method, tag } = toAdd;
+    const firstCurrency = Object.keys(currencies)[0];
+    const newExpense = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: currencies,
+    };
+    addExpense(newExpense);
+    this.setState({
+      toAdd: {
+        id: parseInt(id, 10) + 1,
+        value: 0,
+        description: '',
+        currency: firstCurrency,
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      },
+    });
+  }
+
+  updateTotal() {
+    const { expenses } = this.props;
+    if (expenses.length === 0) {
+      return 0;
+    }
+    if (expenses.length >= 1) {
+      let total = 0;
+      for (let index = 0; index < expenses.length; index += 1) {
+        const { value, currency, exchangeRates } = expenses[index];
+        const convertValue = (parseInt(value, 10) * exchangeRates[currency].ask);
+        total += convertValue;
+      }
+      return Math.floor(total * 100) / 100;
+    }
   }
 
   render() {
     const { email } = this.props;
-    const { currency } = this.state;
+    const { toAdd } = this.state;
     return (
       <div>
         <header>
           <p>TrybeWallet</p>
           <div data-testid="email-field">{ email }</div>
-          <div data-testid="total-field">0</div>
           <div data-testid="header-currency-field">BRL</div>
+          <div data-testid="total-field">{ this.updateTotal() }</div>
         </header>
-        <form>
-          <label htmlFor="valor">
-            Valor
-            <input name="valor" type="number" id="valor" />
-          </label>
-          <label htmlFor="summary">
-            Descrição
-            <input name="summary" type="text" id="summary" />
-          </label>
-          <label htmlFor="currency">
-            Moeda
-            <select name="currency" id="currency">
-              { currency.map((eachOne) => <option key={ eachOne }>{ eachOne }</option>) }
-            </select>
-          </label>
-          <label htmlFor="payment">
-            Método de pagamento
-            <select name="payment" id="payment">
-              <option>Dinheiro</option>
-              <option>Cartão de Crédito</option>
-              <option>Cartão de Débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select name="tag" id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
-        </form>
+        <AddForm
+          changeFunc={ this.handleChange }
+          toAdd={ toAdd }
+          currencies={ this.getCurrenciesKeys() }
+        />
+        <button
+          type="button"
+          onClick={ this.handleAdd }
+        >
+          Adicionar Despesa
+        </button>
+        <ExpensesTable />
       </div>
     );
   }
@@ -75,13 +138,21 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  updateCurrencies: () => dispatch(updateCurrenciesThunk()),
+  addExpense: (value) => dispatch(addExpenseAction(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  currencies: PropTypes.objectOf().isRequired,
+  expenses: PropTypes.arrayOf.isRequired,
+  updateCurrencies: PropTypes.func.isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
