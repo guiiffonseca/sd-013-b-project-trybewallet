@@ -26,12 +26,19 @@ export const fetchError = (error) => ({
   payload: { error },
 });
 
-export const addExpense = (expense) => ({
+export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
-  payload: { expense },
+  payload,
 });
 
-const thunkAPI = (URL) => async (dispatch) => {
+export const addExpenseThunk = (expense) => async (dispatch) => {
+  dispatch(loading());
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const exchangeRates = await response.json();
+  dispatch(addExpense({ ...expense, exchangeRates }));
+};
+
+export const thunkAPI = (URL) => async (dispatch) => {
   dispatch(loading());
   try {
     const response = await fetch(URL);
@@ -42,5 +49,3 @@ const thunkAPI = (URL) => async (dispatch) => {
     dispatch(fetchError(error));
   }
 };
-
-export default thunkAPI;
