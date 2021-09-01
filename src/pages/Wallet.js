@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import WalletInputs from '../components/WalletInputs';
 import Tags from '../components/Tags';
 import PaymentMethods from '../components/PaymentMethods';
+import ExpensesTable from '../components/ExpensesTable';
 import fetchCurrency, { addExpenses } from '../actions';
 
 class Wallet extends React.Component {
@@ -50,7 +51,7 @@ class Wallet extends React.Component {
     let TOTAL = 0;
     const CURRENCY = 'BRL';
     const totalExpenses = () => {
-      // eu estava pegando o currey do local state, e não do global state, por isso o valor total estava sempre errado;
+      // eu estava pegando o currency do local state, e não do global state, por isso o valor total estava sempre errado;
       userExpenses
         .forEach(({ value, currency, exchangeRates }) => {
           TOTAL += value * exchangeRates[currency].ask;
@@ -84,6 +85,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <ExpensesTable />
       </>
     );
   }
