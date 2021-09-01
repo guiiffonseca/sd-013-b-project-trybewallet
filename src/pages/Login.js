@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setUseremail as setUseremailAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,6 +15,7 @@ class Login extends React.Component {
     };
     this.handlerChengeEmail = this.handlerChengeEmail.bind(this);
     this.handlerChengePassword = this.handlerChengePassword.bind(this);
+    this.submitEmail = this.submitEmail.bind(this);
   }
   // ref:https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
 
@@ -34,8 +39,15 @@ class Login extends React.Component {
     });
   }
 
+  submitEmail() {
+    const { setUseremail } = this.props;
+    const { email } = this.state;
+    setUseremail(email);
+  }
+
   render() {
     const { email, password, disabPassword, disablEmail } = this.state;
+
     return (
       <div>
         <h1>Fazer o Login</h1>
@@ -64,9 +76,15 @@ class Login extends React.Component {
                 onChange={ this.handlerChengePassword }
               />
             </label>
-            <button type="submit" disabled={ (!disabPassword || !disablEmail) }>
-              Entrar
-            </button>
+            <Link to="/carteira">
+              <button
+                type="submit"
+                onClick={ this.submitEmail }
+                disabled={ (!disabPassword || !disablEmail) }
+              >
+                Entrar
+              </button>
+            </Link>
           </fieldset>
 
         </form>
@@ -75,4 +93,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  setUseremail: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispath) => ({
+  setUseremail: (payload) => dispath(setUseremailAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
