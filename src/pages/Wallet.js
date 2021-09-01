@@ -31,7 +31,7 @@ class Wallet extends React.Component {
       <div>
         <header>
           TrybeWallet
-          <p data-testid="email-input">{email}</p>
+          <p data-testid="email-field">{email}</p>
           <p data-testid="total-field">{value}</p>
           <p data-testid="header-currency-field">BRL</p>
           <p data-testid="password-input" />

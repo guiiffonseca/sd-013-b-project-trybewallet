@@ -1,5 +1,8 @@
 export const paymentMethodObject = [
-  'Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+  'Dinheiro',
+  'Cartão de crédito',
+  'Cartão de débito',
+];
 
 export const categoriesObject = [
   'Alimentação',
@@ -8,6 +11,7 @@ export const categoriesObject = [
   'Transporte',
   'Saúde',
 ];
+
 // By Lucas Caribé
 export const fetchCurrencies = async () => {
   const SIGLA = 3;
