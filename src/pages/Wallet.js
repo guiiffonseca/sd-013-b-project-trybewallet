@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Formulario from '../components/formulario';
+// import Formulario from '../components/formulario';
+import { getApi, setFetchAwesomeapi } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -11,6 +12,17 @@ class Wallet extends React.Component {
       total: 0,
       moeda: 'BRL',
     };
+  
+    this.getApi = this.getApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.getApi();
+  }
+
+  async getApi() {
+    const { currency } = this.props;
+    setCurrencies();
   }
 
   render() {
@@ -26,7 +38,7 @@ class Wallet extends React.Component {
           </div>
         </header>
         <section>
-          <Formulario />
+          <Form />
         </section>
       </>
     );
@@ -37,8 +49,13 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  currency: () => dispatch(getApi()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  currency: PropTypes.func.isRequired,
 };
