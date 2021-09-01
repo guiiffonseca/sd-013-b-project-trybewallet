@@ -8,7 +8,7 @@ export const INITIAL_STATE = {
 export default function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case GET_CURRENCIES:
-    return { ...state, currencies: action.payload, }
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }
