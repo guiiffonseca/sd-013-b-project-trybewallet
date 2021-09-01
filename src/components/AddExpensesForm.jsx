@@ -39,7 +39,7 @@ export default class AddExpensesForm extends Component {
           label="Tag"
           options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
         />
-        
+
         <Button
           label="Adicionar despesa"
         />
