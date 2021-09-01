@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { dispatchApi } from '../actions';
+import { connect } from 'react-redux';
+import ExpensesButton from './Expense';
 
 class Form extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      moedas: [],
+      id: 0,
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
     };
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.getApi();
-  }
-
-  async getApi() {
-    const url = 'https://economia.awesomeapi.com.br/json/all';
-    const fecthApi = await fetch(url);
-    const getJson = await fecthApi.json();
-    console.log(getJson);
-    const getMoedas = Object.keys(getJson);
-
-    const removeUSDT = getMoedas.filter((target) => target !== 'USDT');
-
-    this.setState({
-      moedas: [...removeUSDT],
-    });
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -33,47 +26,73 @@ class Form extends Component {
     });
   }
 
+  handleClick() {
+    const { newExpense, expenses } = this.props;
+    const expensesLength = expenses.length;
+
+    newExpense(this.state);
+
+    if (expensesLength >= 0) {
+      this.setState({ id: expensesLength + 1 });
+    }
+  }
+
   render() {
-    const { moedas } = this.state;
+    const { currencies } = this.props;
+    console.log(currencies);
     return (
       <form>
         <label htmlFor="Valor">
           Valor:
-          <input type="text" id="Valor" />
+          <input type="text" id="Valor" name="value" onChange={ this.handleChange } />
         </label>
         <label htmlFor="Descrição">
           Descrição:
-          <input type="text" id="Descrição" />
+          <input type="text" id="Descrição" name="description" onChange={ this.handleChange } />
         </label>
-        <label htmlFor="Moeda">
+        <label htmlFor="currency">
           Moeda:
-          <select id="Moeda">
-            {moedas.map((moeda) => (
-              <option key={ moeda } value={ moeda }>{ moeda }</option>
+          <select id="currency" name="currency" onChange={ this.handleChange }>
+            {currencies.map((currency) => (
+              <option key={ currency } value={ currency }>{ currency }</option>
             ))}
           </select>
         </label>
         <label htmlFor="Pagamento">
           Método de Pagamento:
-          <select type="text" id="Pagamento">
-            <option value="BRL">Dinheiro</option>
-            <option value="BRL">Cartão de crédito</option>
-            <option value="BRL">Cartão de débito</option>
+          <select type="text" id="Pagamento" name="method" onChange={ this.handleChange }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="Tag">
           Tag:
-          <select type="text" id="Tag">
-            <option value="BRL">Alimentação</option>
-            <option value="BRL">Lazer</option>
-            <option value="BRL">Trabalho</option>
-            <option value="BRL">Transporte</option>
-            <option value="BRL">Saúde</option>
+          <select type="text" id="Tag" name="tag" onChange={ this.handleChange }>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <ExpensesButton handle={ this.handleClick } />
       </form>
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  newExpense: PropTypes.func,
+  currencies: PropTypes.string,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  newExpense: (expense) => dispatch(dispatchApi(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
