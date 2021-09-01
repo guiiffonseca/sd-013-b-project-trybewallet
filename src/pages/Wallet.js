@@ -1,6 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import WalletForm from '../components/WalletForm';
 
 import '../styles/wallet.css';
 
@@ -22,7 +24,7 @@ class Wallet extends React.Component {
             <h2>BRL</h2>
           </div>
         </div>
-
+        <WalletForm props={ this.props } />
       </div>
     );
   }
