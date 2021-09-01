@@ -10,13 +10,13 @@ class Table extends Component {
     return (
       <div>
         <Button
-          button="Editar"
+          buttonText="Editar"
           onClick={ () => edit(id) }
           testid="edit-btn"
         />
 
         <Button
-          button="Excluir"
+          buttonText="Excluir"
           onClick={ () => remove(id) }
           testid="delete-btn"
         />

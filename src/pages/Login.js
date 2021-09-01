@@ -75,7 +75,7 @@ class Login extends React.Component {
           onChange={ this.handleChange }
           value={ password }
         />
-        <Button button="Entrar" onClick={ this.handleClick } disabled={ disabled } />
+        <Button buttonText="Entrar" onClick={ this.handleClick } disabled={ disabled } />
       </form>
     );
   }
