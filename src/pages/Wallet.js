@@ -7,6 +7,7 @@ import ExpenseForm from '../components/ExpenseForm';
 import Table from '../components/Table';
 
 import './wallet.css';
+import EditForm from '../components/EditForm/index';
 
 class Wallet extends React.Component {
   constructor() {
@@ -36,9 +37,19 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, editForm } = this.props;
     // const { seconds } = this.state;
     // const ZERO = 0;
+
+    if (editForm) {
+      return (
+        <div className="wallet-main-container">
+          <Header history={ history } />
+          <EditForm />
+          <Table />
+        </div>
+      );
+    }
 
     // if (logged) {
     return (
@@ -71,8 +82,9 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, wallet }) => ({
   logged: user.logged,
+  editForm: wallet.editForm,
 });
 
 Wallet.propTypes = {

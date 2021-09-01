@@ -49,3 +49,27 @@ export const removeItem = (index) => ({
     index,
   },
 });
+
+export const EDIT_FORM = 'EDIT_FORM';
+
+export const editForm = () => ({
+  type: EDIT_FORM,
+});
+
+export const SET_ID_TO_EDIT = 'SET_ID_TO_EDIT';
+
+export const setIdToEdit = (id) => ({
+  type: SET_ID_TO_EDIT,
+  payload: {
+    id,
+  },
+});
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+
+export const editExpense = (editExpenses) => ({
+  type: EDIT_EXPENSE,
+  payload: {
+    editExpenses,
+  },
+});

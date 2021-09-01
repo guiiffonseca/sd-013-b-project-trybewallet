@@ -3,9 +3,12 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { BiEdit } from 'react-icons/bi';
 
 import {
   removeItem as removeItemAction,
+  editForm as editItemAction,
+  setIdToEdit as setIdToEditAction,
 } from '../../actions';
 
 import './index.css';
@@ -25,7 +28,7 @@ class Table extends Component {
   }
 
   tableExpense() {
-    const { expenses, removeItem } = this.props;
+    const { expenses, removeItem, editItem, setIdToEdit } = this.props;
     return expenses.map((
       { value, description, currency, method, tag, id, exchangeRates }, index,
     ) => (
@@ -43,6 +46,16 @@ class Table extends Component {
         </td>
         <td>Real</td>
         <td className="button-container">
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => {
+              editItem();
+              setIdToEdit(id);
+            } }
+          >
+            <BiEdit />
+          </button>
           <button
             type="button"
             data-testid="delete-btn"
@@ -85,6 +98,8 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeItem: (index) => dispatch(removeItemAction(index)),
+  editItem: (index) => dispatch(editItemAction(index)),
+  setIdToEdit: (id) => dispatch(setIdToEditAction(id)),
 });
 
 Table.propTypes = {
