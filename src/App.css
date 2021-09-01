@@ -58,6 +58,20 @@ label {
   padding: 5px;
 }
 
-h1 {
+h1, h5 {
   margin-left: 60px;
+}
+
+.header {
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  height: 150px;
+}
+
+.moedaTotal {
+  display: flex;
+  align-self: center;
+  
 }
