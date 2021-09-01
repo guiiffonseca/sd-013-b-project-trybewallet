@@ -77,7 +77,7 @@ class ExpensesForm extends React.Component {
     return (
       <form onSubmit={ this.handleSubmit }>
         { this.renderHandler({
-          label: 'Valor:', type: 'number', name: 'value', value,
+          label: 'Valor:', type: 'number', name: 'value', value, min: 0, step: 0.01,
         })}
         { this.renderHandler({
           label: 'Descrição:', name: 'description', value: description,

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import formatCurrency from '../../utils/formatCurrency';
+
 const Header = ({ email, expensesTotal }) => (
   <header>
     <span data-testid="email-field">
@@ -13,7 +15,7 @@ const Header = ({ email, expensesTotal }) => (
       Despesa total:
       <span data-testid="header-currency-field">BRL</span>
       <span data-testid="total-field">
-        { expensesTotal }
+        { formatCurrency(expensesTotal) }
       </span>
     </div>
   </header>
