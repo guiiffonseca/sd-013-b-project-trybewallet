@@ -11,8 +11,12 @@ export const submitExpense = (payload) => ({
   payload,
 });
 
-export const submitExpenseThunk = () => async (dispatch) => {
+export const submitExpenseThunk = (expense) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const object = await response.json();
+  const exchangeRates = await response.json();
+  const object = {
+    ...expense,
+    exchangeRates,
+  };
   dispatch(submitExpense(object));
 };

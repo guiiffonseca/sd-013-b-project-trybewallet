@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SelectTag from '../components/SelectTag';
 import Header from '../components/Header';
 import SelectCoin from '../components/SelectCoin';
+import { submitExpenseThunk } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
@@ -11,11 +12,12 @@ class Wallet extends React.Component {
 
     this.state = {
       currencys: [],
-      valor: '',
-      descricao: '',
-      moeda: '',
-      payment: '',
-      tag: '',
+      id: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Lazer',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,8 +39,12 @@ class Wallet extends React.Component {
 
   handleClick() {
     const { getExpenseState } = this.props;
-    const { valor, descricao, moeda, payment, tag } = this.state;
-    getExpenseState({ valor, descricao, moeda, payment, tag });
+    const { id, value, description, currency, method, tag } = this.state;
+    this.setState((prev) => ({
+      ...prev,
+      id: id + 1,
+    }));
+    getExpenseState({ id, value, description, currency, method, tag });
   }
 
   handleChange({ target }) {
@@ -70,22 +76,20 @@ class Wallet extends React.Component {
             />
           </label>
           <SelectCoin currencys={ currencys } funcao={ this.handleChange } />
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Método de pagamento
             <select
               role="combobox"
-              name="payment"
-              id="payment"
+              name="method"
+              id="method"
               onChange={ this.handleChange }
             >
-              <option value="dinheiro">Dinheiro</option>
-              <option value="credito" selected>
-                Cartão de crédito
-              </option>
-              <option value="debito">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
-          <SelectTag function={ this.handleChange } name="despesas" role="combobox" />
+          <SelectTag funcao={ this.handleChange } />
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
       </div>

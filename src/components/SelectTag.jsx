@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 class SelectTag extends React.Component {
   render() {
-    const { name, role } = this.props;
+    const { funcao } = this.props;
     return (
-      <label htmlFor={ name }>
+      <label htmlFor="tag">
         Tag
-        <select role={ role } name={ name } id={ name }>
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer" selected>
+        <select role="combobox" name="tag" id="tag" onChange={ funcao }>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer" selected>
             Lazer
           </option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );
@@ -22,8 +22,7 @@ class SelectTag extends React.Component {
 }
 
 SelectTag.propTypes = {
-  name: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
+  funcao: PropTypes.func.isRequired,
 };
 
 export default SelectTag;
