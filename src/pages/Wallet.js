@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { expensesAction, fetchCurrency } from '../actions';
 import Header from '../components/Header';
 import Payment from '../components/Payment';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -17,10 +18,10 @@ class Wallet extends React.Component {
       id: -1,
       value: '',
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
-      exchangeRates: {},
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: [],
     };
   }
 
@@ -86,7 +87,6 @@ class Wallet extends React.Component {
           <label htmlFor>
             Tag:
             <select name="tag" onChange={ this.handleChange }>
-              <option>Selecione</option>
               {tagOptions.map((text) => (
                 <option key={ text } value={ text }>{text}</option>
               ))}
@@ -99,6 +99,7 @@ class Wallet extends React.Component {
         >
           Adicionar despesa
         </button>
+        <Table />
       </>
     );
   }
@@ -115,15 +116,15 @@ Wallet.propTypes = {
   }).isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  currency: () => dispatch(fetchCurrency()),
-  expenses: (state) => dispatch(expensesAction(state)),
-});
-
 const mapStateToProps = (state) => ({
   email: state.user.email,
   coin: state.wallet.currency,
   totalExpenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currency: () => dispatch(fetchCurrency()),
+  expenses: (state) => dispatch(expensesAction(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
