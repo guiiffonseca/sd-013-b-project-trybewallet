@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Convertion from './convertion';
+import { getCoinsExpenses as getCoinsExpensesAction } from '../actions/walletAction';
+import { fetchApi as fetchApiAction } from '../actions/index';
 
 class FormAdd extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       value: '',
@@ -13,23 +14,46 @@ class FormAdd extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentacao',
-      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.Convertion = this.Convertion.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    const { value, description, currency, method, tag } = this.state;
+    const { getCoinsExpenses, fetchApi, currencies, globalState, valueAll } = this.props;
+
+    const exchangeRates = async () => {
+      const fetch = await fetchApi();
+      return fetch;
+    };
+
+    console.log(exchangeRates());
+
+    const id = globalState.wallet.expenses.length
+      ? globalState.wallet.expenses.length
+      : 0;
+
+    getCoinsExpenses({
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: currencies,
+    });
+
+    const a = globalState.wallet.currencies[currency].ask;
+    const b = (a * value).toFixed(2);
+    valueAll(b);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
-  }
-
-  Convertion() {
-    Convertion();
-    const { value, description, currency, method, tag, exchangeRates } = this.state;
-    console.log(`${value} ${description} ${currency} ${method} ${tag} ${exchangeRates}`);
   }
 
   render() {
@@ -60,24 +84,24 @@ class FormAdd extends Component {
         <label htmlFor="paymentMethod">
           Método de pagamento:
           <select id="paymentMethod" name="method" onChange={ this.handleChange }>
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
 
         <label htmlFor="category">
           Tag:
           <select id="category" name="tag" onChange={ this.handleChange }>
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
 
-        <button type="button" onClick={ this.Convertion }>Adicionar despesa</button>
+        <button type="button" onClick={ this.onClick }>Adicionar despesa</button>
       </form>
     );
   }
@@ -85,10 +109,28 @@ class FormAdd extends Component {
 
 FormAdd.propTypes = {
   currencies: PropTypes.string.isRequired,
+  fetchApi: PropTypes.func.isRequired,
+  getCoinsExpenses: PropTypes.func.isRequired,
+  globalState: PropTypes.shape({
+    wallet: PropTypes.shape({
+      currencies: PropTypes.func,
+      expenses: PropTypes.shape({
+        length: PropTypes.number,
+      }),
+    }),
+  }).isRequired,
+  valueAll: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
-  currencies,
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+  globalState: state,
 });
 
-export default connect(mapStateToProps)(FormAdd);
+const mapDispatchToProps = (dispatch) => ({
+  getCoinsExpenses: (login) => dispatch(getCoinsExpensesAction(login)),
+  fetchApi: () => dispatch(fetchApiAction()),
+  valueAll: (login) => dispatch({ type: 'VALUE_ALL', payload: login }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormAdd);

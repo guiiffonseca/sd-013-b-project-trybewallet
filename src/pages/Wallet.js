@@ -12,7 +12,7 @@ class Wallet extends React.Component {
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { email } = this.props;
+    const { email, globalState: { user } } = this.props;
 
     return (
       <div>
@@ -21,14 +21,14 @@ class Wallet extends React.Component {
             <p data-testid="email-field">{ email }</p>
           </div>
           <div>
-            <p data-testid="total-field">0</p>
+            <p data-testid="total-field">{user.valueAll}</p>
           </div>
           <div>
             <p data-testid="header-currency-field">BRL</p>
           </div>
         </header>
         <body>
-          <FormAdd />
+          <FormAdd abc={ this.props } />
         </body>
       </div>
     );
@@ -38,6 +38,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   isLoading: state.wallet.isLoading,
+  globalState: state,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -47,6 +48,11 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   fetchApi: PropTypes.func.isRequired,
+  globalState: PropTypes.shape({
+    user: PropTypes.shape({
+      valueAll: PropTypes.number,
+    }),
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

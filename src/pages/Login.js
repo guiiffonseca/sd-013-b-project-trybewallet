@@ -14,6 +14,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.save = this.save.bind(this);
   }
 
   handleChange({ target }) {
@@ -25,6 +26,12 @@ class Login extends React.Component {
     });
 
     this.checkingInputs();
+  }
+
+  save() {
+    const { saveLogin } = this.props;
+    const { email } = this.state;
+    saveLogin(email);
   }
 
   checkingInputs() {
@@ -41,7 +48,6 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const { saveLogin } = this.props;
     return (
       <form action="">
         <label htmlFor="email-input">
@@ -68,11 +74,10 @@ class Login extends React.Component {
             value={ password }
           />
         </label>
-        <Link to="/carteira">
+        <Link to="/carteira" onClick={ this.save }>
           <button
             type="button"
             id="btnLogin"
-            onClick={ saveLogin(email) }
             disabled="false"
           >
             Entrar

@@ -1,5 +1,10 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { GET_COINS, GET_COINS_ERROR, GET_COINS_SUCCESS } from '../actions/actionsType';
+import {
+  GET_COINS,
+  GET_COINS_ERROR,
+  GET_COINS_SUCCESS,
+  GET_COINS_EXPENSES,
+} from '../actions/actionsType';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -14,6 +19,13 @@ const WalletReducer = (state = INITIAL_STATE, action) => {
     return { ...state, isLoading: true };
   case GET_COINS_SUCCESS:
     return { ...state, error: null, currencies: action.payload, isLoading: false };
+  case GET_COINS_EXPENSES:
+    return {
+      ...state,
+      error: null,
+      expenses: [...state.expenses, action.payload],
+      isLoading: false,
+    };
   case GET_COINS_ERROR:
     return { ...state, error: action.error, isLoading: false };
   default:
