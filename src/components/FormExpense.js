@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { actionLoadCurrenciesThunk } from '../actions';
 
 class FormExpense extends Component {
+  componentDidMount() {
+    const { actionLoadCurrencies } = this.props;
+    actionLoadCurrencies();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -15,7 +24,9 @@ class FormExpense extends Component {
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda">
-            moedas
+            { currencies.map((currencie) => (
+              <option key={ currencie } value={ currencie }>{currencie}</option>
+            )) }
           </select>
         </label>
         <label htmlFor="metodo-pagamento">
@@ -41,4 +52,17 @@ class FormExpense extends Component {
   }
 }
 
-export default FormExpense;
+FormExpense.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actionLoadCurrencies: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actionLoadCurrencies: () => dispatch(actionLoadCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);
