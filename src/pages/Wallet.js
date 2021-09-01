@@ -50,13 +50,12 @@ class Wallet extends React.Component {
     const { currency } = this.state;
     let TOTAL = 0;
     const CURRENCY = 'BRL';
-    const TEST = 9.94;
     const totalExpenses = () => {
       userExpenses
         .forEach((expense) => {
           TOTAL += expense.value * expense.exchangeRates[currency].ask;
         });
-      return parseFloat(TOTAL).toFixed(2) - TEST;
+      return parseFloat(TOTAL).toFixed(2);
     };
 
     return (
