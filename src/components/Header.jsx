@@ -5,7 +5,7 @@ import walletimg from '../images/wallet.png';
 
 class Header extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, totalExpenses } = this.props;
     return (
       <div className="header">
         <div className="header-logo">
@@ -21,7 +21,7 @@ class Header extends React.Component {
         <div className="header-expenses">
           <h3 className="header-info">
             {'Despesa Total: R$ '}
-            <span data-testid="total-field">0</span>
+            <span data-testid="total-field">{ totalExpenses }</span>
             <span data-testid="header-currency-field">BRL</span>
           </h3>
         </div>
@@ -32,6 +32,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  totalExpenses: PropTypes.number.isRequired,
 };
 
 export default Header;

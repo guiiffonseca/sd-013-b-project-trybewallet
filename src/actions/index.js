@@ -7,6 +7,8 @@ export const ADD_CURRENCIES_SUCCESS = 'ADD_CURRENCIES_SUCCESS';
 export const ADD_CURRENCIES_ERROR = 'ADD_CURRENCIES_ERROR';
 
 export const ADD_EXPENSE = 'ADD_EXPENSES';
+
+export const ADD_EXCHANGE_RATES_NOW = 'ADD_EXCHANGE_RATES_NOW';
 // export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const saveUser = (payload) => ({
@@ -24,30 +26,40 @@ export const getCurrenciesError = (payload) => ({
   payload,
 });
 
+export const getCurrenciesListThunk = () => async (dispatch) => {
+  try {
+    const response = await getCurrenciesAPI();
+    const currenciesList = Object.keys(response)
+      .reduce((acc, currentValue) => (
+        currentValue === 'USDT' ? acc : [...acc, currentValue]
+      ), []);
+    const payload = {
+      currencies: currenciesList,
+    };
+    dispatch(getCurrenciesSuccess(payload));
+  } catch (error) {
+    dispatch(getCurrenciesError(error));
+  }
+};
+
+export const addExchangeRatesNow = (payload) => ({
+  type: ADD_EXCHANGE_RATES_NOW,
+  payload,
+});
+
 export const getCurrenciesThunk = () => async (dispatch) => {
   try {
     const response = await getCurrenciesAPI();
-    // converte o obj de obj em array
-    // const entriesResponse = Object.entries(response);
-    // filtra, retirando o array USDT
-    // const responseFiltered = entriesResponse.reduce((acc, currentvalue) => (
-    //   currentvalue[0] === 'USDT' ? acc : [...acc, currentvalue]
-    // ), []);
-    // mapeia a saída, transformando em um array de objetos
-    // const responseMap = responseFiltered
+    // const responseFiltered = Object
+    //   .entries(response)
+    //   .reduce((acc, currentvalue) => (
+    //     currentvalue[0] === 'USDT' ? acc : [...acc, currentvalue]
+    //   ), [])
     //   .map((item, index) => ({ id: index, name: item[0], data: item[1] }));
-    // resultado:
-
-    const responseFiltered = Object
-      .entries(response)
-      .reduce((acc, currentvalue) => (
-        currentvalue[0] === 'USDT' ? acc : [...acc, currentvalue]
-      ), [])
-      .map((item, index) => ({ id: index, name: item[0], data: item[1] }));
     const payload = {
-      currencies: responseFiltered,
+      exchangeRatesNow: response,
     };
-    dispatch(getCurrenciesSuccess(payload));
+    dispatch(addExchangeRatesNow(payload));
   } catch (error) {
     dispatch(getCurrenciesError(error));
   }
@@ -57,3 +69,25 @@ export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
   payload,
 });
+
+export const getCurrenciesAndAddExpenseThunk = (expenseValue) => async (dispatch) => {
+  try {
+    const response = await getCurrenciesAPI();
+    const { id, value, description, currency, method, tag } = expenseValue;
+    const expenseNow = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: response,
+    };
+    const payload = {
+      expense: expenseNow,
+    };
+    dispatch(addExpense(payload));
+  } catch (error) {
+    dispatch(getCurrenciesError(error));
+  }
+};

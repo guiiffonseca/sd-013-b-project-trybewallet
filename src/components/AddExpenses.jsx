@@ -1,8 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Input from './Input';
-import Select from './Select';
+import { getCurrenciesAndAddExpenseThunk } from '../actions';
 
 class AddExpenses extends React.Component {
   constructor(props) {
@@ -10,65 +10,148 @@ class AddExpenses extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      payment: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  // componentDidMount() {
+  //   const { getCurrencies } = this.props;
+  //   getCurrencies();
+  // }
+
+  handleChange(field, newValue) {
+    this.setState({ [field]: newValue });
+  }
+
+  renderValueInput() {
+    const { value } = this.state;
+    return (
+      <label htmlFor="input-value">
+        Valor:
+        <input
+          id="input-value"
+          type="number"
+          min="0"
+          step="0.01"
+          value={ value }
+          onChange={ (event) => this.handleChange('value', event.target.value) }
+        />
+      </label>
+    );
+  }
+
+  renderDescriptionInput() {
+    const { description } = this.state;
+    return (
+      <label htmlFor="input-description">
+        Descrição:
+        <input
+          id="input-description"
+          type="text"
+          value={ description }
+          onChange={ (event) => this.handleChange('description', event.target.value) }
+        />
+      </label>
+    );
+  }
+
+  renderCurrencySelect() {
+    const { currency } = this.state;
+    const { currencies } = this.props;
+    return (
+      <label htmlFor="input-currency">
+        Moeda:
+        <select
+          id="input-currency"
+          name="currency"
+          onChange={ (event) => this.handleChange('currency', event.target.value) }
+          value={ currency }
+        >
+          {currencies.map((item, index) => (
+            <option key={ index } value={ item }>{ item }</option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
+  renderMethodSelect() {
+    const { method } = this.state;
+    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    return (
+      <label htmlFor="input-method">
+        Método de pagamento:
+        <select
+          id="input-method"
+          name="method"
+          onChange={ (event) => this.handleChange('method', event.target.value) }
+          value={ method }
+        >
+          {methods.map((item, index) => (
+            <option key={ index } value={ item }>{ item }</option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
+  renderTagSelect() {
+    const { tag } = this.state;
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    return (
+      <label htmlFor="input-tag">
+        Tag:
+        <select
+          id="input-tag"
+          name="tag"
+          onChange={ (event) => this.handleChange('tag', event.target.value) }
+          value={ tag }
+        >
+          {tags.map((item, index) => (
+            <option key={ index } value={ item }>{ item }</option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
+  renderSubmitButton() {
+    const { id, addExpenseThunk } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const expenseNow = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      // exchangeRates: exchangeRatesNow,
+    };
+    return (
+      <button
+        type="button"
+        onClick={ () => {
+          addExpenseThunk(expenseNow);
+        } }
+      >
+        Adicionar despesa
+      </button>
+    );
   }
 
   render() {
-    const { value, description, currency, payment, tag } = this.state;
-    const { currencies } = this.props;
-    const currenciesNameArray = currencies.map((item) => item.name);
     return (
       <form>
-        <Input
-          label="Valor:"
-          type="number"
-          id="input-value"
-          name="value"
-          value={ value }
-          onChange={ this.handleChange }
-        />
-        <Input
-          label="Descrição:"
-          id="input-description"
-          type="text"
-          name="description"
-          value={ description }
-          onChange={ this.handleChange }
-        />
-        <Select
-          id="input-currency"
-          onChange={ this.handleChange }
-          value={ currency }
-          label="Moeda:"
-          name="currency"
-          options={ currenciesNameArray }
-        />
-        <Select
-          id="input-payment"
-          onChange={ this.handleChange }
-          value={ payment }
-          label="Método de pagamento:"
-          name="payment"
-          options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
-        />
-        <Select
-          id="input-tag"
-          onChange={ this.handleChange }
-          value={ tag }
-          label="Tag:"
-          name="tag"
-          options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
-        />
+        {this.renderValueInput()}
+        {this.renderDescriptionInput()}
+        {this.renderCurrencySelect()}
+        {this.renderMethodSelect()}
+        {this.renderTagSelect()}
+        {this.renderSubmitButton()}
       </form>
     );
   }
@@ -81,6 +164,15 @@ AddExpenses.propTypes = {
     data: PropTypes.shape({ }).isRequired,
     map: PropTypes.func,
   }).isRequired,
+  id: PropTypes.number.isRequired,
+  addExpenseThunk: PropTypes.func.isRequired,
+  exchangeRatesNow: PropTypes.shape({}).isRequired,
 };
 
-export default AddExpenses;
+const mapDispatchToProps = (dispatch) => ({
+  addExpenseThunk: (expense) => dispatch(
+    getCurrenciesAndAddExpenseThunk(expense),
+  ),
+});
+
+export default connect(null, mapDispatchToProps)(AddExpenses);

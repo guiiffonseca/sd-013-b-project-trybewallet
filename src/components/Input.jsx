@@ -12,7 +12,7 @@ class Input extends Component {
           type={ type }
           name={ name }
           value={ value }
-          onChange={ onChange }
+          onChange={ onChange(name, value) }
           id={ id }
         />
       </label>
