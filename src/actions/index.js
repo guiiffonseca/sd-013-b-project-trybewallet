@@ -54,4 +54,11 @@ export const fetchForCurrency = () => async (dispatch) => {
     dispatch(failFetch(error));
   }
 };
+
+export const actionEdit = (estado, curr) => ({
+  type: 'EDIT_EXPENSES',
+  estado,
+  exchangeRates: curr,
+});
+
 export default fetchApi;

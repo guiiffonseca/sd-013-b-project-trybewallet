@@ -15,7 +15,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case 'ADD_EXPENSES':
     return {
       ...state,
-      expenses: state.expenses.concat(action.payload.allExpenses),
+      expenses: [...state.expenses, action.payload.allExpenses],
       isFetching: false,
     };
   case 'SUCESS_FETCH':
@@ -29,6 +29,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       error: action.error,
       isFetching: false,
+    };
+  case 'EDIT_EXPENSES':
+    return {
+      ...state,
+      expenses: [action.estado],
     };
   case 'DELETE_ITEM':
     return {

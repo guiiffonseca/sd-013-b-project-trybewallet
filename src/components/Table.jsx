@@ -1,11 +1,26 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { deleteItem } from '../actions/index';
+import FormEdit from './FormEdit';
 
 class Table extends Component {
+  constructor() {
+    super();
+    this.state = {
+      btn: false,
+    };
+    this.changeToEdit = this.changeToEdit.bind(this);
+  }
+
+  changeToEdit() {
+    this.setState({ btn: true });
+  }
+
   render() {
     const { expensesFromGlobal, funcDelete } = this.props;
+    const { btn } = this.state;
     return (
       <table>
         <tbody>
@@ -35,9 +50,17 @@ class Table extends Component {
               onClick={ () => funcDelete(index) }
               data-testid="delete-btn"
             >
-              Excluir
+              <AiFillDelete />
+            </button>
+            <button
+              type="button"
+              onClick={ () => this.changeToEdit() }
+              data-testid="edit-btn"
+            >
+              <AiFillEdit />
             </button>
           </Fragment>))}
+        {btn ? <FormEdit /> : null}
       </table>
     );
   }

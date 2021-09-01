@@ -13,14 +13,13 @@ class Wallet extends Component {
       id: 0,
       value: 0,
       description: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.sendToGlobal = this.sendToGlobal.bind(this);
     this.getCurrenciesCorrect = this.getCurrenciesCorrect.bind(this);
-    this.sumDispenses = this.sumDispenses.bind(this);
   }
 
   componentDidMount() {
@@ -44,19 +43,6 @@ class Wallet extends Component {
     });
   }
 
-  sumDispenses() {
-    const { expenses } = this.props;
-    if (expenses.length !== 0) {
-      const accValueExpenses = expenses
-        .reduce((acc, curr) => {
-          acc += curr.value * curr.exchangeRates[curr.currency].ask;
-          return acc;
-        }, 0);
-      return accValueExpenses;
-    }
-    return 0;
-  }
-
   sendToGlobal() {
     const { funcFetch } = this.props;
     this.setState((estadoAnterior) => ({
@@ -67,10 +53,9 @@ class Wallet extends Component {
 
   render() {
     const correctCurr = this.getCurrenciesCorrect();
-    const sumTotal = this.sumDispenses();
     return (
       <div>
-        <Header sum={ sumTotal } />
+        <Header />
         <Form handChang={ this.handleChange } correctCurrency={ correctCurr } />
         adicionar despesa
         <button
