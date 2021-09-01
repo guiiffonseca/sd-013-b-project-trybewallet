@@ -1,4 +1,4 @@
-import fetchAPI from '../services/api';
+import fetchAPI from '../servises/api';
 
 // Coloque aqui suas actions
 export const GET_EMAIL = 'GET_EMAIL';
@@ -29,11 +29,11 @@ export const getFetchApi = () => async (dispatch) => {
     console.error(error);
   }
 };
-/*const loginAction = (email) => ({
+/* const loginAction = (email) => ({
   type: 'LOGIN',
   payload: {
     email,
   },
-});*/
+}); */
 
 export default actionLogin;

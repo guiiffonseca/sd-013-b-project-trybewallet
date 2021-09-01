@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import Formulario from '../components/formulario';
-import { getApi, setFetchAwesomeapi } from '../actions';
+import Form from '../components/formulario';
+import { getApi } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -12,7 +12,7 @@ class Wallet extends React.Component {
       total: 0,
       moeda: 'BRL',
     };
-  
+
     this.getApi = this.getApi.bind(this);
   }
 
@@ -22,7 +22,7 @@ class Wallet extends React.Component {
 
   async getApi() {
     const { currency } = this.props;
-    setCurrencies();
+    currency();
   }
 
   render() {

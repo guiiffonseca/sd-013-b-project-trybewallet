@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class Form extends Component {
   render() {
-    const { payload } = this.props;
+    const { currency } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -25,7 +25,7 @@ class Form extends Component {
           Moeda
           <select id="select-moeda">
             {
-              payload.map((pay) => (
+              currency.map((pay) => (
                 <option key={ pay[0] } value={ pay[0] }>{ pay[0] }</option>))
             }
           </select>
@@ -54,11 +54,11 @@ class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  payload: state.wallet.payload,
+  currency: state.wallet.payload,
 });
 
 export default connect(mapStateToProps)(Form);
 
 Form.propTypes = {
-  payload: PropTypes.arrayOf(Array).isRequired,
+  currency: PropTypes.arrayOf(Array).isRequired,
 };
