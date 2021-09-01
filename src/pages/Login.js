@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import actionLogin from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,8 +16,10 @@ class Login extends React.Component {
   }
 
   onclick() {
-    // const { history } = this.props;
-    // history.push = '/carteira';
+    const { history, emailDispatch } = this.props;
+    const { email } = this.state;
+    history.push('/carteira');
+    emailDispatch(email);
   }
 
   verifyInfos() {
@@ -34,16 +39,13 @@ class Login extends React.Component {
   }
 
   handleChange({ target }) {
-    const { senha } = this.state;
-    // const condition = 4;
-    // console.log(ableButton);
-    // const able = email.length < condition;
+    // const { senha } = this.state;
     this.setState({
       [target.name]: target.value,
-      // ableButton: this.verifyInfos(),
+
     }, this.verifyInfos);
 
-    console.log(senha);
+    // console.log(senha);
   }
 
   render() {
@@ -80,4 +82,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  emailDispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  emailDispatch: (payload) => dispatch(actionLogin(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

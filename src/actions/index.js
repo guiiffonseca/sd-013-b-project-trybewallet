@@ -2,6 +2,6 @@
 
 import LOGIN_OK from './types';
 
-const actionLogin = () => ({ type: LOGIN_OK });
+const actionLogin = (payload) => ({ type: LOGIN_OK, payload });
 
 export default actionLogin;

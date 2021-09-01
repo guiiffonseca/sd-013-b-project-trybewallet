@@ -1,9 +1,14 @@
 import LOGIN_OK from '../actions/types';
 
-const reducerLogin = (state = {}, action) => {
+const initialState = { email: '' };
+
+const reducerLogin = (state = initialState, action) => {
   switch (action.type) {
   case LOGIN_OK:
-    return state;
+    return {
+      ...state,
+      email: action.payload,
+    };
   default:
     return state;
   }
