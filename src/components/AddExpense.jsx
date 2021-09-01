@@ -4,15 +4,22 @@ import PropTypes from 'prop-types';
 class AddExpense extends React.Component {
   render() {
     const { expenses } = this.props;
+    const { currency, exchangeRates } = expenses;
+    const [newCurrencyName] = exchangeRates[currency].name.split('/');
+    const value = Number(expenses.value);
+    const cambio = Number(exchangeRates[currency].ask);
     return (
-      <div>
-        <p>{ expenses.currency }</p>
-        <p>{ expenses.description }</p>
-        <p>{ expenses.method }</p>
-        <p>{ expenses.tag }</p>
-        <p>{ expenses.value }</p>
-        <p>{ expenses.exchangeRates[expenses.currency].ask }</p>
-      </div>
+      <tr>
+        <td>{ expenses.description }</td>
+        <td>{ expenses.tag }</td>
+        <td>{ expenses.method }</td>
+        <td>{ value }</td>
+        <td>{ newCurrencyName }</td>
+        <td>{ cambio.toFixed(2) }</td>
+        <td>{ cambio * value }</td>
+        <td>Real</td>
+        <td><button type="button">editar</button></td>
+      </tr>
     );
   }
 }
