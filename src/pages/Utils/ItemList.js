@@ -14,6 +14,10 @@ class ItemList extends Component {
     removeListItem(id);
   }
 
+  editExpense() {
+    console.log('Aoba!');
+  }
+
   render() {
     const { item:
       { value, description, method, currency,
@@ -28,7 +32,13 @@ class ItemList extends Component {
         <td>{(Number(exchangeRates[currency].ask)).toFixed(2)}</td>
         <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
         <td>Real</td>
-        <button type="button" data-testid="edit-btn">Editar</button>
+        <button
+          type="button"
+          data-testid="edit-btn"
+          onClick={ this.editExpense }
+        >
+          Editar
+        </button>
         <button
           type="button"
           onClick={ this.handleClick }
@@ -48,7 +58,7 @@ ItemList.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeListItem: () => (dispatch(deleteExpense())),
+  removeListItem: (id) => (dispatch(deleteExpense(id))),
 });
 
 export default connect(null, mapDispatchToProps)(ItemList);
