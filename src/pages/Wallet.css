@@ -1,0 +1,14 @@
+.wallet-style {
+  background-color: #f8f8f8;
+  padding: 10px;
+}
+
+.wallet-style input {
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.wallet-style select {
+  border-radius: 10px;
+  margin: 10px;
+}
