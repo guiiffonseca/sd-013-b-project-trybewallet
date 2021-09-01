@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/formulario';
-import { getApi } from '../actions';
+import { getFetchApi } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -13,26 +13,26 @@ class Wallet extends React.Component {
       moeda: 'BRL',
     };
 
-    this.getApi = this.getApi.bind(this);
+    this.getFetchApi = this.getFetchApi.bind(this);
   }
 
   componentDidMount() {
-    this.getApi();
+    this.getFetchApi();
   }
 
-  async getApi() {
-    const { currency } = this.props;
-    currency();
+  async getFetchApi() {
+    const { setCurrency } = this.props;
+    setCurrency();
   }
 
   render() {
     const { total, moeda } = this.state;
-    const { email } = this.props;
+    const { getEmail } = this.props;
     return (
       <>
         <header>
           <div>
-            <span data-testid="email-field">{ email }</span>
+            <span data-testid="email-field">{ getEmail }</span>
             <span data-testid="total-field">{ total }</span>
             <span data-testid="header-currency-field">{ moeda }</span>
           </div>
@@ -46,16 +46,16 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
+  getEmail: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  currency: () => dispatch(getApi()),
+  setCurrency: () => dispatch(getFetchApi()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-  currency: PropTypes.func.isRequired,
+  getEmail: PropTypes.string.isRequired,
+  setCurrency: PropTypes.func.isRequired,
 };
