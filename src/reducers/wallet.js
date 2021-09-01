@@ -4,6 +4,7 @@ import {
   ADD_CURRENCIES_SUCCESS,
   ADD_EXCHANGE_RATES_NOW,
   ADD_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INICIAL_WALLET_STATE = {
@@ -29,6 +30,13 @@ const wallet = (state = INICIAL_WALLET_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.payload.expense],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses.filter((expense) => expense.id !== action.payload.id),
+      ],
     };
   case ADD_EXCHANGE_RATES_NOW:
     return {

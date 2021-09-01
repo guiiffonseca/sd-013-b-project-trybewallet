@@ -158,12 +158,9 @@ class AddExpenses extends React.Component {
 }
 
 AddExpenses.propTypes = {
-  currencies: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    data: PropTypes.shape({ }).isRequired,
-    map: PropTypes.func,
-  }).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.shape({}).isRequired,
+  ).isRequired,
   id: PropTypes.number.isRequired,
   addExpenseThunk: PropTypes.func.isRequired,
   exchangeRatesNow: PropTypes.shape({}).isRequired,

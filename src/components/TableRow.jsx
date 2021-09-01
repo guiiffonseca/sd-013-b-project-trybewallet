@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import { deleteExpense as deleteExpenseAction } from '../actions';
+
+import deleteIcon from '../images/bin.png';
+import editIcon from '../images/editing.png';
 
 class TableRow extends Component {
   render() {
-    const { expense, key } = this.props;
+    const { expense, key, deleteExpense } = this.props;
     const {
+      id,
       value,
       description,
       currency,
@@ -22,19 +29,23 @@ class TableRow extends Component {
         <td>{ tag }</td>
         <td>{ method }</td>
         <td>{ value }</td>
-        {/* <td>{ `${currency} ${parseFloat(value).toFixed(2)}` }</td> */}
         <td>
           { userExchangeCurrency[0] ? userExchangeCurrency[0] : userExchangeIncomplete }
         </td>
         <td>{ userExchangeFixed }</td>
-        {/* <td>{ `R$ ${userExchangeFixed}` }</td> */}
         <td>{ (userExchange * parseFloat(value)).toFixed(2) }</td>
-        {/* <td>{ `R$ ${(userExchangeFixed * parseFloat(value)).toFixed(2)}`}</td> */}
         <td>{ userExchangeCurrency[1] ? userExchangeCurrency[1] : 'Real' }</td>
-        {/* <td>
-          { userExchangeCurrency[1] ? userExchangeCurrency[1] : 'Real Brasileiro' }
-        </td> */}
-        <td>Edita/Excluir</td>
+        <td>
+          <img className="btn-icon" src={ editIcon } alt="Editar despesa" />
+          <button
+            className="btn-deletar"
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => deleteExpense(id) }
+          >
+            <img className="btn-icon" src={ deleteIcon } alt="Apagar despesa" />
+          </button>
+        </td>
       </tr>
     );
   }
@@ -51,6 +62,13 @@ TableRow.propTypes = {
     tag: PropTypes.string.isRequired,
     exchangeRates: PropTypes.shape({}).isRequired,
   }).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default TableRow;
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (id) => dispatch(
+    deleteExpenseAction(id),
+  ),
+});
+
+export default connect(null, mapDispatchToProps)(TableRow);

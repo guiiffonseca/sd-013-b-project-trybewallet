@@ -50,7 +50,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email, currencies, expenses, exchangeRatesNow } = this.props;
-    const id = expenses.length;
+    const id = expenses.length !== 0 ? expenses[expenses.length - 1].id + 1 : 0;
     const { totalExpenses } = this.state;
     return (
       // (email.length === 0)
@@ -87,12 +87,14 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrencies: PropTypes.func.isRequired,
-  currencies: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    data: PropTypes.shape({}).isRequired,
-  }).isRequired,
-  expenses: PropTypes.shape([]).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.shape({}).isRequired,
+  ).isRequired,
+  expenses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+  ).isRequired,
   exchangeRatesNow: PropTypes.shape({}).isRequired,
 };
 

@@ -7,6 +7,7 @@ export const ADD_CURRENCIES_SUCCESS = 'ADD_CURRENCIES_SUCCESS';
 export const ADD_CURRENCIES_ERROR = 'ADD_CURRENCIES_ERROR';
 
 export const ADD_EXPENSE = 'ADD_EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const ADD_EXCHANGE_RATES_NOW = 'ADD_EXCHANGE_RATES_NOW';
 // export const DELETE_EXPENSES = 'DELETE_EXPENSES';
@@ -68,6 +69,11 @@ export const getCurrenciesThunk = () => async (dispatch) => {
 export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
   payload,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  payload: { id },
 });
 
 export const getCurrenciesAndAddExpenseThunk = (expenseValue) => async (dispatch) => {
