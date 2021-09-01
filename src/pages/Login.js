@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setEmail, setLogged } from '../actions';
 
 class Login extends React.Component {
@@ -64,15 +65,17 @@ class Login extends React.Component {
               required
             />
           </label>
-          <button
-            onClick={ this.handleClick }
-            type="button"
-            name="entrar"
-            value="Entrar"
-            id="loginButton"
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              onClick={ this.handleClick }
+              type="button"
+              name="entrar"
+              value="Entrar"
+              id="loginButton"
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>);
   }
