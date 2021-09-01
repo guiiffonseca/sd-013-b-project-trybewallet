@@ -14,9 +14,9 @@ class ExpenseForm extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      payment: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -35,20 +35,20 @@ class ExpenseForm extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { fetchExchangeRates } = this.props;
     fetchExchangeRates({
       value,
       description,
       currency,
-      payment,
+      method,
       tag,
     });
   }
 
   render() {
     const { currencies } = this.props;
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <div>
         <form>
@@ -75,7 +75,7 @@ class ExpenseForm extends React.Component {
           </label>
           <Select
             onChange={ this.handleChange }
-            payment={ payment }
+            method={ method }
             tag={ tag }
           />
           <button
@@ -98,6 +98,7 @@ ExpenseForm.propTypes = {
 
 const mapStateToProps = ({ wallet }) => ({
   currencies: wallet.currencies,
+  expenses: wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

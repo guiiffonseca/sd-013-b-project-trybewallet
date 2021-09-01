@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { sumCurrencies as sumCurrenciesAction } from '../actions';
 
 class Header extends React.Component {
   constructor() {
@@ -9,14 +10,18 @@ class Header extends React.Component {
   }
 
   calcTotalExpenses() {
-    const { expenses } = this.props;
-    return expenses.reduce((acc, curr) => acc + curr, 0);
+    const { expenses, totalExpense, sumCurrencies } = this.props;
+    const values = expenses
+      .map((item) => item.value * item.exchangeRates[item.currency].ask);
+    const expended = values.reduce((acc, curr) => acc + curr, 0).toFixed(2);
+    sumCurrencies(expended);
+    return totalExpense;
   }
 
   render() {
     const { email } = this.props;
     return (
-      <div>
+      <header>
         <p
           data-testid="email-field"
         >
@@ -25,14 +30,14 @@ class Header extends React.Component {
         <p
           data-testid="total-field"
         >
-          { this.calcTotalExpenses() }
+          { `R$: ${this.calcTotalExpenses()}` }
         </p>
         <p
           data-testid="header-currency-field"
         >
           BRL
         </p>
-      </div>
+      </header>
     );
   }
 }
@@ -45,6 +50,11 @@ Header.propTypes = {
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   expenses: wallet.expenses,
+  totalExpense: wallet.totalExpense,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  sumCurrencies: (payload) => dispatch(sumCurrenciesAction(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

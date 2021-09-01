@@ -3,41 +3,46 @@ import PropTypes from 'prop-types';
 
 class Select extends React.Component {
   render() {
-    const { onChange } = this.props;
+    const { onChange, method, tag } = this.props;
     return (
-      <div>
+      <>
         <label htmlFor="payment">
           Método de pagamento:
           <select
-            name="payment"
+            name="method"
             id="payment"
             onChange={ onChange }
+            value={ method }
           >
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
-          Categoria:
+          Tag:
           <select
             name="tag"
             id="tag"
             onChange={ onChange }
+            value={ tag }
           >
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte e Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <optin value="Saúde">Saúde</optin>
           </select>
         </label>
-      </div>
+      </>
     );
   }
 }
 
 Select.propTypes = {
   onChange: PropTypes.func.isRequired,
+  method: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
 };
 
 export default Select;

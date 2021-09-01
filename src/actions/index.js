@@ -6,6 +6,7 @@ const actions = {
   CURRENCIES: 'CURRENCIES',
   FAILED_REQUEST: 'FAILED_REQUEST',
   EXCHANGE_RATES: 'EXCHANGE_RATES',
+  SUM_CURRENCIES: 'SUM_CURRENCIES',
 };
 
 export const requestApi = () => ({
@@ -18,6 +19,10 @@ export const failedRequest = (error) => ({
 
 export const getCurrencies = (payload) => ({
   type: actions.CURRENCIES, payload,
+});
+
+export const sumCurrencies = (payload) => ({
+  type: actions.SUM_CURRENCIES, payload,
 });
 
 export const getExchangeRates = (payload) => ({
@@ -39,12 +44,13 @@ export const fetchCurrencies = () => async (dispatch) => {
   }
 };
 
-export const fetchExchangeRates = (payload) => async (dispatch) => {
+export const fetchExchangeRates = (payload) => async (dispatch, getState) => {
   dispatch(requestApi());
 
   try {
+    const { expenses } = getState().wallet;
     const exchangeRates = await fetchExchangeRateApi();
-    dispatch(getExchangeRates({ ...payload, exchangeRates }));
+    dispatch(getExchangeRates({ ...payload, id: expenses.length, exchangeRates }));
   } catch (error) {
     dispatch(failedRequest(error.message));
   }
