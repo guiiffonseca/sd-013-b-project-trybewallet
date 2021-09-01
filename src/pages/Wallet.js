@@ -17,11 +17,20 @@ class Wallet extends React.Component {
       tag: 'Alimentação',
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.renderPaymentMethod = this.renderPaymentMethod.bind(this);
     this.renderTags = this.renderTags.bind(this);
     this.renderCurrency = this.renderCurrency.bind(this);
     this.renderDescription = this.renderDescription.bind(this);
     this.renderTotalValue = this.renderTotalValue.bind(this);
+  }
+
+  // event.target.name / value
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   renderPaymentMethod(pagamento) {
@@ -30,7 +39,9 @@ class Wallet extends React.Component {
         Método de pagamento:
         <select
           id="input-pagamento"
+          name="pagamento"
           value={ pagamento }
+          onChange={ this.handleChange }
         >
           { payments.map(({ method, key }) => (
             <option value={ method } key={ key }>
@@ -45,7 +56,12 @@ class Wallet extends React.Component {
     return (
       <label htmlFor="input-tag">
         Tag:
-        <select id="input-tag" value={ tag }>
+        <select
+          id="input-tag"
+          name="tag"
+          value={ tag }
+          onChange={ this.handleChange }
+        >
           { tags.map(({ type, key }) => (
             <option value={ type } key={ key }>
               { type }
@@ -61,9 +77,11 @@ class Wallet extends React.Component {
         Moeda:
         <select
           id="input-moeda"
+          name="moeda"
           value={ moeda }
+          onChange={ this.handleChange }
         >
-          <option>Escolha uma moeda</option>
+          <option value="escolha">Escolha uma moeda</option>
         </select>
       </label>
     );
@@ -78,6 +96,7 @@ class Wallet extends React.Component {
           type="text"
           name="descDespesa"
           value={ descDespesa }
+          onChange={ this.handleChange }
         />
       </label>
     );
@@ -92,6 +111,7 @@ class Wallet extends React.Component {
           type="number"
           name="valor"
           value={ valor }
+          onChange={ this.handleChange }
         />
       </label>
     );
