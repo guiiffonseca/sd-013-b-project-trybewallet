@@ -56,11 +56,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     const { currencys } = this.state;
     return (
       <div>
-        <Header email={ email } />
+        <Header email={ email } expenses={ expenses } />
         <form>
           <label htmlFor="value">
             Valor
@@ -100,9 +100,13 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   getExpenseState: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
 };
 
-const mapStateToProps = (state) => ({ email: state.user.email });
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  expenses: state.wallet.expenses,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   getExpenseState: (payload) => dispatch(submitExpenseThunk(payload)),
