@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
-  constructor() {
+  /* constructor() {
     super();
 
-  }
-  
+  } */
+
   render() {
-    const { email } = this.props; 
+    const { email } = this.props;
     return (
       <div>
-        Carteira <br/>
+        Carteira
+        <br />
         { email }
       </div>
     );
@@ -20,7 +22,11 @@ class Wallet extends React.Component {
 
 // lendo os dados do estado global: state
 const mapStateToProps = (state) => ({
+  // essa propriedade email tem que ter o mesmo nome da props
   email: state.user.email,
 });
 
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+};
 export default connect(mapStateToProps)(Wallet);
