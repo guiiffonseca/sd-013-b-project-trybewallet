@@ -10,23 +10,29 @@ class WalletInputs extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, onChange } = this.props;
     const allCurrencies = Object.keys(currencies);
     return (
       <>
         <label htmlFor="amount">
           Valor:
-          <input type="text" id="amount" name="name" />
+          <input type="number" id="amount" name="value" onChange={ onChange } />
         </label>
 
         <label htmlFor="description">
           Descrição:
-          <input type="text" id="description" name="description" />
+          <input
+            autoComplete="off"
+            type="text"
+            id="description"
+            name="description"
+            onChange={ onChange }
+          />
         </label>
 
         <label htmlFor="currency">
           Moeda:
-          <select id="currency">
+          <select id="currency" name="currency" onChange={ onChange }>
             { allCurrencies.map((currency, index) => (
               <option
                 key={ index }
@@ -51,7 +57,8 @@ const mapStateToProps = (state) => ({
 
 WalletInputs.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.array).isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletInputs);
