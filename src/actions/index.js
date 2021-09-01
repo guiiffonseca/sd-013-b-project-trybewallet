@@ -2,6 +2,7 @@
 const LOGIN = 'LOGIN';
 const GET_CURRENCIES = 'GET_CURRENCIES';
 const ADD_EXPENSE = 'ADD_EXPENSE';
+const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export default function Login(email) {
   return ({
@@ -26,6 +27,15 @@ export function addExpense(despesa) {
     type: ADD_EXPENSE,
     payload: {
       despesa,
+    },
+  });
+}
+
+export function removeExpense(index) {
+  return ({
+    type: REMOVE_EXPENSE,
+    payload: {
+      index,
     },
   });
 }

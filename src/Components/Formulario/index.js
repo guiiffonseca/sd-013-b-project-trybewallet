@@ -57,7 +57,7 @@ class Formulario extends Component {
     delete data.DOGE;
 
     const obj = {
-      id: despesas.length,
+      id: despesas.length > 0 ? despesas[despesas.length - 1].id + 1 : 0,
       value,
       description,
       currency,
