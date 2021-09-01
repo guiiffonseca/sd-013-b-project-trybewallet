@@ -1,9 +1,20 @@
 .header-container {
   display: flex;
   justify-content: flex-end;
-  border: 2px solid orange;
+  border: 0.2em solid orange;
 }
 
 .header-container > span {
   margin: 0.5em;
+}
+
+.form-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  border: 0.2em solid blue;
+}
+
+.form-container > label > * {
+  margin: 0.2em;
 }

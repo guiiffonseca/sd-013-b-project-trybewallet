@@ -4,7 +4,7 @@ export default class FormWallet extends Component {
   renderValueInput() {
     return (
       <label htmlFor="value-input">
-        Valor
+        Valor:
         <input
           id="value-input"
           name="value"
@@ -16,7 +16,7 @@ export default class FormWallet extends Component {
   renderDescriptionInput() {
     return (
       <label htmlFor="description-input">
-        Descrição
+        Descrição:
         <input
           id="description-input"
           name="description"
@@ -28,7 +28,7 @@ export default class FormWallet extends Component {
   renderCurrencySelect() {
     return (
       <label htmlFor="currency-select">
-        Moeda
+        Moeda:
         <select
           id="currency-select"
         >
@@ -41,7 +41,7 @@ export default class FormWallet extends Component {
   renderPaymentMethodSelect() {
     return (
       <label htmlFor="payment-method-select">
-        Método de pagamento
+        Método de pagamento:
         <select
           id="payment-method-select"
         >
@@ -72,7 +72,7 @@ export default class FormWallet extends Component {
 
   renderForm() {
     return (
-      <form>
+      <form className="form-container">
         { this.renderValueInput() }
         { this.renderCurrencySelect() }
         { this.renderPaymentMethodSelect() }
