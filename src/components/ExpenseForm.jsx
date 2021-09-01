@@ -2,57 +2,70 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from './Input';
+import Select from './Select';
 import { fetchCurrencies as fetchCurrenciesAction } from '../actions/index';
 
 class ExpenseForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+      description: '',
+      currency: '',
+      payment: '',
+      tag: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
   }
 
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
   render() {
     const { currencies } = this.props;
+    const { value, description, currency, payment, tag } = this.state;
     return (
       <div>
         <form>
-          <Input />
+          <Input
+            onChange={ this.handleChange }
+            description={ description }
+            value={ value }
+          />
           <label htmlFor="currency">
             Moeda:
             <select
               name="currency"
               id="currency"
+              value={ currency }
+              onChange={ this.handleChange }
             >
-              { currencies.map((currency, index) => (
+              { currencies.map((currencyType, index) => (
                 <option
                   key={ index }
                 >
-                  { currency }
+                  { currencyType }
                 </option>))}
             </select>
           </label>
-          <label htmlFor="payment">
-            Método de pagamento:
-            <select
-              name="payment"
-              id="payment"
-            >
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Categoria:
-            <select
-              name="tag"
-              id="tag"
-            >
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte e Saúde</option>
-            </select>
-          </label>
+          <Select
+            onChange={ this.handleChange }
+            payment={ payment }
+            tag={ tag }
+          />
+          <button
+            type="button"
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -60,7 +73,7 @@ class ExpenseForm extends React.Component {
 }
 
 ExpenseForm.propTypes = {
-  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
 };
 
