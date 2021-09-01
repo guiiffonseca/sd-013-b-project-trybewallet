@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Input from '../components/Input';
 import { fetchCurrencies } from '../utils';
 import FormSelects from './FormSelects';
 
@@ -39,7 +40,7 @@ class Wallet extends React.Component {
         <form>
           <fieldset>
             <legend>Welcome</legend>
-            <input
+            <Input
               type="text"
               name="expense"
               id="expense"
@@ -49,7 +50,8 @@ class Wallet extends React.Component {
               value={ expense }
               onChange={ this.handleChange }
             />
-            <input
+
+            <Input
               type="text"
               name="description"
               id="description"
