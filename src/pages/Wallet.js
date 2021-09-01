@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { payments } from '../data/payments';
+import { tags } from '../data/tags';
+
 class Wallet extends React.Component {
   constructor() {
     super();
@@ -10,9 +13,88 @@ class Wallet extends React.Component {
       valor: 0,
       descDespesa: '',
       moeda: '',
-      pagamento: '',
-      tag: '',
+      pagamento: 'Dinheiro',
+      tag: 'Alimentação',
     };
+
+    this.renderPaymentMethod = this.renderPaymentMethod.bind(this);
+    this.renderTags = this.renderTags.bind(this);
+    this.renderCurrency = this.renderCurrency.bind(this);
+    this.renderDescription = this.renderDescription.bind(this);
+    this.renderTotalValue = this.renderTotalValue.bind(this);
+  }
+
+  renderPaymentMethod(pagamento) {
+    return (
+      <label htmlFor="input-pagamento">
+        Método de pagamento:
+        <select
+          id="input-pagamento"
+          value={ pagamento }
+        >
+          { payments.map(({ method }) => (
+            <option value={ method }>
+              { method }
+            </option>)) }
+        </select>
+      </label>
+    );
+  }
+
+  renderTags(tag) {
+    return (
+      <label htmlFor="input-tag">
+        Tag:
+        <select id="input-tag" value={ tag }>
+          { tags.map(({ type }) => (
+            <option value={ type }>
+              { type }
+            </option>)) }
+        </select>
+      </label>
+    );
+  }
+
+  renderCurrency(moeda) {
+    return (
+      <label htmlFor="input-moeda">
+        Moeda:
+        <select
+          id="input-moeda"
+          value={ moeda }
+        >
+          <option>Escolha uma moeda</option>
+        </select>
+      </label>
+    );
+  }
+
+  renderDescription(descDespesa) {
+    return (
+      <label htmlFor="input-descricao">
+        Descrição:
+        <input
+          id="input-descricao"
+          type="text"
+          name="descDespesa"
+          value={ descDespesa }
+        />
+      </label>
+    );
+  }
+
+  renderTotalValue(valor) {
+    return (
+      <label htmlFor="input-valor">
+        Valor:
+        <input
+          id="input-valor"
+          type="number"
+          name="valor"
+          value={ valor }
+        />
+      </label>
+    );
   }
 
   render() {
@@ -36,58 +118,15 @@ class Wallet extends React.Component {
 
         <main>
           <form>
-            <label htmlFor="input-valor">
-              Valor:
-              <input
-                id="input-valor"
-                type="number"
-                name="valor"
-                value={ valor }
-              />
-            </label>
+            { this.renderTotalValue(valor) }
             <br />
-            <label htmlFor="input-descricao">
-              Descrição:
-              <input
-                id="input-descricao"
-                type="text"
-                name="descDespesa"
-                value={ descDespesa }
-              />
-            </label>
+            { this.renderDescription(descDespesa) }
             <br />
-            <label htmlFor="input-moeda">
-              Moeda:
-              <select
-                id="input-moeda"
-                value={ moeda }
-              >
-                <option>Escolha uma moeda</option>
-              </select>
-            </label>
+            { this.renderCurrency(moeda) }
             <br />
-            <label htmlFor="input-pagamento">
-              Método de pagamento:
-              <select
-                id="input-pagamento"
-                value={ pagamento }
-              >
-                <option value="dinheiro">Dinheiro</option>
-                <option value="credito">Cartão de crédito</option>
-                <option value="debito">Cartão de débito</option>
-              </select>
-            </label>
+            { this.renderPaymentMethod(pagamento) }
             <br />
-            <label htmlFor="input-tag">
-              Tag:
-              <select id="input-tag" value={ tag }>
-                <option value="alimentacao">Alimentação</option>
-                <option value="lazer">Lazer</option>
-                <option value="trabalho">Trabalho</option>
-                <option value="transporte">Transporte</option>
-                <option value="saude">Saúde</option>
-              </select>
-            </label>
+            { this.renderTags(tag) }
           </form>
         </main>
       </div>
