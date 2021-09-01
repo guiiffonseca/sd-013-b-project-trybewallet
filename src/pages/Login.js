@@ -1,10 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setEmail, setLogged } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
 
     this.handleButtonLock = this.handleButtonLock.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const button = document.getElementById('loginButton');
+    button.disabled = true;
+  }
+
+  handleClick() {
+    const { setEmail, setLogged } = this.props;
+    const emailInput = document.getElementById('emailInput').value;
+    setLogged(true);
+    setEmail(emailInput);
+    console.log('test');
   }
 
   handleButtonLock() {
@@ -49,7 +65,7 @@ class Login extends React.Component {
             />
           </label>
           <button
-            disabled
+            onClick={ this.handleClick }
             type="button"
             name="entrar"
             value="Entrar"
@@ -62,4 +78,9 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (payload) => dispatch(setEmail(payload)),
+  setLogged: (payload) => dispatch(setLogged(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
