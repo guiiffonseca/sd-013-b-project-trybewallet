@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.header {
+  align-items: center;
+  background-color: #ffe98a;
+  display: flex;
+  flex-flow: row wrap;
+  height: 60px;
+  justify-content: space-between;
+}
+
+.header p {
+  padding-right: 10px;
+}
+
+.header img {
+  height: 60px;
+  padding-left: 20px;
+}
