@@ -24,7 +24,7 @@ class Header extends React.Component {
           { `Despesa Total: R$${totalExpenses.toFixed(2)}` }
         </span>
         <span data-testid="header-currency-field">
-          { currencyField }
+          { `Câmbio: ${currencyField}` }
         </span>
       </div>
     );

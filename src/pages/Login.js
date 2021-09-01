@@ -13,21 +13,8 @@ class Login extends React.Component {
       disabled: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  // handleEmailChange({ target }) {
-  //   const { userName } = this.state;
-  //   if (userName === /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i) {
-  //     this.setState({
-  //       disabled: false,
-  //     });
-  //   }
-  //   this.setState({
-  //     userName: target.value,
-  //   });
-  // }
 
   // Expressão do Regex pesquisei no stackoverflow e testei no RegEx Testing
   handleInputChange({ target }) {
@@ -101,10 +88,6 @@ Login.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-// const mapStateToProps = (state) => ({
-//   email: state.userReducer.email,
-// });
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(loginAction(email)),

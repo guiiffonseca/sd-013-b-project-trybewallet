@@ -1,4 +1,5 @@
 import React from 'react';
+import getCodeCountries from '../API';
 
 class ExpenseForm extends React.Component {
   constructor() {
@@ -6,12 +7,27 @@ class ExpenseForm extends React.Component {
 
     this.state = {
       value: '',
+      allCurrency: [],
       currency: 'USD',
       paymentMethod: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.showCodeCountries();
+  }
+
+  async showCodeCountries() {
+    const results = await getCodeCountries();
+    const resultsArray = Object.keys(results);
+    const finalResults = resultsArray.filter((_result, index) => index !== 1);
+    console.log(finalResults);
+    this.setState({
+      allCurrency: finalResults,
+    });
   }
 
   handleChange({ target }) {
@@ -37,8 +53,24 @@ class ExpenseForm extends React.Component {
     );
   }
 
+  renderDescription() {
+    const { description } = this.state;
+    return (
+      <label htmlFor="description">
+        Descrição:
+        <input
+          type="text"
+          name="description"
+          id="description"
+          value={ description }
+          onChange={ this.handleChange }
+        />
+      </label>
+    );
+  }
+
   renderCurrency() {
-    const { currency } = this.state;
+    const { allCurrency, currency } = this.state;
     return (
       <label htmlFor="currency">
         Moeda:
@@ -48,7 +80,11 @@ class ExpenseForm extends React.Component {
           value={ currency }
           onChange={ this.handleChange }
         >
-          vazio
+          { allCurrency.map((code) => (
+            <option key={ code } value={ code }>
+              { code }
+            </option>
+          )) }
         </select>
       </label>
     );
@@ -94,31 +130,15 @@ class ExpenseForm extends React.Component {
     );
   }
 
-  renderDescription() {
-    const { description } = this.state;
-    return (
-      <label htmlFor="description">
-        Descrição:
-        <input
-          type="text"
-          name="description"
-          id="description"
-          value={ description }
-          onChange={ this.handleChange }
-        />
-      </label>
-    );
-  }
-
   render() {
     return (
       <div>
         <form>
           { this.renderValue() }
+          { this.renderDescription() }
           { this.renderCurrency() }
           { this.renderPaymentMethod() }
           { this.renderTag() }
-          { this.renderDescription() }
         </form>
       </div>
     );
