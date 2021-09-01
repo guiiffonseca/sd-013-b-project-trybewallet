@@ -29,7 +29,6 @@ class FormSelects extends React.Component {
   render() {
     const { currency, paymentMethod, categories } = this.state;
     const { currencies } = this.props;
-    console.log(this.props);
     return (
       <>
         <Select

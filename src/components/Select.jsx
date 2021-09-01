@@ -8,8 +8,6 @@ export default class Select extends React.Component {
       <label htmlFor={ id }>
         {label}
         <select id={ id } name={ name } value={ value } onChange={ onChange }>
-          {/* vai dar ruim */}
-          <option value="0">Choose:</option>
           {items.map((item) => (
             <option value={ item } key={ item }>
               {item}
