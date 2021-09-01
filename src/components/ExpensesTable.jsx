@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ItensTable from './ItensTable';
 
 class ExpensesTable extends React.Component {
@@ -33,8 +34,8 @@ class ExpensesTable extends React.Component {
   }
 }
 
-// const mapStateToProps = ({ expenses: { wallet: expenses } }) => ({
-//   expenses,
-// });
+ExpensesTable.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default (ExpensesTable);

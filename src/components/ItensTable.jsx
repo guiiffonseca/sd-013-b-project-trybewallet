@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ItensTable extends React.Component {
   render() {
@@ -23,5 +24,9 @@ class ItensTable extends React.Component {
     );
   }
 }
+
+ItensTable.propTypes = {
+  expense: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default ItensTable;
