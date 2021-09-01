@@ -1,4 +1,5 @@
 import React from 'react';
+import SelectCoins from './SelectCoins';
 
 class FormWallet extends React.Component {
   render() {
@@ -14,10 +15,7 @@ class FormWallet extends React.Component {
           <input type="text" name="descricao" id="descricao" />
         </label>
 
-        <label htmlFor="moeda">
-          Moeda:
-          <select aria-label="moeda" name="moeda" id="moeda" />
-        </label>
+        <SelectCoins />
 
         <label htmlFor="metodo">
           Método de pagamento:
