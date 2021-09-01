@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getCambio from '../globalFuncs/CambioFunc';
+import Button from './Button';
+import { deleteExpense } from '../actions';
 
 class Table extends React.Component {
   // getCurrencyName(name) {
@@ -9,8 +11,16 @@ class Table extends React.Component {
   //   return realName;
   // }
 
+  handleDelete(id) {
+    const { expenses, remove } = this.props;
+    const newExpenses = expenses.filter((expense) => (
+      expense.id !== id
+    ));
+    remove(newExpenses);
+  }
+
   createTr(expense) {
-    const { description, tag, method, value, currency, exchangeRates } = expense;
+    const { description, tag, method, value, currency, exchangeRates, id } = expense;
     const { ask, name } = exchangeRates[currency];
 
     return (
@@ -23,6 +33,13 @@ class Table extends React.Component {
         <td>{ Math.round(ask * 100) / 100 }</td>
         <td>{ getCambio(value, ask) }</td>
         <td>Real</td>
+        <td>
+          <Button
+            text="Deletar"
+            handleClick={ () => this.handleDelete(id) }
+            testId="delete-btn"
+          />
+        </td>
       </>
     );
   }
@@ -61,8 +78,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  remove: (expenses) => dispatch(deleteExpense(expenses)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

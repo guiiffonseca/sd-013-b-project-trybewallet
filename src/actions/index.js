@@ -3,6 +3,7 @@ export const LOGGED_INFO = 'LOGGED_INFO';
 export const CURRENCY = 'CURRENCY';
 export const LOADING = 'LOADING';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const logged = (email) => ({ type: LOGGED_INFO, email });
 
@@ -18,6 +19,10 @@ export function fetchApi() {
     dispatch(getCurrency(result));
     dispatch(loading());
   };
+  // Pesquisei sobre o delete(linha 18), neste link:
+  // https://stackoverflow.com/questions/6295087/how-to-remove-item-from-a-javascript-object
 }
 
 export const expense = (infos) => ({ type: ADD_EXPENSE, infos });
+
+export const deleteExpense = (expenses) => ({ type: DELETE_EXPENSE, expenses });
