@@ -9,8 +9,8 @@ class LoginRightContainer extends React.Component {
       <div className="right-container">
         <div className="form-container">
           <div className="login-register-buttons">
-            <span>ENTRAR</span>
-            <span>CADASTRAR</span>
+            <span>LOGIN</span>
+            <span>CADASTRO</span>
           </div>
           <SocialLogin />
           <form>
