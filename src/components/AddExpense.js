@@ -1,7 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { getCurrenciesThunk } from '../actions';
 
 class AddExpense extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      selectedCurrency: 'USD',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
+  handleChange({ target: { value } }) {
+    this.setState({ selectedCurrency: value });
+  }
+
   render() {
+    const { currencies = [] } = this.props;
+    const { selectedCurrency } = this.state;
     return (
       <form action="">
         <label htmlFor="value-input">
@@ -14,8 +39,15 @@ class AddExpense extends Component {
         </label>
         <label htmlFor="currency">
           Moeda
-          <select name="currency" id="currency">
-            <option value=""> </option>
+          <select
+            name="currency"
+            id="currency"
+            value={ selectedCurrency }
+            onChange={ this.handleChange }
+          >
+            {currencies.map((currency) => (
+              <option key={ currency } value={ currency }>{currency}</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-method">
@@ -41,4 +73,17 @@ class AddExpense extends Component {
   }
 }
 
-export default AddExpense;
+AddExpense.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
