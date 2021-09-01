@@ -24,6 +24,9 @@ export const fetchApi = () => (dispatch) => {
   const endPoint = 'https://economia.awesomeapi.com.br/json/all';
   fetch(endPoint)
     .then((data) => data.json())
-    .then((response) => dispatch(getCoinsSuccess(response)));
+    .then((response) => {
+      dispatch(getCoinsSuccess(response));
+      console.log(response);
+    });
   // .catch((err) => dispatch(getCoinsError(err)));
 };

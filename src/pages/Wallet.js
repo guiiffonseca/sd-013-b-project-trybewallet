@@ -12,11 +12,8 @@ class Wallet extends React.Component {
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { email, isLoading } = this.props;
+    const { email } = this.props;
 
-    if (isLoading) {
-      return (<p>Carregando...</p>);
-    }
     return (
       <div>
         <header className="header">
@@ -50,7 +47,6 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   fetchApi: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

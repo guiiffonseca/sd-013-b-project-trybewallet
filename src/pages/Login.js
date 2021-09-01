@@ -31,7 +31,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const numMax = 5;
     const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
-    // Regex pego no internet
+    // Regex pego na internet
     const enable = emailIsValid.test(email) && password.length >= numMax;
     if (enable === true) {
       const btnLogin = document.getElementById('btnLogin');
