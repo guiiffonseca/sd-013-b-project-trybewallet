@@ -13,7 +13,6 @@ class Wallet extends React.Component {
       ),
       0,
     );
-
     return (
       <div>
         <header>

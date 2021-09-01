@@ -1,10 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { expensesActionDelete } from '../actions';
 
 class WalletTable extends React.Component {
-  render() {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.tableRender = this.tableRender.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { expenses, removeExpense } = this.props;
+    const { id } = target.parentNode;
+    const expensesFiltered = expenses
+      .filter(({ id: idExpense }) => idExpense !== Number(id));
+    removeExpense(expensesFiltered);
+  }
+
+  tableRender() {
     const { expenses } = this.props;
+    return (
+      expenses && expenses.map(
+        ({ id, description, tag, method, value, currency, exchangeRates }) => (
+          <tr key={ id }>
+            <td>{ description }</td>
+            <td>{ tag }</td>
+            <td>{ method }</td>
+            <td>{ value }</td>
+            <td>{ exchangeRates[currency].name }</td>
+            <td>{ (Number(exchangeRates[currency].ask)).toFixed(2) }</td>
+            <td>
+              { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
+            </td>
+            <td>Real</td>
+            <td id={ id }>
+              <button
+                onClick={ this.handleChange }
+                type="button"
+                data-testid="edit-btn"
+              >
+                EDIT
+              </button>
+              <button
+                onClick={ this.handleChange }
+                type="button"
+                data-testid="delete-btn"
+              >
+                X
+              </button>
+            </td>
+          </tr>
+        ),
+      )
+    );
+  }
+
+  render() {
     return (
       <div>
         <table>
@@ -22,30 +74,7 @@ class WalletTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            { expenses && expenses.map(
-              ({ id, description, tag, method, value, currency, exchangeRates }) => (
-                <tr key={ id }>
-                  <td>{ description }</td>
-                  <td>{ tag }</td>
-                  <td>{ method }</td>
-                  <td>{ value }</td>
-                  <td>{ exchangeRates[currency].name }</td>
-                  <td>{ (Number(exchangeRates[currency].ask)).toFixed(2) }</td>
-                  <td>
-                    { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
-                  </td>
-                  <td>Real</td>
-                  <td>
-                    <button type="button" data-testid="edit-btn">
-                      <span aria-label="📝" role="img">📝</span>
-                    </button>
-                    <button type="button" data-testid="delete-btn">
-                      <span aria-label="x" role="img">❌</span>
-                    </button>
-                  </td>
-                </tr>
-              ),
-            ) }
+            { this.tableRender() }
           </tbody>
         </table>
       </div>
@@ -57,8 +86,12 @@ WalletTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string),
 }.isRequired;
 
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expenses) => dispatch(expensesActionDelete(expenses)),
+});
+
 const mapStateToProps = ({ wallet }) => ({
   expenses: wallet.expenses,
 });
 
-export default connect(mapStateToProps)(WalletTable);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);

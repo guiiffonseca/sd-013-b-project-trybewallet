@@ -3,6 +3,7 @@
 export const USER_TYPE = 'user';
 export const WALLET_TYPE = 'wallet';
 export const EXPENSES_TYPE = 'expenses';
+export const EXPENSES_DELETE_TYPE = 'expensesDelete';
 
 export const userAction = (email) => ({
   type: USER_TYPE,
@@ -16,6 +17,11 @@ export const walletAction = (currencies) => ({
 
 export const expensesAction = (expenses) => ({
   type: EXPENSES_TYPE,
+  payload: { expenses },
+});
+
+export const expensesActionDelete = (expenses) => ({
+  type: EXPENSES_DELETE_TYPE,
   payload: { expenses },
 });
 
