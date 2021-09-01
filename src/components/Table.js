@@ -58,7 +58,7 @@ Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteExpense: PropTypes.func.isRequired,
 };
-// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
@@ -68,3 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
+
+// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
+// https://stackoverflow.com/questions/57519905/how-delete-item-from-redux-state
