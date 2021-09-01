@@ -1,4 +1,4 @@
-export const payments = [
+const payments = [
   {
     key: 1,
     method: 'Dinheiro',
@@ -12,3 +12,5 @@ export const payments = [
     method: 'Cartão de débito',
   },
 ];
+
+export default payments;

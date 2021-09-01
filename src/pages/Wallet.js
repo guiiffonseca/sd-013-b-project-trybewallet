@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { payments } from '../data/payments';
-import { tags } from '../data/tags';
+import payments from '../data/payments';
+import tags from '../data/tags';
 
 class Wallet extends React.Component {
   constructor() {

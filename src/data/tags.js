@@ -1,4 +1,4 @@
-export const tags = [
+const tags = [
   {
     key: 1,
     type: 'Alimentação',
@@ -20,3 +20,5 @@ export const tags = [
     type: 'Saúde',
   },
 ];
+
+export default tags;
