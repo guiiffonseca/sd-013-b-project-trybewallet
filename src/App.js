@@ -1,21 +1,16 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 import './App.css';
 
 function App() {
   return (
-    <>
-      <div>
-        <h1>HEADER</h1>
-      </div>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        {/* <Route path="/professionalForm" component={ ProfessionalForm } /> */}
-        {/* <Route path="/formDisplay" component={ FormDataDisplay } /> */}
-        {/* <Route path="*" component={ NotFound } /> */}
-      </Switch>
-    </>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route path="/carteira" component={ Wallet } />
+      {/* <Route path="*" component={ NotFound } /> */}
+    </Switch>
   );
 }
 

@@ -2,32 +2,65 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
+.header {
   background-color: #282c34;
   color: white;
+  height: 60px;
+  position: fixed;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.left-header{
+  height: 60px;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.right-header{
+  height: 60px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.span{
+  margin-left: 15px;
+}
+
+.form {
+  background-color: rgb(111, 122, 133);
+  height: 100px;
+  padding-top: 60px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+input {
+  margin-left: 10px;
+}
+
+select {
+  margin-left: 10px;
+}
+
+.wallet {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+
+}
+
 
 @keyframes App-logo-spin {
 

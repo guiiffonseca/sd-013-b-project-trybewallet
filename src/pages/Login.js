@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setLoginValue } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -18,14 +19,15 @@ class Login extends React.Component {
   }
 
   onSubmitLog() {
-    const { history } = this.props;
+    const { history, dispatchSetValue } = this.props;
+    dispatchSetValue(this.state);
     history.push('/carteira');
   }
 
   emailTest(value) {
     const num = -1;
     const strTest = value.slice(num);
-    // extrair o ultimo caracter
+    // extrair o ultimo caracter de uma string
     // fonte: https://qastack.com.br/programming/3884632/how-to-get-the-last-character-of-a-string#:~:text=Use%20charAt%20%3A,%C3%ADndice%20especificado%20em%20uma%20string.
 
     if (strTest === '@' || strTest === '.') {
@@ -97,10 +99,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  // dispatchSetValue: PropTypes.func.isRequired,
+  dispatchSetValue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default connect()(Login);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (payload) => dispatch(setLoginValue(payload)),
+}
+);
+export default connect(null, mapDispatchToProps)(Login);

@@ -1,6 +1,12 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { SET_WALLET_VALUE } from '../actions/index';
-import { initialState } from './user';
+
+const initialState = {
+  wallet: {
+    currencies: [],
+    expenses: [],
+  },
+};
 
 const reducerWallet = (state = initialState, action) => {
   switch (action.type) {
