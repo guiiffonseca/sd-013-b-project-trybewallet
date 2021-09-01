@@ -1,0 +1,9 @@
+.header-container {
+  display: flex;
+  justify-content: flex-end;
+  border: 2px solid orange;
+}
+
+.header-container > span {
+  margin: 0.5em;
+}
