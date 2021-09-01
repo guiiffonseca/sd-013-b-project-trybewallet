@@ -1,6 +1,6 @@
 const MAX_LENGTH = 3;
 
-const userCoinsFetch = async () => {
+export const userCoinsFetch = async () => {
   const request = await fetch('https://economia.awesomeapi.com.br/json/all');
   const obj = await request.json();
 
@@ -8,4 +8,9 @@ const userCoinsFetch = async () => {
     (currency) => currency.length === MAX_LENGTH,
   );
 };
-export default userCoinsFetch;
+
+export const allData = async () => {
+  const request = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const obj = await request.json();
+  return obj;
+};
