@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import { getCurrencyThunk } from '../actions';
-import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
 // import getCurrencies from '../services/currencyAPI';
 export const SET_USER = 'SET_USER';
-
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 
@@ -12,6 +12,11 @@ export const getCurrencySuccess = (payload) => ({
 
 export const getCurrencyError = (payload) => ({
   type: GET_CURRENCY_ERROR,
+  payload,
+});
+
+export const addExpense = (payload) => ({
+  type: ADD_EXPENSE,
   payload,
 });
 
