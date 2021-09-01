@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import payments from '../data/payments';
 import tags from '../data/tags';
+import currencyAPI from '../services/currencyAPI';
 
 class Wallet extends React.Component {
   constructor() {
@@ -25,6 +26,11 @@ class Wallet extends React.Component {
     this.renderTotalValue = this.renderTotalValue.bind(this);
   }
 
+  componentDidMount() {
+    currencyAPI()
+      .then((response) => console.log(response));
+      //nescessário salvar esse response no estado global
+  }
   // event.target.name / value
   handleChange({ target }) {
     const { name, value } = target;
