@@ -15,7 +15,7 @@ class Table extends Component {
   }
 
   renderTbody() {
-    const { expenses } = this.props;
+    const { expenses, onEditForm } = this.props;
     return (
       <tbody>
         {
@@ -36,7 +36,14 @@ class Table extends Component {
               </td>
               <td>Real</td>
               <td>
-                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  id={ id }
+                  onClick={ onEditForm }
+                >
+                  Editar
+                </button>
                 <button
                   type="button"
                   data-testid="delete-btn"
@@ -88,4 +95,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 Table.propTypes = {
   expenses: PropTypes.arrayOf(String).isRequired,
   setExpenses: PropTypes.func.isRequired,
+  onEditForm: PropTypes.func.isRequired,
 };

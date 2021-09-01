@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setFetchExpenses } from '../actions';
+import { setFetchExpenses, setNewExpenses } from '../actions';
 
 const INITIAL_STATE = {
   value: '',
@@ -12,19 +12,38 @@ const INITIAL_STATE = {
 };
 
 class Form extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = INITIAL_STATE;
 
     this.onSubmitExpenses = this.onSubmitExpenses.bind(this);
+    this.onUpdateExpenses = this.onUpdateExpenses.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderFilds = this.renderFilds.bind(this);
+  }
+
+  onUpdateExpenses() {
+    const { setNewExpensesEdit, expenses, editId, onEditFormDisable } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+
+    const newExpensesEditA = expenses.map((objct) => {
+      if (objct.id === Number(editId)) {
+        objct.value = value;
+        objct.description = description;
+        objct.currency = currency;
+        objct.method = method;
+        objct.tag = tag;
+      }
+      return objct;
+    });
+    setNewExpensesEdit(newExpensesEditA);
+    onEditFormDisable();
   }
 
   onSubmitExpenses(e) {
     e.preventDefault();
     const { value, description, currency, method, tag } = this.state;
-    const { setExpenses, expenses } = this.props;
+    const { setExpenses, expenses, editId } = this.props;
     const newExpenses = {
       id: expenses.length,
       value,
@@ -33,7 +52,12 @@ class Form extends Component {
       method,
       tag,
     };
-    setExpenses(newExpenses);
+
+    if (editId) {
+      this.onUpdateExpenses();
+    } else {
+      setExpenses(newExpenses);
+    }
     this.setState(INITIAL_STATE);
   }
 
@@ -91,6 +115,7 @@ class Form extends Component {
 
   render() {
     const { method, tag } = this.state;
+    const { editId } = this.props;
     return (
       <form onSubmit={ this.onSubmitExpenses }>
 
@@ -124,9 +149,10 @@ class Form extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="submit">
-          Adicionar despesa
-        </button>
+        {
+          !editId ? <button type="submit">Adicionar despesa</button>
+            : <button type="submit">Editar despesa</button>
+        }
       </form>
     );
   }
@@ -139,6 +165,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setExpenses: (expenses) => dispatch(setFetchExpenses(expenses)),
+  setNewExpensesEdit: (expenses) => dispatch(setNewExpenses(expenses)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
@@ -147,4 +174,12 @@ Form.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
   expenses: PropTypes.arrayOf(String).isRequired,
   setExpenses: PropTypes.func.isRequired,
+  setNewExpensesEdit: PropTypes.func.isRequired,
+  onEditFormDisable: PropTypes.func,
+  editId: PropTypes.string,
+};
+
+Form.defaultProps = {
+  editId: undefined,
+  onEditFormDisable: undefined,
 };

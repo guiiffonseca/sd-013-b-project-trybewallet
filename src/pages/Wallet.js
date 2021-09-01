@@ -11,14 +11,26 @@ class Wallet extends React.Component {
 
     this.state = {
       cambio: 'BRL',
+      editId: '',
     };
 
     this.fetchAwesomeApi = this.fetchAwesomeApi.bind(this);
     this.amountExpenses = this.amountExpenses.bind(this);
+    this.onEditForm = this.onEditForm.bind(this);
+    this.onEditFormDisable = this.onEditFormDisable.bind(this);
   }
 
   componentDidMount() {
     this.fetchAwesomeApi();
+  }
+
+  onEditForm({ target }) {
+    this.setState({ editId: target.id });
+  }
+
+  onEditFormDisable() {
+    const { editId } = this.state;
+    if (editId !== '') this.setState({ editId: '' });
   }
 
   amountExpenses() {
@@ -35,7 +47,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { cambio } = this.state;
+    const { cambio, editId } = this.state;
     const { getEmail } = this.props;
     return (
       <>
@@ -51,10 +63,13 @@ class Wallet extends React.Component {
           </div>
         </header>
         <section>
-          <Form amountExpenses={ this.amountExpenses } />
+          {
+            !editId ? <Form />
+              : <Form editId={ editId } onEditFormDisable={ this.onEditFormDisable } />
+          }
         </section>
         <section>
-          <Table />
+          <Table onEditForm={ this.onEditForm } />
         </section>
       </>
     );
