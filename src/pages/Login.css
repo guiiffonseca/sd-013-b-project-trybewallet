@@ -6,12 +6,14 @@
 
 body {
   background-color: #280b45;
+  background-image: url('../background.png');
+  opacity: 0.9;
 }
 
 .login-card {
   align-items: center;
-  background-color: #ffe98a;
-  border-radius: 60px;
+  background-color: #f8f8f8;
+  border-radius: 30px;
   display: flex;
   flex-flow: column wrap;
   margin: 6vw auto;
