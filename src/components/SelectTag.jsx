@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Input extends React.Component {
+class SelectTag extends React.Component {
   render() {
     const { name, role } = this.props;
     return (
@@ -21,9 +21,9 @@ class Input extends React.Component {
   }
 }
 
-Input.propTypes = {
+SelectTag.propTypes = {
   name: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
 };
 
-export default Input;
+export default SelectTag;
