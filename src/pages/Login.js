@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { loginAction } from '../actions';
+import '../App.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -56,7 +57,8 @@ class Login extends React.Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <form>
+      <form className="App">
+        <header>TrybeWallet</header>
         <Input
           label="Email"
           name="email"
