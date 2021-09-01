@@ -3,7 +3,35 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencies: [],
+    };
+    this.selectCurrencies = this.selectCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencies();
+  }
+
+  fetchCurrencies() {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedate = [...Object.values(data)];
+        updatedate.splice(1, 1);
+        this.setState({ currencies: updatedate });
+      });
+  }
+
+  selectCurrencies() {
+    const { currencies } = this.state;
+    currencies.map((currency, index) => <option key={ index }>{ currency }</option>);
+  }
+
   render() {
+    const { currencies } = this.state;
     const { user } = this.props;
     return (
       <div>
@@ -24,7 +52,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency">
-              <option value="teste">teste</option>
+              { currencies.map(
+                (currency, index) => <option key={ index }>{ currency.code }</option>,
+              )}
             </select>
           </label>
           <label htmlFor="payment">
