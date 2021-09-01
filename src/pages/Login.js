@@ -36,6 +36,7 @@ class Login extends React.Component {
       <div>
         <label htmlFor="email">
           E-mail:
+          {' '}
           <input
             data-testid="email-input"
             placeholder="Insira seu e-mail"
@@ -46,6 +47,7 @@ class Login extends React.Component {
         </label>
         <label htmlFor="password">
           Senha:
+          {' '}
           <input
             data-testid="password-input"
             placeholder="Insira sua senha"
