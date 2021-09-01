@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
@@ -16,7 +16,7 @@ class Header extends Component {
   }
 }
 Header.propTypes = {
-  email: string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

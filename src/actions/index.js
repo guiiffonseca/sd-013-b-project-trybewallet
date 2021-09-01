@@ -1,23 +1,29 @@
-// Coloque aqui suas actions
 export const EMAIL_LOGIN = 'EMAIL_LOGIN';
-// export const REQUEST_API = 'REQUEST_API';
+export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
+export const REQUEST_ERROR = 'REQUEST_ERROR';
+
+// ACTION CREATOR - LOGIN
 
 export const emailLogin = (payload) => ({
   type: EMAIL_LOGIN,
   payload,
 });
 
-// export const requestAPI = () => ({ type: REQUEST_API });
+// ACTION CREATORS - API REQUEST COINS
 
-// export function thunkFetchAPI() {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(requestAPI());
-//       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-//       const data = await response.json();
-//       dispatch(getPicture(data));
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-// }
+export const requestAPISuccess = (json) => ({
+  type: REQUEST_API_SUCCESS,
+  payload: json,
+});
+
+export const requestAPIFailed = (error) => ({
+  type: REQUEST_ERROR,
+  error,
+});
+
+export function thunkCurrencies() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((json) => dispatch(requestAPISuccess(json)))
+    .catch((error) => dispatch(requestAPIFailed(error)));
+}
