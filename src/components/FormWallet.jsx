@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class FormWallet extends React.Component {
   render() {
+    const { infoApi } = this.props;
+
     return (
       <form>
         <label htmlFor="despesa">
@@ -17,7 +20,11 @@ class FormWallet extends React.Component {
         <label htmlFor="moeda">
           Moeda :
           <select name="moeda" id="moeda">
-            <option>BRL</option>
+            {
+              Object.keys(infoApi).map((e) => (
+                e !== 'USDT' ? <option key={ e }>{ e }</option> : console.log('no')
+              ))
+            }
           </select>
         </label>
 
@@ -40,11 +47,14 @@ class FormWallet extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-
         <button type="button">Adicionar despesa</button>
       </form>
     );
   }
 }
+
+FormWallet.propTypes = {
+  infoApi: PropTypes.shape.isRequired,
+};
 
 export default FormWallet;

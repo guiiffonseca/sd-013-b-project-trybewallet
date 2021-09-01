@@ -2,10 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
+import { fetchApi } from '../actions/index';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchWalletApi } = this.props;
+    fetchWalletApi();
+  }
+
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies, expenses, infoApi, errorApi } = this.props;
+    console.log(infoApi);
+
     return (
       <div>
         <header>
@@ -26,7 +34,7 @@ class Wallet extends React.Component {
           </span>
         </header>
 
-        <FormWallet />
+        <FormWallet infoApi={ infoApi } errorApi={ errorApi } />
 
       </div>
     );
@@ -35,14 +43,25 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.shape.isRequired,
+  currencies: PropTypes.func.isRequired,
   expenses: PropTypes.shape.isRequired,
+  fetchWalletApi: PropTypes.func.isRequired,
+  infoApi: PropTypes.shape.isRequired,
+  errorApi: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+
+  infoApi: state.api.infoApi,
+  errorApi: state.api.error,
 });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchWalletApi: () => dispatch(fetchApi()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
