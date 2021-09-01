@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Form from '../components/Form';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
     return (
-      <>
-        <h1 data-testid="email-field">{ email }</h1>
-        <h2 data-testid="total-field">0</h2>
-        <h2 data-testid="header-currency-field">BRL</h2>
-      </>
+      <div>
+        <Header />
+        <Form />
+      </div>
     );
   }
 }
