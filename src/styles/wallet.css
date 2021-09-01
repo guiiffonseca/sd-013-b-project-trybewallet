@@ -1,0 +1,17 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.main-wallet-div {
+  background-color: azure;
+}
+
+.wallet-header {
+  background-color: #1a8ebc;
+  height: 5em;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
