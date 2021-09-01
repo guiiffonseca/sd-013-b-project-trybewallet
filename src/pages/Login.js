@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import emailValid from '../actions/emailValid';
+import { emailValid } from '../actions/emailValid';
 
 class Login extends React.Component {
   constructor() {
@@ -13,6 +13,14 @@ class Login extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.disableButton = this.disableButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { emailValidSucess, history } = this.props;
+    /* const { email } = this.state; */
+    emailValidSucess(this.state);
+    history.push('/carteira');
   }
 
   handleEmailChange(event) {
@@ -38,7 +46,7 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.handleClick }>
         <label data-testid="text-input-label" htmlFor="Input-email">
           E-mail
 
@@ -66,18 +74,30 @@ class Login extends React.Component {
           />
         </label>
 
-        <Link to="/carteira">
-          <button type="button" disabled={ !this.disableButton() }> Entrar </button>
-        </Link>
-
+        <button
+          type="submit"
+          disabled={ !this.disableButton() }
+        >
+          {' '}
+          Entrar
+          {' '}
+        </button>
       </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  emailValid: (value) => dispatch(emailValid(value)),
+  emailValidSucess: (payload) => dispatch(emailValid(payload)),
 });
 
+Login.propTypes = {
+  emailValidSucess: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
 export default connect(null, mapDispatchToProps)(Login);
-// Commit Inicial;
+
+// Com a ajuda do colega de turma Heitor Gomes, consegui realizar o Requisito 3 do Projeto.
