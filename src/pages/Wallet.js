@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ExpensesTable from '../components/ExpensesTable';
 import { fetchCurrencyThunk, fetchGetCurrenciesThunk } from '../actions';
 import Header from '../components/Header';
 // import InputForm from '../components/InputForm';
@@ -91,10 +92,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { user, wallet } = this.props;
+    const { user, wallet, expenses } = this.props;
     const { email } = user;
     const { currencies } = wallet;
     const { value, description, currency, method, tag } = this.state;
+
     return (
       <div>
         <Header email={ email } />
@@ -120,6 +122,7 @@ class Wallet extends React.Component {
           { this.renderSelectTag(tag) }
           <button type="button" onClick={ this.addExpenses }>Adicionar despesa</button>
         </form>
+        <ExpensesTable expenses={ expenses } />
       </div>
     );
   }
@@ -130,6 +133,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   fetchCurrency: PropTypes.func.isRequired,
   fetchGetCurrencies: PropTypes.func.isRequired,
   wallet: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -138,6 +142,7 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   user: state.user,
   wallet: state.wallet,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
