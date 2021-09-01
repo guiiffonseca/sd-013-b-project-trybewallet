@@ -18,18 +18,21 @@ class Header extends Component {
       <header>
         <div
           data-testid="email-field"
-        />
-        { email }
+        >
+          { email }
+
+        </div>
         <div
           data-testid="total-field"
         >
           { valueinitial }
-          <div />
-          <div
-            data-testid="header-currency-field"
-          >
-            { coinInitial }
-          </div>
+
+        </div>
+        <div
+          data-testid="header-currency-field"
+        >
+          { coinInitial }
+
         </div>
       </header>
     );
