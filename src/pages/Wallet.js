@@ -47,13 +47,13 @@ class Wallet extends React.Component {
 
   render() {
     const { email, userExpenses } = this.props;
-    const { currency } = this.state;
     let TOTAL = 0;
     const CURRENCY = 'BRL';
     const totalExpenses = () => {
+      // eu estava pegando o currey do local state, e não do global state, por isso o valor total estava sempre errado;
       userExpenses
-        .forEach((expense) => {
-          TOTAL += expense.value * expense.exchangeRates[currency].ask;
+        .forEach(({ value, currency, exchangeRates }) => {
+          TOTAL += value * exchangeRates[currency].ask;
         });
       return parseFloat(TOTAL).toFixed(2);
     };
