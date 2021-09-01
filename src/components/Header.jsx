@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import HeaderForm from './HeaderForm';
+import getCambio from '../globalFuncs/CambioFunc';
 
 class Header extends React.Component {
   sumExpenses() {
@@ -10,9 +11,7 @@ class Header extends React.Component {
     return expenses.reduce((acc, expense) => {
       const { currency, value, exchangeRates } = expense;
       const { ask } = exchangeRates[currency];
-      const askNumber = parseFloat(ask);
-      const valueNumber = parseFloat(value);
-      acc += Math.round((valueNumber * askNumber) * 100) / 100;
+      acc += getCambio(value, ask);
       return acc;
     }, 0);
   }
