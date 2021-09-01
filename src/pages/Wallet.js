@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
 
-// let retorno = 0;
+// const retorno = 0;
 // const contador = 0;
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      despesas: '187.12',
+      despesas: '0',
     };
     this.despesas = this.despesas.bind(this);
   }
@@ -26,6 +26,9 @@ class Wallet extends React.Component {
     //   despesas: retorno,
     // }));
     console.log(Valor);
+    this.setState(({
+      despesas: '187.12',
+    }));
   }
 
   render() {
