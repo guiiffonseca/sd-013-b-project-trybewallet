@@ -32,6 +32,10 @@ WalletHeader.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,
-  total: PropTypes.number.isRequired,
+  total: PropTypes.number,
   moeda: PropTypes.string.isRequired,
+};
+
+WalletHeader.defaultProps = {
+  total: 0,
 };
