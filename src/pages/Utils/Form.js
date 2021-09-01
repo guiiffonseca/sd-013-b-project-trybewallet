@@ -49,6 +49,18 @@ class Form extends Component {
     );
   }
 
+  labellabel() {
+    return (
+      <label htmlFor="method">
+        Método de Pagamento
+        <select name="method" id="method" onChange={ this.handleChange }>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
+        </select>
+      </label>);
+  }
+
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
@@ -92,20 +104,24 @@ class Form extends Component {
           </select>
         </label>
         {this.tagLabel()}
-        <label htmlFor="method">
-          Método de Pagamento
-          <select name="method" id="method" onChange={ this.handleChange }>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
+        {this.labellabel()}
         <button type="button" onClick={ this.createExpense }>Adicionar despesas</button>
-        <ul>
+        <table>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
           {expensesList.length === 0 ? null : expensesList
             .map((item,
-              index) => <li id={ index } key="item"><ItemList item={ item } /></li>)}
-        </ul>
+              index) => <ItemList item={ item } key={ index } id={ index } />)}
+        </table>
       </form>
     );
   }
