@@ -43,9 +43,6 @@ class AddExpenseForm extends Component {
 
   handleClick() {
     const { saveNewExpense } = this.props;
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-    }));
     const { id, cost, description, currencyChecked, method, tag } = this.state;
     const expenseObj = {
       id,
@@ -56,6 +53,9 @@ class AddExpenseForm extends Component {
       description,
     };
     saveNewExpense(expenseObj);
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
   }
 
   renderCostInput() {

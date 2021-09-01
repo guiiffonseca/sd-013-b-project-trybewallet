@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AddExpenseForm from '../components/AddExpenseForm';
 import WalletHeader from '../components/WalletHeader';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   render() {
@@ -9,6 +10,7 @@ class Wallet extends React.Component {
       <div>
         <WalletHeader />
         <AddExpenseForm />
+        <ExpensesTable />
       </div>
     );
   }
