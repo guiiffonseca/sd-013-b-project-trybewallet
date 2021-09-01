@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
-import store from './store';
+import Wallet from './pages/Wallet';
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Provider store={ store }>
-          <Switch>
-            <Route path="/" component={ Login } />
-          </Switch>
-        </Provider>
-      </BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/carteira" component={ Wallet } />
+      </Switch>
+
     );
   }
 }
