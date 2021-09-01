@@ -25,7 +25,6 @@ class Login extends React.Component {
     const emailValidInput = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
     if (email.match(emailValidInput) && password.length >= PASSWORD_MINIMUM_LENGTH) {
-      console.log('true');
       return true;
     }
   }
