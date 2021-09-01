@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { setUsersValue } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,7 +12,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    /* this.handleSubmit = this.handleSubmit.bind(this); */
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -17,15 +20,12 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-  /* handleSubmit() {
-    const { email, password } = this.state;
-    const btnSubmit = document.getElementById('btn__submit');
-    if (email.includes('@')) {
-      btnSubmit.disabled = false;
-    } else {
-      btnSubmit.disabled = true;
-    }
-  } */
+  handleSubmit(event) {
+    event.preventDefault();
+    const { history, dispatchSetValue } = this.props;
+    dispatchSetValue(this.state);
+    history.push('/carteira');
+  }
 
   render() {
     const { email, password } = this.state;
@@ -66,4 +66,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatchSetValue: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (value) => dispatch(setUsersValue(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
