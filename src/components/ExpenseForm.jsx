@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from './Input';
 import Select from './Select';
-import { fetchCurrencies as fetchCurrenciesAction } from '../actions/index';
+import {
+  fetchCurrencies as fetchCurrenciesAction,
+  fetchExchangeRates as fetchExchangeRatesAction,
+} from '../actions/index';
 
 class ExpenseForm extends React.Component {
   constructor(props) {
@@ -16,6 +19,7 @@ class ExpenseForm extends React.Component {
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +30,19 @@ class ExpenseForm extends React.Component {
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
+    });
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { value, description, currency, payment, tag } = this.state;
+    const { fetchExchangeRates } = this.props;
+    fetchExchangeRates({
+      value,
+      description,
+      currency,
+      payment,
+      tag,
     });
   }
 
@@ -63,6 +80,7 @@ class ExpenseForm extends React.Component {
           />
           <button
             type="button"
+            onClick={ this.handleClick }
           >
             Adicionar despesa
           </button>
@@ -75,6 +93,7 @@ class ExpenseForm extends React.Component {
 ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
+  fetchExchangeRates: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
@@ -83,6 +102,7 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
+  fetchExchangeRates: (payload) => dispatch(fetchExchangeRatesAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

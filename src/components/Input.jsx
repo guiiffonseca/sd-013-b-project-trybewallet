@@ -34,7 +34,7 @@ class Input extends React.Component {
 Input.propTypes = {
   description: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Input;
