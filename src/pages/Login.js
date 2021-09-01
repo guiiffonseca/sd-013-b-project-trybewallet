@@ -11,25 +11,10 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      // isDisabled: false,
     };
 
     this.handleInputs = this.handleInputs.bind(this);
-    // this.handleEnabled = this.handleEnabled.bind(this);
   }
-
-  // componentDidUpdate() {
-  //   const { email, password } = this.state;
-  //   const numberSix = 6;
-  //   const isDisable = 'isDisable';
-
-  //   const validEmail = email.includes('@') && email.includes('.');
-  //   const validPassword = password.length >= numberSix;
-
-  //   const isTwoValid = validEmail && validPassword;
-
-  //   this.setState({ [isDisable]: isTwoValid });
-  // }
 
   handleInputs(event) {
     const { target } = event;
@@ -50,23 +35,6 @@ class Login extends React.Component {
     });
   }
 
-  // handleEnabled() {
-  //   const { email, password } = this.state;
-  //   const numberSix = 6;
-  //   // const isDisabled = 'isDisabled';
-
-  //   const validEmail = email.includes('@') && email.includes('.com');
-
-  //   const validPassword = password.length >= numberSix;
-
-  //   if (validEmail === true && validPassword === true) {
-  //     return true;
-  //   }
-  //   return false;
-
-  //   // this.setState({ [isDisabled]: validEmail && validPassword });
-  // }
-
   render() {
     const { email, password } = this.state;
     const { login } = this.props;
@@ -75,7 +43,7 @@ class Login extends React.Component {
     const emailValid = email.includes('@') && email.includes('.com');
     const passwordValid = password.length >= numberSix;
     const isTwoValid = emailValid && passwordValid;
-    console.log(`se os dois deu true: ${isTwoValid} `);
+    // console.log(`se os dois deu true: ${isTwoValid} `);
 
     return (
       <div>
