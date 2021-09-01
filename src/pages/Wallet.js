@@ -12,11 +12,12 @@ class Wallet extends Component {
       .reduce((acc, expense) => acc
       + parseFloat(expense.value)
       * parseFloat(expense.exchangeRates[expense.currency].ask), 0);
+    console.log(total);
     return (Math.floor(total * 100) / 100);
   }
 
   render() {
-    const { email, expenses } = this.props;
+    const { email, expenses, editor, idToEdit } = this.props;
     return (
       <div>
         <Header
@@ -24,7 +25,10 @@ class Wallet extends Component {
           total={ this.totalExpenses() }
           currency="BRL"
         />
-        <NewExpense />
+        <NewExpense
+          editor={ editor }
+          idToEdit={ idToEdit }
+        />
         <Table expenses={ expenses } />
       </div>
     );
@@ -36,11 +40,20 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(
     PropTypes.object.isRequired,
   ).isRequired,
+  editor: PropTypes.bool,
+  idToEdit: PropTypes.number,
+};
+
+Wallet.defaultProps = {
+  editor: false,
+  idToEdit: 0,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
+  editor: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
 });
 
 export default connect(mapStateToProps)(Wallet);
