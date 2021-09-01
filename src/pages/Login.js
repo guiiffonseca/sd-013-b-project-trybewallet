@@ -19,7 +19,7 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleEmail(event){
+  handleEmail(event) {
     event.persist();
     const { target: { value } } = event;
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g;
@@ -41,7 +41,7 @@ class Login extends React.Component {
 
     if (isEmailValid && isPasswordValid) {
       login(email);
-      history.push('/carteira')
+      history.push('/carteira');
     }
   }
 
@@ -73,7 +73,8 @@ class Login extends React.Component {
             type="button"
             onClick={ this.handleSubmit }
             disabled={ !isEmailValid || !isPasswordValid }
-          > Entrar 
+          >
+            Entrar
           </button>
         </fieldset>
       </form>
@@ -89,8 +90,9 @@ const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(actionLogin(email)),
 });
 
-Login.propTypes={
+Login.propTypes = {
   login: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
