@@ -8,14 +8,14 @@ class Input extends Component {
     } = this.props;
     return (
       <div>
-        <label htmlFor={ type }>
+        <label htmlFor={ id }>
           <input
             type={ type }
             name={ name }
             value={ value }
             id={ id }
             placeholder={ placeholder }
-            data-testeid={ dataTestId }
+            data-testid={ dataTestId }
             onChange={ onChange }
           />
         </label>
