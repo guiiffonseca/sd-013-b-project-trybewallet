@@ -20,6 +20,13 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleSubmit() {
+    const { email } = this.state;
+    const { history, dispatchEmail } = this.props;
+    dispatchEmail(email);
+    history.push('/carteira');
+  }
+
   // referência para a regex utilizada: https://medium.com/@zackcreach/shred-the-gnar-how-to-write-decode-regex-for-email-validation-9a970fa91641
   buttonDisabled() {
     const { email, password } = this.state;
@@ -29,13 +36,6 @@ class Login extends React.Component {
     return !(
       /(^\w.*@\w+\.\w)/.test(email) && password.length >= securityLength
     );
-  }
-
-  handleSubmit() {
-    const { email } = this.state;
-    const { history, dispatchEmail } = this.props;
-    dispatchEmail(email);
-    history.push('/carteira');
   }
 
   render() {
