@@ -12,9 +12,9 @@ class FormWallet extends Component {
       moedas: [],
       valor: 0,
       descricao: '',
-      moeda: '',
-      metodoPagamento: '',
-      tag: '',
+      moeda: 'USD',
+      metodoPagamento: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.StateChange = this.StateChange.bind(this);
     this.ClickButton = this.ClickButton.bind(this);

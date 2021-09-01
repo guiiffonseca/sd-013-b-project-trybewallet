@@ -4,17 +4,24 @@ import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
 
 let retorno = 0;
+// const contador = 0;
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      despesas: 0,
+      despesas: '187.12',
     };
     this.despesas = this.despesas.bind(this);
   }
 
   despesas(Valor) {
+    // const { email } = this.props;
+    // const { wallet } = email;
+    // const { expenses } = wallet;
+    // const ArrayEx = expenses;
+
+    console.log(nomeMoeda);
     retorno += Valor;
     this.setState(({
       despesas: retorno,
