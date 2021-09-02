@@ -17,7 +17,8 @@ class Header extends React.Component {
     const wExpense = wallet.expenses;
     let t = 0;
     if (wExpense) {
-      wExpense.map((e) => { return t += e.value * e.exchangeRates[e.currency].ask });
+      wExpense.map((e) => (t += e.value * e.exchangeRates[e.currency].ask));
+      return t;
     }
     return t;
   }
