@@ -1,11 +1,15 @@
 const INITIAL_STATE = {
   expenses: [],
   isEditing: false,
+  editingExpense: {},
 };
 
 const ATT_CURRENCIES = 'ATT_CURRENCIES';
 const SAVE_NEW_EXP = 'SAVE_NEW_EXP';
 const DELETE_ROW = 'DELETE_ROW';
+const ATT_EDITING = 'ATT_EDITING';
+const SUBMIT_EDITION = 'SUBMIT_EDITION';
+
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ATT_CURRENCIES:
@@ -22,6 +26,21 @@ const wallet = (state = INITIAL_STATE, action) => {
     return ({
       ...state,
       expenses: action.payload,
+    });
+  }
+  case ATT_EDITING: {
+    return ({
+      ...state,
+      isEditing: true,
+      editingExpense: action.payload,
+    });
+  }
+  case SUBMIT_EDITION: {
+    return ({
+      ...state,
+      expenses: action.payload,
+      isEditing: false,
+      editingExpense: {},
     });
   }
   default:

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteRow as deleteRowAction } from '../actions';
+import { deleteRow as deleteRowAction,
+  attIsEditing as attIsEditingAction } from '../actions';
 
 class ExpensesTable extends Component {
   constructor(props) {
@@ -19,8 +20,10 @@ class ExpensesTable extends Component {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  handleEdit() {
-
+  handleEdit(id) {
+    const { attIsEditing, expenses } = this.props;
+    const wantedExpense = expenses.find((expense) => expense.id === id);
+    attIsEditing(wantedExpense);
   }
 
   handleDelete(id) {
@@ -31,12 +34,12 @@ class ExpensesTable extends Component {
     deleteRow(filteredArray);
   }
 
-  renderEditButton() {
+  renderEditButton(id) {
     return (
       <button
         type="button"
         data-testid="edit-btn"
-        onClick={ this.handleEdit }
+        onClick={ () => this.handleEdit(id) }
       >
         Editar
       </button>
@@ -96,7 +99,7 @@ class ExpensesTable extends Component {
         <td>{roundedConvertedValueString}</td>
         <td>Real</td>
         <td>
-          {this.renderEditButton()}
+          {this.renderEditButton(expense.id)}
           {this.renderDeleteButton(expense.id)}
         </td>
       </tr>
@@ -114,6 +117,7 @@ class ExpensesTable extends Component {
 
   render() {
     const { expenses } = this.props;
+    console.log(expenses);
     return (
       <div>
         { this.renderTable(expenses) }
@@ -128,11 +132,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteRow: (payload) => dispatch(deleteRowAction(payload)),
+  attIsEditing: (payload) => dispatch(attIsEditingAction(payload)),
 });
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteRow: PropTypes.func.isRequired,
+  attIsEditing: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
