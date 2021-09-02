@@ -44,6 +44,11 @@
   display: flex;
 }
 
+.formValue {
+  background-color: lawngreen;
+  display: flex;
+}
+
 .fieldset {
   display: flex;
   flex-direction: column;
@@ -58,7 +63,7 @@ label {
   padding: 5px;
 }
 
-h1, h5 {
+h1 h5 {
   margin-left: 60px;
 }
 
@@ -71,7 +76,6 @@ h1, h5 {
 }
 
 .moedaTotal {
+  align-self:flex-end;
   display: flex;
-  align-self: center;
-  
 }
