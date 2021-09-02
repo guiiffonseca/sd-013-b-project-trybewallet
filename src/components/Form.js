@@ -1,7 +1,32 @@
 import React, { Component } from 'react';
 
+const three = 3;
+
 class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      coinsList: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchCoins();
+  }
+
+  async fetchCoins() {
+    const result = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const response = await result.json();
+    const Coins = Object.keys(response)
+      .filter((coin) => (coin.length <= three));
+    this.setState({
+      coinsList: Coins,
+    });
+  }
+
   render() {
+    const { coinsList } = this.state;
     return (
       <div>
         <form>
@@ -12,7 +37,11 @@ class Form extends Component {
           <label htmlFor="moeda">
             Moeda:
             <select type="text" id="moeda">
-              <option>BRL</option>
+              {coinsList.map((coin) => (
+                <option key={ coin }>
+                  { coin }
+                </option>
+              ))}
             </select>
           </label>
           <label htmlFor="descrição">
