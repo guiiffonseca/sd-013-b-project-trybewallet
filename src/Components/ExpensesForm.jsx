@@ -13,30 +13,31 @@ class ExpensesForm extends React.Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-    }
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
     const { getCurrencies } = this.props;
     getCurrencies();
   }
 
   handleChange(event) {
-   this.setState({
-     [event.target.name]: event.target.value,
-   });
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   }
 
   handleClick() {
     const { getCurrencies } = this.props;
     getCurrencies();
     const { expenses, currencies, globalState: { wallet } } = this.props;
-    const { value,  description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const id = wallet.expenses.length ? wallet.expenses.length : 0;
-    expenses({ 
-      id, value, description, currency, method, tag, exchangeRates: currencies 
+    expenses({
+      id, value, description, currency, method, tag, exchangeRates: currencies,
     });
   }
 
@@ -46,11 +47,16 @@ class ExpensesForm extends React.Component {
       <form className="form">
         <label htmlFor="value">
           Valor
-          <input type="number" name="value" id="value" onChange={ this.handleChange }/>
+          <input type="number" name="value" id="value" onChange={ this.handleChange } />
         </label>
         <label htmlFor="description">
           Descrição
-          <input type="text" id="description" name="description" onChange={ this.handleChange } />
+          <input 
+            type="text" 
+            id="description" 
+            name="description" 
+            onChange={ this.handleChange } 
+          />
         </label>
         <label htmlFor="currency">
           Moeda
@@ -76,7 +82,7 @@ class ExpensesForm extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button type='button' onClick={ this.handleClick }>Adicionar Despesa</button>
+        <button type="button" onClick={ this.handleClick }>Adicionar Despesa</button>
       </form>
     );
   }
@@ -92,9 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
   expenses: (payload) => dispatch(addExpenses(payload)),
 });
 
- const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
   globalState: state,
   currencies: state.wallet.currencies,
- });
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
