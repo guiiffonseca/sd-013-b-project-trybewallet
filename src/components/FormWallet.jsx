@@ -10,8 +10,12 @@ class FormWallet extends React.Component {
     this.state = {
       expensesX: {
         id: 0,
-        exchangeRates: { },
-        total: 0,
+        value: '',
+        description: '',
+        currency: '',
+        method: '',
+        tag: '',
+        exchangeRates: {},
       },
     };
 
