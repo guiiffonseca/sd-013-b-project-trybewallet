@@ -1,13 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteRow as deleteRowAction } from '../actions';
 
 class ExpensesTable extends Component {
   constructor(props) {
     super(props);
+    this.bindings();
+  }
+
+  bindings() {
     this.renderTable = this.renderTable.bind(this);
     this.renderTableHeader = this.renderTableHeader.bind(this);
     this.renderRow = this.renderRow.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.renderDeleteButton = this.renderDeleteButton.bind(this);
+  }
+
+  handleDelete(id) {
+    const { deleteRow, expenses } = this.props;
+    const arrayOfExpenses = expenses;
+    const filteredArray = arrayOfExpenses.filter((expense) => expense.id !== id);
+    console.log(filteredArray);
+    deleteRow(filteredArray);
+  }
+
+  renderDeleteButton(id) {
+    return (
+      <button
+        type="button"
+        data-testid="delete-btn"
+        onClick={ () => this.handleDelete(id) }
+      >
+        Excluir
+      </button>
+    );
   }
 
   renderTableHeader() {
@@ -50,7 +77,10 @@ class ExpensesTable extends Component {
         </td>
         <td>{roundedConvertedValueString}</td>
         <td>Real</td>
-        <td>Editar/Excluir</td>
+        <td>
+          Editar/
+          {this.renderDeleteButton(expense.id)}
+        </td>
       </tr>
     );
   }
@@ -68,8 +98,7 @@ class ExpensesTable extends Component {
     const { expenses } = this.props;
     return (
       <div>
-        { expenses.length > 0
-          ? this.renderTable(expenses) : <h4>Nenhum registro por enquanto</h4>}
+        { this.renderTable(expenses) }
       </div>
     );
   }
@@ -79,8 +108,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteRow: (payload) => dispatch(deleteRowAction(payload)),
+});
+
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteRow: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(ExpensesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

@@ -25,7 +25,6 @@ class WalletHeader extends Component {
         secondArray.push(((expense.value) * (expense.conversion)));
       });
       const totalAmount = secondArray.reduce((total, price) => total + price, 0);
-      console.log(Math.round(totalAmount * 100) / 100);
       return (Math.round(totalAmount * 100) / 100);
     }
     return 0;

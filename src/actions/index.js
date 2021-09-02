@@ -4,6 +4,8 @@ const attCurrencies = (payload) => ({ type: 'ATT_CURRENCIES', payload });
 
 const saveNewExpense = (payload) => ({ type: 'SAVE_NEW_EXP', payload });
 
+export const deleteRow = (payload) => ({ type: 'DELETE_ROW', payload });
+
 export function fetchCurrencies() {
   return async (dispatch) => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
