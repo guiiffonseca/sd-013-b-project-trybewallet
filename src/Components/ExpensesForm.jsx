@@ -33,16 +33,16 @@ class ExpensesForm extends React.Component {
   handleClick() {
     const { getCurrencies } = this.props;
     getCurrencies();
-    const { expenses, currencies, globalState: { wallet } } = this.props;
+    const { expenses, curr, globalState: { wallet } } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const id = wallet.expenses.length ? wallet.expenses.length : 0;
     expenses({
-      id, value, description, currency, method, tag, exchangeRates: currencies,
+      id, value, description, currency, method, tag, exchangeRates: curr,
     });
   }
 
   render() {
-    const { currencies } = this.props;
+    const { curr } = this.props;
     return (
       <form className="form">
         <label htmlFor="value">
@@ -61,9 +61,7 @@ class ExpensesForm extends React.Component {
         <label htmlFor="currency">
           Moeda
           <select name="currency" id="currency" onChange={ this.handleChange }>
-            { Object.values(currencies).map((curr, i) => {
-              return <option key={ i }>{ curr.code }</option>;
-            }) }
+            { Object.values(curr).map((c, i) => (<option key={ i }>{ c.code }</option>)) }
           </select>
         </label>
         <label htmlFor="method">
@@ -102,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   globalState: state,
-  currencies: state.wallet.currencies,
+  curr: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
