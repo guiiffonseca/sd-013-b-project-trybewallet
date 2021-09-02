@@ -5,6 +5,13 @@ export const GET_EMAIL = 'GET_EMAIL';
 export const GET_WALLET = 'GET_WALLET';
 export const GET_API = 'GET_API';
 
+export const actionLogin = (email) => ({
+  type: 'LOGIN',
+  payload: {
+    email,
+  },
+});
+
 export const getEmail = (email) => ({
   type: GET_EMAIL,
   email,
