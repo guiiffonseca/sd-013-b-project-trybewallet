@@ -1,99 +1,94 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import Input from '../components/Input';
-
-import { setEmail as setEmailAction } from '../actions/index';
+import propTypes from 'prop-types';
+import loginAction from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
       email: '',
       password: '',
-      validEmail: false,
-      validPassword: false,
+      enable: true,
     };
 
-    this.handleEmail = this.handleEmail.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.login = this.login.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
+    this.verifyPassword = this.verifyPassword.bind(this);
   }
 
-  handleEmail({ target }) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g;
-    const validEmail = emailRegex.test(target.value);
-
-    this.setState({
-      email: target.value,
-      validEmail,
-    });
-  }
-
-  handlePassword({ target: { value } }) {
-    const MIN_PASSWORD_LENGTH = 6;
-    const validPassword = value.length >= MIN_PASSWORD_LENGTH;
-
-    this.setState({
-      password: value,
-      validPassword,
-    });
-  }
-
-  handleClick() {
-    const { history, setEmail } = this.props;
+  login() {
+    const { login, history } = this.props;
     const { email } = this.state;
+    if (this.verifyEmail()) {
+      login(email);
+      history.push('/carteira');
+    }
+  }
 
-    setEmail(email);
-    history.push('/carteira');
+  verifyEmail() {
+    const { email } = this.state;
+    if (email.includes('@') && email.includes('.com')) {
+      return true;
+    }
+    return false;
+  }
+
+  verifyPassword(password) {
+    const min = 5;
+    if (password.length > min) return true;
+    return false;
+  }
+
+  handleChange({ target }) {
+    if (this.verifyPassword(target.value) && this.verifyEmail(target.value)) {
+      this.setState({
+        enable: false,
+      });
+    } else {
+      this.setState({
+        enable: true,
+      });
+    }
+    this.setState({
+      [target.id]: target.value,
+    });
   }
 
   render() {
-    const { email, password, validEmail, validPassword } = this.state;
-
+    const { email, password, enable } = this.state;
     return (
       <div>
-        <Input
-          placeholder="email@exemplo.com"
-          type="email"
-          name="email"
+        <input
           id="email"
-          testId="email-input"
+          type="text"
           value={ email }
-          onChange={ this.handleEmail }
+          data-testid="email-input"
+          onChange={ this.handleChange }
         />
 
-        <Input
-          placeholder="senha"
-          type="password"
-          name="password"
+        <input
           id="password"
-          testId="password-input"
+          type="text"
+          data-testid="password-input"
+          onChange={ this.handleChange }
           value={ password }
-          onChange={ this.handlePassword }
         />
 
-        <button
-          disabled={ !validEmail || !validPassword }
-          type="button"
-          onClick={ this.handleClick }
-        >
-          Entrar
-        </button>
+        <button disabled={ enable } type="button" onClick={ this.login }>Entrar</button>
       </div>
     );
   }
 }
 
-Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  setEmail: PropTypes.func.isRequired,
-};
-
 const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmailAction(email)),
+  login: (email) => dispatch(loginAction(email)),
 });
+
+Login.propTypes = {
+  login: propTypes.func.isRequired,
+  history: propTypes.objectOf(propTypes.func).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
