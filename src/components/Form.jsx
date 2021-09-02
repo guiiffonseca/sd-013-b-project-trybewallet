@@ -4,35 +4,67 @@ import { connect } from 'react-redux';
 import { addCurrenciesThunk } from '../actions';
 
 class Form extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-
-  //   };
-  // }
+  constructor() {
+    super();
+    this.state = {
+      valor: '',
+      descricao: '',
+      moeda: '',
+      pagamento: '',
+      tipoDespesa: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.renderFormInput = this.renderFormInput.bind(this);
+    this.renderFormSelect = this.renderFormSelect.bind(this);
+  }
 
   componentDidMount() {
     const { addCurrencies } = this.props;
     addCurrencies();
   }
 
-  render() {
-    const { currencies } = this.props;
-    const currenciesArray = Object.keys(currencies);
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
+  renderFormInput() {
+    const { valor, descricao } = this.state;
     return (
-      <form>
+      <>
         <label htmlFor="input-valor">
           Valor
-          <input type="number" name="valor" id="input-valor" />
+          <input
+            type="number"
+            name="valor"
+            id="input-valor"
+            onChange={ this.handleChange }
+            value={ valor }
+          />
         </label>
         <label htmlFor="descricao">
           Descrição
-          <textarea id="descricao" />
+          <textarea
+            id="descricao"
+            name="descricao"
+            onChange={ this.handleChange }
+            value={ descricao }
+          />
         </label>
+      </>
+    );
+  }
+
+  renderFormSelect() {
+    const { currencies } = this.props;
+    const currenciesArray = Object.keys(currencies);
+    const { pagamento, moeda, tipoDespesa } = this.state;
+    return (
+      <>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda">
-            {/* <option>0</option> */}
+          <select id="moeda" name="moeda" onChange={ this.handleChange } value={ moeda }>
             {
               currenciesArray.filter((elemento) => !elemento.includes('USDT'))
                 .map((elemento, index) => <option key={ index }>{ elemento }</option>)
@@ -41,7 +73,12 @@ class Form extends React.Component {
         </label>
         <label htmlFor="pagamento">
           Método de pagamento
-          <select id="pagamento">
+          <select
+            id="pagamento"
+            name="pagamento"
+            onChange={ this.handleChange }
+            value={ pagamento }
+          >
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -49,7 +86,12 @@ class Form extends React.Component {
         </label>
         <label htmlFor="despesa-tipo">
           Tag
-          <select id="despesa-tipo">
+          <select
+            id="despesa-tipo"
+            name="tipoDespesa"
+            onChange={ this.handleChange }
+            value={ tipoDespesa }
+          >
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -57,6 +99,19 @@ class Form extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <form>
+        {
+          this.renderFormInput()
+        }
+        {
+          this.renderFormSelect()
+        }
       </form>
     );
   }
