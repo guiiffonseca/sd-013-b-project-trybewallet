@@ -9,6 +9,45 @@ import SelectMethod from '../components/SelectMethod';
 import SelectTag from '../components/SelectTag';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      coins: [],
+    };
+
+    this.attStateWithCurrencies = this.attStateWithCurrencies.bind(this);
+    this.createCurrencieOptions = this.createCurrencieOptions.bind(this);
+  }
+
+  async componentDidMount() {
+    const requestResponse = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const currenciesArr = await requestResponse.json();
+    const Arr = Object.keys(currenciesArr);
+    const filteredCurrencies = Arr.filter((coins) => coins !== 'USDT');
+
+    this.attStateWithCurrencies(filteredCurrencies);
+  }
+
+  attStateWithCurrencies(response) {
+    this.setState({
+      coins: response,
+    });
+  }
+
+  createCurrencieOptions() {
+    const { coins } = this.state;
+    return (
+      coins.map((coin) => (
+        <option
+          key={ coin }
+          value={ coin }
+        >
+          { coin }
+        </option>
+      ))
+    );
+  }
+
   render() {
     const { user } = this.props;
     return (
@@ -33,6 +72,7 @@ class Wallet extends React.Component {
             />
             <Select
               htmlId="currencie-select"
+              createOptions={ this.createCurrencieOptions }
             />
             <SelectMethod
               htmlId="paymentMethod-select"

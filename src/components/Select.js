@@ -8,6 +8,7 @@ class Select extends Component {
       onChange,
       value,
       htmlId,
+      createOptions,
     } = this.props;
     return (
       <label htmlFor={ htmlId }>
@@ -19,7 +20,9 @@ class Select extends Component {
           onChange={ onChange }
           name={ name }
           value={ value }
-        />
+        >
+          { createOptions() }
+        </select>
       </label>
     );
   }
@@ -30,6 +33,7 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   htmlId: PropTypes.string.isRequired,
+  createOptions: PropTypes.func.isRequired,
 };
 
 export default Select;
