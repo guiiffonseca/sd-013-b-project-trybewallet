@@ -10,8 +10,15 @@ import {
 import Input from './Input';
 import Select from './Select';
 
-const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+const PAYMENT_METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+const INITIAL_STATE = {
+  value: '',
+  description: '',
+  currency: 'USD',
+  method: PAYMENT_METHODS[0],
+  tag: TAGS[0],
+};
 
 class ExpenseForm extends Component {
   constructor(props) {
@@ -19,11 +26,7 @@ class ExpenseForm extends Component {
 
     this.state = {
       id: 0,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: paymentMethods[0],
-      tag: tags[0],
+      ...INITIAL_STATE,
     };
 
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
@@ -52,6 +55,7 @@ class ExpenseForm extends Component {
     addExpense(this.state);
     this.setState((prevState) => ({
       id: prevState.id + 1,
+      ...INITIAL_STATE,
     }));
   }
 
@@ -62,9 +66,7 @@ class ExpenseForm extends Component {
     confirmEditExpense(editExpense);
   }
 
-  chooseButton() {
-    const { editor } = this.props;
-
+  chooseButton(editor) {
     if (editor) {
       return (
         <button
@@ -85,7 +87,7 @@ class ExpenseForm extends Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     return (
       <div>
         <form>
@@ -112,18 +114,18 @@ class ExpenseForm extends Component {
           <Select
             label="Método de pagamento"
             name="method"
-            options={ paymentMethods }
+            options={ PAYMENT_METHODS }
             value={ method }
             onChange={ this.handleChange }
           />
           <Select
             label="Tag"
             name="tag"
-            options={ tags }
+            options={ TAGS }
             value={ tag }
             onChange={ this.handleChange }
           />
-          { this.chooseButton() }
+          { this.chooseButton(editor) }
         </form>
       </div>
     );

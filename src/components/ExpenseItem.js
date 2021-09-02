@@ -10,30 +10,14 @@ import {
 import Button from './Button';
 
 class ExpenseItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.removeItem = this.removeItem.bind(this);
-    this.editItem = this.editItem.bind(this);
-  }
-
-  editItem({ target }) {
-    const { editExpense } = this.props;
-    editExpense(target.value);
-  }
-
-  removeItem({ target }) {
-    const { removeExpense } = this.props;
-    removeExpense(target.value);
-  }
-
   render() {
-    const { expense } = this.props;
+    const { expense, removeExpense, editExpense } = this.props;
     const { id, description, method, tag, value, currency, exchangeRates } = expense;
 
     const [currencyName] = exchangeRates[currency].name.split('/');
     const ask = parseFloat(exchangeRates[currency].ask);
     const fixedAsk = ask.toFixed(2);
+    const convertedValue = (value * ask).toFixed(2);
 
     return (
       <tr>
@@ -43,18 +27,18 @@ class ExpenseItem extends Component {
         <td>{ value }</td>
         <td>{ currencyName }</td>
         <td>{ fixedAsk }</td>
-        <td>{ value * ask }</td>
+        <td>{ convertedValue }</td>
         <td>Real</td>
         <td>
           <Button
             value={ id }
-            onClick={ this.editItem }
+            onClick={ ({ target }) => editExpense(target.value) }
             text="Editar"
             testId="edit-btn"
           />
           <Button
             value={ id }
-            onClick={ this.removeItem }
+            onClick={ ({ target }) => removeExpense(target.value) }
             text="X"
             testId="delete-btn"
           />
