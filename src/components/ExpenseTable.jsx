@@ -23,7 +23,7 @@ class ExpenseTable extends Component {
         <thead>
           <th>
             {data.map((string, index) => (
-              <th key={index}>{ string }</th>
+              <th key={ index }>{ string }</th>
             ))}
           </th>
         </thead>
@@ -74,4 +74,5 @@ const mapDispatchToProps = (dispatch) => ({
   Delete: (expense) => dispatch(deleteExpense(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable); //https://tableless.com.br/tabelas-semanticas/
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
+// https://tableless.com.br/tabelas-semanticas/
