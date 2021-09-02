@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import WalletHeader from './WalletHeader';
 import { fetchCoins, setExpenses } from '../actions';
 import WalletForm from './WalletForm';
+import WalletTable from './WalletTable';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       expense: {
+        id: 0,
         value: 0,
         currency: 'USD',
         method: 'Dinheiro',
@@ -27,12 +29,10 @@ class Wallet extends React.Component {
   }
 
   handleChange({ target: { name, value } }) {
-    const { wallet: { expenses } } = this.props;
     this.setState((prevState) => ({
       expense: {
         ...prevState.expense,
         [name]: value,
-        id: expenses.length,
       },
     }));
   }
@@ -41,6 +41,12 @@ class Wallet extends React.Component {
     const { sendExpenses } = this.props;
     const { expense } = this.state;
     sendExpenses(expense);
+    this.setState((prevState) => ({
+      expense: {
+        ...prevState.expense,
+        id: prevState.expense.id + 1,
+      },
+    }));
   }
 
   render() {
@@ -48,13 +54,16 @@ class Wallet extends React.Component {
     const { moeda } = this.state;
     return (
       <div>
-        <WalletHeader total={ wallet.total } moeda={ moeda } user={ user } />
-        <br />
+        <header>
+          <WalletHeader total={ wallet.total } moeda={ moeda } user={ user } />
+          <br />
+        </header>
         <WalletForm
           wallet={ wallet }
           onChange={ this.handleChange }
           onClick={ this.handleButton }
         />
+        <WalletTable wallet={ wallet } />
       </div>
     );
   }

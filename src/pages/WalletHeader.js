@@ -6,24 +6,22 @@ export default class WalletHeader extends React.Component {
     const { user: { email }, total, moeda } = this.props;
     return (
       <div>
-        <header>
-          <span data-testid="email-field">
-            Email:
-            {' '}
-            {email}
-          </span>
+        <span data-testid="email-field">
+          Email:
           {' '}
-          |
-          {' '}
-          <span data-testid="total-field">
-            Despesa Total: R$
-            {total}
-          </span>
-          {' '}
-          <span data-testid="header-currency-field">
-            {moeda}
-          </span>
-        </header>
+          {email}
+        </span>
+        {' '}
+        |
+        {' '}
+        <span data-testid="total-field">
+          Despesa Total: R$
+          {total}
+        </span>
+        {' '}
+        <span data-testid="header-currency-field">
+          {moeda}
+        </span>
       </div>);
   }
 }
