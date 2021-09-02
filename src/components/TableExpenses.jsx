@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../index.css'
+import '../index.css';
 
 class TableExpenses extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {};
   }
 
   render() {
     const { propArrayDespesas } = this.props;
-    const description = propArrayDespesas.forEach(despesa => despesa.description);
-    return(
+    // const description = propArrayDespesas.forEach(despesa => despesa.description);
+    return (
       <div>
         <h3>Tabela de Desepesa</h3>
         <table>

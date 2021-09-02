@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionFunctionThunk2 } from '../actions';
+import ImputValor from './ImputValor';
+import ImputDescription from './ImputDescription';
+import ImputTag from './ImputTag';
 
 class FormWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: 0,
-      value: 0 ,
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -20,7 +24,7 @@ class FormWallet extends React.Component {
 
   handleContadorDespesas() {
     const { id } = this.state;
-    this.setState({id: id + 1})
+    this.setState({ id: id + 1 });
   }
 
   handleOnClick() {
@@ -36,30 +40,12 @@ class FormWallet extends React.Component {
 
   render() {
     const { respostaAPI } = this.props;
-    const { valor, descricao, moeda, method: metodoPag, tag } = this.state;
+    const { valor, description, moeda, method: metodoPag, tag } = this.state;
     return (
       <div>
         <form>
-          <label htmlFor="valor">
-            Valor:
-            <input
-              type="number"
-              id="valor"
-              name="value"
-              value={ valor }
-              onChange={ (e) => this.handleOnChange(e) }
-            />
-          </label>
-          <label htmlFor="descricao">
-            Descrição :
-            <input
-              type="text"
-              id="descricao"
-              name="description"
-              value={ descricao }
-              onChange={ this.handleOnChange }
-            />
-          </label>
+          <ImputValor value={ valor } func={ this.handleOnChange } />
+          <ImputDescription description={ description } func={ this.handleOnChange } />
           <label htmlFor="selectMoeda">
             Moeda
             <select
@@ -68,9 +54,13 @@ class FormWallet extends React.Component {
               value={ moeda }
               onChange={ this.handleOnChange }
             >
-              { respostaAPI ?
-                  respostaAPI
-                    .map((item)=> item[0] !== 'USDT' ? <option key={ item[0] }> { item[0] } </option> : '') : ''
+              {
+                respostaAPI ? respostaAPI
+                  .map((i) => (
+                    i[0] !== 'USDT' ? (
+                      <option key={ i[0] }>
+                        { i[0] }
+                      </option>) : '')) : ''
               }
             </select>
           </label>
@@ -87,35 +77,21 @@ class FormWallet extends React.Component {
               <option value="Cartão de débito" selected>Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="tag">
-            Tag :
-            <select
-              name="tag"
-              id="tag"
-              value={ tag }
-              onChange={ this.handleOnChange }
-            >
-              <option value="Alimentacao">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saude">Saúde</option>
-            </select>
-          </label>
-          </form>
-          <button
-            type="button"
-            onClick={ () => this.handleOnClick() }
-          >
-            Adicionar Despesa
-          </button>
+          <ImputTag tag={ tag } func={ this.handleOnChange } />
+        </form>
+        <button type="button" onClick={ () => this.handleOnClick() }>
+          Adicionar Despesa
+        </button>
       </div>
     );
   }
 }
 
+FormWallet.propTypes = {
+  respostaAPI: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
-  // dispatchAction: (stateComponent) => dispatch(ActionAddDespesa(stateComponent)),
   functionThunk: (payload) => dispatch(actionFunctionThunk2(payload)),
 });
 

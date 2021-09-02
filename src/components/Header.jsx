@@ -15,16 +15,17 @@ class Header extends React.Component {
       const objExchangeRates = desp.exchangeRates;
       total.push(objExchangeRates[desp.currency].ask * desp.value);
     });
-    const totalDespesa = total.reduce((acc, value) => acc + value, 0)
+    const totalDespesa = total.reduce((acc, value) => acc + value, 0);
     return `Total de Despesas RS: ${totalDespesa.toFixed(2)}`;
   }
 
   render() {
-    const { userEmail, despesa } = this.props;
+    const { userEmail } = this.props;
     return (
       <header>
         <div data-testid="email-field">
-          Welcome {userEmail}
+          Welcome
+          {userEmail}
         </div>
         <div data-testid="total-field">
           { this.handleTotalDespesas() }
