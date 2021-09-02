@@ -2,13 +2,29 @@
 import { ADD_EXPENSE, LOAD_CURRENCIES } from '../actions';
 
 /**
- * expenses: {
- *    valor:
- *    moeda:
- *    metodoPagamento:
- *    tag:
- *    descricao:
- * }
+ * expense: {
+        id: 0,
+        value: '10',
+        currency: 'USD',
+        method: 'Cartão de crédito',
+        tag: 'Lazer',
+        description: 'Dez dólares',
+        exchangeRates: {
+          "USD": {
+              "code": "USD",
+              "codein": "BRL",
+              "name": "Dólar Americano/Real Brasileiro",
+              "high": "5.1867",
+              "low": "5.1864",
+              "varBid": "0.0006",
+              "pctChange": "0.01",
+              "bid": "5.1849",
+              "ask": "5.1879",
+              "timestamp": "1630530000",
+              "create_date": "2021-09-01 18:00:00"
+          },
+          "USDT": {...
+      }
  */
 
 const INITIAL_WALLET_STATE = {
