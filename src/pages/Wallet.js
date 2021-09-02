@@ -31,23 +31,24 @@ class Wallet extends React.Component {
     const { getCurrency } = this.props;
 
     currencyAPI()
-      .then((response) => {
-        delete response.USDT;
-        
+      .then((object) => {
+        // nescessário salvar esse object no estado global
+        delete object.USDT;
+
         // recebe somente as chaves do obj
-        const keysCurrency = Object.keys(response);
+        const keysCurrency = Object.keys(object);
         console.log(keysCurrency);
 
-        // todos os .code do objeto, a partir de cada chave. Ex: { USD { code: USD }, BRL { code: BRL }, }
-        const currenciesCode = Object.keys(response).map((keyCurrency) => response[keyCurrency].code);
-        console.log("currenciesCode" + currenciesCode);
+        // recebe todos os .code do objeto (object), a partir de cada chave.
+        // Ex: { USD { code: USD }, BRL { code: BRL }, }
+        const currenciesCode = Object.keys(object)
+          .map((keyCurrency) => object[keyCurrency].code);
 
         // recebe o objeto inteiro
-        // const payload = response;
+        // const payload = object;
 
         getCurrency(currenciesCode);
       });
-    // nescessário salvar esse response no estado global
   }
 
   // event.target.name / value
@@ -200,6 +201,6 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrency: PropTypes.func.isRequired,
-  wallet: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
