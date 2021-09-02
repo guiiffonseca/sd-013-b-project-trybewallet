@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpensesThunk } from '../actions';
-import Header from '../Components/header';
 
 let cont = 0;
 
@@ -16,6 +15,7 @@ class Wallet extends React.Component {
       currency: '',
       method: '',
       tag: '',
+      total: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,14 +58,27 @@ class Wallet extends React.Component {
       tag,
     };
     cont += 1;
+    this.setState({ total: 187.12 });
     add(expenses);
+  }
+
+  renderHeader() {
+    const { user } = this.props;
+    const { total } = this.state;
+    return (
+      <section>
+        <h2 data-testid="email-field">{ user.email }</h2>
+        <h3 data-testid="total-field">{ total }</h3>
+        <h3 data-testid="header-currency-field">BRL</h3>
+      </section>
+    );
   }
 
   render() {
     const { currencies } = this.state;
     return (
       <div>
-        <Header />
+        { this.renderHeader() }
         <form>
           <label htmlFor="value">
             Valor:
