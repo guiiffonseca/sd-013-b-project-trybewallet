@@ -8,21 +8,31 @@ class Wallet extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      total: 0,
-    };
+    // this.state = {
+    //   total: 0,
+    // };
+
+    this.totalExpenses = this.totalExpenses.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { fetchWalletApi } = this.props;
-    await fetchWalletApi();
+    fetchWalletApi();
+  }
+
+  totalExpenses() {
+    const { expenses } = this.props;
+
+    return expenses.reduce((acc, { value, currency, exchangeRates }) => {
+      acc += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
+      return acc;
+    }, 0);
   }
 
   render() {
     const { email, infoApi, errorApi } = this.props;
-    const { total } = this.state;
+    // const { total } = this.state;
     console.log(infoApi);
-    console.log(total);
 
     return (
       <div>
@@ -32,7 +42,7 @@ class Wallet extends React.Component {
             { email }
           </span>
           <span data-testid="total-field">
-            { total }
+            { this.totalExpenses().toFixed(2) }
           </span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
@@ -53,6 +63,11 @@ Wallet.propTypes = {
     PropTypes.string,
   ).isRequired,
   errorApi: PropTypes.string.isRequired,
+  expenses: PropTypes.objectOf(
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ).isRequired,
 };
 
 const mapStateToProps = (state) => ({
