@@ -4,18 +4,22 @@ import { PropTypes } from 'prop-types';
 
 class TableComponent extends Component {
   render() {
+    // handleDelete ({ target }) {
+    //
+    // }
+
     const { expenses } = this.props;
     return (
       <table>
         <tr>
           <th>Descrição</th>
           <th>Tag</th>
-          <th>Método de Pagamento</th>
+          <th>Método de pagamento</th>
           <th>Valor</th>
           <th>Moeda</th>
-          <th>Câmbio Utilizado</th>
-          <th>Valor Convertido</th>
-          <th>Moeda Conversão</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
         { expenses
@@ -26,11 +30,15 @@ class TableComponent extends Component {
               <td>{ method }</td>
               <td>{ value }</td>
               <td>{ exchangeRates[currency].name.split('/')[0] }</td>
-              { exchangeRates[currency].code }
+              <td>{ (parseFloat(exchangeRates[currency].ask)).toFixed(2) }</td>
               <td>
-                { Number(value) * Number(exchangeRates[currency].ask).toFixed(2) }
+                { parseFloat(value) * parseFloat(exchangeRates[currency].ask) }
               </td>
-              <td>BRL</td>
+              <td>Real</td>
+              <td>
+                <button type="button">Editar</button>
+                <button type="button">X</button>
+              </td>
             </tr>
           ))}
       </table>
