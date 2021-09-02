@@ -6,7 +6,16 @@ import Form from '../components/Form';
 class Wallet extends React.Component {
   render() {
     const { email, expenses } = this.props;
-    const despesa = expenses.reduce((acc, curr) => acc + Number(curr.valor), 0);
+    // const despesa = expenses.reduce((acc, curr) => acc + Number(curr.value), 0);
+    //
+    // Cálculo da despesa feito com a ajuda do Jeferson Oliveira
+    //
+    //
+    const despesa = expenses.reduce((acc, { currency, value, exchangeRates }) => {
+      const result = value * exchangeRates[currency].ask;
+      return acc + result;
+    }, 0);
+    console.log(expenses);
     return (
       <>
         <header>

@@ -7,11 +7,11 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      valor: 0,
-      descricao: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
-      tipoDespesa: 'Alimentação',
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderFormInput = this.renderFormInput.bind(this);
@@ -32,7 +32,8 @@ class Form extends React.Component {
 
   submitDespesa(event) {
     event.preventDefault();
-    const { currencies, walleteLength, addExpense } = this.props;
+    const { currencies, walleteLength, addExpense, addCurrencies } = this.props;
+    addCurrencies();
     const obj = {
       ...this.state,
       id: walleteLength.length,
@@ -51,7 +52,7 @@ class Form extends React.Component {
           Valor
           <input
             type="number"
-            name="valor"
+            name="value"
             id="input-valor"
             onChange={ this.handleChange }
             value={ valor }
@@ -61,7 +62,7 @@ class Form extends React.Component {
           Descrição
           <textarea
             id="descricao"
-            name="descricao"
+            name="description"
             onChange={ this.handleChange }
             value={ descricao }
           />
@@ -74,11 +75,17 @@ class Form extends React.Component {
     const { currencies } = this.props;
     const currenciesArray = Object.keys(currencies);
     const { pagamento, moeda, tipoDespesa } = this.state;
+    const arrayTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda" name="moeda" onChange={ this.handleChange } value={ moeda }>
+          <select
+            id="moeda"
+            name="currency"
+            onChange={ this.handleChange }
+            value={ moeda }
+          >
             {
               currenciesArray.filter((elemento) => !elemento.includes('USDT'))
                 .map((elemento, index) => <option key={ index }>{ elemento }</option>)
@@ -89,7 +96,7 @@ class Form extends React.Component {
           Método de pagamento
           <select
             id="pagamento"
-            name="pagamento"
+            name="method"
             onChange={ this.handleChange }
             value={ pagamento }
           >
@@ -102,15 +109,11 @@ class Form extends React.Component {
           Tag
           <select
             id="despesa-tipo"
-            name="tipoDespesa"
+            name="tag"
             onChange={ this.handleChange }
             value={ tipoDespesa }
           >
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
+            {arrayTags.map((el, i) => <option key={ i }>{ el }</option>)}
           </select>
         </label>
       </>
