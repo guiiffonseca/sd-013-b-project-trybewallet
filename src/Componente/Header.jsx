@@ -10,12 +10,12 @@ class Header extends React.Component {
         <div>
           <h1>TrybeWallet</h1>
           <h5 data-testid="email-field">
-            Email: 
+            Email:
             { email }
           </h5>
         </div>
         <div className="moedaTotal">
-          <h5 data-testid="total-field">{ `Despesa Total: R$ ${ 0 }` }</h5>
+          <h5 data-testid="total-field">{ `Despesa Total: R$ ${0}` }</h5>
           <h5 data-testid="header-currency-field">BRL</h5>
         </div>
 
