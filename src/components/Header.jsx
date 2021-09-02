@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Header extends React.Component {
   handleTotalDespesas() {
     const { despesa } = this.props;
     const total = [];
-    despesa.forEach(desp => {
+    despesa.forEach((desp) => {
       const objExchangeRates = desp.exchangeRates;
       total.push(objExchangeRates[desp.currency].ask * desp.value);
     });
@@ -37,6 +38,11 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  despesa: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userEmail: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
   userEmail: email,

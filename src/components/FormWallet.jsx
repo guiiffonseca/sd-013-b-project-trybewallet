@@ -89,6 +89,7 @@ class FormWallet extends React.Component {
 
 FormWallet.propTypes = {
   respostaAPI: PropTypes.arrayOf(PropTypes.object).isRequired,
+  functionThunk: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

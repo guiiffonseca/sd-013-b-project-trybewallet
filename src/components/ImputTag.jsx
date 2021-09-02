@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ImputTag extends React.Component {
   constructor(props) {
@@ -30,5 +31,10 @@ class ImputTag extends React.Component {
     );
   }
 }
+
+ImputTag.propTypes = {
+  tag: PropTypes.string.isRequired,
+  func: PropTypes.func.isRequired,
+};
 
 export default ImputTag;

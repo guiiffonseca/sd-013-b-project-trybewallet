@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../index.css';
+// import PropTypes from 'prop-types';
 
 class TableExpenses extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class TableExpenses extends React.Component {
   }
 
   render() {
-    const { propArrayDespesas } = this.props;
+    // const { propArrayDespesas } = this.props;
     // const description = propArrayDespesas.forEach(despesa => despesa.description);
     return (
       <div>
@@ -53,6 +54,11 @@ class TableExpenses extends React.Component {
     );
   }
 }
+
+/* TableExpenses.propTypes = {
+  value: PropTypes.string.isRequired,
+  func: PropTypes.func.isRequired,
+}; */
 
 const mapStateToProps = (state) => ({
   propArrayDespesas: state.wallet.expenses,

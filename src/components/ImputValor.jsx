@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ImputValor extends React.Component {
   constructor(props) {
@@ -25,5 +26,10 @@ class ImputValor extends React.Component {
     );
   }
 }
+
+ImputValor.propTypes = {
+  value: PropTypes.string.isRequired,
+  func: PropTypes.func.isRequired,
+};
 
 export default ImputValor;
