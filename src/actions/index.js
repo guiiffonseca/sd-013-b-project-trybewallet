@@ -10,3 +10,12 @@ export const setExpensesValue = (payload) => (
   {
     type: SET_EXPENSES_VALUE, payload,
   });
+
+export const fetchExchangeRates = (state) => (dispatch) => {
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((requestResponse) => requestResponse.json())
+    .then((coins) => {
+      const myState = { exchangeRates: { ...coins }, ...state };
+      dispatch(setExpensesValue(myState));
+    });
+};
