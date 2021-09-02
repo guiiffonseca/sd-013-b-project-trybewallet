@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import payments from '../data/payments';
 import tags from '../data/tags';
-import currencyAPI from '../services/currencyAPI';
-import { getCurrency as getCurrencyAction } from '../actions';
+import { getCurrencyThunk } from '../actions';
+
 
 class Wallet extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class Wallet extends React.Component {
     this.state = {
       valor: 0,
       descDespesa: '',
-      moeda: '',
+      moeda: 'USD',
       pagamento: 'Dinheiro',
       tag: 'Alimentação',
     };
@@ -29,26 +29,7 @@ class Wallet extends React.Component {
 
   componentDidMount() {
     const { getCurrency } = this.props;
-
-    currencyAPI()
-      .then((object) => {
-        // nescessário salvar esse object no estado global
-        delete object.USDT;
-
-        // recebe somente as chaves do obj
-        const keysCurrency = Object.keys(object);
-        console.log(keysCurrency);
-
-        // recebe todos os .code do objeto (object), a partir de cada chave.
-        // Ex: { USD { code: USD }, BRL { code: BRL }, }
-        const currenciesCode = Object.keys(object)
-          .map((keyCurrency) => object[keyCurrency].code);
-
-        // recebe o objeto inteiro
-        // const payload = object;
-
-        getCurrency(currenciesCode);
-      });
+    getCurrency(); // está na mapdispatchToprops
   }
 
   // event.target.name / value
@@ -195,7 +176,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrency: (payload) => dispatch(getCurrencyAction(payload)),
+  getCurrency: () => dispatch(getCurrencyThunk()),
 });
 
 Wallet.propTypes = {
