@@ -6,13 +6,32 @@ import WalletLogo from '../Images/wallet.png';
 import '../CSS/header.css';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+
+    this.totalExpenses = this.totalExpenses.bind(this);
+  }
+
+  totalExpenses() {
+  const { globalState: { wallet } } = this.props;
+  const walletExpenses = wallet.expenses;
+  let total = 0;
+  if (walletExpenses) {
+    walletExpenses.map((expense) => {
+      total += expense.value * expense.exchangeRates[expense.currency].ask;
+    })
+    return total.toFixed(2);
+  }
+   return 0;
+  }
+
   render() {
     const { email } = this.props;
     return (
       <header className="head">
         <img src={ WalletLogo } alt="carteira" />
         <h2 data-testid="email-field">{ email }</h2>
-        <h3 data-testid="total-field">Total Expenses: 0</h3>
+        <h3 data-testid="total-field">Total Expenses: { this.totalExpenses() }</h3>
         <h4 data-testid="header-currency-field">BRL</h4>
       </header>
     );
@@ -24,6 +43,7 @@ Header.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
+  globalState: state,
   email: state.user.email,
 });
 
