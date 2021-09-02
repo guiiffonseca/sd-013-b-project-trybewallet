@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense } from '../actions'
+import { deleteExpense } from '../actions';
 
 const data = [
   'Descrição',
@@ -12,7 +12,7 @@ const data = [
   'Câmbio utilizado',
   'Valor convertido',
   'Moeda de conversão',
-  'Editar/Excluir'
+  'Editar/Excluir',
 ];
 
 class ExpenseTable extends Component {
@@ -23,7 +23,7 @@ class ExpenseTable extends Component {
         <thead>
           <th>
             {data.map((string, index) => (
-              <th key={index}>{string}</th>
+              <th key={index}>{ string }</th>
             ))}
           </th>
         </thead>
@@ -31,14 +31,14 @@ class ExpenseTable extends Component {
           {expenses.map(
             (
               { description, tag, method, value, exchangeRates, currency },
-              index
+              index,
             ) => (
-              <th key={index}>
+              <th key={ index }>
                 <td>{ description }</td>
                 <td>{ tag }</td>
                 <td>{ method }</td>
                 <td>{ value }</td>
-                <td>{ exchangeRates[currency].name.split("/")[0] }</td>
+                <td>{ exchangeRates[currency].name.split('/')[0] }</td>
                 <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
                 <td>
                   { Number(value * exchangeRates[currency].ask).toFixed(2) }
@@ -54,7 +54,7 @@ class ExpenseTable extends Component {
                   </button>
                 </td>
               </th>
-            )
+            ),
           )}
         </tbody>
       </table>
@@ -74,5 +74,4 @@ const mapDispatchToProps = (dispatch) => ({
   Delete: (expense) => dispatch(deleteExpense(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
-//https://tableless.com.br/tabelas-semanticas/
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable); //https://tableless.com.br/tabelas-semanticas/

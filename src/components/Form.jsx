@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { dispatchApi } from '../actions';
 import { connect } from 'react-redux';
+import { dispatchApi } from '../actions';
 import ExpensesButton from './ExpenseButton';
 
 class Form extends Component {
@@ -48,7 +48,12 @@ class Form extends Component {
         </label>
         <label htmlFor="Descrição">
           Descrição:
-          <input type="text" id="Descrição" name="description" onChange={ this.handleChange } />
+          <input
+            type="text"
+            id="Descrição"
+            name="description"
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
