@@ -1,4 +1,4 @@
-import fetchURL from "../services/currencyAPI";
+import fetchURL from '../services/currencyAPI';
 
 // Coloque aqui suas actions
 export const USER_EMAIL = 'USER_EMAIL';
@@ -15,7 +15,6 @@ export const getCurrency = (payload) => ({
 });
 
 export const getCurrencyThunk = () => (dispatch) => {
-
   fetchURL()
     // captura a response (resposta) no then(), que é próprio objeto
     .then((object) => {
@@ -38,5 +37,5 @@ export const getCurrencyThunk = () => (dispatch) => {
 
       // chama a action getCurrency SUCESSO
       dispatch(getCurrency(payload));
-  });
+    });
 };

@@ -6,7 +6,6 @@ import payments from '../data/payments';
 import tags from '../data/tags';
 import { getCurrencyThunk } from '../actions';
 
-
 class Wallet extends React.Component {
   constructor() {
     super();
