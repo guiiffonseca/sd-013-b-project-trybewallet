@@ -1,21 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { addCurrenciesThunk } from '../actions';
+import { addCurrenciesThunk, addExpenses } from '../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      valor: '',
+      valor: 0,
       descricao: '',
-      moeda: '',
-      pagamento: '',
-      tipoDespesa: '',
+      moeda: 'USD',
+      pagamento: 'Dinheiro',
+      tipoDespesa: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderFormInput = this.renderFormInput.bind(this);
     this.renderFormSelect = this.renderFormSelect.bind(this);
+    this.submitDespesa = this.submitDespesa.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,19 @@ class Form extends React.Component {
     this.setState({
       [target.name]: target.value,
     });
+  }
+
+  submitDespesa(event) {
+    event.preventDefault();
+    const { currencies, walleteLength, addExpense } = this.props;
+    const obj = {
+      ...this.state,
+      id: walleteLength.length,
+      exchangeRates: currencies,
+    };
+    // console.log(obj);
+    addExpense(obj);
+    // console.log(walleteLength);
   }
 
   renderFormInput() {
@@ -112,6 +126,12 @@ class Form extends React.Component {
         {
           this.renderFormSelect()
         }
+        <button
+          type="submit"
+          onClick={ (event) => this.submitDespesa(event) }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
@@ -119,6 +139,8 @@ class Form extends React.Component {
 
 Form.propTypes = {
   addCurrencies: PropTypes.func.isRequired,
+  walleteLength: PropTypes.arrayOf(PropTypes.any).isRequired,
+  addExpense: PropTypes.func.isRequired,
   currencies: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
@@ -127,10 +149,12 @@ Form.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   addCurrencies: () => dispatch(addCurrenciesThunk()),
+  addExpense: (obj) => dispatch(addExpenses(obj)),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  walleteLength: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
