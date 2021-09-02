@@ -76,6 +76,6 @@ h1 h5 {
 }
 
 .moedaTotal {
-  align-self:flex-end;
+  align-self: flex-start;
   display: flex;
 }
