@@ -7,9 +7,9 @@ export default class SelectOptionComponent extends Component {
     return (
       <label htmlFor={ name }>
         { textCoin }
-        <select name={ name } id={ name }>
+        <select name={ name } id={ name } value={ value } onChange={ onChange }>
           { mapValue.map((selected) => (
-            <option key={ selected } value={ value } onSelect={ onChange }>
+            <option key={ selected }>
               { selected }
             </option>
           )) }

@@ -1,22 +1,61 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { userInformation as userInformationAction } from '../actions';
 import { PropTypes } from 'prop-types';
-import InputComponent from '../components/InputComponent';
-import SelectOptionComponent from '../components/SelectOptionComponent';
+import {
+  coinsFetchThunk as coinsFetchThunkAction,
+  exchangeFetchThunk as exchangeFetchThunkAction,
+} from '../actions/index';
+
 import Header from '../components/Header';
+import SelectOptionComponent from '../components/SelectOptionComponent';
+// import InputPages from '../components/InputPages';
+import InputComponent from '../components/InputComponent';
+import TableComponent from '../components/TableComponent';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coins: [],
+      id: 0,
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+      exchangeRates: {},
     };
+
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleInputsForm = this.handleInputsForm.bind(this);
+    this.handleCurrencies = this.handleCurrencies.bind(this);
   }
 
   componentDidMount() {
-    this.coinsFatch();
+    const { coinsFetchThunk } = this.props;
+    coinsFetchThunk();
+  }
+
+  handleInputsForm(label, type, name, value) {
+    return (<InputComponent
+      label={ label }
+      type={ type }
+      name={ name }
+      value={ value }
+      onChange={ this.handleChange }
+    />);
+  }
+
+  handleClick() {
+    const { exchangeFetchThunk } = this.props;
+    const { id } = this.state;
+    this.setState({
+      id,
+    });
+    exchangeFetchThunk(this.state);
+    this.setState({
+      id: id + 1,
+    });
   }
 
   handleChange({ target }) {
@@ -26,62 +65,50 @@ class Wallet extends React.Component {
     });
   }
 
-  async coinsFatch() {
-    const linkApi = 'https://economia.awesomeapi.com.br/json/all';
-    const response = await (await fetch(linkApi)).json();
+  handleCurrencies() {
+    const { currencies } = this.props;
     const currencyLength = 3;
-    const filterCoins = Object.keys(response)
+    const payload = Object.keys(currencies)
       .filter((currency) => currency.length === currencyLength);
-    this.setState({
-      coins: filterCoins,
-    });
+    return payload;
   }
 
+  // { this.handleInputsForm('Valor', 'text', 'valor', value) }
+
   render() {
-    const { email } = this.props;
     const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagSelect = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-
-    const { value, coins } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <>
-        <Header email={ email } />
+        <Header />
         <form action="">
-          <InputComponent
-            label="Valor"
-            type="number"
-            name="valor"
-            value={ value }
-            onChange={ this.handleChange }
-          />
-          <InputComponent
-            label="Descrição"
-            type="text"
-            name="descricao"
-            value={ value }
-            onChange={ this.handleChange }
-          />
+          {/* <InputPages /> */}
+          { this.handleInputsForm('Valor', 'text', 'value', value) }
+          { this.handleInputsForm('Descrição', 'text', 'description', description) }
           <SelectOptionComponent
             textCoin="Moeda"
-            name="coin"
-            value={ value }
+            name="currency"
+            value={ currency }
+            mapValue={ this.handleCurrencies() }
             onChange={ this.handleChange }
-            mapValue={ coins }
           />
           <SelectOptionComponent
             textCoin="Método de pagamento"
-            name="paymentMethod"
-            value={ value }
+            name="method"
+            value={ method }
             mapValue={ paymentMethod }
             onChange={ this.handleChange }
           />
           <SelectOptionComponent
             textCoin="Tag"
-            name="tagSelect"
-            value={ value }
+            name="tag"
+            value={ tag }
             mapValue={ tagSelect }
             onChange={ this.handleChange }
           />
+          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          <TableComponent />
         </form>
       </>
     );
@@ -92,8 +119,14 @@ Wallet.propTypes = ({
   email: PropTypes.string,
 }.isRequired);
 
-const mapStateToProps = ({ user }) => ({
-  email: user.email,
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  coinsFetchThunk: () => dispatch(coinsFetchThunkAction()),
+  exchangeFetchThunk: (expenses) => dispatch(exchangeFetchThunkAction(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
