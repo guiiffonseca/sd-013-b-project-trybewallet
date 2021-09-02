@@ -62,7 +62,7 @@ class ExpensesForm extends React.Component {
           Moeda
           <select name="currency" id="currency" onChange={ this.handleChange }>
             { Object.values(currencies).map((curr, i) => {
-              <option key={ i }>{ curr.code }</option>
+              return <option key={ i }>{ curr.code }</option>;
             }) }
           </select>
         </label>

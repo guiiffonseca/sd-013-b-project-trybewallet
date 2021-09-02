@@ -17,8 +17,8 @@ class Header extends React.Component {
     const walletExpenses = wallet.expenses;
     let total = 0;
     if (walletExpenses) {
-    walletExpenses.map((expense) => {
-        total += expense.value * expense.exchangeRates[expense.currency].ask;
+      walletExpenses.map((expense) => {
+        (total += expense.value * expense.exchangeRates[expense.currency].ask)
       });
       return total.toFixed(2);
     }
@@ -32,7 +32,7 @@ class Header extends React.Component {
         <img src={ WalletLogo } alt="carteira" />
         <h2 data-testid="email-field">{ email }</h2>
         <h3 data-testid="total-field">
-          Total Expenses: 
+          Total Expenses:
           { this.totalExpenses() }
         </h3>
         <h4 data-testid="header-currency-field">BRL</h4>
