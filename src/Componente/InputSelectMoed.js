@@ -8,8 +8,8 @@ class InputSelectMoed extends React.Component {
       <label htmlFor="select">
         Moeda:
         <select
-          ame="moeda"
-          d="select"
+          name="moeda"
+          id="select"
           value={ value }
           onChange={ onChange }
         >
