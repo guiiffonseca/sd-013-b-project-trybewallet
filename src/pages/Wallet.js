@@ -118,6 +118,7 @@ class Wallet extends React.Component {
           }
         </td>
         <td>Real</td>
+        <td><button type="button" data-testid="delete-btn">Deletar</button></td>
       </tr>
     ));
   }
