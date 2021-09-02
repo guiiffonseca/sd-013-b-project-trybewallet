@@ -14,7 +14,7 @@ export const getCurrency = () => ({
 
 export const getCurrencySuccess = (data) => ({
   type: CURRENCIES_REQUEST_SUCCESS,
-  currencies: data,
+  currencies: Object.keys(data),
 });
 
 export const getCurrencyFailure = () => ({
@@ -28,6 +28,7 @@ export function currenciesFromApi() {
       const categoriesURL = 'https://economia.awesomeapi.com.br/json/all';
       const fetchAPI = await fetch(categoriesURL);
       const data = await fetchAPI.json();
+      delete data.USDT;
       dispatch(getCurrencySuccess(data));
     } catch (err) {
       console.error(err);
