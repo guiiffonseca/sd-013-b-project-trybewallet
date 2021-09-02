@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { getCurrenciesThunk } from '../../actions';
 import Input from '../Input';
 import Select from '../Select';
 
@@ -29,6 +33,12 @@ class FormAddExpenses extends Component {
     this.handleChanges = this.handleChanges.bind(this);
   }
 
+  componentDidMount() {
+    console.log('passou aq');
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
   handleChanges({ target }) {
     const { name, value } = target;
     this.setState({
@@ -37,6 +47,8 @@ class FormAddExpenses extends Component {
   }
 
   render() {
+    const { currencies } = this.props;
+    console.log(currencies);
     const { value, description, currency, paymentMethod, category } = this.state;
     return (
       <form>
@@ -62,7 +74,7 @@ class FormAddExpenses extends Component {
           name="currency"
           id="currency"
           onChange={ this.handleChanges }
-          options={ [{ test: 'test' }] }
+          options={ currencies }
         />
         <Select
           labelText="Método de pagamento"
@@ -85,4 +97,21 @@ class FormAddExpenses extends Component {
   }
 }
 
-export default FormAddExpenses;
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+FormAddExpenses.propTypes = {
+  setCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf,
+};
+
+FormAddExpenses.defaultProps = {
+  currencies: [],
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddExpenses);
