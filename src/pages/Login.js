@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import userLogin from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleLogin = this.handleLogin.bind(this);
     this.state = {
@@ -13,8 +14,6 @@ class Login extends React.Component {
       password: '',
     };
   }
-
-  emailValidation() {}
 
   handleLogin({ target }) {
     const { name, value } = target;
@@ -26,16 +25,16 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const userEmail = this.props;
+    const { userEmail } = this.props;
     const minLength = 6;
 
     const emailIsValid = () => {
-      const validationRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      const validationRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/; // source: https://www.w3resource.com/javascript/form/email-validation.php
       const validEmail = validationRegex.test(email);
       return validEmail;
     };
 
-    const passwordValidator = password.length >= minLength;
+    const passwordIsValid = password.length >= minLength;
 
     return (
       <div>
@@ -61,7 +60,7 @@ class Login extends React.Component {
         >
           <button
             type="button"
-            disabled={ !(emailIsValid() && passwordValidator) }
+            disabled={ !(emailIsValid() && passwordIsValid) } // button disabled until passed checks
           >
             Entrar
           </button>
@@ -74,19 +73,8 @@ const mapDispatchtoProps = (dispatch) => ({
   userEmail: (email) => dispatch(userLogin(email)),
 });
 
+Login.propTypes = {
+  userEmail: PropTypes.func.isRequired,
+};
+
 export default connect(null, mapDispatchtoProps)(Login);
-
-/* 2. Realize as seguintes verificações nos campos de email, senha e botão:
-O email está no formato válido, como 'alguem@alguem.com'.
-
-A senha possui 6 ou mais caracteres.
-
-Salve o email no estado da aplicação, com a chave email, assim que a pessoa usuária logar.
-
-A rota deve ser mudada para '/carteira' após o clique no botão 'Entrar'.
-
-O que será testado:
-
-- O botão de "Entrar" está desabilitado ao entrar na página
-- O botão de "Entrar está desabilitado quando um email inválido é digitado
-- O botão de "Entrar" está habilitado quando um email e uma senha válidos são passados */
