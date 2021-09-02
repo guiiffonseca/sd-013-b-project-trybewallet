@@ -7,12 +7,13 @@ class Coins extends Component {
     super(props);
     this.state = {};
     this.createOption = this.createOption.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   createOption() {
-    const { initial } = this.props;
+    const { coins } = this.props;
     return (
-      initial.map((code, index) => (
+      coins.map((code, index) => (
         <option value={ code } key={ index }>
           { code }
         </option>
@@ -20,11 +21,20 @@ class Coins extends Component {
     );
   }
 
+  // handleChange({ target }) {
+  //   const { name, value } = target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  //   console.log(value);
+  // }
+
   render() {
+    const { onChange, value } = this.props;
     return (
-      <label htmlFor="coin">
+      <label htmlFor="currency">
         Moeda
-        <select name="coin" id="coin">
+        <select name="currency" id="currency" value={ value } onChange={ onChange }>
           { this.createOption() }
         </select>
       </label>
@@ -33,16 +43,20 @@ class Coins extends Component {
 }
 
 const mapStateToProps = ({ wallet }) => ({
-  initial: wallet.initial,
+  coins: wallet.coins,
 });
 
 Coins.propTypes = {
-  initial: PropTypes.string,
-
+  coins: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 Coins.defaultProps = {
-  initial: [],
+  coins: [],
 };
 
 export default connect(mapStateToProps, null)(Coins);
+
+// erro do "map undefined" resolvido com ajuda do stackoverflow
+// https://stackoverflow.com/questions/56192170/typeerror-cannot-read-property-map-of-undefined-jest-js
