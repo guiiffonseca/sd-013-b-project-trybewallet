@@ -2,19 +2,15 @@
 // import { VALIDA_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
+
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   // case VALIDA_EMAIL:
-  //   return { ...state, user: { email: action.payload } };
+  // return { ...state, user: { email: action.payload } };
   default:
     return state;
   }
