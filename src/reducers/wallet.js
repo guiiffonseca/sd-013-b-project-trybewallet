@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   expenses: [],
+  isEditing: false,
 };
 
 const ATT_CURRENCIES = 'ATT_CURRENCIES';

@@ -15,6 +15,12 @@ class ExpensesTable extends Component {
     this.renderRow = this.renderRow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this.renderEditButton = this.renderEditButton.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit() {
+
   }
 
   handleDelete(id) {
@@ -23,6 +29,18 @@ class ExpensesTable extends Component {
     const filteredArray = arrayOfExpenses.filter((expense) => expense.id !== id);
     console.log(filteredArray);
     deleteRow(filteredArray);
+  }
+
+  renderEditButton() {
+    return (
+      <button
+        type="button"
+        data-testid="edit-btn"
+        onClick={ this.handleEdit }
+      >
+        Editar
+      </button>
+    );
   }
 
   renderDeleteButton(id) {
@@ -78,7 +96,7 @@ class ExpensesTable extends Component {
         <td>{roundedConvertedValueString}</td>
         <td>Real</td>
         <td>
-          Editar/
+          {this.renderEditButton()}
           {this.renderDeleteButton(expense.id)}
         </td>
       </tr>
