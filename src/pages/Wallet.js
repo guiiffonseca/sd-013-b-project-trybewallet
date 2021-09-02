@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import payments from '../data/payments';
 import tags from '../data/tags';
 import currencyAPI from '../services/currencyAPI';
+import { getCurrency as getCurrencyAction} from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -27,8 +28,14 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
+    const { getCurrency } = this.props;
+
     currencyAPI()
-      .then((response) => console.log(response));
+      .then((response) => {
+        const payload = [response];
+
+        getCurrency(payload);
+      });
       //nescessário salvar esse response no estado global
   }
   // event.target.name / value
@@ -78,6 +85,7 @@ class Wallet extends React.Component {
   }
 
   renderCurrency(moeda) {
+    const { wallet: { currencies } } = this.props;
     return (
       <label htmlFor="input-moeda">
         Moeda:
@@ -87,7 +95,9 @@ class Wallet extends React.Component {
           value={ moeda }
           onChange={ this.handleChange }
         >
-          <option value="escolha">Escolha uma moeda</option>
+          { currencies.map((currency) => (
+            <option value={ currency.code }>{ currency.code }</option>
+          )) }
         </select>
       </label>
     );
@@ -166,7 +176,11 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  getCurrency: (payload) => dispatch(getCurrencyAction(payload)),
+});
+
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
 };
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

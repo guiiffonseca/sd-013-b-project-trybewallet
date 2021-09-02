@@ -14,7 +14,7 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       wallet: {
-        currencies: [action.payload],
+        currencies: action.payload,
       },
     };
   default:
