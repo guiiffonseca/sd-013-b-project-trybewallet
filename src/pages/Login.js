@@ -7,45 +7,66 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      validateEmail: false,
+      validatePassword: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  // handleChange({ target }) {
+  //   const { name, value } = target;
+  //   this.setState({ [name]: value });
+  // }
+
+  // solução usada para validação do email com regex
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  handleEmail({ target: { value } }) {
+    const emailRegex = /\S+@\S+\.\S+/;
+    const validateEmail = emailRegex.test(value);
+
+    this.setState({ email: value, validateEmail });
+  }
+
+  handlePassword({ target: { value } }) {
+    const PASSWORD_LENGTH = 6;
+    const validatePassword = value.length >= PASSWORD_LENGTH;
+
+    this.setState({ password: value, validatePassword });
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, validateEmail, validatePassword } = this.state;
 
     return (
       <form>
         <fieldset>
-          <label htmlFor="email">
+          <label htmlFor="emailInput">
             Email:
             <input
-              type="text"
+              type="email"
               name="email"
+              id="emailInput"
               value={ email }
-              onChange={ this.handleChange }
+              onChange={ this.handleEmail }
               data-testid="email-input"
               required
             />
           </label>
-          <label htmlFor="password">
+          <label htmlFor="passwordInput">
             Senha:
             <input
               type="password"
               name="password"
+              id="passwordInput"
               value={ password }
-              onChange={ this.handleChange }
+              onChange={ this.handlePassword }
               data-testid="password-input"
               required
             />
           </label>
-          <button type="button">
+          <button type="button" disabled={ !validateEmail || !validatePassword }>
             Entrar
           </button>
         </fieldset>
