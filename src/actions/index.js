@@ -4,6 +4,7 @@ const USER_WALLET = 'USER_WALLET';
 const RESQUEST_API = 'REQUEST_API';
 const GET_INFO_API = 'GET_INFO_API';
 const GET_INFO_API_ERROR_ = 'GET_INFO_API_ERROR';
+const TOTAL_EXPENSE = 'TOTAL_EXPENSE';
 
 export const loginAction = (value) => ({ type: USER_LOGIN, value });
 
@@ -14,6 +15,8 @@ export const fetchApiAction = () => ({ type: RESQUEST_API });
 export const getInfoApi = (value) => ({ type: GET_INFO_API, value });
 
 export const getInfoApiError = (value) => ({ type: GET_INFO_API_ERROR_, value });
+
+export const totalExpense = (value) => ({ type: TOTAL_EXPENSE, value });
 
 export function fetchApi() {
   return (dispatch) => {

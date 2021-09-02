@@ -5,14 +5,24 @@ import FormWallet from '../components/FormWallet';
 import { fetchApi } from '../actions/index';
 
 class Wallet extends React.Component {
-  componentDidMount() {
+  constructor() {
+    super();
+
+    this.state = {
+      total: 0,
+    };
+  }
+
+  async componentDidMount() {
     const { fetchWalletApi } = this.props;
-    fetchWalletApi();
+    await fetchWalletApi();
   }
 
   render() {
-    const { email, currencies, expenses, infoApi, errorApi } = this.props;
+    const { email, infoApi, errorApi } = this.props;
+    const { total } = this.state;
     console.log(infoApi);
+    console.log(total);
 
     return (
       <div>
@@ -22,16 +32,9 @@ class Wallet extends React.Component {
             { email }
           </span>
           <span data-testid="total-field">
-            {
-              expenses.length <= 0 ? 0
-                : expenses.reduce((total, currentValue) => total + currentValue)
-            }
+            { total }
           </span>
-          <span data-testid="header-currency-field">
-            {
-              currencies.length <= 0 ? 'BRL' : currencies
-            }
-          </span>
+          <span data-testid="header-currency-field">BRL</span>
         </header>
 
         <FormWallet infoApi={ infoApi } errorApi={ errorApi } />
@@ -43,10 +46,12 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.func.isRequired,
-  expenses: PropTypes.shape.isRequired,
   fetchWalletApi: PropTypes.func.isRequired,
-  infoApi: PropTypes.shape.isRequired,
+  infoApi: PropTypes.objectOf(
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.string,
+  ).isRequired,
   errorApi: PropTypes.string.isRequired,
 };
 
