@@ -171,6 +171,7 @@ class AddExpenses extends React.Component {
           addExpenseThunk(expenseNow);
           this.resetState();
         } }
+        disabled={ description === '' }
       >
         Adicionar despesa
       </button>

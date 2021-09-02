@@ -65,7 +65,7 @@ class Wallet extends React.Component {
     return (
       // (email.length === 0)
       //   ? <Redirect to="/" />
-      //   : <div>TrybeWallet</div>
+      //   : (
       <div className="wallet-main">
         <Header email={ email } totalExpenses={ totalExpenses } />
         <AddExpenses
@@ -82,6 +82,7 @@ class Wallet extends React.Component {
           updateEditing={ this.updateEditing }
         />
       </div>
+      // )
     );
   }
 }
