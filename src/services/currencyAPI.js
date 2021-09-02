@@ -5,7 +5,9 @@ const fetchURL = () => (
     .then((response) => (
       response
         .json()
-        .then((object) => (response.ok ? Promise.resolve(object) : Promise.reject(object) ))
+        .then((object) => (
+          response.ok ? Promise.resolve(object) : Promise.reject(object)
+        ))
     ))
 );
 
