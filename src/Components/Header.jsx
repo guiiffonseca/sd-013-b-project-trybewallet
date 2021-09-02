@@ -15,12 +15,12 @@ class Header extends React.Component {
   totalExpenses() {
     const { globalState: { wallet } } = this.props;
     const wExpense = wallet.expenses;
-    let total = 0;
+    let t = 0;
     if (wExpense) {
-      wExpense.map((e) => (total = (total + e.value * e.exchangeRates[e.currency].ask)));
-      return total.toFixed(2);
+      wExpense.map((e) => (t += e.value * e.exchangeRates[e.currency].ask));
+      return t;
     }
-    return total;
+    return t;
   }
 
   render() {
