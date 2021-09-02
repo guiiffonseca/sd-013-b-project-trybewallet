@@ -16,7 +16,6 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.canBeSubmitted = this.canBeSubmitted.bind(this);
-    this.setExpensesThunk = this.setExpensesThunk.bind(this);
   }
 
   canBeSubmitted() {
@@ -38,7 +37,6 @@ class Login extends React.Component {
     });
 
     this.canBeSubmitted();
-    this.setExpensesThunk();
   }
 
   render() {
