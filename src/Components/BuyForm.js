@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import TagSelect from './TagSelect';
 
 class BuyForm extends React.Component {
@@ -14,10 +15,12 @@ class BuyForm extends React.Component {
         method: 'Dinheiro',
         tag: 'Comida',
       },
+      editingState: false,
     };
     this.handleData = this.handleData.bind(this);
     this.actB = this.actB.bind(this);
     this.actE = this.actE.bind(this);
+    this.updateStateEditing = this.updateStateEditing.bind(this);
   }
 
   componentDidMount() {
@@ -59,9 +62,9 @@ class BuyForm extends React.Component {
     });
   }
 
-  actE(form) {
+  async actE(form) {
     const { actE } = this.props;
-    actE(form);
+    const oi = await actE(form);
     this.setState({
       form: {
         value: '',
@@ -70,15 +73,31 @@ class BuyForm extends React.Component {
         method: 'Dinheiro',
         tag: 'Comida',
       },
+      editingState: false,
     });
   }
 
+  updateStateEditing(obj) {
+    const { value, description, currency, method, tag } = obj;
+    this.setState({
+      form: { value, description, currency, method, tag },
+      editingState: true,
+    });
+  }
+
+  // eslint-disable-next-line max-lines-per-function
   render() {
-    const { currencies, form } = this.state;
+    const { currencies, form, editingState } = this.state;
     const { value, description, currency, method, tag } = form;
     const { actB, actE } = this;
     const hand = this.handleData;
     const d = 'description';
+    const { editing } = this.props;
+    const { isEditing, editingObject } = editing;
+    console.log(editing);
+    console.log(editingObject);
+    console.log(isEditing);
+    if (editing.isEditing && !editingState) { this.updateStateEditing(editingObject); }
     return (
       currencies.length > 1
         ? (
@@ -124,9 +143,13 @@ class BuyForm extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  editing: state.wallet.editing,
+});
+
 BuyForm.propTypes = {
   act: PropTypes.func.isRequired,
   actE: PropTypes.func.isRequired,
 };
 
-export default BuyForm;
+export default connect(mapStateToProps, null)(BuyForm);
