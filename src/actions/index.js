@@ -1,5 +1,12 @@
 // Coloque aqui suas actions
 
-const enter = (email) => ({ type: 'USER', email });
+import fetchMoedas from '../services';
 
-export default enter;
+export const enter = (email) => ({ type: 'USER', email });
+
+const addCurrencies = (currencies) => ({ type: 'CURRENCIES', currencies });
+
+export const addCurrenciesThunk = () => async (dispatch) => {
+  const currencies = await fetchMoedas();
+  dispatch(addCurrencies(currencies));
+};
