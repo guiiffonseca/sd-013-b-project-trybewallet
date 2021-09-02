@@ -8,7 +8,6 @@ import {
 
 import Header from '../components/Header';
 import SelectOptionComponent from '../components/SelectOptionComponent';
-// import InputPages from '../components/InputPages';
 import InputComponent from '../components/InputComponent';
 import TableComponent from '../components/TableComponent';
 

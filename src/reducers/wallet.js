@@ -11,6 +11,8 @@ const addExpensesReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case USER_ACTIONS.USER_EXPENSES:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case USER_ACTIONS.USER_DELETE_EXPENSES:
+    return { ...state, expenses: [...action.payload] };
   case USER_ACTIONS.FETCH_SUCCESS:
     return { ...state, currencies: action.payload };
   case USER_ACTIONS.FETCH_ERROR:

@@ -5,6 +5,7 @@ export const USER_ACTIONS = {
   EXCHANGE_THUNK: 'EXCHANGE_THUNK',
   FETCH_ERROR: 'FETCH_ERROR',
   FETCH_SUCCESS: 'FETCH_SUCCESS',
+  USER_DELETE_EXPENSES: 'USER_DELETE_EXPENSES',
 };
 
 export const userInformation = (payload) => ({
@@ -14,6 +15,11 @@ export const userInformation = (payload) => ({
 
 export const addExpense = (payload) => ({
   type: USER_ACTIONS.USER_EXPENSES,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: USER_ACTIONS.USER_DELETE_EXPENSES,
   payload,
 });
 
