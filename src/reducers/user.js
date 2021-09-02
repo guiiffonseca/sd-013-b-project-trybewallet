@@ -1,4 +1,4 @@
-import USER_INFO_ACTIONS from '../actions';
+import STORE_INFO_ACTIONS from '../actions';
 
 const INITIAL_STATE = {
   email: '',
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case USER_INFO_ACTIONS.SET_INFO:
+  case STORE_INFO_ACTIONS.SET_EMAIL:
     return { ...state, email: action.payload };
   default:
     return state;

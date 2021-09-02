@@ -9,7 +9,7 @@ export default class Select extends Component {
       <>
         {
           options.map(
-            ({ code }) => <option key={ code } value={ code }>{code}</option>,
+            (item) => <option key={ item } value={ item }>{item}</option>,
           )
         }
       </>
@@ -18,5 +18,5 @@ export default class Select extends Component {
 }
 
 Select.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

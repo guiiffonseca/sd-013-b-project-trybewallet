@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { setInfo as setInfoAction } from '../actions';
+import { setEmail as setEmailAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.canBeSubmitted = this.canBeSubmitted.bind(this);
+    this.setExpensesThunk = this.setExpensesThunk.bind(this);
   }
 
   canBeSubmitted() {
@@ -37,11 +38,12 @@ class Login extends React.Component {
     });
 
     this.canBeSubmitted();
+    this.setExpensesThunk();
   }
 
   render() {
     const { email } = this.state;
-    const { setInfo } = this.props;
+    const { setEmail } = this.props;
 
     return (
       <div>
@@ -67,7 +69,7 @@ class Login extends React.Component {
           <Link to="/carteira">
             <button
               type="submit"
-              onClick={ () => setInfo(email) }
+              onClick={ () => setEmail(email) }
               disabled={ !this.canBeSubmitted() }
             >
               Entrar
@@ -80,11 +82,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setInfo: (email) => dispatch(setInfoAction(email)),
+  setEmail: (email) => dispatch(setEmailAction(email)),
 });
 
 Login.propTypes = {
-  setInfo: PropTypes.func.isRequired,
+  setEmail: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
