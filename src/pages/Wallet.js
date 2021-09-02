@@ -9,7 +9,9 @@ class Wallet extends React.Component {
     super();
     this.state = {
       currencies: [],
+      total: 0,
     };
+    this.handleUpdateTotal = this.handleUpdateTotal.bind(this);
   }
 
   componentDidMount() {
@@ -17,18 +19,31 @@ class Wallet extends React.Component {
     getCurrencies();
   }
 
+  handleUpdateTotal(value) {
+    const { total } = this.state;
+    this.setState((prevState) => ({
+      ...prevState,
+      total: prevState.total + Number(value),
+    }));
+    console.log(total);
+  }
+
   render() {
     const { email } = this.props;
-    const { currencies } = this.state;
+    const { currencies, total } = this.state;
+    console.log('Total', total);
     return (
       <div>
         <h1>Email:</h1>
         <h2 data-testid="email-field">{email}</h2>
         <h1>Total:</h1>
-        <h2 data-testid="total-field">{0}</h2>
+        <h2 data-testid="total-field">{total}</h2>
         <h1>Currency:</h1>
         <h2 data-testid="header-currency-field">BRL</h2>
-        <WalletForm currencies={ currencies } />
+        <WalletForm
+          currencies={ currencies }
+          handleUpdateTotal={ this.handleUpdateTotal }
+        />
       </div>
     );
   }

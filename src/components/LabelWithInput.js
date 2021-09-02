@@ -8,7 +8,12 @@ class LabelWithInput extends React.Component {
     return (
       <label htmlFor="value">
         Valor
-        <input id="value" type="number" value={ value } onChange={ (event) => handleChange(event, 'value') } />
+        <input
+          id="value"
+          type="number"
+          value={ value }
+          onChange={ (event) => handleChange(event, 'value') }
+        />
       </label>
     );
   }

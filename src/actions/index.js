@@ -2,6 +2,8 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const SET_EXCHANGE_RATES = 'SET_EXCHANGE_RATES';
+export const SET_EXPENSE = 'SET_EXPENSE';
 
 export function setEmail(email) {
   return ({ type: SET_EMAIL, payload: email });
@@ -19,4 +21,18 @@ export function getCurrencies() {
       .filter((currency) => currency !== 'USDT');
     dispatch({ type: SET_CURRENCIES, payload: currencies });
   };
+}
+
+export function getExchangeRates() {
+  return async (dispatch) => {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const result = await response.json();
+    // console.log('result', result);
+    dispatch({ type: SET_EXCHANGE_RATES, payload: result });
+  };
+}
+
+export function setExpenses(expense) {
+  console.log('Expense', expense);
+  return ({ type: SET_EXPENSE, payload: expense });
 }
