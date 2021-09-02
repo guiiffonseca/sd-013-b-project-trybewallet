@@ -17,10 +17,10 @@ class Header extends React.Component {
     const wExpense = wallet.expenses;
     let total = 0;
     if (wExpense) {
-      wExpense.map((e) => (total += e.value * e.exchangeRates[e.currency].ask));
+      wExpense.map((e) => (total = (total + e.value * e.exchangeRates[e.currency].ask)));
       return total.toFixed(2);
     }
-    return 0;
+    return total;
   }
 
   render() {
