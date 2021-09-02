@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { getCurrenciesFromApi } from '../actions';
@@ -9,7 +9,7 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: '',
+      //  value: '',
       currency: 'USD',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +29,7 @@ class Form extends React.Component {
   //  Codigo de Jose Luiz Demenegi, fonte de inspiraçao.
 
   renderSelect() {
-    const { value, currency } = this.state;
+    const { currency } = this.state;
     const { currencies } = this.props;
     return (
       <fieldset name="selects">
@@ -94,6 +94,7 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
+  addCurrencie: PropTypes.func.isRequired,
   currencies: PropTypes.shape({
     map: PropTypes.func,
   }).isRequired,
