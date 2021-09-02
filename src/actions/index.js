@@ -1,5 +1,6 @@
 // Coloque aqui suas actions
 import getCurrenciesAPI from '../services/awesomeAPI';
+// import getExpenseId from '../services/idServer';
 
 export const SAVE_USER = 'SAVE_USER';
 
@@ -8,9 +9,11 @@ export const ADD_CURRENCIES_ERROR = 'ADD_CURRENCIES_ERROR';
 
 export const ADD_EXPENSE = 'ADD_EXPENSES';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const ADD_EXCHANGE_RATES_NOW = 'ADD_EXCHANGE_RATES_NOW';
-// export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+
+export const UPDATE_EXPENSE_EDIT = 'UPDATE_EXPENSE_EDIT';
 
 export const saveUser = (payload) => ({
   type: SAVE_USER,
@@ -74,6 +77,19 @@ export const addExpense = (payload) => ({
 export const deleteExpense = (id) => ({
   type: DELETE_EXPENSE,
   payload: { id },
+});
+
+export const editExpense = (payload) => ({
+  type: EDIT_EXPENSE,
+  payload,
+});
+
+export const updateExpenseEdit = (editing, editingId) => ({
+  type: UPDATE_EXPENSE_EDIT,
+  payload: {
+    editing,
+    editingId,
+  },
 });
 
 export const getCurrenciesAndAddExpenseThunk = (expenseValue) => async (dispatch) => {

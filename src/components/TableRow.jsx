@@ -9,7 +9,7 @@ import editIcon from '../images/editing.png';
 
 class TableRow extends Component {
   render() {
-    const { expense, key, deleteExpense } = this.props;
+    const { expense, deleteExpense, updateEditing } = this.props;
     const {
       id,
       value,
@@ -24,7 +24,7 @@ class TableRow extends Component {
     const userExchangeCurrency = exchangeRates[currency].name.split('/');
     const userExchangeIncomplete = exchangeRates[currency].name;
     return (
-      <tr key={ key }>
+      <tr key={ id }>
         <td>{ description }</td>
         <td>{ tag }</td>
         <td>{ method }</td>
@@ -36,14 +36,21 @@ class TableRow extends Component {
         <td>{ (userExchange * parseFloat(value)).toFixed(2) }</td>
         <td>{ userExchangeCurrency[1] ? userExchangeCurrency[1] : 'Real' }</td>
         <td>
-          <img className="btn-icon" src={ editIcon } alt="Editar despesa" />
+          <button
+            className="btn-edit"
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => updateEditing(true, id) }
+          >
+            <img className="btn-icon" src={ editIcon } alt="Ícone de editar" />
+          </button>
           <button
             className="btn-deletar"
             type="button"
             data-testid="delete-btn"
             onClick={ () => deleteExpense(id) }
           >
-            <img className="btn-icon" src={ deleteIcon } alt="Apagar despesa" />
+            <img className="btn-icon" src={ deleteIcon } alt="Ícone lixeira" />
           </button>
         </td>
       </tr>
@@ -52,7 +59,6 @@ class TableRow extends Component {
 }
 
 TableRow.propTypes = {
-  key: PropTypes.number.isRequired,
   expense: PropTypes.shape({
     id: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
@@ -62,6 +68,7 @@ TableRow.propTypes = {
     tag: PropTypes.string.isRequired,
     exchangeRates: PropTypes.shape({}).isRequired,
   }).isRequired,
+  updateEditing: PropTypes.func.isRequired,
   deleteExpense: PropTypes.func.isRequired,
 };
 

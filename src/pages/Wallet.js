@@ -16,8 +16,11 @@ class Wallet extends React.Component {
     super(props);
     this.state = {
       totalExpenses: 0,
+      editing: false,
+      editingId: 99999999999,
     };
     this.updateTotalExpenses = this.updateTotalExpenses.bind(this);
+    this.updateEditing = this.updateEditing.bind(this);
   }
 
   componentDidMount() {
@@ -48,10 +51,17 @@ class Wallet extends React.Component {
     });
   }
 
+  updateEditing(bool, id) {
+    this.setState({
+      editing: bool,
+      editingId: id,
+    });
+  }
+
   render() {
     const { email, currencies, expenses, exchangeRatesNow } = this.props;
     const id = expenses.length !== 0 ? expenses[expenses.length - 1].id + 1 : 0;
-    const { totalExpenses } = this.state;
+    const { totalExpenses, editing, editingId } = this.state;
     return (
       // (email.length === 0)
       //   ? <Redirect to="/" />
@@ -62,9 +72,14 @@ class Wallet extends React.Component {
           currencies={ currencies }
           id={ id }
           exchangeRatesNow={ exchangeRatesNow }
+          expenses={ expenses }
+          editing={ editing }
+          editingId={ editingId }
+          updateEditing={ this.updateEditing }
         />
         <TableExpenses
           expenses={ expenses }
+          updateEditing={ this.updateEditing }
         />
       </div>
     );

@@ -46,9 +46,15 @@
 .expenses-form {
   align-items: center;
   background-color: var(--bgdark);
+  border: 1px solid var(--bgdark);
   display: flex;
   height: 50px;
   justify-content: space-between;
+}
+
+.editing-form {
+  background-color: var(--dark-olive-green);
+  border: 1px solid var(--asparagus);
 }
 
 .expenses-form input {
@@ -112,6 +118,15 @@
 .btn-deletar {
   background-color: rgb(220, 0, 0);
   border: 1px solid rgb(100, 0, 0);
+  border-radius: 8px;
+  margin: 0 5px;
+  padding: 5px 3px;
+  width: 40px;
+}
+
+.btn-edit {
+  background-color: rgb(240, 200, 35);
+  border: 1px solid rgb(100, 100, 0);
   border-radius: 8px;
   margin: 0 5px;
   padding: 5px 3px;
