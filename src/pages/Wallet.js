@@ -47,8 +47,8 @@ class Wallet extends React.Component {
   addExpenses() {
     const { expensesData } = this.props;
     const { id, value, description, method, currency, tag, exchangeRates } = this.state;
-    const payload =
-      [{
+    const payload = [
+      {
         id,
         value,
         description,
@@ -56,7 +56,8 @@ class Wallet extends React.Component {
         currency,
         tag,
         exchangeRates,
-      }];
+      },
+    ];
 
     expensesData(payload);
   }
@@ -210,7 +211,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  getCurrency: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getCurrency: PropTypes.func.isRequired,
+  expensesData: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
