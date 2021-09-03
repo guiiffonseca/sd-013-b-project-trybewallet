@@ -133,4 +133,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 ExpenseForm.propTypes = {
   exchangeAPI: PropTypes.func.isRequired,
   expenses: PropTypes.func.isRequired,
+  currenciesProps: PropTypes.objectOf(PropTypes.object).isRequired,
 };
