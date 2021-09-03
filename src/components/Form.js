@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Form extends Component {
   render() {
     const { currencies } = this.props;
-    console.log(currencies);
     delete currencies.USDT;
     const arrayObjctCurrencies = Object.values(currencies);
     return (
