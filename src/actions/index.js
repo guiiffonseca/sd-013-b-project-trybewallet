@@ -27,12 +27,10 @@ export function getExchangeRates() {
   return async (dispatch) => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const result = await response.json();
-    // console.log('result', result);
     dispatch({ type: SET_EXCHANGE_RATES, payload: result });
   };
 }
 
 export function setExpenses(expense) {
-  console.log('Expense', expense);
   return ({ type: SET_EXPENSE, payload: expense });
 }

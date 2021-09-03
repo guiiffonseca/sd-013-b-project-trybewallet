@@ -20,18 +20,15 @@ class Wallet extends React.Component {
   }
 
   handleUpdateTotal(value) {
-    const { total } = this.state;
     this.setState((prevState) => ({
       ...prevState,
       total: prevState.total + Number(value),
     }));
-    console.log(total);
   }
 
   render() {
     const { email } = this.props;
     const { currencies, total } = this.state;
-    console.log('Total', total);
     return (
       <div>
         <h1>Email:</h1>

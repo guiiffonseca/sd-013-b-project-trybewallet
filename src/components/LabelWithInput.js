@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class LabelWithInput extends React.Component {
   render() {
     const { value, handleChange } = this.props;
-    console.log(handleChange);
+    // console.log(handleChange);
     return (
       <label htmlFor="value">
         Valor

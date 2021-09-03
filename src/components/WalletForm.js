@@ -5,7 +5,6 @@ import {
   getExchangeRates as getExchangeRatesAction,
   setExpenses as setExpensesAction,
 } from '../actions';
-// import LabelWithInput from './LabelWithInput';
 
 class WalletForm extends React.Component {
   constructor(props) {
@@ -27,8 +26,6 @@ class WalletForm extends React.Component {
 
   handleChange(event, id) {
     const eventValue = event.target.value;
-    // const eventId = event.target.id;
-    // console.log(event.target.id);
     this.setState((prevState) => ({
       ...prevState,
       [id]: eventValue,
@@ -37,33 +34,23 @@ class WalletForm extends React.Component {
 
   async handleClick(event) {
     const {
-      getExchangeRates,
-      exchangeRatesProp,
       handleUpdateTotal,
       setExpenses,
       expenses,
     } = this.props;
-    const { value, description, currency, method, tag, exchangeRates } = this.state;
-    console.log('exchangeRatesProp', exchangeRatesProp);
+    const { value, currency } = this.state;
     event.preventDefault();
-    // getExchangeRates();
-    console.log('exchangeRates', JSON.stringify(exchangeRates));
-    // console.log('this.props', this.props);
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const result = await response.json();
-    console.log('result', result);
-    // getExchangeRates();
     this.setState((prevState) => (
-    // console.log('exchangeRates', exchangeRates);
       {
         ...prevState,
         id: expenses.length === 0 ? 0 : expenses[expenses.length - 1].id + 1,
         exchangeRates: result,
       }));
-    handleUpdateTotal(value);
-    // console.log(this.state);
+    console.log(result[currency].ask);
+    handleUpdateTotal(value * result[currency].ask);
     setExpenses(this.state);
-    // console.log(expenses);
   }
 
   renderInput({ name, label, id, type, value, stateKey }) {
@@ -171,7 +158,6 @@ class WalletForm extends React.Component {
   }
 
   render() {
-    // console.log(myObject);
     return this.renderForm();
   }
 }
@@ -192,16 +178,13 @@ const mapDispatchToProps = (dispatch) => ({
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(
     PropTypes.string.isRequired,
-    // PropTypes.shape({
-    //   index: PropTypes.string.isRequired,
-    // }).isRequired,
   ).isRequired,
   expenses: PropTypes.arrayOf(
     PropTypes.string.isRequired,
-    // PropTypes.shape({
-    //   index: PropTypes.string.isRequired,
-    // }).isRequired,
   ).isRequired,
+  exchangeRatesProps: PropTypes.shape().isRequired,
+  handleUpdateTotal: PropTypes.func.isRequired,
+  setExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

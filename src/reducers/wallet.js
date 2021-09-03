@@ -13,7 +13,6 @@ export default function wallet(state = INITIAL_STATE, action) {
   case SET_CURRENCIES:
     return { ...state, currencies: action.payload };
   case SET_EXCHANGE_RATES:
-    console.log('action.payload', { ...action.payload });
     return { ...state, exchangeRates: { ...action.payload } };
   case SET_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.payload] };
