@@ -11,11 +11,13 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
-      valor: 0,
-      descDespesa: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
+      id: 0,
+      value: 0,
+      description: '',
+      method: 'Dinheiro',
+      currency: 'USD',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,6 +31,7 @@ class Wallet extends React.Component {
 
   componentDidMount() {
     const { getCurrency } = this.props;
+    // obtenho a moeda(currency) da API
     getCurrency(); // está na mapdispatchToprops
   }
 
@@ -40,14 +43,14 @@ class Wallet extends React.Component {
     });
   }
 
-  renderPaymentMethod(pagamento) {
+  renderPaymentMethod(method) {
     return (
-      <label htmlFor="input-pagamento">
-        Método de pagamento:
+      <label htmlFor="input-method">
+        Forma de Pagamento:
         <select
-          id="input-pagamento"
-          name="pagamento"
-          value={ pagamento }
+          id="input-method"
+          name="method"
+          value={ method }
           onChange={ this.handleChange }
         >
           { payments.map(({ method, key }) => (
@@ -78,17 +81,17 @@ class Wallet extends React.Component {
     );
   }
 
-  renderCurrency(moeda) {
+  renderCurrency(currency) {
     const { currencies } = this.props;
     // console.log(currencies);
 
     return (
-      <label htmlFor="input-moeda">
+      <label htmlFor="input-currency">
         Moeda:
         <select
-          id="input-moeda"
-          name="moeda"
-          value={ moeda }
+          id="input-currency"
+          name="currency"
+          value={ currency }
           onChange={ this.handleChange }
         >
           { currencies.map((currency) => (
@@ -101,30 +104,30 @@ class Wallet extends React.Component {
     );
   }
 
-  renderDescription(descDespesa) {
+  renderDescription(description) {
     return (
       <label htmlFor="input-descricao">
         Descrição:
         <input
           id="input-descricao"
           type="text"
-          name="descDespesa"
-          value={ descDespesa }
+          name="description"
+          value={ description }
           onChange={ this.handleChange }
         />
       </label>
     );
   }
 
-  renderTotalValue(valor) {
+  renderTotalValue(value) {
     return (
-      <label htmlFor="input-valor">
+      <label htmlFor="input-value">
         Valor:
         <input
-          id="input-valor"
+          id="input-value"
           type="number"
-          name="valor"
-          value={ valor }
+          name="value"
+          value={ value }
           onChange={ this.handleChange }
         />
       </label>
@@ -133,15 +136,24 @@ class Wallet extends React.Component {
 
   addExpenses() {
     const { expensesData } = this.props;
-    const { valor, descDespesa, pagamento, moeda, tag } = this.state;
-    const payload = [valor, descDespesa, pagamento, moeda, tag];
+    const { id, value, description, method, currency, tag, exchangeRates } = this.state;
+    const payload =
+      [{
+        id,
+        value,
+        description,
+        method,
+        currency,
+        tag,
+        exchangeRates,
+      }];
+    
     expensesData(payload);
-    console.log(payload);
   }
 
   render() {
     const { email } = this.props;
-    const { valor, descDespesa, moeda, pagamento, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <div>
         <header>
@@ -160,13 +172,13 @@ class Wallet extends React.Component {
 
         <main>
           <form>
-            { this.renderTotalValue(valor) }
+            { this.renderTotalValue(value) }
             <br />
-            { this.renderDescription(descDespesa) }
+            { this.renderDescription(description) }
             <br />
-            { this.renderCurrency(moeda) }
+            { this.renderCurrency(currency) }
             <br />
-            { this.renderPaymentMethod(pagamento) }
+            { this.renderPaymentMethod(method) }
             <br />
             { this.renderTags(tag) }
             <br />
