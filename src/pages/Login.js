@@ -75,7 +75,7 @@ class Login extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmailAction(email)),
+  setEmail: (payload) => dispatch(setEmailAction(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
