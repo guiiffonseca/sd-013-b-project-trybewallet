@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import payments from '../data/payments';
 import tags from '../data/tags';
-import { getCurrencyThunk, expensesData as expensesDataAction } from '../actions';
+import { getCurrencyThunk, getExpensesDataThunk} from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -27,6 +27,7 @@ class Wallet extends React.Component {
     this.renderDescription = this.renderDescription.bind(this);
     this.renderTotalValue = this.renderTotalValue.bind(this);
     this.addExpenses = this.addExpenses.bind(this);
+    this.sunTotalExpenses = this.sunTotalExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -45,21 +46,21 @@ class Wallet extends React.Component {
 
   // adiciona as despesas no estado global na chave espenses
   addExpenses() {
-    const { expensesData } = this.props;
-    const { id, value, description, method, currency, tag, exchangeRates } = this.state;
-    const payload = [
-      {
-        id,
-        value,
-        description,
-        method,
-        currency,
-        tag,
-        exchangeRates,
-      },
-    ];
+    const { getExpensesData } = this.props;
+    // const { id, value, description, method, currency, tag, exchangeRates } = this.state;
 
-    expensesData(payload);
+    getExpensesData(this.state);
+    this.sunTotalExpenses();
+
+    // const payload = {
+    //     id,
+    //     value,
+    //     description,
+    //     method,
+    //     currency,
+    //     tag,
+    //   };
+    // expensesData(payload);
   }
 
   renderPaymentMethod(method) {
@@ -153,9 +154,25 @@ class Wallet extends React.Component {
     );
   }
 
+  sunTotalExpenses() {
+    const { expenses } = this.state;
+    console.log('espenses ' + expenses);
+    const sum = 0;
+    if (expenses != undefined) {
+      sum = expenses.map((item) => {
+        if (item.currency === item.exchangeRates.code) {
+          return item.value * item.exchangeRates.ask;
+        }
+      });
+    }
+
+    return console.log(sum);
+  }
+
   render() {
     const { email } = this.props;
     const { value, description, currency, method, tag } = this.state;
+    console.log(this.state);
     return (
       <div>
         <header>
@@ -206,13 +223,14 @@ const mapStateToProps = (state) => ({
 // escrevendo os dados no estado global
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(getCurrencyThunk()),
-  expensesData: (payload) => dispatch(expensesDataAction(payload)),
+  // expensesData: (payload) => dispatch(expensesDataAction(payload)),
+  getExpensesData: (payloadState) => dispatch(getExpensesDataThunk(payloadState)),
+  // getExchengeRates: (state) => dispatch(getExchengeRatesThunk(state)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   getCurrency: PropTypes.func.isRequired,
-  expensesData: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

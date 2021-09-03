@@ -16,9 +16,17 @@ function wallet(state = INITIAL_STATE, action) {
   case EXPENSES_DATA:
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, {
+        ...action.payload,
+        id: state.expenses.length,
+      }],
     };
-  default:
+  // case GET_EXCHANGE_RATES:
+  //   return {
+  //     ...state,
+  //     exchangeRates: action.payload,
+  //   };
+    default:
     return state;
   }
 }
