@@ -43,6 +43,24 @@ class Wallet extends React.Component {
     });
   }
 
+  // adiciona as despesas no estado global na chave espenses
+  addExpenses() {
+    const { expensesData } = this.props;
+    const { id, value, description, method, currency, tag, exchangeRates } = this.state;
+    const payload =
+      [{
+        id,
+        value,
+        description,
+        method,
+        currency,
+        tag,
+        exchangeRates,
+      }];
+
+    expensesData(payload);
+  }
+
   renderPaymentMethod(method) {
     return (
       <label htmlFor="input-method">
@@ -53,9 +71,9 @@ class Wallet extends React.Component {
           value={ method }
           onChange={ this.handleChange }
         >
-          { payments.map(({ method, key }) => (
-            <option value={ method } key={ key }>
-              { method }
+          { payments.map(({ payMethod, key }) => (
+            <option value={ payMethod } key={ key }>
+              { payMethod }
             </option>)) }
         </select>
       </label>
@@ -132,23 +150,6 @@ class Wallet extends React.Component {
         />
       </label>
     );
-  }
-
-  addExpenses() {
-    const { expensesData } = this.props;
-    const { id, value, description, method, currency, tag, exchangeRates } = this.state;
-    const payload =
-      [{
-        id,
-        value,
-        description,
-        method,
-        currency,
-        tag,
-        exchangeRates,
-      }];
-    
-    expensesData(payload);
   }
 
   render() {

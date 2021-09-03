@@ -1,15 +1,15 @@
 const payments = [
   {
     key: 1,
-    method: 'Dinheiro',
+    payMethod: 'Dinheiro',
   },
   {
     key: 2,
-    method: 'Cartão de crédito',
+    payMethod: 'Cartão de crédito',
   },
   {
     key: 3,
-    method: 'Cartão de débito',
+    payMethod: 'Cartão de débito',
   },
 ];
 
