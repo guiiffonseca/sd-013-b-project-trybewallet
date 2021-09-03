@@ -2,10 +2,16 @@ import fetchURL from '../services/currencyAPI';
 
 // Coloque aqui suas actions
 export const USER_EMAIL = 'USER_EMAIL';
+export const EXPENSES_DATA = 'EXPENSES_DATA';
 export const GET_CURRENCY = 'GET_CURRENCY';
 
 export const userEmail = (payload) => ({
   type: USER_EMAIL,
+  payload,
+});
+
+export const expensesData = (payload) => ({
+  type: EXPENSES_DATA,
   payload,
 });
 

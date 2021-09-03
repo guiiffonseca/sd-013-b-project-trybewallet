@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import payments from '../data/payments';
 import tags from '../data/tags';
-import { getCurrencyThunk } from '../actions';
+import { getCurrencyThunk, expensesData as expensesDataAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -24,6 +24,7 @@ class Wallet extends React.Component {
     this.renderCurrency = this.renderCurrency.bind(this);
     this.renderDescription = this.renderDescription.bind(this);
     this.renderTotalValue = this.renderTotalValue.bind(this);
+    this.addExpenses = this.addExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -130,6 +131,14 @@ class Wallet extends React.Component {
     );
   }
 
+  addExpenses() {
+    const { expensesData } = this.props;
+    const { valor, descDespesa, pagamento, moeda, tag } = this.state;
+    const payload = [valor, descDespesa, pagamento, moeda, tag];
+    expensesData(payload);
+    console.log(payload);
+  }
+
   render() {
     const { email } = this.props;
     const { valor, descDespesa, moeda, pagamento, tag } = this.state;
@@ -160,6 +169,12 @@ class Wallet extends React.Component {
             { this.renderPaymentMethod(pagamento) }
             <br />
             { this.renderTags(tag) }
+            <br />
+            <input
+              type="button"
+              value="Adicionar despesa"
+              onClick={ this.addExpenses }
+            />
           </form>
         </main>
       </div>
@@ -174,8 +189,10 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
+// escrevendo os dados no estado global
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(getCurrencyThunk()),
+  expensesData: (payload) => dispatch(expensesDataAction(payload)),
 });
 
 Wallet.propTypes = {
