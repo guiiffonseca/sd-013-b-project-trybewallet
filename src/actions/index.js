@@ -6,6 +6,7 @@ export const RESPONSE_API = 'RESPONSE_API';
 export const RESPONSE_API2 = 'RESPONSE_API2';
 export const RESPONSE_ERROR = 'RESPONSE_ERROR';
 export const ADD_DESPESA = 'ADD_DESPESA';
+export const REMOVE_LIST = 'REMOVE_LIST';
 
 export const fazerLogin = (payload) => ({ type: LOGIN, payload });
 
@@ -46,3 +47,8 @@ export const actionFunctionThunk2 = (state) => async (dispatch) => {
     dispatch(actionErrorAPI(error));
   }
 };
+
+export const removeList = (payload) => ({
+  type: REMOVE_LIST,
+  payload,
+});
