@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../index.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class TableExpenses extends React.Component {
   constructor(props) {
@@ -10,8 +10,7 @@ class TableExpenses extends React.Component {
   }
 
   render() {
-    // const { propArrayDespesas } = this.props;
-    // const description = propArrayDespesas.forEach(despesa => despesa.description);
+    const { propArrayDespesas } = this.props;
     return (
       <div>
         <h3>Tabela de Desepesa</h3>
@@ -27,38 +26,44 @@ class TableExpenses extends React.Component {
             <th className="tabelaTH"> Moeda de conversão </th>
             <th className="tabelaTH"> Editar/Excluir </th>
           </tr>
-          <tr>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-            <td className="tabelaTD">Ae</td>
-          </tr>
-          <tr>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-            <td className="tabelaTD">Cm</td>
-          </tr>
+          {
+            propArrayDespesas.map((item) => (
+              <tr key={ item.id }>
+                <td className="tabelaTD">{ item.description }</td>
+                <td className="tabelaTD">{ item.tag }</td>
+                <td className="tabelaTD">{ item.method }</td>
+                <td className="tabelaTD">{ item.value }</td>
+                <td className="tabelaTD">
+                  {
+                    item.exchangeRates[item.currency]
+                      .name === /Dólar Americano/i ? 'Dólar Comercial'
+                      : item.exchangeRates[item.currency].name.split('/', 1)
+                  }
+                </td>
+                <td className="tabelaTD">
+                  {
+                    Number(item.exchangeRates[item.currency].ask).toFixed(2)
+                  }
+                </td>
+                <td className="tabelaTD">
+                  {
+                    Number(item.exchangeRates[item.currency].ask * item.value).toFixed(2)
+                  }
+                </td>
+                <td className="tabelaTD"> BRL </td>
+                <td className="tabelaTD">x</td>
+              </tr>
+            ))
+          }
         </table>
       </div>
     );
   }
 }
 
-/* TableExpenses.propTypes = {
-  value: PropTypes.string.isRequired,
-  func: PropTypes.func.isRequired,
-}; */
+TableExpenses.propTypes = {
+  propArrayDespesas: PropTypes.objectOf.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   propArrayDespesas: state.wallet.expenses,

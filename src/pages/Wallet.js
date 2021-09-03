@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { actionFunctionThunk } from '../actions';
 import FormWallet from '../components/FormWallet';
 import Header from '../components/Header';
-// import TableExpenses from '../components/TableExpenses';
+import TableExpenses from '../components/TableExpenses';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <FormWallet respostaAPI={ respostaAPI } />
-        {/* <TableExpenses /> */}
+        <TableExpenses />
       </div>
     );
   }
