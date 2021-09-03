@@ -50,7 +50,7 @@ class TableExpenses extends React.Component {
                     Number(item.exchangeRates[item.currency].ask * item.value).toFixed(2)
                   }
                 </td>
-                <td className="tabelaTD"> BRL </td>
+                <td className="tabelaTD"> Real </td>
                 <td className="tabelaTD">x</td>
               </tr>
             ))
