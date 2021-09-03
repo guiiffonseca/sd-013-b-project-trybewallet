@@ -2,10 +2,9 @@ import { SET_USERS } from '../actions/index';
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_USERS:
     return { ...state,
@@ -16,4 +15,4 @@ const reducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default reducer;
+export default usersReducer;

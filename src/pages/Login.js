@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUsersValue } from '../actions/index';
+import { setUserValue, getCurrencyThunk } from '../actions/index';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,34 +15,32 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
+  handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { history, dispatchSetValue } = this.props;
+    const { history, dispatchSetValue /* getCurrency */ } = this.props;
     dispatchSetValue(this.state);
     history.push('/carteira');
   }
 
   render() {
     const { email, password } = this.state;
-    const N = 6;
+    const maxLength = 6;
     let enable = true;
-
-    if (email.includes('@' && '.com') && password.length >= N) {
+    if (email.includes('@' && '.com') && password.length >= maxLength) {
       enable = false;
     } else {
       enable = true;
     }
+
     return (
       <form onSubmit={ this.handleSubmit }>
-        <h1>{email}</h1>
-        <h1>{password}</h1>
         <label htmlFor="email">
           <input
+            id="email"
             data-testid="email-input"
             type="email"
             name="email"
@@ -52,10 +50,11 @@ class Login extends React.Component {
         </label>
         <label htmlFor="password">
           <input
+            id="password"
             data-testid="password-input"
             type="password"
             name="password"
-            minLength="8"
+            minLength="6"
             placeholder="Senha"
             onChange={ this.handleChange }
           />
@@ -74,7 +73,9 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSetValue: (value) => dispatch(setUsersValue(value)),
+  dispatchSetValue: (value) => dispatch(setUserValue(value)),
+  getCurrency: () => dispatch(getCurrencyThunk()),
+
 });
 
 export default connect(null, mapDispatchToProps)(Login);
