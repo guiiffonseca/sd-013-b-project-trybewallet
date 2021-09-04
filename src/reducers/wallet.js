@@ -26,7 +26,7 @@ function wallet(state = INITIAL_STATE, action) {
   //     ...state,
   //     exchangeRates: action.payload,
   //   };
-    default:
+  default:
     return state;
   }
 }

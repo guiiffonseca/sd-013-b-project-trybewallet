@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import payments from '../data/payments';
 import tags from '../data/tags';
-import { getCurrencyThunk, getExpensesDataThunk} from '../actions';
+import { getCurrencyThunk, getExpensesDataThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -61,6 +60,36 @@ class Wallet extends React.Component {
     //     tag,
     //   };
     // expensesData(payload);
+  }
+
+  sunTotalExpenses() {
+    const { expenses } = this.props;
+    let sum = 0;
+
+    if (expenses.length > 0) {
+      // source: baseado no code review de @raugusto96
+      expenses.forEach(({ value, currency, exchangeRates }) => {
+        sum += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
+      });
+
+      // tentativas frustadas abaixo:
+      // const exchangeKeys = Object.entries(expenses[0].exchangeRates);
+      // const exchangeRatesArr = expenses.map((item) => item.exchangeRates);
+      // console.log('exchangeRatesArr:  ' + exchangeRatesArr);
+      // expenses.map((item) => {
+      //   exchangeRatesArr.filter((rate) => {
+      //     if (item.currency === rate.code) {
+      //       sum = item.value * rate.ask;
+      //     }
+      //   }); // filter
+      // }); // map expenses
+      // sum = expenses.map((item) => {
+      //   if (item.currency === item.exchangeRates.code) {
+      //     return item.value * item.exchangeRates.ask;
+      //   }
+      // }
+    }
+    return sum.toFixed(2);
   }
 
   renderPaymentMethod(method) {
@@ -154,49 +183,6 @@ class Wallet extends React.Component {
     );
   }
 
-  sunTotalExpenses() {
-    const { expenses } = this.props;
-    let sum = 0;
-
-    if (expenses.length > 0) {
-      // source: baseado no code review de @raugusto96
-      expenses.forEach(({ value, currency, exchangeRates }) => {
-        sum += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
-      });
-
-      // tentativas frustadas abaixo:
-      // console.log('expenses via props : ' + expenses[0].currency);
-      // const exchangeKeys = Object.entries(expenses[0].exchangeRates);
-      // console.log('exchangeKeys: ' + typeof(exchangeKeys));
-      // exchangeKeys = [USD, BRL]
-
-      // const exchangeRatesArr = expenses.map((item) => item.exchangeRates);
-      // console.log('exchangeRatesArr:  ' + exchangeRatesArr);
-      
-      // expenses.currency === exchangeRatesArr.code
-      //    expenses.value * exchangeRatesArr.ask
-
-      // expenses.map((item) => {
-      //   console.log('item: ' + item.currency);
-      //   exchangeRatesArr.filter((rate) => {
-      //     console.log('rate: ' + rate.code);
-      //     if (item.currency === rate.code) {
-      //       sum = item.value * rate.ask;
-      //     }
-      //   }); // filter
-      // }); // map expenses
-
-
-      // sum = expenses.map((item) => {
-      //   if (item.currency === item.exchangeRates.code) {
-      //     return item.value * item.exchangeRates.ask;
-      //   }
-      // }
-    }
-
-    return sum.toFixed(2);
-  }
-
   render() {
     const { email } = this.props;
     const { value, description, currency, method, tag } = this.state;
@@ -215,7 +201,6 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">{' BRL'}</span>
           </div>
         </header>
-
         <main>
           <form>
             { this.renderTotalValue(value) }
@@ -251,14 +236,14 @@ const mapStateToProps = (state) => ({
 // escrevendo os dados no estado global
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(getCurrencyThunk()),
-  // expensesData: (payload) => dispatch(expensesDataAction(payload)),
   getExpensesData: (payloadState) => dispatch(getExpensesDataThunk(payloadState)),
-  // getExchengeRates: (state) => dispatch(getExchengeRatesThunk(state)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf({}).isRequired,
   getCurrency: PropTypes.func.isRequired,
+  getExpensesData: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
