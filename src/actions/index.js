@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
-const fazerLogin = (email) => ({
-  type: 'LOGIN',
-  email,
-});
+export const FAZER_LOGIN = 'FAZER_LOGIN';
 
-export default fazerLogin;
+export const fazerLogin = (payload) => ({
+  type: FAZER_LOGIN,
+  payload,
+});

@@ -1,28 +1,27 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fazerLogin } from '../actions';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: '',
       password: '',
-      button: false,
+      isButtonEnabled: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateButton = this.validateButton.bind(this);
-    this.changeRoute = this.changeRoute.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   validateButton() {
     const passwordLength = 5;
     const { email, password } = this.state;
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
-    const buttonSelector = document.querySelector('#button');
     if (regex.test(email) && password.length >= passwordLength) {
-      buttonSelector.removeAttribute('disabled');
-    } else {
-      buttonSelector.setAttribute('disabled', true);
+      this.setState({ isButtonEnabled: true });
     }
   }
 
@@ -33,14 +32,15 @@ class Login extends React.Component {
     this.validateButton();
   }
 
-  changeRoute() {
-    return (
-      <Redirect to="/carteira" />
-    );
+  submitLogin() {
+    const { history, dispatchFazerLogin } = this.props;
+    const { email } = this.state;
+    dispatchFazerLogin(email);
+    history.push('/carteira');
   }
 
   render() {
-    const { email, password, button } = this.state;
+    const { email, password, isButtonEnabled } = this.state;
     return (
       <div>
         <label htmlFor="email-input">
@@ -62,11 +62,11 @@ class Login extends React.Component {
           />
         </label>
         <button
+          onClick={ this.submitLogin }
           type="submit"
           data-testid="login-button"
-          onClick={ () => this.changeRoute() }
           id="button"
-          disabled
+          disabled={ !isButtonEnabled }
         >
           Entrar
         </button>
@@ -76,4 +76,20 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  // email: PropTypes.string.isRequired,
+  dispatchFazerLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchFazerLogin: (userEmail) => dispatch(fazerLogin(userEmail)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

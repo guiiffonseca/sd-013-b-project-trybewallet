@@ -5,10 +5,10 @@ const ESTADO_INICIAL = {
 
 const user = (state = ESTADO_INICIAL, action) => {
   switch (action.type) {
-  case 'LOGIN':
+  case 'FAZER_LOGIN':
     return {
       ...state,
-      email: action.email,
+      email: action.payload,
     };
 
   default:
