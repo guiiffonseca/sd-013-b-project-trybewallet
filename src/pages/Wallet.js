@@ -214,11 +214,7 @@ class Wallet extends React.Component {
             <br />
             { this.renderTags(tag) }
             <br />
-            <input
-              type="button"
-              value="Adicionar despesa"
-              onClick={ this.addExpenses }
-            />
+            <input type="button" value="Adicionar despesa" onClick={ this.addExpenses } />
           </form>
           <Table />
         </main>
