@@ -50,8 +50,8 @@ class Wallet extends React.Component {
     // const { id, value, description, method, currency, tag, exchangeRates } = this.state;
 
     getExpensesData(this.state);
-    this.sunTotalExpenses();
 
+    // Forma antiga que funcionou por um tempo
     // const payload = {
     //     id,
     //     value,
@@ -155,24 +155,51 @@ class Wallet extends React.Component {
   }
 
   sunTotalExpenses() {
-    const { expenses } = this.state;
-    console.log('espenses ' + expenses);
-    const sum = 0;
-    if (expenses != undefined) {
-      sum = expenses.map((item) => {
-        if (item.currency === item.exchangeRates.code) {
-          return item.value * item.exchangeRates.ask;
-        }
+    const { expenses } = this.props;
+    let sum = 0;
+
+    if (expenses.length > 0) {
+      // source: baseado no code review de @raugusto96
+      expenses.forEach(({ value, currency, exchangeRates }) => {
+        sum += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
       });
+
+      // tentativas frustadas abaixo:
+      // console.log('expenses via props : ' + expenses[0].currency);
+      // const exchangeKeys = Object.entries(expenses[0].exchangeRates);
+      // console.log('exchangeKeys: ' + typeof(exchangeKeys));
+      // exchangeKeys = [USD, BRL]
+
+      // const exchangeRatesArr = expenses.map((item) => item.exchangeRates);
+      // console.log('exchangeRatesArr:  ' + exchangeRatesArr);
+      
+      // expenses.currency === exchangeRatesArr.code
+      //    expenses.value * exchangeRatesArr.ask
+
+      // expenses.map((item) => {
+      //   console.log('item: ' + item.currency);
+      //   exchangeRatesArr.filter((rate) => {
+      //     console.log('rate: ' + rate.code);
+      //     if (item.currency === rate.code) {
+      //       sum = item.value * rate.ask;
+      //     }
+      //   }); // filter
+      // }); // map expenses
+
+
+      // sum = expenses.map((item) => {
+      //   if (item.currency === item.exchangeRates.code) {
+      //     return item.value * item.exchangeRates.ask;
+      //   }
+      // }
     }
 
-    return console.log(sum);
+    return sum.toFixed(2);
   }
 
   render() {
     const { email } = this.props;
     const { value, description, currency, method, tag } = this.state;
-    console.log(this.state);
     return (
       <div>
         <header>
@@ -181,7 +208,7 @@ class Wallet extends React.Component {
           </div>
           <div>
             Total despesa: R$
-            <span data-testid="total-field">0</span>
+            <span data-testid="total-field">{ this.sunTotalExpenses() }</span>
           </div>
           <div>
             Câmbio atual:
@@ -218,6 +245,7 @@ const mapStateToProps = (state) => ({
   // essa propriedade email tem que ter o mesmo nome da props
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 // escrevendo os dados no estado global
