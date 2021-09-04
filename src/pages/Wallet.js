@@ -66,7 +66,7 @@ class Wallet extends React.Component {
   renderPaymentMethod(method) {
     return (
       <label htmlFor="input-method">
-        Forma de Pagamento:
+        Método de pagamento
         <select
           id="input-method"
           name="method"
@@ -85,7 +85,7 @@ class Wallet extends React.Component {
   renderTags(tag) {
     return (
       <label htmlFor="input-tag">
-        Tag:
+        Tag
         <select
           id="input-tag"
           name="tag"
@@ -107,7 +107,7 @@ class Wallet extends React.Component {
 
     return (
       <label htmlFor="input-currency">
-        Moeda:
+        Moeda
         <select
           id="input-currency"
           name="currency"
