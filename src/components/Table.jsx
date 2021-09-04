@@ -45,24 +45,24 @@ class Table extends React.Component {
           expenses.length <= 0 ? desc
             : (expenses.map(({ description, tag, method,
               value, exchangeRates, currency }, index) => (
-              <tr key={ index }>
-                <td>{ description }</td>
-                <td>{ tag }</td>
-                <td>{ method }</td>
-                <td>{ value }</td>
-                <td>{ exchangeRates[currency].name }</td>
-                <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
-                <td>{ (parseFloat(exchangeRates[currency].ask) * value).toFixed(2) }</td>
-                <td>Real</td>
-                <td>
-                  <input
-                    type="button"
-                    value="Deletar"
-                    data-testid="delete-btn"
-                    onClick={ this.delete }
-                  />
-                </td>
-              </tr>
+                <tr key={ index }>
+                  <td>{ description }</td>
+                  <td>{ tag }</td>
+                  <td>{ method }</td>
+                  <td>{ value }</td>
+                  <td>{ exchangeRates[currency].name }</td>
+                  <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
+                  <td>{ (parseFloat(exchangeRates[currency].ask) * value).toFixed(2) }</td>
+                  <td>Real</td>
+                  <td>
+                    <input
+                      type="button"
+                      value="Deletar"
+                      data-testid="delete-btn"
+                      onClick={ this.delete }
+                    />
+                  </td>
+                </tr>
             )))
         }
       </table>
