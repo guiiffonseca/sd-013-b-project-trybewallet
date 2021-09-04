@@ -6,7 +6,7 @@ class Table extends React.Component {
     super();
 
     this.state = {
-      description: '',
+      desc: '',
     };
 
     this.delete = this.delete.bind(this);
@@ -25,7 +25,7 @@ class Table extends React.Component {
 
   render() {
     const { expenses } = this.props;
-    const { description } = this.state;
+    const { desc } = this.state;
     return (
       <table>
         <tr>
@@ -41,19 +41,26 @@ class Table extends React.Component {
         </tr>
         {
           // esse ternário está aqui apenas para a aplicação não quebrar no primeiro render
-          expenses.length <= 0 ? description
-            : ( expenses.map((expense, index) => (
-                <tr key={index}>
-                  <td>{expense.description}</td>
-                  <td>{expense.tag}</td>
-                  <td>{expense.method}</td>
-                  <td>{expense.value}</td>
-                  <td>{expense.exchangeRates[expense.currency].name}</td>
-                  <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-                  <td>{(parseFloat(expense.exchangeRates[expense.currency].ask) * expense.value).toFixed(2)}</td>
-                  <td>Real</td>
-                  <td><input type="button" value="Deletar" data-testid="delete-btn" onClick={this.delete} /></td>
-                </tr>
+          expenses.length <= 0 ? desc
+            : (expenses.map(({ description, tag, method, value, exchangeRates, currency }, index) => (
+              <tr key={ index }>
+                <td>{ description }</td>
+                <td>{ tag }</td>
+                <td>{ method }</td>
+                <td>{ value }</td>
+                <td>{ exchangeRates[currency].name }</td>
+                <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>{ (parseFloat(exchangeRates[currency].ask) * value).toFixed(2) }</td>
+                <td>Real</td>
+                <td>
+                  <input
+                    type="button"
+                    value="Deletar"
+                    data-testid="delete-btn"
+                    onClick={ this.delete }
+                  />
+                </td>
+              </tr>
             )))
         }
       </table>
