@@ -24,7 +24,7 @@ class Wallet extends React.Component {
     // retorno += Valor;
     // this.setState(({
     //   despesas: retorno,
-    // }));
+    // }));ss
     console.log(Valor);
     this.setState(({
       despesas: '187.12',
