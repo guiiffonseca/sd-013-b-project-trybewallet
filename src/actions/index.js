@@ -1,37 +1,46 @@
 import fetchAPI from '../servises/api';
 
-// Coloque aqui suas actions
 export const GET_EMAIL = 'GET_EMAIL';
-export const GET_WALLET = 'GET_WALLET';
-export const GET_API = 'GET_API';
-
-export const actionLogin = (email) => ({
-  type: 'LOGIN',
-  payload: {
-    email,
-  },
-});
+export const GET_CURRENCIES = 'GET_WALLET';
+export const GET_EXPENSES = 'GET_AWESOMEAPI';
+export const GET_NEW_EXPENSES = 'SET_NEW_EXPENSES';
 
 export const getEmail = (email) => ({
   type: GET_EMAIL,
   email,
 });
-export const getWallet = (payload) => ({
-  type: GET_WALLET,
-  payload,
-});
-
-export const getApi = (currencies) => ({
-  type: GET_API,
+export const getCurrencies = (currencies) => ({
+  type: GET_CURRENCIES,
   currencies,
 });
+export const getExpenses = (newExpenses) => ({
+  type: GET_EXPENSES,
+  newExpenses,
+});
 
-export const getFetchApi = () => async (dispatch) => {
+export const getNewExpenses = (newArrayExpenses) => ({
+  type: GET_NEW_EXPENSES,
+  newArrayExpenses,
+});
+
+export const getFetchCurrencies = () => async (dispatch) => {
   try {
     const response = await fetchAPI();
-    const Array = Object.entries(response)
-      .filter((item) => item[0] !== 'USDT');
-    dispatch(getApi(Array));
+    const array = Object.keys(response)
+      .filter((item) => item !== 'USDT');
+    dispatch(getCurrencies(array));
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const getFetchExpenses = (expenses) => async (dispatch) => {
+  try {
+    const response = await fetchAPI();
+    const newExpenses = {
+      ...expenses,
+      exchangeRates: response,
+    };
+    dispatch(getExpenses(newExpenses));
   } catch (error) {
     console.error(error);
   }
