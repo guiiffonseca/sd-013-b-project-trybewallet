@@ -1,6 +1,9 @@
 import searchCurrency from '../service/API';
 
 export const SET_USERS = 'SET_USERS';
+
+export const SET_EXPENSES = 'SET_EXPENSES';
+
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
@@ -8,6 +11,13 @@ export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 export const setUserValue = (payload) => (
   {
     type: SET_USERS,
+    payload,
+  }
+);
+
+export const setExpenses = (payload) => (
+  {
+    type: SET_EXPENSES,
     payload,
   }
 );

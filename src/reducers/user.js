@@ -8,7 +8,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_USERS:
     return { ...state,
-      ...action.payload,
+      email: action.payload,
     };
   default:
     return state;

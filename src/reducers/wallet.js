@@ -1,9 +1,14 @@
-import { GET_CURRENCY, GET_CURRENCY_SUCCESS, GET_CURRENCY_ERROR } from '../actions/index';
+import {
+  SET_EXPENSES,
+  GET_CURRENCY,
+  GET_CURRENCY_SUCCESS,
+  GET_CURRENCY_ERROR,
+} from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: {},
   expenses: [],
-  arrayCurrency: ['n', 'f'],
+  arrayCurrency: [],
   loading: false,
   error: null,
 };
@@ -14,9 +19,13 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return { ...state,
       loading: true,
     };
+  case SET_EXPENSES:
+    return { ...state,
+      expenses: action.payload,
+    };
   case GET_CURRENCY_SUCCESS:
     return { ...state,
-      currencies: action.payload,
+      currencies: [action.payload],
       loading: false,
     };
   case GET_CURRENCY_ERROR:
