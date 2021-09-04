@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Table extends React.Component {
   constructor() {
@@ -42,7 +43,8 @@ class Table extends React.Component {
         {
           // esse ternário está aqui apenas para a aplicação não quebrar no primeiro render
           expenses.length <= 0 ? desc
-            : (expenses.map(({ description, tag, method, value, exchangeRates, currency }, index) => (
+            : (expenses.map(({ description, tag, method,
+              value, exchangeRates, currency }, index) => (
               <tr key={ index }>
                 <td>{ description }</td>
                 <td>{ tag }</td>
@@ -71,5 +73,9 @@ class Table extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+Table.propTypes = {
+  expenses: PropTypes.objectOf({}).isRequired,
+};
 
 export default connect(mapStateToProps)(Table);
