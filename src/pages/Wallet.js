@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import payments from '../data/payments';
 import tags from '../data/tags';
 import { getCurrencyThunk, getExpensesDataThunk } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -219,6 +220,7 @@ class Wallet extends React.Component {
               onClick={ this.addExpenses }
             />
           </form>
+          <Table />
         </main>
       </div>
     );
