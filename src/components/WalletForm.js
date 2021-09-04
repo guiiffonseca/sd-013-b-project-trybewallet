@@ -1,6 +1,41 @@
 import React from 'react';
 
 export default class WalletForm extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      coins: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getCoins();
+  }
+
+  async getCoins() {
+    const coinsAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const resolve = await coinsAPI.json();
+    const coins = Object.keys(resolve).filter((coin) => coin !== 'USDT');
+    this.setState({
+      coins,
+    });
+  }
+
+  renderCoinsOptions() {
+    const { coins } = this.state;
+    return (
+      coins.map((coin, index) => (
+        <option
+          key={ index }
+          value={ coin }
+        >
+          { coin }
+        </option>
+      ))
+    );
+  }
+
   render() {
     return (
       <form>
@@ -17,7 +52,7 @@ export default class WalletForm extends React.Component {
         <label htmlFor="coin">
           Moeda :
           <select name="coin" id="coin">
-            <option>BRL</option>
+            { this.renderCoinsOptions() }
           </select>
         </label>
 
