@@ -37,7 +37,7 @@ class Login extends React.Component {
     history.push('/carteira');
   }
 
-  // baseada no CR de @raugusto96
+  // source: baseada no CR de @raugusto96
   enableToComeInButton() {
     const { email, pass } = this.state;
     const emailRegExValidation = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
