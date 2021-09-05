@@ -1,4 +1,4 @@
-import { COIN_INFO, EXPENSES, TOTAL } from '../actions';
+import { ADD_TOTAL, COIN_INFO, EXPENSES, DELETE_ITEM } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -12,9 +12,15 @@ const wallet = (state = INITIAL_STATE, action) => {
     return { ...state, currencies: action.payload };
   case EXPENSES:
     return { ...state, expenses: [...state.expenses, action.payload] };
-  case TOTAL: {
+  case ADD_TOTAL: {
     const tot = state.total + action.payload;
     return { ...state, total: parseFloat(tot.toFixed(2)) };
+  }
+  case DELETE_ITEM: {
+    return {
+      ...state,
+      expenses: state.expenses.filter((item) => item.id !== action.payload.id),
+    };
   }
   default:
     return state;

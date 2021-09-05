@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class WalletHeader extends React.Component {
+class WalletHeader extends React.Component {
   render() {
     const { user: { email }, total, moeda } = this.props;
     return (
@@ -26,11 +27,20 @@ export default class WalletHeader extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  user: state.user,
+  total: state.wallet.expenses.reduce((acc, { value, currency, exchangeRates }) => (
+    acc + parseFloat(value * exchangeRates[currency].ask)
+  ), 0).toFixed(2),
+});
+
+export default connect(mapStateToProps)(WalletHeader);
+
 WalletHeader.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,
-  total: PropTypes.number,
+  total: PropTypes.string,
   moeda: PropTypes.string.isRequired,
 };
 

@@ -50,12 +50,12 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { user, wallet } = this.props;
+    const { wallet } = this.props;
     const { moeda } = this.state;
     return (
       <div>
         <header>
-          <WalletHeader total={ wallet.total } moeda={ moeda } user={ user } />
+          <WalletHeader moeda={ moeda } />
           <br />
         </header>
         <WalletForm
@@ -63,7 +63,7 @@ class Wallet extends React.Component {
           onChange={ this.handleChange }
           onClick={ this.handleButton }
         />
-        <WalletTable wallet={ wallet } />
+        <WalletTable />
       </div>
     );
   }
