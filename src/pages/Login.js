@@ -77,6 +77,7 @@ class Login extends React.Component {
               Entrar
             </button>
           </Link>
+          <expenseForms />
         </form>
       </div>);
   }
