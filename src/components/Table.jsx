@@ -22,16 +22,11 @@ class Table extends React.Component {
   /** closest()
    * O método Element.closest() retorna o ancestral mais próximo, em relação ao elemento atual, que possui o
    * seletor fornecido como parâmetro, neste caso o 'tr'. Caso não exista um ancestral o método retorna null.
-   * Lembrando que o event é passado de forma automática e dentro dele temos o 'target' */
+   * Lembrando que o event é passado de forma automática e dentro dele temos o 'target'
+   * Não está sendo mais usada mas fica de aprendizado
+   * */
   delete({ target }) {
     target.closest('tr').remove();
-    // captura tds as trs e manda para a expenses
-    // arr = [tr, tr, tr]
-    // expenses: [{ arr }] X
-    // capturar o conteudo de cada td
-    // manda esse conteudo pra cada chave da expense
-    // td = moeda
-    // expenses: [{ moeda: td }]
   }
 
   render() {
