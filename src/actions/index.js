@@ -20,6 +20,7 @@ export const expensesData = (payload) => ({
   payload, // expenses
 });
 
+// getCurrencySucess
 export const getCurrency = (payload) => ({
   type: GET_CURRENCY,
   payload,
@@ -30,23 +31,12 @@ export const deleteExpense = (payload) => ({
   payload,
 });
 
-// export const getExchangeRates = (payload) => ({
-//   type: GET_EXCHANGE_RATES,
-//   payload,
-// });
-
 export const getCurrencyThunk = () => (dispatch) => {
   fetchURL()
     // captura a response (resposta) no then(), que é próprio objeto
     .then((object) => {
       // nescessário salvar esse object (response) no estado global
       delete object.USDT;
-
-      // recebe o objeto inteiro
-      // const payload = object;
-
-      // recebe somente as chaves do obj
-      // const keysCurrency = Object.keys(object);
 
       // recebe todos os .code do objeto (object), a partir de cada chave.
       // Ex: { USD { code: USD }, BRL { code: BRL }, }
