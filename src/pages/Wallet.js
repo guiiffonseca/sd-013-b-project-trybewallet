@@ -6,17 +6,16 @@ import { setMoedas as setMoedasAction } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { setMoedas, moedas } = this.props;
+    const { setMoedas } = this.props;
 
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
       .then((data) => setMoedas(data));
-
-    delete moedas.USDT;
   }
 
   render() {
-    const { email } = this.props;
+    const { email, moedas } = this.props;
+    delete moedas.USDT;
     return (
       <>
         <header>

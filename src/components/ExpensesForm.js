@@ -6,7 +6,6 @@ import SelectOptions from './SelectOptions';
 class ExpenseForms extends React.Component {
   render() {
     const { moedas } = this.props;
-    delete moedas.USDT;
     const tagOptionst = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const currencyOptions = Object.keys(moedas);
     const expenseFormsOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
