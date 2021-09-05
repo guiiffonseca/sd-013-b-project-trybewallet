@@ -14,8 +14,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, moedas } = this.props;
-    delete moedas.USDT;
+    const { email } = this.props;
+
     return (
       <>
         <header>

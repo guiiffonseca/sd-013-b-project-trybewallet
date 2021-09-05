@@ -8,6 +8,7 @@ class ExpenseForms extends React.Component {
     const { moedas } = this.props;
     const tagOptionst = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const currencyOptions = Object.keys(moedas);
+    const cleanArray = currencyOptions.filter((crr) => crr !== 'USDT');
     const expenseFormsOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
       <form>
@@ -22,7 +23,7 @@ class ExpenseForms extends React.Component {
         <label htmlFor="currency">
           Moeda
           <select name="currency">
-            {currencyOptions.map((crr) => <SelectOptions info={ crr } key={ crr } />) }
+            {cleanArray.map((crr) => <SelectOptions info={ crr } key={ crr } />) }
           </select>
         </label>
         <label htmlFor="paymentMethod">
