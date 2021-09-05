@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteItem } from '../actions';
 
 class WalletTable extends React.Component {
   constructor(props) {
@@ -10,7 +9,7 @@ class WalletTable extends React.Component {
   }
 
   makeTable(expenses) {
-    const { deleteExpense } = this.props;
+    const { deleteItem } = this.props;
     if (expenses.length) {
       return expenses.map((item) => (
         <tr key={ item.id }>
@@ -45,7 +44,7 @@ class WalletTable extends React.Component {
             <button
               type="button"
               data-testid="delete-btn"
-              onClick={ () => deleteExpense(item) }
+              onClick={ () => deleteItem(item) }
             >
               Deletar
             </button>
@@ -84,14 +83,10 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (id) => dispatch(deleteItem(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
+export default connect(mapStateToProps)(WalletTable);
 
 WalletTable.propTypes = {
-  deleteExpense: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
   wallet: PropTypes.shape({
     expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
