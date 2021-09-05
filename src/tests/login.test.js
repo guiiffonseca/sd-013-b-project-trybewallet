@@ -31,7 +31,7 @@ describe('1 - Crie uma página inicial de login com os seguintes campos e caract
     renderWithRouterAndStore(<App />, '/');
 
     const button = screen.getByText(/Entrar/i);
-    expect(button).toBeInTheDocument();
+    expect(button).toBeInTheDocument()
   });
 });
 
