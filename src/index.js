@@ -5,18 +5,14 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Wallet from './pages/Wallet';
 import store from './store';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={ store }>
-      <Switch>
-        <Route exact path="/wallet" component={ Wallet } />
-        <Route exact path="/" component={ App } />
-      </Switch>
-    </Provider>
-  </BrowserRouter>,
+  <Provider store={ store }>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root'),
 );
 

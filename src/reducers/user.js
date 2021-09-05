@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
   email: '',
+  userName: '',
   logado: false,
 };
 
@@ -10,7 +11,6 @@ function user(state = INITIAL_STATE, action) {
     return { ...state, email: action.payload };
   case 'SET_LOGGED':
     return { ...state, logado: true };
-
   default:
     return state;
   }
