@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense as deleteExpenseAction } from '../actions';
 
 class Table extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
+    const { expenses } = this.props;
     this.state = {
       desc: '',
+      ...expenses,
     };
 
     this.delete = this.delete.bind(this);
@@ -22,10 +25,17 @@ class Table extends React.Component {
    * Lembrando que o event é passado de forma automática e dentro dele temos o 'target' */
   delete({ target }) {
     target.closest('tr').remove();
+    // captura tds as trs e manda para a expenses
+    // arr = [tr, tr, tr]
+    // expenses: [{ arr }] X
+    // capturar o conteudo de cada td
+    // manda esse conteudo pra cada chave da expense
+    // td = moeda
+    // expenses: [{ moeda: td }]
   }
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpense } = this.props;
     const { desc } = this.state;
     return (
       <table>
@@ -43,26 +53,25 @@ class Table extends React.Component {
         {
           // esse ternário está aqui apenas para a aplicação não quebrar no primeiro render
           expenses.length <= 0 ? desc
-            : (expenses.map(({ description, tag, method,
-              value, exchangeRates, currency }, index) => (
-                <tr key={ index }>
-                  <td>{ description }</td>
-                  <td>{ tag }</td>
-                  <td>{ method }</td>
-                  <td>{ value }</td>
-                  <td>{ exchangeRates[currency].name }</td>
-                  <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
-                  <td>{ (parseFloat(exchangeRates[currency].ask) * value).toFixed(2) }</td>
-                  <td>Real</td>
-                  <td>
-                    <input
-                      type="button"
-                      value="Deletar"
-                      data-testid="delete-btn"
-                      onClick={ this.delete }
-                    />
-                  </td>
-                </tr>
+            : (expenses.map(({ description, tag, method, value, exchangeRates, currency }, index) => (
+              <tr key={ index }>
+                <td>{ description }</td>
+                <td>{ tag }</td>
+                <td>{ method }</td>
+                <td>{ value }</td>
+                <td>{ exchangeRates[currency].name }</td>
+                <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>{ (parseFloat(exchangeRates[currency].ask) * value).toFixed(2) }</td>
+                <td>Real</td>
+                <td>
+                  <input
+                    type="button"
+                    value="Deletar"
+                    data-testid="delete-btn"
+                    onClick={ () => deleteExpense(index) }
+                  />
+                </td>
+              </tr>
             )))
         }
       </table>
@@ -74,8 +83,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (index) => dispatch(deleteExpenseAction(index)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.objectOf({}).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -6,6 +6,7 @@ export const USER_EMAIL = 'USER_EMAIL';
 export const EXPENSES_DATA = 'EXPENSES_DATA';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_EXCHANGE_RATES = 'EXCHANGE_RATES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 // ACTIONS CREATOR
 export const userEmail = (payload) => ({
@@ -13,14 +14,19 @@ export const userEmail = (payload) => ({
   payload,
 });
 
-// setExpensesData
+// setExpensesData | porque estou enviado os dados para o estado
 export const expensesData = (payload) => ({
   type: EXPENSES_DATA,
-  payload,
+  payload, // expenses
 });
 
 export const getCurrency = (payload) => ({
   type: GET_CURRENCY,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 

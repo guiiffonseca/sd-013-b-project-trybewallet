@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { GET_CURRENCY, EXPENSES_DATA } from '../actions/index';
+import { GET_CURRENCY, EXPENSES_DATA, DELETE_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -20,6 +20,14 @@ function wallet(state = INITIAL_STATE, action) {
         ...action.payload,
         id: state.expenses.length,
       }],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses.slice(0, action.payload), // o payload é o index
+        ...state.expenses.slice(action.payload + 1, state.expenses.length),
+      ],
     };
   // case GET_EXCHANGE_RATES:
   //   return {
