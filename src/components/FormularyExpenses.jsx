@@ -6,13 +6,19 @@ class FormularyExpenses extends React.Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
+      currency: [],
       method: '',
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderInput = this.renderInput.bind(this);
     this.renderSelect = this.renderSelect.bind(this);
+    this.optionsCurrency = this.optionsCurrency.bind(this);
+  }
+
+  componentDidMount() {
+    this.requisitionApi();
+    this.optionsCurrency();
   }
 
   handleChange({ target }) {
@@ -20,6 +26,30 @@ class FormularyExpenses extends React.Component {
     return this.setState({
       [name]: value,
     });
+  }
+
+  async requisitionApi() {
+    const request = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const response = await request.json();
+    const currency = Object.keys(response).filter((coin) => coin);
+    currency.splice(1, 1);
+    this.setState({
+      currency,
+    });
+  }
+
+  optionsCurrency() {
+    const { currency } = this.state;
+    const options = currency.map((moeda) => (
+      <option
+        key={ moeda }
+        id={ moeda }
+        value={ moeda }
+      >
+        { moeda }
+      </option>
+    ));
+    return options;
   }
 
   renderInput() {
@@ -60,9 +90,9 @@ class FormularyExpenses extends React.Component {
             value={ currency }
             name="currency"
             id="currency"
-            onChange={ this.handleChange }
+            // onChange={ this.handleChange }
           >
-            <option value="ARS">ARS</option>
+            {this.optionsCurrency()}
           </select>
         </label>
         <label htmlFor="method">
