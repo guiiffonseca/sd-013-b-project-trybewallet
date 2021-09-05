@@ -2,12 +2,13 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  moedas: {},
 };
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'TESTE':
-    return state;
+  case 'SET_MOEDAS':
+    return { ...state, moedas: action.payload };
   default:
     return state;
   }

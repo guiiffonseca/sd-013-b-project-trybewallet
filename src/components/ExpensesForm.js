@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import SelectOptions from './SelectOptions';
 
 class ExpenseForms extends React.Component {
   render() {
+    const { moedas } = this.props;
+    delete moedas.USDT;
     const tagOptionst = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const currencyOptions = Object.keys(moedas);
     const expenseFormsOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const currencyOptions = ['test', 'test2'];
     return (
       <form>
         <label htmlFor="expense">
@@ -38,4 +42,12 @@ class ExpenseForms extends React.Component {
   }
 }
 
-export default ExpenseForms;
+const mapStateToProps = (state) => ({
+  moedas: state.wallet.moedas,
+});
+
+ExpenseForms.propTypes = {
+  moedas: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps)(ExpenseForms);
