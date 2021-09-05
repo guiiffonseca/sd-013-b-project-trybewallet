@@ -29,6 +29,8 @@ class WalletHeader extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  // Consultei o repositório do Rafael Nery para o cálculo do total.
+  // https://github.com/tryber/sd-013-b-project-trybewallet/blob/rafael-nery-machado-trybewallet-project/src/components/Header/index.jsx
   total: state.wallet.expenses.reduce((acc, { value, currency, exchangeRates }) => (
     acc + parseFloat(value * exchangeRates[currency].ask)
   ), 0).toFixed(2),

@@ -1,32 +1,27 @@
-import { ADD_TOTAL, COIN_INFO, EXPENSES, DELETE_ITEM, EDIT_ITEM } from '../actions';
+import { COIN_INFO, EXPENSES, DELETE_ITEM, EDIT_ITEM } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  total: 0,
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+const wallet = (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
   case COIN_INFO:
-    return { ...state, currencies: action.payload };
+    return { ...state, currencies: payload };
   case EXPENSES:
-    return { ...state, expenses: [...state.expenses, action.payload] };
-  case ADD_TOTAL: {
-    const tot = state.total + action.payload;
-    return { ...state, total: parseFloat(tot.toFixed(2)) };
-  }
+    return { ...state, expenses: [...state.expenses, payload] };
   case EDIT_ITEM: {
     return {
       ...state,
       expenses: state.expenses.map(
-        (item) => (item.id === action.payload.id ? action.payload : item),
+        (item) => (item.id === payload.id ? payload : item),
       ) };
   }
   case DELETE_ITEM: {
     return {
       ...state,
-      expenses: state.expenses.filter((item) => item.id !== action.payload.id),
+      expenses: state.expenses.filter(({ id }) => id !== payload.id),
     };
   }
   default:
