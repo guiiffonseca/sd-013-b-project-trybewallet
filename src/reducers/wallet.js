@@ -1,4 +1,4 @@
-import { ADD_TOTAL, COIN_INFO, EXPENSES, DELETE_ITEM } from '../actions';
+import { ADD_TOTAL, COIN_INFO, EXPENSES, DELETE_ITEM, EDIT_ITEM } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -15,6 +15,13 @@ const wallet = (state = INITIAL_STATE, action) => {
   case ADD_TOTAL: {
     const tot = state.total + action.payload;
     return { ...state, total: parseFloat(tot.toFixed(2)) };
+  }
+  case EDIT_ITEM: {
+    return {
+      ...state,
+      expenses: state.expenses.map(
+        (item) => (item.id === action.payload.id ? action.payload : item),
+      ) };
   }
   case DELETE_ITEM: {
     return {

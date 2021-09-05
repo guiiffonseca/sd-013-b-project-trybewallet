@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WalletHeader from './WalletHeader';
-import { deleteItem, fetchCoins, setExpenses } from '../actions';
+import { deleteItem, editItem, fetchCoins, setExpenses } from '../actions';
 import WalletForm from './WalletForm';
 import WalletTable from './WalletTable';
 
@@ -18,10 +18,13 @@ class Wallet extends React.Component {
         tag: 'Alimentação',
       },
       moeda: 'BRL',
+      isEditing: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleButton = this.handleButton.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.editItem = this.editItem.bind(this);
+    this.editClick = this.editClick.bind(this);
   }
 
   componentDidMount() {
@@ -39,33 +42,53 @@ class Wallet extends React.Component {
   }
 
   handleButton() {
-    const { sendExpenses } = this.props;
+    const { sendExpenses, wallet } = this.props;
     const { expense } = this.state;
+    sendExpenses(expense);
     this.setState((prevState) => ({
       expense: {
         ...prevState.expense,
-        id: prevState.expense.id + 1,
+        id: wallet.expenses.length + 1,
       } }),
     () => {
-      sendExpenses(expense);
     });
   }
 
   deleteItem(item) {
-    const { deleteExpense } = this.props;
+    const { deleteExpense, wallet } = this.props;
     this.setState((prevState) => ({
       expense: {
         ...prevState.expense,
-        id: prevState.expense.id - 1,
+        id: wallet.expenses.length - 1,
       } }),
     () => {
       deleteExpense(item);
     });
   }
 
+  editItem(item) {
+    this.setState({
+      expense: item,
+      isEditing: true });
+  }
+
+  editClick() {
+    const { expense } = this.state;
+    const { setEditedItem, wallet } = this.props;
+    setEditedItem(expense);
+    this.setState((prevState) => ({
+      ...prevState,
+      isEditing: false,
+      expense: {
+        ...prevState.expense,
+        id: wallet.expenses.length,
+      },
+    }));
+  }
+
   render() {
     const { wallet } = this.props;
-    const { moeda } = this.state;
+    const { moeda, isEditing, expense } = this.state;
     return (
       <div>
         <header>
@@ -76,8 +99,11 @@ class Wallet extends React.Component {
           wallet={ wallet }
           onChange={ this.handleChange }
           onClick={ this.handleButton }
+          editItem={ isEditing }
+          expense={ expense }
+          editClick={ this.editClick }
         />
-        <WalletTable deleteItem={ this.deleteItem } />
+        <WalletTable deleteItem={ this.deleteItem } editItem={ this.editItem } />
       </div>
     );
   }
@@ -92,6 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
   sendCoin: () => dispatch(fetchCoins()),
   sendExpenses: (expense) => dispatch(setExpenses(expense)),
   deleteExpense: (item) => dispatch(deleteItem(item)),
+  setEditedItem: (item) => dispatch(editItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -100,6 +127,7 @@ Wallet.propTypes = {
   deleteExpense: PropTypes.func.isRequired,
   sendCoin: PropTypes.func.isRequired,
   sendExpenses: PropTypes.func.isRequired,
+  setEditedItem: PropTypes.func.isRequired,
   user: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,

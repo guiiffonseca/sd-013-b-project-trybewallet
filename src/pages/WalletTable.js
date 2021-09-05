@@ -3,13 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class WalletTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.makeTable = this.makeTable.bind(this);
+  makeButton(item) {
+    const { deleteItem, editItem } = this.props;
+    return (
+      <>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ () => deleteItem(item) }
+        >
+          Deletar
+        </button>
+        <button
+          type="button"
+          data-testid="edit-btn"
+          onClick={ () => editItem(item) }
+        >
+          Editar
+        </button>
+      </>
+    );
   }
 
   makeTable(expenses) {
-    const { deleteItem } = this.props;
     if (expenses.length) {
       return expenses.map((item) => (
         <tr key={ item.id }>
@@ -41,13 +57,7 @@ class WalletTable extends React.Component {
             Real
           </td>
           <td>
-            <button
-              type="button"
-              data-testid="delete-btn"
-              onClick={ () => deleteItem(item) }
-            >
-              Deletar
-            </button>
+            {this.makeButton(item)}
           </td>
         </tr>
       ));
@@ -87,6 +97,7 @@ export default connect(mapStateToProps)(WalletTable);
 
 WalletTable.propTypes = {
   deleteItem: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   wallet: PropTypes.shape({
     expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,

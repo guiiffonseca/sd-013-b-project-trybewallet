@@ -5,11 +5,13 @@ export const COIN_INFO = 'COIN_INFO';
 export const EXPENSES = 'EXPENSES';
 export const ADD_TOTAL = 'ADD_TOTAL';
 export const DELETE_ITEM = 'DELETE_ITEM';
+export const EDIT_ITEM = 'EDIT_ITEM';
 
 export const setUserInfo = (payload) => ({
   type: USER_INFO, payload,
 });
 export const deleteItem = (payload) => ({ type: DELETE_ITEM, payload });
+export const editItem = (payload) => ({ type: EDIT_ITEM, payload });
 export const addTotal = (payload) => ({ type: ADD_TOTAL, payload });
 export const setCoins = (payload) => ({ type: COIN_INFO, payload });
 export const setWallet = (payload) => ({ type: EXPENSES, payload });

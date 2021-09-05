@@ -2,13 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class WalletForm extends React.Component {
+  makeButton(editItem) {
+    const { editClick, onClick } = this.props;
+    return (
+      editItem
+        ? <button type="button" onClick={ editClick }> Editar despesa </button>
+        : <button type="button" onClick={ onClick }> Adicionar Despesa </button>
+    );
+  }
+
+  makeDescription(callback) {
+    return (
+      <label htmlFor="desc">
+        Descrição:
+        <textarea
+          name="description"
+          id="desc"
+          style={ { verticalAlign: 'top' } }
+          onChange={ callback }
+        />
+      </label>
+    );
+  }
+
   render() {
-    const { wallet: { currencies }, onChange, onClick } = this.props;
+    const { expense: { value }, wallet: { currencies }, onChange, editItem } = this.props;
     return (
       <form>
         <label htmlFor="valor">
           Valor:
-          <input onChange={ onChange } name="value" type="number" id="valor" />
+          <input
+            value={ value }
+            onChange={ onChange }
+            name="value"
+            type="number"
+            id="valor"
+          />
         </label>
         {' '}
         <label htmlFor="moeda">
@@ -39,21 +68,21 @@ export default class WalletForm extends React.Component {
           </select>
         </label>
         {' '}
-        <label htmlFor="desc">
-          Descrição:
-          <textarea
-            name="description"
-            id="desc"
-            style={ { verticalAlign: 'top' } }
-            onChange={ onChange }
-          />
-        </label>
-        <button type="button" onClick={ onClick }> Adicionar Despesa </button>
+        {this.makeDescription(onChange)}
+        {this.makeButton(editItem)}
       </form>);
   }
 }
 
 WalletForm.propTypes = {
+  editClick: PropTypes.func.isRequired,
+  editItem: PropTypes.bool.isRequired,
+  expense: PropTypes.shape({
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   wallet: PropTypes.shape({
