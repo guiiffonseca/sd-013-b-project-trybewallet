@@ -3,25 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import WalletForm from '../components/WalletForm';
-
 import '../styles/wallet.css';
 
 class Wallet extends React.Component {
   render() {
     const { userEmail } = this.props;
-    console.log(userEmail);
     return (
       <div className="main-wallet-div">
         <div className="wallet-header">
           HEADER
           <div className="email-header">
-            <h3 data-testid="email-field">{userEmail}</h3>
+            <h5 data-testid="email-field">{userEmail}</h5>
           </div>
           <div className="total-value">
-            <h1 data-testid="total-field">0</h1>
+            <h5 data-testid="total-field">0</h5>
           </div>
           <div className="currency-field" data-testid="header-currency-field">
-            <h2>BRL</h2>
+            <h5>BRL</h5>
           </div>
         </div>
         <WalletForm props={ this.props } />

@@ -32,10 +32,9 @@ class LoginForm extends React.Component {
   }
 
   handleChange({ target }) {
-    this.inputFilter();
     this.setState({
       [target.id]: target.value,
-    });
+    }, () => this.inputFilter());
   }
 
   changeStateFilters() {
@@ -82,8 +81,21 @@ class LoginForm extends React.Component {
     }
   }
 
+  inputButton(activateButton) {
+    return (
+      <button
+        type="button"
+        disabled={ activateButton }
+        className="login-button"
+        onClick={ this.onClick }
+      >
+        Entrar
+      </button>
+    );
+  }
+
   render() {
-    const { loginError, activateButton } = this.state;
+    const { loginError, activateButton, inputEmail, inputLogin } = this.state;
     return (
       <div className={ loginError }>
         <div className="login-icon">
@@ -98,6 +110,7 @@ class LoginForm extends React.Component {
                 data-testid="email-input"
                 placeholder="E-mail"
                 maxLength="50"
+                value={ inputEmail }
                 className="pr-color input-form-base input-email"
                 onChange={ this.handleChange }
                 autoComplete="off"
@@ -111,6 +124,7 @@ class LoginForm extends React.Component {
                 maxLength="15"
                 id="inputLogin"
                 data-testid="password-input"
+                value={ inputLogin }
                 className="pr-color input-form-base input-password"
                 onChange={ this.handleChange }
                 placeholder="Senha"
@@ -119,14 +133,7 @@ class LoginForm extends React.Component {
             </label>
           </div>
           <div className="login-button-area">
-            <button
-              type="button"
-              disabled={ activateButton }
-              className="login-button"
-              onClick={ this.onClick }
-            >
-              Entrar
-            </button>
+            { this.inputButton(activateButton) }
           </div>
         </form>
       </div>

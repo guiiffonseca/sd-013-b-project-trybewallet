@@ -1,14 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { getCurrenciesThunk } from '../actions/index';
 
 class WalletForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      globalCurrencies: [],
+    };
+    this.insertOptions = this.insertOptions(this);
   }
-  componentDidMount(){
+
+  componentDidMount() {
+    this.getCurrenciesToState();
+  }
+
+  async getCurrenciesToState() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
+  insertOptions() {
+    // return { currencies.map((item, index) => <option key={ index }>{ item }</option>) };
   }
 
   render() {
+    const { globalCurrencies } = this.state;
     return (
       <div className="main-form-wallet">
         <form>
@@ -29,6 +47,9 @@ class WalletForm extends React.Component {
           <label htmlFor="input-currency">
             Moeda
             <select name="currency" id="input-currency">
+              { globalCurrencies.map((item, index) => (
+                <option key={ index } value={ item }>{ item }</option>
+              ))}
             </select>
           </label>
           <label htmlFor="input-payment">
@@ -55,4 +76,11 @@ class WalletForm extends React.Component {
   }
 }
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: (payload) => dispatch(getCurrenciesThunk(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

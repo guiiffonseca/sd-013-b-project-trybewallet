@@ -1,6 +1,27 @@
+import getCurrenciesFromApi from '../services/getCurrenciesFromApi';
+
 export const INPUT_USER = 'INPUT_USER';
 
-export const userLogin = (email) => ({
+export const userLogin = (emailPayload) => ({
   type: INPUT_USER,
-  payload: email,
+  payload: emailPayload,
 });
+
+export const GET_EXPENSES = 'GET_EXPENSES';
+export const expenses = (expensesPayload) => ({
+  type: GET_EXPENSES,
+  payload: expensesPayload,
+});
+
+export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const currencies = (payload) => ({
+  type: GET_CURRENCIES,
+  payload,
+});
+
+export const getCurrenciesThunk = () => async (dispatch) => {
+  const URL = 'https://economia.awesomeapi.com.br/json/all';
+  const arrayWithEntries = await getCurrenciesFromApi(URL);
+  const arrayWithout = arrayWithEntries.filter((ele) => ele !== 'USDT');
+  dispatch(currencies(arrayWithout));
+};
