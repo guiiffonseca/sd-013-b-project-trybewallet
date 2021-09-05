@@ -21,7 +21,12 @@ function wallet(state = INITIAL_STATE, action) {
         id: state.expenses.length,
       }],
     };
-  // explicação detalhada deste reducer ao final do documento
+  /**
+   * Sources:
+   *  code review raugusto96
+   *  https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-remove-an-item-from-an-array/301447
+   * Minha explicação detalhada deste reducer está ao final do documento
+  */
   case DELETE_EXPENSE:
     return {
       ...state,
