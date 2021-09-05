@@ -51,7 +51,12 @@ class LoginRightContainer extends React.Component {
     const { button } = this.state;
     return (
       <Link to="/carteira">
-        <button className="disabled-button" type="button" disabled={ button }>
+        <button
+          className="disabled-button"
+          type="button"
+          disabled={ button }
+          onClick={ this.handleButton }
+        >
           Entrar
         </button>
       </Link>
