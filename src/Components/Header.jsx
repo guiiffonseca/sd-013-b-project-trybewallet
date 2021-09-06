@@ -20,11 +20,12 @@ class Header extends Component {
   render() {
     const { email } = this.props;
     const totalDespesas = this.totalDespesas();
+    console.log(email);
     return (
       <header>
         <h1>TrybeWallet</h1>
         <p data-testid="email-field">
-          { `Email: ${email}` }
+          {email}
         </p>
         <p data-testid="total-field">
           Total de despesas:

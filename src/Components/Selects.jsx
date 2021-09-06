@@ -49,7 +49,7 @@ class Selects extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  moedas: state.wallet.moedas,
+  moedas: state.wallet.currencies,
 });
 
 Selects.propTypes = {
