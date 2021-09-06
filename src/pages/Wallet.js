@@ -29,7 +29,6 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.shape.isRequired,
   expenses: PropTypes.shape.isRequired,
 };
 
