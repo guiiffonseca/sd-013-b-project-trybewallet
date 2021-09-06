@@ -2,6 +2,6 @@ const INITIAL_STATE = {
   email: '',
 };
 
-const userReducer = (state = INITIAL_STATE, action) => state;
+const userReducer = (state = INITIAL_STATE) => state;
 
 export default userReducer;
