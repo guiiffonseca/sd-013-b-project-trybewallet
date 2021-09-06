@@ -1,12 +1,14 @@
+/* eslint-disable no-magic-numbers */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../../actions/index';
+import { deleteExpense, editExpense } from '../../actions/index';
 
 class ItemList extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.editExpense = this.editExpense.bind(this);
   }
 
   handleClick() {
@@ -15,21 +17,32 @@ class ItemList extends Component {
   }
 
   editExpense() {
-    console.log('Aoba!');
+    const { editListItem, id } = this.props;
+    editListItem(id);
+  }
+
+  editNumbers(number) {
+    const stringNumber = number.toString();
+    const stringNumberIndex = stringNumber.indexOf('.');
+    const numberEdited = stringNumber.slice(0, stringNumberIndex + 3);
+    return numberEdited;
   }
 
   render() {
     const { item:
       { value, description, method, currency,
         tag, exchangeRates } } = this.props;
+    const currencyIndex = exchangeRates[currency].name.indexOf('/');
+    const editedCurrency = exchangeRates[currency].name.slice(0, currencyIndex);
+
     return (
       <tr>
         <td>{description}</td>
         <td>{tag}</td>
         <td>{method}</td>
         <td>{value}</td>
-        <td>{exchangeRates[currency].name}</td>
-        <td>{(Number(exchangeRates[currency].ask)).toFixed(2)}</td>
+        <td>{editedCurrency}</td>
+        <td>{this.editNumbers(exchangeRates[currency].ask)}</td>
         <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
         <td>Real</td>
         <button
@@ -52,6 +65,7 @@ class ItemList extends Component {
 }
 
 ItemList.propTypes = {
+  editListItem: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   item: PropTypes.string.isRequired,
   removeListItem: PropTypes.func.isRequired,
@@ -59,6 +73,7 @@ ItemList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   removeListItem: (id) => (dispatch(deleteExpense(id))),
+  editListItem: (index) => (dispatch(editExpense(index))),
 });
 
 export default connect(null, mapDispatchToProps)(ItemList);

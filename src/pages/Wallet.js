@@ -29,7 +29,6 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { setCurrency } = this.props;
     const { state: { user, wallet: { currencies, expenses } } } = this.props;
     const currenciesArray = Object.keys(currencies);
     currenciesArray.splice(1, 1);
@@ -47,7 +46,7 @@ class Wallet extends React.Component {
           Câmbio:
           <span data-testid="header-currency-field">BRL</span>
         </p>
-        <Form currencies={ currenciesArray } currencyPrice={ setCurrency } />
+        <Form currencies={ currencies } />
       </>
     );
   }

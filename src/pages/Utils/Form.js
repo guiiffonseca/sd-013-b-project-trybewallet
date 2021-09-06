@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrencyThunk, listExpenses } from '../../actions/index';
+import { getSecondThunk, getThirdThunk } from '../../actions/index';
 import ItemList from './ItemList';
 
 class Form extends Component {
@@ -16,7 +16,11 @@ class Form extends Component {
       tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.createExpense = this.createExpense.bind(this);
+    this.createExpen = this.createExpen.bind(this);
+    this.formToFill = this.formToFill.bind(this);
+    this.tagLabel = this.tagLabel.bind(this);
+    this.labellabel = this.labellabel.bind(this);
+    this.expenseEdit = this.expenseEdit.bind(this);
   }
 
   FormInputText(value, text, name, handle) {
@@ -34,29 +38,31 @@ class Form extends Component {
     );
   }
 
-  tagLabel() {
+  tagLabel(tag) {
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Saúde', 'Transporte'];
     return (
       <label htmlFor="tag">
         Tag
         <select name="tag" id="tag" onChange={ this.handleChange }>
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Saúde">Saúde</option>
-          <option value="Transporte">Transporte</option>
+          {tags.map((type) => {
+            if (type === tag) return <option value={ type } selected>{type}</option>;
+            return <option key={ type } value={ type }>{type}</option>;
+          })}
         </select>
       </label>
     );
   }
 
-  labellabel() {
+  labellabel(method) {
+    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
       <label htmlFor="method">
         Método de Pagamento
         <select name="method" id="method" onChange={ this.handleChange }>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
+          {methods.map((met) => {
+            if (met === method) return <option value={ met } selected>{met}</option>;
+            return <option key={ met } value={ met }>{met}</option>;
+          })}
         </select>
       </label>);
   }
@@ -67,19 +73,17 @@ class Form extends Component {
     });
   }
 
-  createExpense() {
+  createExpen() {
     const { id } = this.state;
-    const { exchangeRates } = this.props;
     this.setState({
       id: id + 1,
     });
-    const { saveExpenses, attCurrencyThunk } = this.props;
-    attCurrencyThunk();
-    saveExpenses({ ...this.state, exchangeRates });
+    const { attCurrencyThunk } = this.props;
+    attCurrencyThunk({ ...this.state });
   }
 
-  render() {
-    const { currencies, expensesList } = this.props;
+  formToFill() {
+    const { currencies, expensesList: { editor } } = this.props;
     const { value, description } = this.state;
     return (
       <form>
@@ -105,7 +109,23 @@ class Form extends Component {
         </label>
         {this.tagLabel()}
         {this.labellabel()}
-        <button type="button" onClick={ this.createExpense }>Adicionar despesas</button>
+        { !editor
+          ? <button type="button" onClick={ this.createExpen }>Adicionar despesas</button>
+          : <button type="button" onClick={ this.expenseEdit }>Editar despesa</button>}
+      </form>
+    );
+  }
+
+  expenseEdit() {
+    const { editExpense, id } = this.props;
+    editExpense({ ...this.state, id });
+  }
+
+  render() {
+    const { expensesList } = this.props;
+    return (
+      <>
+        {this.formToFill()}
         <table>
           <tr>
             <th>Descrição</th>
@@ -118,11 +138,11 @@ class Form extends Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
-          {expensesList.length === 0 ? null : expensesList
+          {expensesList.expenses.length === 0 ? null : expensesList.expenses
             .map((item,
               index) => <ItemList item={ item } key={ index } id={ index } />)}
         </table>
-      </form>
+      </>
     );
   }
 }
@@ -131,22 +151,22 @@ Form.propTypes = {
   attCurrencyThunk: PropTypes.func.isRequired,
   currencies: PropTypes.shape({
     map: PropTypes.func.isRequired,
-  }).isRequired,
-  exchangeRates: PropTypes.string.isRequired,
+  }).isRequired, // exchangeRates: PropTypes.string.isRequired,
+  editExpense: PropTypes.func.isRequired,
   expenses: PropTypes.shape({
     map: PropTypes.func.isRequired,
   }).isRequired,
   expensesList: PropTypes.func.isRequired,
-  saveExpenses: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  expensesList: state.wallet.expenses,
-  exchangeRates: state.wallet.currencies,
+  expensesList: state.wallet,
+  id: state.wallet.idToEdit,
 });
 const mapDispatchToProps = (dispatch) => ({
-  saveExpenses: (value) => dispatch(listExpenses(value)),
-  attCurrencyThunk: () => dispatch(getCurrencyThunk()),
+  attCurrencyThunk: (value) => dispatch(getSecondThunk(value)),
+  editExpense: (editedExpense) => dispatch(getThirdThunk(editedExpense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
