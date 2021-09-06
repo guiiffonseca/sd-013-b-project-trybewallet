@@ -9,15 +9,17 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.calculateExpenses = this.calculateExpenses.bind(this);
+    this.getData = this.getData.bind(this);
+    this.addTag = this.addTag.bind(this);
     this.state = {
       isCalculating: true,
       data: {},
     };
   }
 
-  componentDidMount() {
+  async getData() {
     let { data } = this.state;
-    data = fetchAPI();
+    data = await fetchAPI();
     console.log(data);
   }
 
@@ -28,6 +30,21 @@ class Wallet extends React.Component {
       isCalculating: false,
     });
     return totalExpenses;
+  }
+
+  addTag() {
+    return (
+      <label htmlFor="tag">
+        Tag:
+        <select id="tag">
+          <option value="alimentacao">Alimentação</option>
+          <option value="lazer">Lazer</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="transporte">Transporte</option>
+          <option value="saude">Saúde</option>
+        </select>
+      </label>
+    );
   }
 
   render() {
@@ -47,6 +64,30 @@ class Wallet extends React.Component {
         <div data-testid="header-currency-field">
           BRL
         </div>
+        <form>
+          <label htmlFor="value">
+            Valor:
+            <input type="text" id="value" />
+          </label>
+          <label htmlFor="description">
+            Descrição:
+            <input type="text" id="description" />
+          </label>
+          <label htmlFor="select">
+            Moeda:
+            <select id="select">Select</select>
+          </label>
+          <label htmlFor="paymentMethod">
+            Método de pagamento:
+            <select id="paymentMethod">
+              <option value="credito">Cartão de crédito</option>
+              <option value="debito">Cartão de débito</option>
+              <option value="dinheiro">Dinheiro</option>
+            </select>
+          </label>
+          {this.addTag()}
+        </form>
+
       </header>
     );
   }
