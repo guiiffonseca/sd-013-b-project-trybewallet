@@ -26,7 +26,7 @@ class Header extends React.Component {
         <span
           data-testid="total-field"
         >
-          { this.sumExpenses() }
+          { this.sumExpenses().toFixed(2) }
         </span>
         <span data-testid="header-currency-field">BRL</span>
         <HeaderForm />

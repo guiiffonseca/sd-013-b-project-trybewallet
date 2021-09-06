@@ -1,3 +1,4 @@
 export default function getCambio(value, ask) {
-  return Math.round((value * ask) * 100) / 100;
+  const roundValue = Math.round((value * ask) * 100) / 100;
+  return roundValue;
 }

@@ -4,8 +4,11 @@ export const CURRENCY = 'CURRENCY';
 export const LOADING = 'LOADING';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const logged = (email) => ({ type: LOGGED_INFO, email });
+
+export const edit = (expense) => ({ type: EDIT_EXPENSE, expense });
 
 const loading = () => ({ type: LOADING });
 

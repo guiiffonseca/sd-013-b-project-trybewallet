@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getCambio from '../globalFuncs/CambioFunc';
 import Button from './Button';
-import { deleteExpense } from '../actions';
+import { deleteExpense, edit } from '../actions';
 
 class Table extends React.Component {
-  // getCurrencyName(name) {
-  //   const realName = name.slice(0, name.indexOf('/'));
-  //   return realName;
-  // }
+  handleEdit(id) {
+    const { expenses, editExpense } = this.props;
+    const newEdit = expenses.find((expense) => (
+      expense.id === id
+    ));
+    editExpense(newEdit);
+  }
 
   handleDelete(id) {
     const { expenses, remove } = this.props;
@@ -19,10 +22,15 @@ class Table extends React.Component {
     remove(newExpenses);
   }
 
+  roundValue(value) {
+    const roundNumber = Math.round(value * 100) / 100;
+    return roundNumber.toFixed(2);
+  }
+
   createTr(expense) {
     const { description, tag, method, value, currency, exchangeRates, id } = expense;
     const { ask, name } = exchangeRates[currency];
-
+    const roundAsk = this.roundValue(ask);
     return (
       <>
         <td>{ description }</td>
@@ -30,10 +38,15 @@ class Table extends React.Component {
         <td>{ method }</td>
         <td>{ value }</td>
         <td>{ name }</td>
-        <td>{ Math.round(ask * 100) / 100 }</td>
+        <td>{ roundAsk }</td>
         <td>{ getCambio(value, ask) }</td>
         <td>Real</td>
         <td>
+          <Button
+            text="Editar"
+            testId="edit-btn"
+            handleClick={ () => this.handleEdit(id) }
+          />
           <Button
             text="Deletar"
             handleClick={ () => this.handleDelete(id) }
@@ -80,11 +93,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (expenses) => dispatch(deleteExpense(expenses)),
+  editExpense: (expense) => dispatch(edit(expense)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   remove: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
