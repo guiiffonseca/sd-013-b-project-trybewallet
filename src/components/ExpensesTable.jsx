@@ -45,7 +45,7 @@ class ExpensesTable extends Component {
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
-            <td>{ Number(value).toFixed(2) }</td>
+            <td>{ value }</td>
             <td>{ exchangeRates[currency].name }</td>
             <td>{ this.getAsk(exchangeRates[currency])}</td>
             <td>{ this.convertValue(value, exchangeRates[currency]) }</td>
