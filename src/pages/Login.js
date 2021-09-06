@@ -49,32 +49,34 @@ class Login extends React.Component {
     const { disableButton } = this.state;
 
     return (
-      <div className="login-card">
-        <Input
-          testid="email-input"
-          type="email"
-          name="email"
-          id="emailIsValid"
-          label="E-mail"
-          change={ this.handleChange }
-        />
+      <main className="login-main main">
+        <div className="login-card">
+          <Input
+            testid="email-input"
+            type="email"
+            name="email"
+            id="emailIsValid"
+            label="E-mail"
+            change={ this.handleChange }
+          />
 
-        <Input
-          testid="password-input"
-          type="password"
-          name="password"
-          id="passwordIsValid"
-          label="Password"
-          change={ this.handleChange }
-          minLength={ 6 }
-        />
+          <Input
+            testid="password-input"
+            type="password"
+            name="password"
+            id="passwordIsValid"
+            label="Password"
+            change={ this.handleChange }
+            minLength={ 6 }
+          />
 
-        <Button
-          label="Entrar"
-          disable={ disableButton }
-          click={ this.handleLogin }
-        />
-      </div>
+          <Button
+            label="Entrar"
+            disable={ disableButton }
+            click={ this.handleLogin }
+          />
+        </div>
+      </main>
     );
   }
 }
