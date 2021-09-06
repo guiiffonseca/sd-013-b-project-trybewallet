@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Inputs from './Inputs';
-import { getCurrencie, getExpenses } from '../actions';
+import { getCurrencie, getAddExpense } from '../actions';
 
 class WalletForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       id: 0,
       valor: 0,
       descricao: '',
-      moeda: '',
+      moeda: 'USD',
       pagamento: '',
       categoria: '',
     };
@@ -101,7 +101,7 @@ WalletForm.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(getCurrencie()),
-  setExpenses: (value) => dispatch(getExpenses(value)),
+  setExpenses: (value) => dispatch(getAddExpense(value)),
 });
 
 const mapStateToProps = (state) => ({

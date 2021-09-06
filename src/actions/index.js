@@ -38,7 +38,17 @@ export const getCurrencie = () => async (dispatch) => {
     const response = getApi();
     const currencies = await response;
     delete currencies.USDT;
-    console.log();
     dispatch(currenciesSuccess(Object.keys(currencies)));
   } catch (err) { console.log(err, 'ola'); }
+};
+
+export const getAddExpense = (state) => async (dispatch) => {
+  try {
+    const response = await getApi();
+    const exchangeRates = response;
+    console.log(exchangeRates);
+    dispatch(getExpenses({ ...state, exchangeRates }));
+  } catch (err) {
+    console.log(err);
+  }
 };

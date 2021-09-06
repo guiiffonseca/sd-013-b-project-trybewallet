@@ -5,8 +5,7 @@ import WalletFrom from '../component/WalletForm';
 
 class Wallet extends React.Component {
   render() {
-    const { email, currencies, expenses } = this.props;
-    console.log(currencies);
+    const { email, expenses } = this.props;
     return (
       <>
         <header>
