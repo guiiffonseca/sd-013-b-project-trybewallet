@@ -13,6 +13,7 @@ function user(state = INITIAL_STATE, action) {
       ...state,
       email: action.payload.email,
     };
+
   default:
     return state;
   }

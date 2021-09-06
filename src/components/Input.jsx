@@ -35,7 +35,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   testid: '',
-  minLength: 1,
+  minLength: 0,
   name: '',
   step: '1',
 };

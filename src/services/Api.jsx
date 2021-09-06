@@ -1,4 +1,4 @@
-export async function getCurrency() {
+export async function fetchCurrency() {
   const endpoint = 'https://economia.awesomeapi.com.br/json/all';
 
   return fetch(endpoint)
@@ -6,6 +6,13 @@ export async function getCurrency() {
     .then((response) => response);
 }
 
-export async function func() {
-  return 'a';
-}
+export const x = () => {
+  // const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+
+  // fetch(endpoint)
+  //   .then((response) => (
+  //     response
+  //       .json()
+  //       .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
+  //   ));
+};

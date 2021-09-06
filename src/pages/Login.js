@@ -10,9 +10,8 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      // password: '',
-      validEmail: false,
-      validPassword: false,
+      emailIsValid: false,
+      passwordIsValid: false,
       disableButton: true,
     };
 
@@ -22,24 +21,20 @@ class Login extends React.Component {
   }
 
   enableOrDisableButton() {
-    const { validEmail, validPassword } = this.state;
+    const { emailIsValid, passwordIsValid } = this.state;
 
     this.setState({
-      disableButton: (!validEmail || !validPassword),
+      disableButton: (!emailIsValid || !passwordIsValid),
     });
   }
 
   handleChange({ target }) {
-    console.log(`MIN LENGTH: ${target.minLength}`);
-    console.log(`CURRENT: ${target.value.length}`);
-    console.log(`VALID: ${target.checkValidity()}`);
-
     this.setState({
       [target.name]: target.value,
       [target.id]: target.checkValidity(),
+    }, () => {
+      this.enableOrDisableButton();
     });
-
-    this.enableOrDisableButton();
   }
 
   handleLogin() {
@@ -59,7 +54,7 @@ class Login extends React.Component {
           testid="email-input"
           type="email"
           name="email"
-          id="validEmail"
+          id="emailIsValid"
           label="E-mail"
           change={ this.handleChange }
         />
@@ -68,7 +63,7 @@ class Login extends React.Component {
           testid="password-input"
           type="password"
           name="password"
-          id="validPassword"
+          id="passwordIsValid"
           label="Password"
           change={ this.handleChange }
           minLength={ 6 }
