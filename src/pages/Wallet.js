@@ -34,7 +34,6 @@ Wallet.propTypes = {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
-  // totalField: state.
 });
 
 export default connect(mapStateToProps)(Wallet);

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+
 import { getCurrenciesThunk } from '../actions';
 
 class WalletForm extends React.Component {
@@ -88,6 +90,10 @@ class WalletForm extends React.Component {
     );
   }
 }
+
+WalletForm.propTypes = {
+  fetchCurrencies: propTypes.func,
+}.isRequired;
 
 const mapDispatchToProps = (dispath) => ({
   getCurrencies: (payload) => dispath(getCurrenciesThunk(payload)),
