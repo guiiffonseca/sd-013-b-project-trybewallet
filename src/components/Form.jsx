@@ -29,7 +29,7 @@ class Form extends Component {
           </select>
         </label>
         <label htmlFor>
-          Tab:
+          Tag
           <select>
             <option value="Alimentação"> Alimentação </option>
             <option value="Lazer"> Lazer </option>
