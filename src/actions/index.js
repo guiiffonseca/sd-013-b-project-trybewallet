@@ -1,9 +1,11 @@
 export const EMAIL = 'EMAIL';
 export const EXPENSES = 'EXPENSES';
 export const CURRENCIES = 'CURRENCIES';
+export const DELETE = 'DELETE';
 
 export const saveEmailAction = (email) => ({ type: EMAIL, email });
 export const saveExpenseAction = (expense) => ({ type: EXPENSES, expense });
+export const deleteAction = (id) => ({ type: DELETE, id });
 
 const currencieAction = (currencies) => ({ type: CURRENCIES, currencies });
 

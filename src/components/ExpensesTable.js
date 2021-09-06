@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ExpensesTableHeader from './ExpensesTableHeader';
+import { deleteAction } from '../actions';
 
 class ExpensesTable extends Component {
+  constructor(props) {
+    super(props);
+    this.deleteExpense = this.deleteExpense.bind(this);
+  }
+
+  deleteExpense(id) {
+    const { deleteExpense } = this.props;
+    deleteExpense(id);
+  }
+
   render() {
     const { expenses } = this.props;
 
@@ -16,12 +27,9 @@ class ExpensesTable extends Component {
               ? expenses.map((expense) => {
                 if (expense.exchangeRates.USD !== undefined) {
                   const {
-                    id,
-                    value,
-                    description,
-                    method,
-                    tag,
-                    exchangeRates,
+                    id, value,
+                    description, method,
+                    tag, exchangeRates,
                   } = expense;
                   const rate = exchangeRates[expense.currency];
                   const nameCurrency = rate.name.split('/')[0];
@@ -37,7 +45,13 @@ class ExpensesTable extends Component {
                       <td>Real</td>
                       <td>
                         <button type="button">Editar</button>
-                        <button type="button">Excluir</button>
+                        <button
+                          type="button"
+                          onClick={ () => this.deleteExpense(id) }
+                          data-testid="delete-btn"
+                        >
+                          Excluir
+                        </button>
                       </td>
                     </tr>
                   );
@@ -56,8 +70,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (id) => dispatch(deleteAction(id)),
+});
+
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(ExpensesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
