@@ -25,7 +25,7 @@ export const fetchExchanges = async (...currency) => {
   const request = await fetch(URL);
   const response = await request.json();
   return currency.length !== 0
-    ? Object.values(response).filter(({ code }) => currency === code)
+    ? Object.values(response).find((item) => item.code === currency)
     : Object.values(response).map((exchange) => exchange);
   // .reduce((acc, { code, name, ask }) => {
   //   acc[code] = { code, name, ask };

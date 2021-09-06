@@ -41,7 +41,7 @@ const setWallet = (state = WALLET_INITIAL_STATE, action) => {
     };
   case GET_AMOUNT:
     return {
-      ...state, amount: state.amount + action.payload,
+      ...state, amount: action.payload,
     };
   default:
     return state;
