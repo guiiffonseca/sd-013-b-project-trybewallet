@@ -1,57 +1,91 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCurrencie } from '../actions';
+import Inputs from './Inputs';
+import { getCurrencie, getExpenses } from '../actions';
 
 class WalletForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      valor: 0,
+      descricao: '',
+      moeda: '',
+      pagamento: '',
+      categoria: '',
+    };
+    this.handelChange = this.handelChange.bind(this);
+    this.handelSubmit = this.handelSubmit.bind(this);
+  }
+
   componentDidMount() {
     const { setCurrencies } = this.props;
     setCurrencies();
   }
 
+  handelChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handelSubmit() {
+    const { setExpenses } = this.props;
+    const forms = this.state;
+    setExpenses(forms);
+    this.setState((previous) => ({
+      id: previous.id + 1,
+    }));
+  }
+
   render() {
     const { currencies } = this.props;
+    const { valor, descricao, moeda, pagamento, categoria } = this.state;
     return (
       <form>
-        <label htmlFor="despesa">
-          Valor :
-          <input type="number" name="despesa" id="despesa" />
-        </label>
-
-        <label htmlFor="descricao">
-          Descrição :
-          <input type="text" name="descricao" id="descricao" />
-        </label>
-
+        <Inputs
+          valor={ valor }
+          descricao={ descricao }
+          handelChange={ this.handelChange }
+        />
         <label htmlFor="moeda">
           Moeda :
-          <select name="moeda" id="moeda">
-            {currencies.map((curr, i) => (<option key={ i }>{ curr }</option>)) }
-            {/* { currencies.map((curr, i) =>
-              (<option key={ i }>{ curr.USD.code }</option>)) } */
-            }
+          <select name="moeda" id="moeda" onChange={ this.handelChange } value={ moeda }>
+            {currencies.map((curr, i) => (
+              <option key={ i } value={ curr }>{ curr }</option>))}
           </select>
         </label>
         <label htmlFor="pagamento">
           Método de pagamento :
-          <select name="pagamento" id="pagamento">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
+          <select
+            name="pagamento"
+            id="pagamento"
+            value={ pagamento }
+            onChange={ this.handelChange }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-
         <label htmlFor="categoria">
           Tag :
-          <select name="categoria" id="categoria">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
+          <select
+            name="categoria"
+            id="categoria"
+            value={ categoria }
+            onChange={ this.handelChange }
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
-
+        <button type="button" onClick={ this.handelSubmit }>Adicionar despesa</button>
       </form>
     );
   }
@@ -62,10 +96,12 @@ WalletForm.propTypes = {
     map: PropTypes.func.isRequired,
   }).isRequired,
   setCurrencies: PropTypes.func.isRequired,
+  setExpenses: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(getCurrencie()),
+  setExpenses: (value) => dispatch(getExpenses(value)),
 });
 
 const mapStateToProps = (state) => ({

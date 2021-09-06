@@ -4,18 +4,6 @@ import PropTypes from 'prop-types';
 import WalletFrom from '../component/WalletForm';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.handelChange = this.handelChange.bind(this);
-  }
-
-  handelChange({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
   render() {
     const { email, currencies, expenses } = this.props;
     console.log(currencies);
@@ -30,6 +18,7 @@ class Wallet extends React.Component {
             }
           </span>
           <span data-testid="header-currency-field">
+            {/* {currencies.length <= 0 ? 'BRL' : currencies} */}
             BRL
           </span>
         </header>

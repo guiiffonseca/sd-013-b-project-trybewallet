@@ -2,10 +2,16 @@
 export const VALIDA_EMAIL = 'VALIDA_EMAIL';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const REQUEST_API = 'REQUEST_API';
+export const GET_EXPENSES = 'GET_EXPENSES';
 
 export const validaEmail = (email) => ({
   type: VALIDA_EMAIL,
   payload: email,
+});
+
+export const getExpenses = (payload) => ({
+  type: GET_EXPENSES,
+  payload,
 });
 
 export const requestApi = () => ({
