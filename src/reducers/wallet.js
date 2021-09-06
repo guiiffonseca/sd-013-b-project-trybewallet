@@ -1,8 +1,8 @@
-// Esse reducer será responsável por tratar o todas as 
+// Esse reducer será responsável por tratar o todas as
 // informações relacionadas as despesas
 // Esse reducer será responsável por tratar as informações
 //  da pessoa usuária
-//importar loadin saved money  error 
+// importar loadin saved money  error
 import { ADD_EXPENSES } from '../actions';
 
 const WALLET_INITIAL_STATE = {
