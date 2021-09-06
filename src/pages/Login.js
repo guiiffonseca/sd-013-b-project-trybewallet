@@ -22,7 +22,6 @@ class Login extends React.Component {
 
   enableOrDisableButton() {
     const { emailIsValid, passwordIsValid } = this.state;
-
     this.setState({
       disableButton: (!emailIsValid || !passwordIsValid),
     });
@@ -31,10 +30,9 @@ class Login extends React.Component {
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
-      [target.id]: target.checkValidity(),
-    }, () => {
-      this.enableOrDisableButton();
-    });
+      [target.id]: (target.id === 'emailIsValid')
+        ? target.checkValidity() : target.value.length >= target.minLength,
+    }, () => this.enableOrDisableButton());
   }
 
   handleLogin() {
