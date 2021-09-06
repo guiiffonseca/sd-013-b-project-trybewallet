@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getCurrencie } from '../actions';
 
 class WalletForm extends Component {
@@ -26,7 +27,9 @@ class WalletForm extends Component {
           Moeda :
           <select name="moeda" id="moeda">
             {currencies.map((curr, i) => (<option key={ i }>{ curr }</option>)) }
-            {/* { currencies.map((curr, i) => (<option key={ i }>{ curr.USD.code }</option>)) } */}
+            {/* { currencies.map((curr, i) =>
+              (<option key={ i }>{ curr.USD.code }</option>)) } */
+            }
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -53,6 +56,14 @@ class WalletForm extends Component {
     );
   }
 }
+
+WalletForm.propTypes = {
+  currencies: PropTypes.shape({
+    map: PropTypes.func.isRequired,
+  }).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(getCurrencie()),
 });
