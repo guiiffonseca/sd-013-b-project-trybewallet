@@ -7,7 +7,6 @@ class ExpenseForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
       value: 0,
       description: '',
       currency: 'USD',
@@ -38,8 +37,10 @@ class ExpenseForm extends Component {
   // DISPARA O EVENTO "onSubmit" DO FORM
   handleSubmit(event) {
     event.preventDefault();
-    const { id, dispatchSetThunk } = this.props;
-    this.setState({ id }, () => (dispatchSetThunk(this.state)));
+    const { id, dispatchSetThunk, expenses } = this.props;
+    const newExense = { ...this.state, id };
+    const currentExpenses = { expenses, newExense };
+    dispatchSetThunk(currentExpenses);
   }
 
   // RENDERIZA O INPUT DO "valor"
@@ -156,6 +157,7 @@ ExpenseForm.propTypes = {
   id: PropTypes.number.isRequired,
   dispatchSetThunk: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

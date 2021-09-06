@@ -14,9 +14,10 @@ const INITIAL_STATE = {
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_EXCHANGE_RATES_SUCCES:
-    state.expenses.push(action.payload);
+    /* state.expenses.push(action.payload); */
     return { ...state,
-      expenses: state.expenses,
+      /* expenses: state.expenses, */
+      expenses: action.payload,
     };
   case GET_CURRENCY_SUCCESS:
     return { ...state,

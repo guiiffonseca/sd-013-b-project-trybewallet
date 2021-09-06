@@ -25,11 +25,14 @@ export const getCurrencySuccess = (payload) => ({
   payload,
 });
 
-export const getCurrencyThunk = (expenses) => async (dispatch) => {
+export const getCurrencyThunk = (expense) => async (dispatch) => {
   const response = await fetchEndPoint();
-  if (expenses !== undefined) {
-    const payload = { ...expenses, exchangeRates: response };
-    dispatch(setExchangeRatesSucces(payload));
+  if (expense !== undefined) {
+    const { expenses, newExense } = expense;
+    let totalExpenses = expenses;
+    const currentExpenses = { ...newExense, exchangeRates: response };
+    totalExpenses = [...totalExpenses, currentExpenses];
+    dispatch(setExchangeRatesSucces(totalExpenses));
   } else {
     dispatch(getCurrencySuccess(response));
   }

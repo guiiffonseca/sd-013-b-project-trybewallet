@@ -4,19 +4,18 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    const { expenses, email } = this.props;
-    console.log(expenses);
-    /* if (expenses.length !== 0) {
-      console.log('expenses');
+    const { email, expenses } = this.props;
+    let total = 0;
+    if (expenses.length !== 0) {
       expenses.forEach((element) => {
         total += Number(element.value * element.exchangeRates[element.currency].ask);
       });
-    } */
+    }
 
     return (
       <header>
         <span data-testid="email-field">{email}</span>
-        <div data-testid="total-field">total</div>
+        <div data-testid="total-field">{total}</div>
         <span data-testid="header-currency-field">BRL</span>
       </header>
     );
