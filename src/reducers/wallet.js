@@ -8,9 +8,9 @@ const USER_WALLET = {
   },
 };
 
-export default userWalletReducer = (state = USER_WALLET, action) => {
+export default function userWalletReducer(state = USER_WALLET, action) {
   switch (action.type) {
   case '': return {};
   default: return state;
   }
-};
+}

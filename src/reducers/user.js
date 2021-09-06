@@ -5,7 +5,7 @@ const USER_LOGIN = {
   password: '',
 };
 
-export default userLoginReducer = (state = USER_LOGIN, action) => {
+const userLoginReducer = (state = USER_LOGIN, action) => {
   switch (action.type) {
   case BUTTON_LOGIN:
     return { };
@@ -13,3 +13,5 @@ export default userLoginReducer = (state = USER_LOGIN, action) => {
     return state;
   }
 };
+
+export default userLoginReducer;
