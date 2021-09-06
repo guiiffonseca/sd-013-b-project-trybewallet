@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 import { saveEmail } from '../actions';
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -21,6 +22,7 @@ class Login extends React.Component {
     createEmail(email);
     history.push('/carteira');
   }
+
   validInput() {
     const { email, password } = this.state;
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
