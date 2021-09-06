@@ -3,32 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from '../components/Select';
 import { categoriesObject, paymentMethodObject } from '../utils';
-import { fetchAwesomeAPI } from '../actions';
+import { fetchCurrenciesThunk } from '../actions';
 
 class FormSelects extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currency: '',
-      paymentMethod: '',
-      categories: '',
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
   componentDidMount() {
     const { retrieveCurrencies } = this.props;
     retrieveCurrencies();
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
-
   render() {
-    const { currency, paymentMethod, categories } = this.state;
-    const { currencies } = this.props;
+    const { currencies, onChange } = this.props;
     return (
       <>
         <Select
@@ -36,26 +20,23 @@ class FormSelects extends React.Component {
           name="currency"
           items={ currencies }
           label="Moeda"
-          value={ currency }
-          onChange={ this.handleChange }
+          onChange={ onChange }
         />
 
         <Select
-          id="paymentMethod"
-          name="paymentMethod"
+          id="method"
+          name="method"
           items={ paymentMethodObject }
           label="Método de pagamento"
-          value={ paymentMethod }
-          onChange={ this.handleChange }
+          onChange={ onChange }
         />
 
         <Select
-          id="categories"
-          name="categories"
+          id="tag"
+          name="tag"
           items={ categoriesObject }
           label="Tag"
-          value={ categories }
-          onChange={ this.handleChange }
+          onChange={ onChange }
         />
       </>
     );
@@ -64,6 +45,7 @@ class FormSelects extends React.Component {
 
 FormSelects.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
   retrieveCurrencies: PropTypes.func.isRequired,
 };
 
@@ -72,7 +54,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  retrieveCurrencies: () => dispatch(fetchAwesomeAPI()),
+  retrieveCurrencies: () => dispatch(fetchCurrenciesThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormSelects);

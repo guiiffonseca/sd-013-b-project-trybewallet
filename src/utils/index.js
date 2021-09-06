@@ -12,12 +12,18 @@ export const categoriesObject = [
   'Saúde',
 ];
 
-// By Lucas Caribé
 export const fetchCurrencies = async () => {
-  const SIGLA = 3;
   const request = await fetch('https://economia.awesomeapi.com.br/json/all');
   const response = await request.json();
-  return Object.keys(response).filter(
-    (currencie) => currencie.length === SIGLA,
-  );
+  return Object.keys(response).filter((currencie) => currencie !== 'USDT');
+};
+
+export const fetchExchanges = async () => {
+  const request = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const response = await request.json();
+  return Object.values(response).map((exchange) => exchange);
+  // .reduce((acc, { code, name, ask }) => {
+  //   acc[code] = { code, name, ask };
+  //   return acc;
+  // }, {});
 };

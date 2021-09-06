@@ -21,7 +21,7 @@ export default class Select extends React.Component {
 
 Select.propTypes = {
   id: PropTypes.string.isRequired,
-  items: PropTypes.objectOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

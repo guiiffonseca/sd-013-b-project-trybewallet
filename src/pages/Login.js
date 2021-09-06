@@ -87,7 +87,7 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchEmail: (email) => dispatch(saveEmailAction(email)),
+  dispatchEmail: (payload) => dispatch(saveEmailAction(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
