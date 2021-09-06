@@ -16,7 +16,6 @@ class Form extends React.Component {
       tag: 'Alimentação',
       exchangeRates: {},
     };
-
     this.fetchApi = this.fetchApi.bind(this);
     this.renderCoins = this.renderCoins.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -27,6 +26,7 @@ class Form extends React.Component {
     this.createPaymentMethod = this.createPaymentMethod.bind(this);
     this.createDescription = this.createDescription.bind(this);
     this.createButton = this.createButton.bind(this);
+    this.createTable = this.createTable.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +37,7 @@ class Form extends React.Component {
     const { createListCoins } = this.props;
     const data = await getCoins();
     const coins = await Object.keys(data);
-    createListCoins(coins);
+    await createListCoins(coins);
   }
 
   async fetchApiExpense() {
@@ -61,7 +61,7 @@ class Form extends React.Component {
     });
     await createExpenses(this.state);
     const { expenses: updateExpenses } = this.props;
-    sumAllExpenses(updateExpenses[updateExpenses.length - 1]);
+    await sumAllExpenses(updateExpenses[updateExpenses.length - 1]);
   }
 
   createValue() {
@@ -144,6 +144,52 @@ class Form extends React.Component {
     );
   }
 
+  createTable() {
+    const { expenses } = this.props;
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Moeda de conversão</th>
+            <th>Valor convertido</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.map((expense) => {
+            const key = expense.currency;
+            const { exchangeRates } = expense;
+            const currencyName = (exchangeRates[key].name).split('/');
+            const exchangeValue = exchangeRates[key].ask;
+            const convertedValue = expense.value * exchangeValue;
+            return (
+              <tr key={ expense.id }>
+                <td>{expense.description}</td>
+                <td>{expense.tag}</td>
+                <td>{expense.method}</td>
+                <td>{currencyName[0]}</td>
+                <td>{Math.round(exchangeValue * 100) / 100}</td>
+                <td>{expense.value}</td>
+                <td>Real</td>
+                <td>{Math.round(convertedValue * 100) / 100}</td>
+                <td>
+                  <button type="button">Editar</button>
+                  <button type="button">Excluir</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  }
+
   renderCoins() {
     const { currencies } = this.props;
     return currencies.filter((currency) => (currency !== 'USDT'))
@@ -161,6 +207,7 @@ class Form extends React.Component {
         {this.createPaymentMethod()}
         {this.createDescription()}
         {this.createButton()}
+        {this.createTable()}
       </form>
     );
   }
@@ -172,11 +219,13 @@ Form.propTypes = {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  totalExpenses: state.wallet.expenses.totalExpenses,
 });
 const mapDispatchToProps = (dispatch) => ({
   createListCoins: (coin) => dispatch(listCoins(coin)),
   createExpenses: (expense) => dispatch(createExpense(expense)),
   sumAllExpenses: (valueExpense) => dispatch(sumExpenses(valueExpense)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
+
+// Referências para ajudar na lógica: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split
