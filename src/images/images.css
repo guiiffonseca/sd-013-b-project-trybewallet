@@ -1,0 +1,15 @@
+.flexbox-container {
+  border-bottom: solid;
+  border-width: thin;
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.main-logo {
+  max-height: 50px;
+  min-width: 50px;
+  overflow: auto;
+  padding-left: 15px;
+  padding-top: 15px;
+  resize: horizontal;
+}

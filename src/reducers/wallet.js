@@ -13,6 +13,12 @@ const wallet = (state = ESTADO_INICIAL, action) => {
       expenses: action.expenses,
     };
 
+  case 'GET_EXPENSES':
+    return {
+      ...state,
+      expenses: action.expenses,
+    };
+
   default:
     return state;
   }
