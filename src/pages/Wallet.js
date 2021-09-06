@@ -5,10 +5,10 @@ import ExpenseForm from '../components/ExpenseForm';
 class Wallet extends React.Component {
   render() {
     return (
-      <div>
+      <main>
         <Header />
         <ExpenseForm />
-      </div>
+      </main>
     );
   }
 }

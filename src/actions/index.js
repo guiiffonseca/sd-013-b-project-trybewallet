@@ -1,12 +1,10 @@
-import searchCurrency from '../service/API';
+import fetchEndPoint from '../service/API';
 
 export const SET_USERS = 'SET_USERS';
 
-export const SET_EXPENSES = 'SET_EXPENSES';
+export const SET_EXCHANGE_RATES_SUCCES = 'SET_EXCHANGE_RATES_SUCCES';
 
-export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
-export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 
 export const setUserValue = (payload) => (
   {
@@ -15,33 +13,24 @@ export const setUserValue = (payload) => (
   }
 );
 
-export const setExpenses = (payload) => (
+export const setExchangeRatesSucces = (payload) => (
   {
-    type: SET_EXPENSES,
+    type: SET_EXCHANGE_RATES_SUCCES,
     payload,
   }
 );
-
-export const getCurrency = () => ({
-  type: GET_CURRENCY,
-});
 
 export const getCurrencySuccess = (payload) => ({
   type: GET_CURRENCY_SUCCESS,
   payload,
 });
 
-export const getCurrencyError = (payload) => ({
-  type: GET_CURRENCY_ERROR,
-  payload,
-});
-
-export const getCurrencyThunk = () => async (dispatch) => {
-  dispatch(getCurrency());
-  try {
-    const response = await searchCurrency();
+export const getCurrencyThunk = (expenses) => async (dispatch) => {
+  const response = await fetchEndPoint();
+  if (expenses !== undefined) {
+    const payload = { ...expenses, exchangeRates: response };
+    dispatch(setExchangeRatesSucces(payload));
+  } else {
     dispatch(getCurrencySuccess(response));
-  } catch (error) {
-    dispatch(getCurrencyError(error));
   }
 };
