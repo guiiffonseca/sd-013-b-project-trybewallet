@@ -12,7 +12,6 @@ class Login extends React.Component {
       valideEmail: false,
       validePassword: false,
     };
-    // this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
@@ -31,10 +30,10 @@ class Login extends React.Component {
 
   validateEmail({ target }) {
     const { id, value } = target;
-    const valideEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
-      .test(value);
     // Regex com uma função que eu tirei do grupo do projeto Trivia.
     // Faz a verificação do email vendo se contem os caracteres exigidos.
+    const valideEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
+      .test(value);
     if (valideEmail) {
       this.setState({
         [id]: value,
@@ -66,7 +65,7 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="password">
-          First name:
+          Senha:
           <input
             type="password"
             id="password"

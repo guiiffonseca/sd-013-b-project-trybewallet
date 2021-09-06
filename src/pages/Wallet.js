@@ -1,19 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { WALLET_INFO as WALLET_INFOACTION } from '../actions';
+import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cambio: 'BRL',
+      gastoTotal: 0,
+    };
+  }
+
   render() {
-    return <div>TrybeWallet</div>;
+    const { email } = this.props;
+    const { cambio, gastoTotal } = this.state;
+    return (
+      <>
+        <div>
+          Trybe Wallet
+        </div>
+        <p data-testid="email-field">{ `Usuario: ${email}` }</p>
+        <p data-testid="header-currency-field">{ `Cambio: ${cambio}` }</p>
+        <p data-testid="total-field">{ `Gasto Total: ${gastoTotal}` }</p>
+      </>
+    );
   }
 }
 
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  user: state.user.email,
+  email: state.user.email,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  WALLET_INFO: (payload) => dispatch(WALLET_INFOACTION(payload)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps)(Wallet);
