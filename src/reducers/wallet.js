@@ -30,10 +30,13 @@ function walletData(state = DEFAULT_WALLET_STATE, action) {
 
   case UPDATE_EXPENSE:
     previous = { ...state };
+    // eslint-disable-next-line no-case-declarations
+    console.log(state);
+    console.log(action);
     previous.expenses[action.payload.id] = { ...action.payload };
     previous.editor = false;
     previous.idToEdit = null;
-    return previous;
+    return { ...previous };
 
   default:
     return state;

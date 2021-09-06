@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getSecondThunk, getThirdThunk } from '../../actions/index';
+import { getSecondThunk, updateExpense } from '../../actions/index';
 import ItemList from './ItemList';
 
 class Form extends Component {
@@ -117,8 +117,9 @@ class Form extends Component {
   }
 
   expenseEdit() {
-    const { editExpense, id } = this.props;
-    editExpense({ ...this.state, id });
+    const { editExpense, id, expenses } = this.props;
+    const { exchangeRates } = expenses[id];
+    editExpense({ ...this.state, id, exchangeRates });
   }
 
   render() {
@@ -163,10 +164,11 @@ Form.propTypes = {
 const mapStateToProps = (state) => ({
   expensesList: state.wallet,
   id: state.wallet.idToEdit,
+  expenses: state.wallet.expenses,
 });
 const mapDispatchToProps = (dispatch) => ({
   attCurrencyThunk: (value) => dispatch(getSecondThunk(value)),
-  editExpense: (editedExpense) => dispatch(getThirdThunk(editedExpense)),
+  editExpense: (editedExpense) => dispatch(updateExpense(editedExpense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

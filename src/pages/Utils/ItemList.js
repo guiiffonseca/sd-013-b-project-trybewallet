@@ -32,17 +32,17 @@ class ItemList extends Component {
     const { item:
       { value, description, method, currency,
         tag, exchangeRates } } = this.props;
-    const currencyIndex = exchangeRates[currency].name.indexOf('/');
-    const editedCurrency = exchangeRates[currency].name.slice(0, currencyIndex);
-
+    // const currencyIndex = exchangeRates[currency].name.indexOf('/');
+    // const editedCurrency = exchangeRates[currency].name.slice(0, currencyIndex);
+    const passaTeste = exchangeRates[currency].name.split('/')[0];
     return (
       <tr>
         <td>{description}</td>
         <td>{tag}</td>
         <td>{method}</td>
         <td>{value}</td>
-        <td>{editedCurrency}</td>
-        <td>{this.editNumbers(exchangeRates[currency].ask)}</td>
+        <td>{passaTeste}</td>
+        <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
         <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
         <td>Real</td>
         <button
