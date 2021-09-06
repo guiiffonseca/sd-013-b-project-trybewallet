@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import login from '../actions';
 import Header from '../components/Header';
+import Form from '../components/Form';
 
 class Wallet extends React.Component {
   render() {
     return (
-      <Header />);
+      <div>
+        <Form />
+        <Header />
+      </div>
+    );
   }
 }
 
