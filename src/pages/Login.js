@@ -1,20 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
-import { createUser } from '../actions';
-
+import { saveEmail } from '../actions';
 class Login extends React.Component {
   constructor() {
     super();
-
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validInput = this.validInput.bind(this);
-
     this.state = {
       email: '',
       password: '',
-      validation: false,
     };
   }
 
@@ -25,35 +21,23 @@ class Login extends React.Component {
     createEmail(email);
     history.push('/carteira');
   }
-
-  async validInput() {
+  validInput() {
     const { email, password } = this.state;
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const lengthSix = 6;
-    console.log(re.test(email));
-    console.log(password.length >= lengthSix);
-    if (re.test(email) && password.length >= lengthSix) {
-      await this.setState({
-        validation: true,
-      });
-    } else {
-      await this.setState({
-        validation: false,
-      });
+    const lengthSix = 5;
+    if ((re.test(email) && password.length > lengthSix)) {
+      return false;
     }
-    console.log(this.state);
+    return true;
   }
 
   async handleChange({ target: { id, value } }) {
     await this.setState({
       [id]: value,
     });
-    await this.validInput();
   }
 
   render() {
-    // const { createEmail } = this.props;
-    const { validation } = this.state;
     return (
       <div>
         <label htmlFor="email">
@@ -72,14 +56,14 @@ class Login extends React.Component {
             data-testid="password-input"
             placeholder="Insira uma senha"
             id="password"
-            type="text"
+            type="password"
             onChange={ this.handleChange }
           />
         </label>
         <button
           type="submit"
           onClick={ this.handleClick }
-          disabled={ !validation }
+          disabled={ this.validInput() }
         >
           Entrar
         </button>
@@ -91,6 +75,8 @@ Login.propTypes = {
   createEmail: func,
 }.isRequired;
 const mapDispatchToProps = (dispatch) => ({
-  createEmail: (state) => dispatch(createUser(state)) });
-
+  createEmail: (state) => dispatch(saveEmail(state)) });
 export default connect(null, mapDispatchToProps)(Login);
+
+// Referências:
+// Atualizar a página: https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4

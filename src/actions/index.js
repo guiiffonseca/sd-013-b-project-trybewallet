@@ -1,23 +1,40 @@
 // Coloque aqui suas actions
-
-export const CREATE_USER = 'CREATE_USER';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const CREATE_EXPENSE = 'CREATE_EXPENSE';
+export const LIST_COINS = 'LIST_COINS';
+export const SUM_EXPENSES = 'SUM_EXPENSES';
 
-export function createUser(email) {
+export function saveEmail(email) {
   return ({
-    type: CREATE_USER,
+    type: SAVE_EMAIL,
     payload: {
       email,
     },
   });
 }
-
-export function createExpense() {
+export function createExpense(expense) {
   return ({
     type: CREATE_EXPENSE,
     payload: {
-      currencies: [],
-      expenses: [],
+      expense,
+    },
+  });
+}
+
+export function sumExpenses(expenses) {
+  return ({
+    type: SUM_EXPENSES,
+    payload: {
+      expenses,
+    },
+  });
+}
+
+export function listCoins(coins) {
+  return ({
+    type: LIST_COINS,
+    payload: {
+      coins,
     },
   });
 }
