@@ -4,16 +4,35 @@ import PropTypes from 'prop-types';
 import WalletFrom from '../component/WalletForm';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.getValor = this.getValor.bind(this);
+  }
+
+  // componentDidMount() {
+  //   this.getValor();
+
+  // }
+
+  getValor() {
+    const { expenses } = this.props;
+    console.log(expenses);
+    if (expenses.length === 0) {
+      return 0;
+    }
+    // return expenses.reduce((acc, crr) => console.log(acc) + parseFloat(crr.valor), 0);
+    return expenses.map((expense) => expense.valor).reduce((acc, crr) => acc + crr);
+  }
+
   render() {
-    const { email, expenses } = this.props;
+    const { email } = this.props;
     return (
       <>
         <header>
           <span data-testid="email-field">{ email }</span>
           <span data-testid="total-field">
             {
-              expenses.length <= 0 ? 0
-                : expenses.reduce((acc, curr) => acc + curr)
+              this.getValor()
             }
           </span>
           <span data-testid="header-currency-field">
@@ -29,12 +48,11 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  expenses: PropTypes.shape.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({ map: PropTypes.func })).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
 });
 

@@ -27,7 +27,7 @@ class WalletForm extends Component {
   handelChange({ target }) {
     const { name, value } = target;
     this.setState({
-      [name]: value,
+      [name]: name === 'valor' ? parseFloat(value) : value,
     });
   }
 
@@ -54,7 +54,7 @@ class WalletForm extends Component {
           Moeda :
           <select name="moeda" id="moeda" onChange={ this.handelChange } value={ moeda }>
             {currencies.map((curr, i) => (
-              <option key={ i } value={ curr }>{ curr }</option>))}
+              <option key={ i } value={ curr.code }>{ curr.code }</option>))}
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -92,9 +92,7 @@ class WalletForm extends Component {
 }
 
 WalletForm.propTypes = {
-  currencies: PropTypes.shape({
-    map: PropTypes.func.isRequired,
-  }).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.shape({ map: PropTypes.func })).isRequired,
   setCurrencies: PropTypes.func.isRequired,
   setExpenses: PropTypes.func.isRequired,
 };

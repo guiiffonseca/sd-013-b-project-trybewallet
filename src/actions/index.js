@@ -9,18 +9,18 @@ export const validaEmail = (email) => ({
   payload: email,
 });
 
-export const getExpenses = (payload) => ({
+export const getExpenses = (expenses) => ({
   type: GET_EXPENSES,
-  payload,
+  payload: expenses,
 });
 
 export const requestApi = () => ({
   type: REQUEST_API,
 });
 
-export const currenciesSuccess = (currencies) => ({
+export const currenciesSuccess = (payload) => ({
   type: SET_CURRENCIES,
-  payload: currencies,
+  payload,
 });
 
 const getApi = () => (
@@ -35,18 +35,18 @@ const getApi = () => (
 export const getCurrencie = () => async (dispatch) => {
   try {
     dispatch(requestApi());
-    const response = getApi();
-    const currencies = await response;
+    const response = await getApi();
+    const currencies = Object.values(response);
     delete currencies.USDT;
-    dispatch(currenciesSuccess(Object.keys(currencies)));
+    dispatch(currenciesSuccess(currencies));
   } catch (err) { console.log(err, 'ola'); }
 };
 
 export const getAddExpense = (state) => async (dispatch) => {
   try {
     const response = await getApi();
-    const exchangeRates = response;
-    console.log(exchangeRates);
+    const exchangeRates = Object.values(response);
+    delete exchangeRates.USDT;
     dispatch(getExpenses({ ...state, exchangeRates }));
   } catch (err) {
     console.log(err);
