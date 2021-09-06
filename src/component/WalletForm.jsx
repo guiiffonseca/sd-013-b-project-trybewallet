@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getCurrencie } from '../actions';
 
 class WalletForm extends Component {
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="despesa">
@@ -17,10 +25,10 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda :
           <select name="moeda" id="moeda">
-            <option>BRL</option>
+            {currencies.map((curr, i) => (<option key={ i }>{ curr }</option>)) }
+            {/* { currencies.map((curr, i) => (<option key={ i }>{ curr.USD.code }</option>)) } */}
           </select>
         </label>
-
         <label htmlFor="pagamento">
           Método de pagamento :
           <select name="pagamento" id="pagamento">
@@ -45,5 +53,12 @@ class WalletForm extends Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(getCurrencie()),
+});
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

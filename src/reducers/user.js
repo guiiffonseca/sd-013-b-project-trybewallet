@@ -1,4 +1,3 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária
 import { VALIDA_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
@@ -13,5 +12,4 @@ const user = (state = INITIAL_STATE, action) => {
     return state;
   }
 };
-
 export default user;

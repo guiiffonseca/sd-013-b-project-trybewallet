@@ -18,6 +18,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email, currencies, expenses } = this.props;
+    console.log(currencies);
     return (
       <>
         <header>
@@ -29,7 +30,7 @@ class Wallet extends React.Component {
             }
           </span>
           <span data-testid="header-currency-field">
-            {currencies.length <= 0 ? 'BRL' : currencies}
+            BRL
           </span>
         </header>
         <WalletFrom />
