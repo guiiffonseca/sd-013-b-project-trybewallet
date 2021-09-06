@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -24,7 +23,8 @@ class ItemList extends Component {
   editNumbers(number) {
     const stringNumber = number.toString();
     const stringNumberIndex = stringNumber.indexOf('.');
-    const numberEdited = stringNumber.slice(0, stringNumberIndex + 3);
+    const NUMBER = 3;
+    const numberEdited = stringNumber.slice(0, stringNumberIndex + NUMBER);
     return numberEdited;
   }
 
