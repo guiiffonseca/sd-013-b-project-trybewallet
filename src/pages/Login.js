@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { buttonLogin as buttonLoginEvent } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -37,6 +40,7 @@ class Login extends React.Component {
 
   render() {
     const { handleChange } = this;
+    const { buttonLogin } = this.props;
     const { isValid, email, password } = this.state;
     return (
       <form>
@@ -66,6 +70,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ !isValid }
+            onClick={ () => buttonLogin({ email, password }) }
           >
             Entrar
           </button>
@@ -75,4 +80,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  buttonLogin: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  buttonLogin: (payload) => dispatch(buttonLoginEvent(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

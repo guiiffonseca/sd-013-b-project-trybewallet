@@ -1,12 +1,9 @@
 // Coloque aqui suas actions
 const BUTTON_LOGIN = 'BUTTON_LOGIN';
 
-const buttonLogin = (email, password) => ({
+const buttonLogin = (payload) => ({
   type: BUTTON_LOGIN,
-  payload: {
-    email,
-    password,
-  },
+  payload,
 });
 
 export { BUTTON_LOGIN, buttonLogin };
