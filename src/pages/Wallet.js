@@ -28,7 +28,11 @@ class Wallet extends React.Component {
     const { cur } = this.state;
     let options;
     if (Object.keys(cur).length === 0) options = [''];
-    else options = Object.keys(cur);
+    else {
+      options = Object.keys(cur);
+      const USDT_INDEX = options.indexOf('USDT');
+      options.splice(USDT_INDEX, 1);
+    }
 
     return options.map((x) => <option name={ x } value={ x } key={ x }>{x}</option>);
   }
