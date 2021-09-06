@@ -21,7 +21,8 @@ export const currencies = (payload) => ({
 
 export const getCurrenciesThunk = () => async (dispatch) => {
   const URL = 'https://economia.awesomeapi.com.br/json/all';
-  const arrayWithEntries = await getCurrenciesFromApi(URL);
-  const arrayWithout = arrayWithEntries.filter((ele) => ele !== 'USDT');
+  const fetchCurrencies = await getCurrenciesFromApi(URL);
+  const arrayWithEntries = Object.entries(fetchCurrencies);
+  const arrayWithout = arrayWithEntries.filter((ele) => ele[0] !== 'USDT');
   dispatch(currencies(arrayWithout));
 };

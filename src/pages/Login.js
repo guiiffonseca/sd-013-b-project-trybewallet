@@ -1,8 +1,7 @@
 import React from 'react';
 
-import '../styles/home.css';
-
 import LoginForm from '../components/LoginForm';
+import '../styles/home.css';
 
 class Login extends React.Component {
   render() {

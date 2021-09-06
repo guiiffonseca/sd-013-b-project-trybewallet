@@ -1,32 +1,50 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { getCurrenciesThunk } from '../actions/index';
+import { getCurrenciesThunk } from '../actions';
 
 class WalletForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      globalCurrencies: [],
+      currency: 'USD',
     };
-    this.insertOptions = this.insertOptions(this);
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.getCurrenciesToState();
-  }
-
-  async getCurrenciesToState() {
     const { getCurrencies } = this.props;
     getCurrencies();
   }
 
-  insertOptions() {
-    // return { currencies.map((item, index) => <option key={ index }>{ item }</option>) };
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  currencyInput(currency) {
+    const { currencies } = this.props;
+    return (
+      <label htmlFor="input-currency">
+        Moeda
+        <select
+          name="currency"
+          id="input-currency"
+          value={ currency }
+          onChange={ this.handleChange }
+        >
+          { currencies.map((item) => (
+            <option value={ item[0] } key={ item[0] }>{item[0]}</option>
+          ))}
+        </select>
+      </label>
+    );
   }
 
   render() {
-    const { globalCurrencies } = this.state;
+    const { currency } = this.state;
     return (
       <div className="main-form-wallet">
         <form>
@@ -44,14 +62,9 @@ class WalletForm extends React.Component {
               id="input-desc"
             />
           </label>
-          <label htmlFor="input-currency">
-            Moeda
-            <select name="currency" id="input-currency">
-              { globalCurrencies.map((item, index) => (
-                <option key={ index } value={ item }>{ item }</option>
-              ))}
-            </select>
-          </label>
+
+          { this.currencyInput(currency) }
+
           <label htmlFor="input-payment">
             Método de pagamento
             <select name="payment" id="input-payment">
@@ -76,11 +89,12 @@ class WalletForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapDispatchToProps = (dispath) => ({
+  getCurrencies: (payload) => dispath(getCurrenciesThunk(payload)),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: (payload) => dispatch(getCurrenciesThunk(payload)),
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
