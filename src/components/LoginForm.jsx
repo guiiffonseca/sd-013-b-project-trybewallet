@@ -21,6 +21,7 @@ class LoginForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.inputFilter = this.inputFilter.bind(this);
+    this.enterPressed = this.enterPressed.bind(this);
   }
 
   onClick() {
@@ -29,6 +30,13 @@ class LoginForm extends React.Component {
     const { user, props } = this.props;
     user(inputEmail);
     props.history.push('/carteira');
+  }
+
+  enterPressed({ key }) {
+    const { activateButton } = this.state;
+    if (activateButton === false && key === 'Enter') {
+      this.onClick();
+    }
   }
 
   handleChange({ target }) {
@@ -113,6 +121,7 @@ class LoginForm extends React.Component {
                 value={ inputEmail }
                 className="pr-color input-form-base input-email"
                 onChange={ this.handleChange }
+                onKeyDown={ this.enterPressed }
                 autoComplete="off"
               />
             </label>
@@ -127,6 +136,7 @@ class LoginForm extends React.Component {
                 value={ inputLogin }
                 className="pr-color input-form-base input-password"
                 onChange={ this.handleChange }
+                onKeyDown={ this.enterPressed }
                 placeholder="Senha"
                 autoComplete="off"
               />
