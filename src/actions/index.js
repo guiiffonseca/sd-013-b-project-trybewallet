@@ -3,6 +3,7 @@ export const EXPENSES = 'EXPENSES';
 export const CURRENCIES = 'CURRENCIES';
 
 export const saveEmailAction = (email) => ({ type: EMAIL, email });
+export const saveExpenseAction = (expense) => ({ type: EXPENSES, expense });
 
 const currencieAction = (currencies) => ({ type: CURRENCIES, currencies });
 

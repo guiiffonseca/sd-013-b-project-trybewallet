@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class TagToAdd extends Component {
   render() {
+    const { handleSelections } = this.props;
+
     return (
       <label
         htmlFor="tag"
@@ -10,6 +13,7 @@ class TagToAdd extends Component {
         <select
           id="tag"
           name="tag"
+          onChange={ handleSelections }
         >
           <option>Alimentação</option>
           <option>Lazer</option>
@@ -21,5 +25,8 @@ class TagToAdd extends Component {
     );
   }
 }
+TagToAdd.propTypes = {
+  handleSelections: PropTypes.func.isRequired,
+};
 
 export default TagToAdd;
