@@ -49,12 +49,12 @@ export const getExchangesErrorAction = (payload) => ({
   type: GET_EXCHANGES_ERROR,
   payload,
 });
-const URL = 'https://economia.awesomeapi.com.br/json/all';
+
 export const fetchCurrenciesThunk = () => async (dispatch) => {
   dispatch(getCurrenciesAction());
   try {
-    const response = await fetchCurrencies(URL);
-    const exchanges = await fetchExchanges(URL);
+    const response = await fetchCurrencies();
+    const exchanges = await fetchExchanges();
     dispatch(getExchangesSuccessAction(exchanges));
     dispatch(getCurrenciesSuccessAction(response));
   } catch (error) {
@@ -65,9 +65,7 @@ export const fetchCurrenciesThunk = () => async (dispatch) => {
 export const fetchExchangesThunk = () => async (dispatch) => {
   dispatch(getExchangesAction());
   try {
-    const response = await fetchExchanges(
-      'https://economia.awesomeapi.com.br/json/all',
-    );
+    const response = await fetchExchanges();
     dispatch(getExchangesSuccessAction(response));
   } catch (error) {
     dispatch(getExchangesErrorAction(error));
