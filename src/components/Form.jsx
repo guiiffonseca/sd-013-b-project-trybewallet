@@ -56,7 +56,11 @@ class Form extends Component {
 
           <Description description={ description } handleChange={ this.handleChange } />
 
-          <Currency currencies={ currencies } currency={ currency } handleChange={ this.handleChange } />
+          <Currency
+            currencies={ currencies }
+            currency={ currency }
+            handleChange={ this.handleChange }
+          />
 
           <Method mothod={ method } handleChange={ this.handleChange } />
 
@@ -82,6 +86,11 @@ const mapDispatchToProps = (dispatch) => ({
 Form.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Array).isRequired,
+  getExpenses: PropTypes.func.isRequired,
+  description: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
+  method: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

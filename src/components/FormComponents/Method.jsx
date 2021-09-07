@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Method extends Component {
   render() {
@@ -22,3 +23,8 @@ export default class Method extends Component {
     );
   }
 }
+
+Method.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  method: PropTypes.string.isRequired,
+};
