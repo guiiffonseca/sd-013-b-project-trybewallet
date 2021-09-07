@@ -10,16 +10,17 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      isValid: false,
+      isValid: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.verificaLogin = this.verificaLogin.bind(this);
   }
 
-  handleChange({ target }) {
+  async handleChange({ target }) {
     const { name, value } = target;
-    this.setState({
+    await this.setState({
       [name]: value,
     });
     this.verificaLogin();
@@ -27,20 +28,29 @@ class Login extends React.Component {
 
   verificaLogin() {
     const { email, password } = this.state;
-    // console.log(email, password);
+
     const emailValid = (email.includes('@') && email.includes('.com'));
     const cinco = 5;
     const passwordValid = (password.length > cinco);
-    // console.log(emailValid);
-    // console.log(passwordValid);
+    console.log(emailValid, passwordValid, email, password);
+
     if (emailValid && passwordValid) {
+      this.setState({ isValid: false });
+    } else {
       this.setState({ isValid: true });
     }
   }
 
+  handleClick() {
+    const { history, buttonLogin } = this.props;
+    const { email, password } = this.state;
+
+    buttonLogin({ email, password });
+    history.push('/carteira');
+  }
+
   render() {
-    const { handleChange } = this;
-    const { buttonLogin } = this.props;
+    const { handleChange, handleClick } = this;
     const { isValid, email, password } = this.state;
     return (
       <form>
@@ -58,19 +68,19 @@ class Login extends React.Component {
         <label htmlFor="login-password">
           Senha:
           <input
+            data-testid="password-input"
             id="login-password"
             type="password"
             name="password"
             value={ password }
             onChange={ handleChange }
-            data-testid="password-input"
           />
         </label>
         <div>
           <button
             type="button"
-            disabled={ !isValid }
-            onClick={ () => buttonLogin({ email, password }) }
+            onClick={ handleClick }
+            disabled={ isValid }
           >
             Entrar
           </button>
@@ -82,6 +92,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   buttonLogin: PropTypes.func.isRequired,
+  history: PropTypes.objectOf().isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

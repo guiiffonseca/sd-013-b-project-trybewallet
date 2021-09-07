@@ -1,3 +1,5 @@
+import { BUTTON_LOGIN } from '../actions';
+
 const USER_WALLET = {
   user: {
     email: '',
@@ -9,8 +11,14 @@ const USER_WALLET = {
 };
 
 export default function userWalletReducer(state = USER_WALLET, action) {
+  const { payload } = action;
   switch (action.type) {
-  case '': return {};
+  case BUTTON_LOGIN: return {
+    ...state,
+    user: {
+      email: payload.email,
+    },
+  };
   default: return state;
   }
 }
