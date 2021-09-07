@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchExchangesThunk, getAmount, setExpensesAction } from '../actions';
+import { fetchExchangesThunk } from '../actions';
 import Input from '../components/Input';
-import { fetchExchanges } from '../utils';
 import FormSelects from './FormSelects';
 
 class Wallet extends React.Component {
@@ -15,11 +14,9 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
-      total: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.fetchl = this.fetchl.bind(this);
   }
 
   handleChange({ target }) {
@@ -27,20 +24,10 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
-  async fetchl(currency) {
-    const request = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const response = await request.json();
-    const obj = Object.values(response).find((item) => item.code === currency).ask;
-    return obj;
-  }
-
   async handleSubmit() {
-    const { value, currency, method, tag, description, total } = this.state;
-    const { setExpenses, exchangeRates, expenses, setTotal } = this.props;
-    const foreignCoin = await this.fetchl(currency);
-    console.log(`${currency}: ${foreignCoin}`);
-    this.setState({ total: [...total, Number(value * foreignCoin)] });
-    setTotal(Number(value));
+    const { value, currency, method, tag, description } = this.state;
+    const { setExpenses, expenses } = this.props;
+
     setExpenses({
       id: expenses.length,
       value,
@@ -48,27 +35,29 @@ class Wallet extends React.Component {
       method,
       tag,
       description,
-      exchangeRates,
     });
   }
 
-  sum(values) {
-    if (values.length !== 0) {
-      const total = values.reduce((acc, item) => acc + item, 0);
+  sum() {
+    const { expenses } = this.props;
+    if (expenses.length !== 0) {
+      const total = expenses.reduce((acc, { value, currency, exchangeRates }) => (
+        acc + (Number(value) * exchangeRates[currency].ask)
+      ), 0);
       return total.toFixed(2);
     }
     return 0;
   }
 
   render() {
-    const { description, value, total } = this.state;
+    const { description, value } = this.state;
     const { email } = this.props;
     return (
       <div>
         <header>
           TrybeWallet
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{this.sum(total)}</p>
+          <p data-testid="total-field">{this.sum()}</p>
           <p data-testid="header-currency-field">BRL</p>
           <p data-testid="password-input" />
         </header>
@@ -109,18 +98,8 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  exchangeRates: PropTypes.arrayOf(PropTypes.object).isRequired,
-  expenses: PropTypes.shape({
-    currency: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    exchangeRates: PropTypes.arrayOf(PropTypes.object).isRequired,
-    length: PropTypes.func,
-    method: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  }).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   setExpenses: PropTypes.func.isRequired,
-  setTotal: PropTypes.func.isRequired,
 };
 
 // Wallet.propTypes = {
@@ -143,9 +122,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getExchanges: () => dispatch(fetchExchangesThunk()),
-  setExpenses: (expenses) => dispatch(setExpensesAction(expenses)),
-  setTotal: (value) => dispatch(getAmount(value)),
+  setExpenses: (expenses) => dispatch(fetchExchangesThunk(expenses)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -37,7 +37,6 @@ const setWallet = (state = WALLET_INITIAL_STATE, action) => {
     return {
       ...state,
       isLoading: false,
-      exchangeRates: action.payload,
     };
   case GET_AMOUNT:
     return {

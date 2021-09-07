@@ -54,19 +54,17 @@ export const fetchCurrenciesThunk = () => async (dispatch) => {
   dispatch(getCurrenciesAction());
   try {
     const response = await fetchCurrencies();
-    const exchanges = await fetchExchanges();
-    dispatch(getExchangesSuccessAction(exchanges));
     dispatch(getCurrenciesSuccessAction(response));
   } catch (error) {
     dispatch(getCurrenciesErrorAction(error));
   }
 };
 
-export const fetchExchangesThunk = () => async (dispatch) => {
+export const fetchExchangesThunk = (expense) => async (dispatch) => {
   dispatch(getExchangesAction());
   try {
-    const response = await fetchExchanges();
-    dispatch(getExchangesSuccessAction(response));
+    const exchangeRates = await fetchExchanges();
+    dispatch(setExpensesAction({ ...expense, exchangeRates }));
   } catch (error) {
     dispatch(getExchangesErrorAction(error));
   }

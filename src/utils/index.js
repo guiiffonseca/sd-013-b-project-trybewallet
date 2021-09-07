@@ -21,12 +21,10 @@ export const fetchCurrencies = async () => {
 };
 
 // Se a chamada da função tiver parâmetro vai retornar apenas um objeto, senão um array de objetos
-export const fetchExchanges = async (...currency) => {
+export const fetchExchanges = async () => {
   const request = await fetch(URL);
   const response = await request.json();
-  return currency.length !== 0
-    ? Object.values(response).find((item) => item.code === currency)
-    : Object.values(response).map((exchange) => exchange);
+  return response;
   // .reduce((acc, { code, name, ask }) => {
   //   acc[code] = { code, name, ask };
   //   return acc;
