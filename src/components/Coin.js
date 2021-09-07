@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class Coin extends React.Component {
   render() {
+    const { currencies } = this.props;
     return (
       <div>
         <label htmlFor="moeda">
@@ -10,6 +12,12 @@ class Coin extends React.Component {
             name="moeda"
             id="moeda"
           >
+            {currencies.map((item) => (
+              <option value={ item } key={ item }>
+                { item }
+              </option>
+
+            ))}
             Moeda
           </select>
         </label>
@@ -17,5 +25,9 @@ class Coin extends React.Component {
     );
   }
 }
+
+Coin.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Coin;

@@ -1,11 +1,12 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Coin from '../components/Coin';
 import Payment from '../components/Payment';
 import Tags from '../components/Tags';
 import InputEntrys from '../components/InputEntrys';
+import currenciesThunk from '../actions';
 
 class Wallet extends React.Component {
   // constructor() {
@@ -14,7 +15,13 @@ class Wallet extends React.Component {
   //   };
   // }
 
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <div>
         <div>
@@ -23,7 +30,7 @@ class Wallet extends React.Component {
         </div>
         <form>
           <InputEntrys />
-          <Coin />
+          <Coin currencies={ currencies } />
           <Payment />
           <Tags />
         </form>
@@ -32,4 +39,17 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(currenciesThunk()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
