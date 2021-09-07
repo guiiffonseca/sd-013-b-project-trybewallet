@@ -36,10 +36,10 @@ export const getCurrencie = () => async (dispatch) => {
   try {
     dispatch(requestApi());
     const response = await getApi();
-    const currencies = Object.values(response);
+    const currencies = response;
     delete currencies.USDT;
-    dispatch(currenciesSuccess(currencies));
-  } catch (err) { console.log(err, 'ola'); }
+    dispatch(currenciesSuccess(Object.keys(currencies)));
+  } catch (err) { console.log(err); }
 };
 
 export const getAddExpense = (state) => async (dispatch) => {

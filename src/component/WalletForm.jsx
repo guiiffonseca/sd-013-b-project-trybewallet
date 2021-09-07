@@ -54,7 +54,7 @@ class WalletForm extends Component {
           Moeda :
           <select name="moeda" id="moeda" onChange={ this.handelChange } value={ moeda }>
             {currencies.map((curr, i) => (
-              <option key={ i } value={ curr.code }>{ curr.code }</option>))}
+              <option key={ i } value={ curr }>{ curr}</option>))}
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -98,7 +98,7 @@ WalletForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrencies: () => dispatch(getCurrencie()),
+  setCurrencies: (valor) => dispatch(getCurrencie(valor)),
   setExpenses: (value) => dispatch(getAddExpense(value)),
 });
 
