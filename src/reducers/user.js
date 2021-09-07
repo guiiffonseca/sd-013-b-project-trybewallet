@@ -13,8 +13,8 @@ const reducerUser = (state = initialState, action) => {
   case SET_LOGIN_VALUE:
     return {
       user: {
-        email: action.payload.email,
-        password: action.payload.password,
+        email: action.payload.user.email,
+        password: action.payload.user.password,
       },
     };
   default:

@@ -1,5 +1,6 @@
-.App {
+body {
   text-align: center;
+  background-color: #c2d1f0;
 }
 
 .header {
@@ -37,7 +38,8 @@
 
 .form {
   background-color: rgb(111, 122, 133);
-  height: 100px;
+  min-height: 100px;
+  max-height: 200px;
   padding-top: 60px;
   width: 100vw;
   display: flex;
@@ -51,6 +53,10 @@ input {
 }
 
 select {
+  margin-left: 10px;
+}
+
+button {
   margin-left: 10px;
 }
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setLoginValue } from '../actions/index';
+import { setLoginValue, getApiThunk } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      user: {
+        email: '',
+        password: '',
+      },
       emailValid: false,
       passValid: false,
     };
@@ -18,9 +20,14 @@ class Login extends React.Component {
     this.emailTest = this.emailTest.bind(this);
   }
 
+  componentDidMount() {
+    const { getApi } = this.props;
+    getApi();
+  }
+
   onSubmitLog() {
-    const { history, dispatchSetValue } = this.props;
-    dispatchSetValue(this.state);
+    const { history, dispatchSetLoginValue } = this.props;
+    dispatchSetLoginValue(this.state);
     history.push('/carteira');
   }
 
@@ -50,7 +57,15 @@ class Login extends React.Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    // atualizar propriedades do objeto
+    // fonte:https:stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
+    this.setState((prevState) => ({
+      ...prevState,
+      user: {
+        ...prevState.user,
+        [name]: value,
+      },
+    }));
     if (name === 'email') {
       this.emailTest(value);
     }
@@ -99,14 +114,16 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  dispatchSetValue: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
+  dispatchSetLoginValue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSetValue: (payload) => dispatch(setLoginValue(payload)),
-}
-);
+  dispatchSetLoginValue: (payload) => dispatch(setLoginValue(payload)),
+  getApi: () => dispatch(getApiThunk()),
+});
+
 export default connect(null, mapDispatchToProps)(Login);
