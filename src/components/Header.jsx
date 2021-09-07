@@ -40,4 +40,5 @@ export default connect(mapStateToProps, null)(Header);
 
 Header.propTypes = {
   userState: PropTypes.string.isRequired,
+  expenditure: PropTypes.number.isRequired,
 };

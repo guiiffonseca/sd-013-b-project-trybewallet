@@ -106,6 +106,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, null)(ExpenseForm);
 
 ExpenseForm.propTypes = {
-  currency: PropTypes.objectOf().isRequired,
+  currency: PropTypes.shape().isRequired,
   dispatch: PropTypes.func.isRequired,
 };
