@@ -6,6 +6,8 @@ export const SET_EXCHANGE_RATES_SUCCES = 'SET_EXCHANGE_RATES_SUCCES';
 
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 
+export const UPDATE_EXPENSES_SUCCESS = 'UPDATE_EXPENSES_SUCCESS';
+
 export const setUserValue = (payload) => (
   {
     type: SET_USERS,
@@ -22,6 +24,11 @@ export const setExchangeRatesSucces = (payload) => (
 
 export const getCurrencySuccess = (payload) => ({
   type: GET_CURRENCY_SUCCESS,
+  payload,
+});
+
+export const updateExpensesSuccess = (payload) => ({
+  type: UPDATE_EXPENSES_SUCCESS,
   payload,
 });
 

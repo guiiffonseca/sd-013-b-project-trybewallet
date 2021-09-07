@@ -1,10 +1,85 @@
-/* import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { updateExpensesSuccess } from '../actions/index';
 
 class ExpenseTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentExpenses: [],
+    };
+  }
+
+  renderDescription(description) {
+    return (
+      <td>{description}</td>
+    );
+  }
+
+  renderTag(tag) {
+    return (
+      <td>{tag}</td>
+    );
+  }
+
+  renderMethod(method) {
+    return (
+      <td>{method}</td>
+    );
+  }
+
+  renderValue(value) {
+    return (
+      <td>{value}</td>
+    );
+  }
+
+  renderCurrency(exchangeRates, currency) {
+    return (
+      <td>{exchangeRates[currency].name.split('/')[0]}</td>
+    );
+  }
+
+  renderExchange(exchangeRates, currency) {
+    return (
+      <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+    );
+  }
+
+  renderConvertedValue(exchangeRates, currency, value) {
+    return (
+      <td>{Number(exchangeRates[currency].ask * value).toFixed(2)}</td>
+    );
+  }
+
+  renderConversionCurrency(expenses) {
+    if (expenses) return <td>Real</td>;
+  }
+
+  renderButton(index) {
+    const { expenses, dispatchSetExpenses } = this.props;
+    return (
+      <th>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ () => {
+            expenses.splice(index, 1);
+            this.setState({
+              currentExpenses: expenses,
+            });
+            dispatchSetExpenses(this.state);
+          } }
+        >
+          Deletar
+        </button>
+      </th>
+    );
+  }
+
   render() {
     const { expenses } = this.props;
-    if (expenses) console.log(expenses);
     return (
       <table>
         <thead>
@@ -17,32 +92,48 @@ class ExpenseTable extends Component {
             <th>Câmbio utilizado</th>
             <th>Valor convertido</th>
             <th>Moeda de conversão</th>
-            <th>Editar</th>
-            <th>Excluir</th>
+            <th>Editar/Excluir</th>
           </tr>
         </thead>
         <thead>
-          <tr>
-            { expenses.map(({ description, id }) => (<td key={ id }>{description}</td>)) }
-            { expenses.map(({ tag, id }) => (<td key={ id }>{tag}</td>)) }
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-          </tr>
+          {expenses.map(({
+            id,
+            description,
+            tag,
+            method,
+            value,
+            currency,
+            exchangeRates,
+          }, index) => (
+            <tr key={ id }>
+              {this.renderDescription(description)}
+              {this.renderTag(tag)}
+              {this.renderMethod(method)}
+              {this.renderValue(value)}
+              {this.renderCurrency(exchangeRates, currency)}
+              {this.renderExchange(exchangeRates, currency)}
+              {this.renderConvertedValue(exchangeRates, currency, value)}
+              {this.renderConversionCurrency(expenses)}
+              {this.renderButton(index)}
+            </tr>
+          ))}
         </thead>
       </table>
     );
   }
 }
 
+ExpenseTable.propTypes = {
+  dispatchSetExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseTable);
- */
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetExpenses: (value) => dispatch(updateExpensesSuccess(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
