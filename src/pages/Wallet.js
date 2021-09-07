@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import login from '../actions';
+import { userLogin } from '../actions';
 import Header from '../components/Header';
 import Form from '../components/Form';
 
@@ -24,7 +24,7 @@ const mapStateToProps = ({ user: { email } }) => ({
   email,
 });
 const mapDispatchToProps = (dispatch) => ({
-  saveLogin: (email) => dispatch(login(email)),
+  saveLogin: (email) => dispatch(userLogin(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

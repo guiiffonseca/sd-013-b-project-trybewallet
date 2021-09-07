@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import login from '../actions';
+import { userLogin } from '../actions';
 
 class Header extends React.Component {
   render() {
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveLogin: (email) => dispatch(login(email)),
+  saveLogin: (email) => dispatch(userLogin(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
