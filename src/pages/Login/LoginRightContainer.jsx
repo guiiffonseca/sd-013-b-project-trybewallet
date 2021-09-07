@@ -13,6 +13,7 @@ class LoginRightContainer extends React.Component {
       email: '',
       password: '',
       button: true,
+      classButton: 'disabled-button',
     };
 
     this.handleChanges = this.handleChanges.bind(this);
@@ -35,6 +36,7 @@ class LoginRightContainer extends React.Component {
     // console.log(validationButton);
     this.setState({
       button: !validationButton,
+      classButton: 'login-button',
     });
   }
 
@@ -48,16 +50,16 @@ class LoginRightContainer extends React.Component {
   }
 
   returnDisabledButton() {
-    const { button } = this.state;
+    const { button, classButton } = this.state;
     return (
       <Link to="/carteira">
         <button
-          className="disabled-button"
+          className={ classButton }
           type="button"
           disabled={ button }
           onClick={ this.handleButton }
         >
-          Entrar
+          <span>Entrar</span>
         </button>
       </Link>
     );

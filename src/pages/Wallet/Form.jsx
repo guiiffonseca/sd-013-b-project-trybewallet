@@ -1,6 +1,30 @@
 import React from 'react';
 
 class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currencies: [],
+    };
+  }
+
+  componentDidMount() {
+    /* Lembrete: coloquei o fetch na Api devido a problemas de lint. No contexto original eu declarei
+    fora do didmount e chamei a função dentro dele. */
+    const fetchApi = async () => {
+      const url = 'https://economia.awesomeapi.com.br/json/all';
+      const response = await fetch(url);
+      const currenciesObject = await response.json();
+      delete currenciesObject.USDT;
+
+      this.setState({
+        currencies: Object.entries(currenciesObject),
+      });
+    };
+
+    fetchApi();
+  }
+
   returnValue() {
     return (
       <label htmlFor="formValue">
@@ -20,11 +44,14 @@ class Form extends React.Component {
   }
 
   returnSelect() {
+    const { currencies } = this.state;
     return (
       <label htmlFor="formSelect">
         Moeda
         <select name="" id="formSelect">
-          Options virá da API
+          {currencies.map((currencie, index) => (
+            <option key={ index } value={ currencie[1].code }>{currencie[1].code}</option>
+          ))}
         </select>
       </label>
     );
@@ -72,3 +99,8 @@ class Form extends React.Component {
 }
 
 export default Form;
+
+/*
+Como remover propriedade de um objeto (delete), sugestão da turma no grupo de whatsapp
+https://igluonline.com/como-remover-uma-propriedade-de-um-objeto-javascript/
+*/
