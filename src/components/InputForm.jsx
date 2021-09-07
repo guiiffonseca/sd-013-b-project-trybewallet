@@ -5,7 +5,7 @@ export default class InputForm extends React.Component {
   render() {
     const { name, handleChange, labelText, value } = this.props;
     return (
-      <label htmlFor="valueExpense">
+      <label htmlFor={ name }>
         {labelText}
         <input
           type="text"

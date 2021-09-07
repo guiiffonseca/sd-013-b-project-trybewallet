@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import InputForm from './InputForm';
 import SelectForm from './SelectForm';
+import responseApi from '../service/data';
+import { expenditure, totalExpenditure } from '../actions';
 
 class ExpenseForm extends React.Component {
   constructor(props) {
@@ -10,25 +12,49 @@ class ExpenseForm extends React.Component {
     this.state = {
       valueExpense: '',
       descriptionExpense: '',
-      currencyOption: 'BRL',
+      currencyOption: 'USD',
       payTypeOption: 'Dinheiro',
       tagOption: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
+  handleClick() {
+    const { currency, dispatch } = this.props;
+    const { state } = this;
+    const actualCurrency = {
+      id: currency.cont,
+      value: state.valueExpense,
+      description: state.descriptionExpense,
+      currency: state.currencyOption,
+      method: state.payTypeOption,
+      tag: state.tagOption,
+    };
+    responseApi()
+      .then((response) => {
+        const actualCurrencyExpense = parseFloat(response[state.currencyOption].ask);
+        console.log(actualCurrencyExpense);
+        dispatch(totalExpenditure(parseFloat(state
+          .valueExpense) * actualCurrencyExpense));
+        dispatch(expenditure(
+          { ...actualCurrency, exchangeRates: response },
+        ));
+      });
+  }
+
   render() {
     const { valueExpense,
       descriptionExpense, currencyOption,
       tagOption, payTypeOption } = this.state;
-
     const payType = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const typeExpense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { currency } = this.props;
+    if (!currency.responseApi) return <h1>Loading</h1>;
     return (
       <form>
         <InputForm
@@ -49,6 +75,7 @@ class ExpenseForm extends React.Component {
           value={ currencyOption }
           labelText="Moeda"
           id="currency"
+          handleChange={ this.handleChange }
         />
         <SelectForm
           options={ payType }
@@ -66,7 +93,7 @@ class ExpenseForm extends React.Component {
           id="typeExpense"
           handleChange={ this.handleChange }
         />
-        <button type="button" onClick>Adicionar despesa</button>
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );
   }
@@ -80,4 +107,5 @@ export default connect(mapStateToProps, null)(ExpenseForm);
 
 ExpenseForm.propTypes = {
   currency: PropTypes.objectOf().isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
