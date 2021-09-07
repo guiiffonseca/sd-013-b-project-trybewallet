@@ -45,8 +45,8 @@ export const getCurrencie = () => async (dispatch) => {
 export const getAddExpense = (state) => async (dispatch) => {
   try {
     const response = await getApi();
+    delete response.USDT;
     const exchangeRates = Object.values(response);
-    delete exchangeRates.USDT;
     dispatch(getExpenses({ ...state, exchangeRates }));
   } catch (err) {
     console.log(err);
