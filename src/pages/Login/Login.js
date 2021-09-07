@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateEmail } from '../../actions';
@@ -21,7 +22,6 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: '',
       emailValid: false,
       passwordValid: false,
     };
@@ -76,6 +76,13 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  login: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(updateEmail(email)),
