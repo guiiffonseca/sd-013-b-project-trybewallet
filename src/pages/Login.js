@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setEmail } from '../actions/index';
+import { setEmail as setEmailAction } from '../actions/index';
 import Input from '../components/Input';
 
 class Login extends React.Component {
@@ -47,11 +47,11 @@ class Login extends React.Component {
   }
 
   handleOnClick() {
-    const { history } = this.props;
+    const { history, setEmail } = this.props;
     const { email } = this.state;
 
     setEmail(email);
-    history.push('./carteira');
+    history.push('/carteira');
   }
 
   render() {
@@ -64,7 +64,6 @@ class Login extends React.Component {
           name="email"
           onChange={ this.checkValidEmail }
           value={ email }
-          data-testid="email-input"
         />
         <Input
           label="Senha"
@@ -72,7 +71,6 @@ class Login extends React.Component {
           value={ password }
           name="password"
           onChange={ this.checkValidPassword }
-          data-testid="password-input"
         />
         <button
           type="button"
@@ -90,10 +88,11 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  setEmail: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmail(email)),
+  setEmail: (email) => dispatch(setEmailAction(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
