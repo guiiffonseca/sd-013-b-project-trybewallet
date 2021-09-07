@@ -13,12 +13,20 @@ export const setEmail = (payload) => ({
   payload,
 });
 
+export const fetchCurrenciesAPI = () => async (dispatch) => {
+  const urlAPI = 'https://economia.awesomeapi.com.br/json/all';
+  const currenciesResponse = await (await fetch(urlAPI)).json();
+  const currenciesNoUSDT = Object.entries(currenciesResponse)
+    .filter((key) => key[0] !== 'USDT');
+  const currenciesEdit = currenciesNoUSDT.map((i) => ({ [i[0]]: i[1] }));
+
+  dispatch({
+    type: ALL_ACTIONS.SET_CURRENCIES,
+    payload: currenciesEdit,
+  });
+};
+
 export const setExpenses = (payload) => ({
   type: ALL_ACTIONS.SET_EXPENSES,
-  payload,
-});
-
-export const setCurrencies = (payload) => ({
-  type: ALL_ACTIONS.SET_CURRENCIES,
   payload,
 });
