@@ -77,7 +77,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  // email: PropTypes.string.isRequired,
   dispatchFazerLogin: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
