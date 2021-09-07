@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
+import { getCurrenciesThunk } from '../actions/index';
 
 class ExpensesForm extends React.Component {
   constructor(props) {
@@ -11,6 +14,13 @@ class ExpensesForm extends React.Component {
       description: '',
       currency: 'BRL',
     };
+
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   handleOnChange({ target }) {
@@ -20,6 +30,7 @@ class ExpensesForm extends React.Component {
 
   render() {
     const { expenses, description, currency } = this.state;
+    const { currencies } = this.props;
     const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const category = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -29,6 +40,7 @@ class ExpensesForm extends React.Component {
           label="Valor"
           name="expenses"
           id={ expenses }
+          value={ expenses }
           onChange={ this.handleOnChange }
         />
         <Input
@@ -36,12 +48,13 @@ class ExpensesForm extends React.Component {
           label="Descrição"
           name="description"
           id={ description }
+          value={ description }
           onChange={ this.handleOnChange }
         />
         <Select
           label="Moeda"
           name="currency"
-          // options={ currency }
+          options={ currencies }
           value={ currency }
           onChange={ this.handleOnChange }
         />
@@ -64,4 +77,17 @@ class ExpensesForm extends React.Component {
   }
 }
 
-export default ExpensesForm;
+ExpensesForm.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
