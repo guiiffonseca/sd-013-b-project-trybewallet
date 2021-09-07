@@ -6,11 +6,9 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      button: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.enableButton = this.enableButton.bind(this);
   }
 
   handleChange({ target }) {
@@ -21,18 +19,10 @@ class Login extends React.Component {
       [name]: value,
     });
   }
-  
-  enableButton() {
-    const { email, password } = this.state;
-    if (!(/\S+@\S+\.\S+/.test(email) && password.length >= 6)) {
-      this.setState({ button: true });
-    } else {
-      this.setState({ button: false });
-    }
-  }
 
   render() {
-    const { email, password, button } = this.state;
+    const { email, password } = this.state;
+    const MIN_PASSWORD = 6;
     return (
       <div>
         <form>
@@ -49,13 +39,13 @@ class Login extends React.Component {
             name="password"
             data-testid="password-input"
             onChange={ this.handleChange }
-            value={ password }  
+            value={ password }
           />
           <br />
           <button
             type="button"
             id="input-button"
-            disabled={ !button }
+            disabled={ !/\S+@\S+\.\S+/.test(email) || password.length < MIN_PASSWORD }
           >
             Entrar
           </button>
