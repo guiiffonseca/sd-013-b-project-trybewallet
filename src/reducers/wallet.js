@@ -1,4 +1,4 @@
-import { GET_CURRENCY, ADD_EXPANSE } from '../actions';
+import { GET_CURRENCY, ADD_EXPANSE, REMOVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -18,6 +18,11 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.newArray,
     };
   default:
     return state;

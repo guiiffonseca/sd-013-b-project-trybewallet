@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCurrencyThunk, addExpenseThunk } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -54,21 +55,14 @@ class Wallet extends React.Component {
 
   currencyOptionsCreator() {
     const { currencies } = this.props;
-    if (currencies.length < 1) {
-      return;
-    }
-    const newArray = currencies.filter((element) => element[1] !== undefined);
-    return newArray.map((currency) => {
-      const currencyName = currency[0];
-      return (
-        <option
-          key={ currencyName }
-          value={ currencyName }
-        >
-          { currencyName }
-        </option>
-      );
-    });
+    return currencies.map((element) => (
+      <option
+        key={ element }
+        value={ element }
+      >
+        { element }
+      </option>
+    ));
   }
 
   selectWithOptions() {
@@ -179,6 +173,7 @@ class Wallet extends React.Component {
           </div>
         </header>
         {this.forms()}
+        <Table />
       </div>
     );
   }
@@ -186,7 +181,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   addExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.array),
+  currencies: PropTypes.arrayOf(String),
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchCurrency: PropTypes.func.isRequired,
