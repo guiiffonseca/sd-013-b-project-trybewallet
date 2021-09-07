@@ -2,13 +2,13 @@
 import { USER_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: '',
+  email: '',
 };
 
 function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case USER_EMAIL:
-    return { ...state, user: action.payload };
+    return { ...state, email: action.payload };
   default:
     return state;
   }
