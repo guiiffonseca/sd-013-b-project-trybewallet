@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { saveEmail as saveEmailAction } from '../actions';
 
 // expressão regular retirada do site: https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
 
@@ -20,7 +22,7 @@ class Login extends React.Component {
     const { name } = target;
     this.setState({
       [name]: target.value,
-    }, () => this.validation());
+    }, () => this.validation()); // essa callback é chamada junto com a atualização do estado
   }
 
   validation() {
@@ -40,7 +42,9 @@ class Login extends React.Component {
   }
 
   redirect() {
-    const { history } = this.props;
+    const { history, saveEmail } = this.props;
+    const { email } = this.state;
+    saveEmail(email);
     history.push('/carteira');
   }
 
@@ -50,22 +54,22 @@ class Login extends React.Component {
       <div className="form-content">
         <div className="icon-trybe">Login</div>
         <form>
-          <label htmlFor="email-input">
+          <label htmlFor="email-field">
             <input
-              data-test-id="email-input"
+              data-testid="email-input"
               type="email"
               name="email"
-              id="email-input"
+              id="email-field"
               value={ email }
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="password-input">
+          <label htmlFor="password-field">
             <input
-              data-test-id="password-input"
+              data-testid="password-input"
               type="password"
               name="password"
-              id="password-input"
+              id="password-field"
               value={ password }
               onChange={ this.handleChange }
             />
@@ -85,6 +89,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.shape(PropTypes.any).isRequired,
+  saveEmail: PropTypes.func.isRequired,
 };
 
-export default Login;
+const mapDispatchtoProps = (dispatch) => ({
+  saveEmail: (state) => dispatch(saveEmailAction(state)),
+});
+
+export default connect(null, mapDispatchtoProps)(Login);
