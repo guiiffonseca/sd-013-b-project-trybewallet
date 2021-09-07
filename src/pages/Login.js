@@ -47,7 +47,7 @@ class Login extends React.Component {
   }
 
   handleOnClick() {
-    const { history, setEmail } = this.props;
+    const { history } = this.props;
     const { email } = this.state;
 
     setEmail(email);
@@ -90,7 +90,6 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  setEmail: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
