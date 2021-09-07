@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchCurrency, addExpense } from '../actions';
 import WalletHeader from '../components/WalletHeader';
 import WalletSelect from '../components/WalletSelect';
@@ -78,6 +79,11 @@ class Wallet extends React.Component {
     );
   }
 }
+
+Wallet.propTypes = {
+  addCurrencies: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addExpenses: (state) => dispatch(addExpense(state)),
