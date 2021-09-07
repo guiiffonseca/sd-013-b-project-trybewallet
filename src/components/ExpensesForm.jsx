@@ -41,7 +41,7 @@ class ExpensesForm extends React.Component {
         <Select
           label="Moeda"
           name="currency"
-        //   options={ currency }
+          // options={ currency }
           value={ currency }
           onChange={ this.handleOnChange }
         />
