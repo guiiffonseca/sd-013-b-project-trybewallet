@@ -9,19 +9,24 @@ class Wallet extends React.Component {
     this.getValor = this.getValor.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.getValor();
-
-  // }
+  componentDidMount() {
+    this.getValor();
+  }
 
   getValor() {
     const { expenses } = this.props;
-    console.log(expenses);
     if (expenses.length === 0) {
       return 0;
     }
     // return expenses.reduce((acc, crr) => console.log(acc) + parseFloat(crr.valor), 0);
-    return expenses.map((expense) => expense.valor).reduce((acc, crr) => acc + crr);
+    // oque me ajudou a passaro no 8 foi o rp do marcos rodrigues
+    // https://github.com/tryber/sd-013-b-project-trybewallet/pull/41/commits/b45664822ac2d38bc98afebeb21d5bcd4895b7dc
+    const reduce = expenses.reduce((acc, crr) => {
+      const subTotal = crr.value * crr.exchangeRates[crr.currency].ask;
+      acc += subTotal;
+      return acc;
+    }, 0);
+    return parseFloat(reduce).toFixed(2);
   }
 
   render() {
@@ -31,9 +36,7 @@ class Wallet extends React.Component {
         <header>
           <span data-testid="email-field">{ email }</span>
           <span data-testid="total-field">
-            {
-              this.getValor()
-            }
+            { this.getValor() }
           </span>
           <span data-testid="header-currency-field">
             {/* {currencies.length <= 0 ? 'BRL' : currencies} */}
