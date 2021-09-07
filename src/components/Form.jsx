@@ -59,8 +59,9 @@ class Form extends React.Component {
       remove,
       editExpense } = this.props;
     const newExpenses = expenses.filter((item) => item.id !== id);
-    const expesnesWithEdit = [{ id, ...this.state, exchangeRates }, ...newExpenses];
-    remove(expesnesWithEdit);
+    const expensesWithEdit = [{ id, ...this.state, exchangeRates }, ...newExpenses];
+    expensesWithEdit.sort((a, b) => a.id - b.id);
+    remove(expensesWithEdit);
     editExpense();
   }
 
