@@ -2,7 +2,7 @@
 import { ALL_ACTIONS } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'user@test.com',
 };
 
 const user = (state = INITIAL_STATE, { type, payload }) => {
