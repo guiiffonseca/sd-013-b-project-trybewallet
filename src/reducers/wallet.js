@@ -9,11 +9,14 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case GET_CURRENCIES:
     return {
-      ...state, currencies: action.payload,
+      ...state, currencies: Object.keys(action.payload),
     };
   case GET_EXPENSES:
     return {
       ...state,
+      expenses: [...state.expenses,
+        action.payload,
+      ],
     };
   default:
     return state;

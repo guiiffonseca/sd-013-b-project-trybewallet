@@ -6,6 +6,28 @@ import WalletForm from '../components/WalletForm';
 import '../styles/wallet.css';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+    this.totalExpensesValue = this.totalExpensesValue.bind(this);
+  }
+
+  totalExpensesValue() {
+    const { totalExpenses } = this.props;
+    let total = 0;
+
+    const toSumTotal = Object.values(totalExpenses);
+
+    toSumTotal.forEach((element) => {
+      const { value, currency, exchangeRates } = element;
+      total += Number(value) * Number(exchangeRates[currency].ask);
+    });
+
+    return total;
+  }
+
   render() {
     const { userEmail } = this.props;
     return (
@@ -16,7 +38,7 @@ class Wallet extends React.Component {
             <h5 data-testid="email-field">{userEmail}</h5>
           </div>
           <div className="total-value">
-            <h5 data-testid="total-field">0</h5>
+            <h5 data-testid="total-field">{ this.totalExpensesValue().toFixed(2) }</h5>
           </div>
           <div className="currency-field" data-testid="header-currency-field">
             <h5>BRL</h5>
@@ -30,10 +52,12 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   userEmail: PropTypes.func,
+  totalExpenses: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  totalExpenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);

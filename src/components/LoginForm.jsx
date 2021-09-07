@@ -14,14 +14,14 @@ class LoginForm extends React.Component {
       inputEmail: '',
       inputLogin: '',
       loginError: 'box-content',
-      activateButton: true,
+      desativateButton: true,
       loginOk: false,
       emailOk: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.inputFilter = this.inputFilter.bind(this);
-    this.enterPressed = this.enterPressed.bind(this);
+    // this.enterPressed = this.enterPressed.bind(this);
   }
 
   onClick() {
@@ -32,12 +32,12 @@ class LoginForm extends React.Component {
     props.history.push('/carteira');
   }
 
-  enterPressed({ key }) {
-    const { activateButton } = this.state;
-    if (activateButton === false && key === 'Enter') {
-      this.onClick();
-    }
-  }
+  // enterPressed({ key }) {
+  //   const { desativateButton } = this.state;
+  //   if (desativateButton === false && key === 'Enter') {
+  //     this.onClick();
+  //   }
+  // }
 
   handleChange({ target }) {
     this.setState({
@@ -53,18 +53,18 @@ class LoginForm extends React.Component {
     if (emailOk && loginOk === true) {
       this.setState({
         loginError: `${loginError} success`,
-        activateButton: true,
+        desativateButton: true,
       });
     } else {
       this.setState({
         loginError: `${loginError} error`,
-        activateButton: true,
+        desativateButton: true,
       });
     }
     setTimeout(() => {
       this.setState({
         loginError: `${patternValue}`,
-        activateButton: false,
+        desativateButton: false,
       });
     }, ONE_SECOND);
   }
@@ -72,28 +72,28 @@ class LoginForm extends React.Component {
   inputFilter() {
     const { inputEmail, inputLogin } = this.state;
     const regexEmail = /\S+@\S+\.\S+/; // referencia retirada do seguinte site https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
-    const regexLogin = /^(?=.*\d)[0-9a-zA-Z$*&@#]{5,}$/; // referencia retirada do seguin site https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
+    const regexLogin = /^(?=.*\d)[0-9a-zA-Z$*&@#]{6,}$/; // referencia retirada do seguin site https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
 
     if (regexEmail.test(inputEmail) && regexLogin.test(inputLogin)) {
       this.setState({
-        activateButton: false,
+        desativateButton: false,
         loginOk: true,
         emailOk: true,
       });
     } else {
       this.setState({
-        activateButton: true,
+        desativateButton: true,
         loginOk: false,
         emailOk: false,
       });
     }
   }
 
-  inputButton(activateButton) {
+  inputButton(desativateButton) {
     return (
       <button
         type="button"
-        disabled={ activateButton }
+        disabled={ desativateButton }
         className="login-button"
         onClick={ this.onClick }
       >
@@ -103,7 +103,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const { loginError, activateButton, inputEmail, inputLogin } = this.state;
+    const { loginError, desativateButton, inputEmail, inputLogin } = this.state;
     return (
       <div className={ loginError }>
         <div className="login-icon">
@@ -121,7 +121,7 @@ class LoginForm extends React.Component {
                 value={ inputEmail }
                 className="pr-color input-form-base input-email"
                 onChange={ this.handleChange }
-                onKeyDown={ this.enterPressed }
+                // onKeyDown={ this.enterPressed }
                 autoComplete="off"
               />
             </label>
@@ -136,14 +136,14 @@ class LoginForm extends React.Component {
                 value={ inputLogin }
                 className="pr-color input-form-base input-password"
                 onChange={ this.handleChange }
-                onKeyDown={ this.enterPressed }
+                // onKeyDown={ this.enterPressed }
                 placeholder="Senha"
                 autoComplete="off"
               />
             </label>
           </div>
           <div className="login-button-area">
-            { this.inputButton(activateButton) }
+            { this.inputButton(desativateButton) }
           </div>
         </form>
       </div>

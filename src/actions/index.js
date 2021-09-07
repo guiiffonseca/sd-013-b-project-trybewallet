@@ -1,6 +1,7 @@
 import getCurrenciesFromApi from '../services/getCurrenciesFromApi';
 
 export const INPUT_USER = 'INPUT_USER';
+const URL = 'https://economia.awesomeapi.com.br/json/all';
 
 export const userLogin = (emailPayload) => ({
   type: INPUT_USER,
@@ -20,9 +21,21 @@ export const currencies = (payload) => ({
 });
 
 export const getCurrenciesThunk = () => async (dispatch) => {
-  const URL = 'https://economia.awesomeapi.com.br/json/all';
   const fetchCurrencies = await getCurrenciesFromApi(URL);
-  const arrayWithEntries = Object.entries(fetchCurrencies);
-  const arrayWithout = arrayWithEntries.filter((ele) => ele[0] !== 'USDT');
-  dispatch(currencies(arrayWithout));
+  const USDT = 'USDT';
+  delete fetchCurrencies[USDT];
+  dispatch(currencies(fetchCurrencies));
+};
+
+export const exchangeRatesThunk = (receiveExpenses) => async (dispatch) => {
+  const fetchCurrencies = await getCurrenciesFromApi(URL);
+  const USDT = 'USDT';
+  delete fetchCurrencies[USDT];
+  const exchangeContais = {
+    ...receiveExpenses,
+    exchangeRates: {
+      ...fetchCurrencies,
+    },
+  };
+  dispatch(expenses(exchangeContais));
 };
