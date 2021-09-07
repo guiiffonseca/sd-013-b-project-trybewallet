@@ -1,6 +1,7 @@
 export const EMAIL_LOGIN = 'EMAIL_LOGIN';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
+export const SET_EXPENSES = 'SET_EXPENSES';
 
 // ACTION CREATOR - LOGIN
 
@@ -11,9 +12,9 @@ export const emailLogin = (payload) => ({
 
 // ACTION CREATORS - API REQUEST COINS
 
-export const requestAPISuccess = (json) => ({
+export const requestAPISuccess = (payload) => ({
   type: REQUEST_API_SUCCESS,
-  payload: json,
+  payload,
 });
 
 export const requestAPIFailed = (error) => ({
@@ -24,6 +25,19 @@ export const requestAPIFailed = (error) => ({
 export function thunkCurrencies() {
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
-    .then((json) => dispatch(requestAPISuccess(json)))
+    .then((payload) => dispatch(requestAPISuccess(payload)))
     .catch((error) => dispatch(requestAPIFailed(error)));
 }
+
+// ACTION CREATOR - EXPENSES
+
+export const setExpenses = (payload) => ({
+  type: SET_EXPENSES,
+  payload,
+});
+
+export const setExpensesThunk = (payload) => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const exchangeRates = await response.json();
+  dispatch(setExpenses({ ...payload, exchangeRates }));
+};

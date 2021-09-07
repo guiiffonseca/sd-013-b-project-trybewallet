@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_API_SUCCESS, REQUEST_ERROR } from '../actions/index';
+import { REQUEST_API_SUCCESS, REQUEST_ERROR, SET_EXPENSES } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -15,6 +15,10 @@ function usersWalletReducer(state = INITIAL_STATE, action) {
   case REQUEST_ERROR:
     return {
       ...state, error: action.error,
+    };
+  case SET_EXPENSES:
+    return {
+      ...state, expenses: [...state.expenses, action.payload],
     };
   default:
     return state;

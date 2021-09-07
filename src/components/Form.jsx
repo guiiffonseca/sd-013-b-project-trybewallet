@@ -1,61 +1,70 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { thunkCurrencies } from '../actions/index';
+import { setExpensesThunk, thunkCurrencies } from '../actions/index';
+import Value from './FormComponents/Value';
+import Description from './FormComponents/Description';
+import Currency from './FormComponents/Currency';
+import Method from './FormComponents/Method';
+import Tag from './FormComponents/Tag';
+import Button from './FormComponents/Button';
 
 class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentDidMount() {
     const { getCurrencies } = this.props;
     getCurrencies();
   }
 
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleClick() {
+    const { getExpenses } = this.props;
+
+    getExpenses(this.state);
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
+  }
+
   render() {
-    const { currencies } = this.props;
+    const { currencies, description, currency, method, tag } = this.props;
+    const { value } = this.state;
     console.log(Object.keys(currencies));
     return (
       <div>
         <form>
-          <label htmlFor="valor">
-            Valor:
-            <input type="text" name="valor" id="valor" />
-          </label>
 
-          <label htmlFor="descrição">
-            Descrição:
-            <textarea name="descriçao" id="descrição" />
-          </label>
+          <Value value={ value } handleChange={ this.handleChange } />
 
-          <label htmlFor="moeda">
-            Moeda
-            <select name="moeda" id="moeda">
-              {
-                Object.keys(currencies)
-                  .filter((currency) => currency !== 'USDT')
-                  .map((currency) => (<option key={ currency }>{ currency }</option>))
-              }
-            </select>
-          </label>
+          <Description description={ description } handleChange={ this.handleChange } />
 
-          <label htmlFor="forma-pagamento">
-            Método de pagamento:
-            <select name="forma-pagamento" id="forma-pagamento">
-              <option>Dinheiro</option>
-              <option>Cartão de Crédito</option>
-              <option>Cartão de Débito</option>
-            </select>
-          </label>
+          <Currency currencies={ currencies } currency={ currency } handleChange={ this.handleChange } />
 
-          <label htmlFor="tag">
-            Tag:
-            <select name="tag" id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <Method mothod={ method } handleChange={ this.handleChange } />
+
+          <Tag tag={ tag } handleChange={ this.handleChange } />
+
         </form>
+
+        <Button handleClick={ this.handleClick } />
       </div>
     );
   }
@@ -67,6 +76,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(thunkCurrencies()),
+  getExpenses: (data) => dispatch(setExpensesThunk(data)),
 });
 
 Form.propTypes = {
