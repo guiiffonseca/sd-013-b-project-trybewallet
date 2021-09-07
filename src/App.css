@@ -1,4 +1,4 @@
-body {
+/* body {
   text-align: center;
   background-color: #c2d1f0;
 }
@@ -65,7 +65,7 @@ button {
   display: flex;
   flex-direction: column;
 
-}
+} */
 
 
 @keyframes App-logo-spin {
