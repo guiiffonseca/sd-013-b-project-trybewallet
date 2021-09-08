@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class CoinApiFilter extends React.Component {
   constructor(props) {
@@ -28,20 +29,31 @@ class CoinApiFilter extends React.Component {
 
   render() {
     const { coin } = this.state;
-    const options = Object.keys(coin);
-    const filterOptions = options.filter(
+    const { func } = this.props;
+    const options = Object.keys(coin).filter(
       (option) => option !== 'USDT',
     ).map((option) => <option key={ option } value={ option }>{ option }</option>);
 
     return (
-      <label htmlFor="coin">
+      <label htmlFor="currency">
         Moeda:
-        <select id="coin" onChange={ this.handleChange }>
-          { filterOptions }
+        <select
+          id="currency"
+          onChange={ func }
+        >
+          {options}
         </select>
       </label>
     );
   }
 }
 
+// const mapDispatchToProps = (dispatch) => ({
+//   setCoin: (payload) => dispatch(setCoinAction(payload)),
+// });
+
 export default CoinApiFilter;
+
+CoinApiFilter.propTypes = {
+  func: PropTypes.func.isRequired,
+};
