@@ -15,12 +15,17 @@ class WalletForm extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(event) {
+  async handleClick(event) {
     event.preventDefault();
-    const { expense, setExchangeratesFunc, allExpenses, setExpensesFunc } = this.props;
-    const newExpense = { ...expense, id: allExpenses.length };
+    const { allExpenses, setExpensesFunc } = this.props;
+    const urlAPI = 'https://economia.awesomeapi.com.br/json/all';
+    const exchangeRates = await (await fetch(urlAPI)).json();
+    // https://stackoverflow.com/questions/3455405/how-do-i-remove-a-key-from-a-javascript-object
+    delete exchangeRates.USDT;
+
+    const { expense } = this.props;
+    const newExpense = { ...expense, id: allExpenses.length, exchangeRates };
     const expenses = allExpenses.concat(newExpense);
-    setExchangeratesFunc();
     setExpensesFunc(expenses);
   }
 

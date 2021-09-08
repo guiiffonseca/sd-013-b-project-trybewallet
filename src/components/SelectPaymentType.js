@@ -12,7 +12,7 @@ class SelectPaymentType extends React.Component {
   }
 
   componentDidMount() {
-    this.updatePayment('Dinheiro');
+    this.updatePayment('Cartão de crédito');
   }
 
   updatePayment(payment) {
@@ -27,17 +27,17 @@ class SelectPaymentType extends React.Component {
 
   render() {
     return (
-      <label htmlFor="input-payment-type" onChange={ this.handleChange }>
+      <label htmlFor="input-payment-type">
         Método de pagamento:
-        <select id="input-payment-type">
+        <select id="input-payment-type" onChange={ this.handleChange }>
+          <option name="credit" id="credit">
+            Cartão de crédito
+          </option>
           <option name="cash" id="cash">
             Dinheiro
           </option>
           <option name="debit" id="debit">
-            Cartão de Débito
-          </option>
-          <option name="credit" id="credit">
-            Cartão de Crédito
+            Cartão de débito
           </option>
         </select>
       </label>

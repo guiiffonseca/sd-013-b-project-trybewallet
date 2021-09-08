@@ -71,12 +71,10 @@ export const setTag = (payload) => ({
 export const setExchangerates = () => async (dispatch) => {
   const urlAPI = 'https://economia.awesomeapi.com.br/json/all';
   const currenciesResponse = await (await fetch(urlAPI)).json();
-  const currenciesNoUSDT = Object.entries(currenciesResponse)
-    .filter((key) => key[0] !== 'USDT');
-  const currenciesEdit = currenciesNoUSDT.map((i) => ({ [i[0]]: i[1] }));
-
+  // https://stackoverflow.com/questions/3455405/how-do-i-remove-a-key-from-a-javascript-object
+  delete currenciesResponse.USDT;
   dispatch({
     type: ALL_ACTIONS.SET_EXCHANGERATES,
-    payload: currenciesEdit,
+    payload: currenciesResponse,
   });
 };
