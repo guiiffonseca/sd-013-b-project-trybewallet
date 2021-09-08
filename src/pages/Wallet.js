@@ -1,7 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { saveExpense } from '../actions';
 
 import Header from '../components/Header';
 import SelectPayment from '../components/SelectPayment';
+import AddExpense from '../components/AddExpenseButton';
+import SelectTag from '../components/SelectTag';
 
 import './Wallet.css';
 
@@ -11,9 +17,16 @@ class Wallet extends React.Component {
 
     this.state = {
       data: [],
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Cartão de crédito',
+      tag: 'Alimentação',
     };
 
     this.fetchApi = this.fetchApi.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addExpenses = this.addExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -30,44 +43,84 @@ class Wallet extends React.Component {
     });
   }
 
+  handleChange(event) {
+    const { id, value } = event.target;
+    this.setState({
+      [id]: value,
+    });
+  }
+
+  async fetchExchangeRates() {
+    const fetchRates = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const rates = await fetchRates.json();
+    return rates;
+  }
+
+  async addExpenses() {
+    const { expenses, currentExpense } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const id = expenses.length;
+    const expense = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: await this.fetchExchangeRates(),
+    };
+    currentExpense(expense);
+  }
+
   render() {
     const { data } = this.state;
-    console.log(data);
     return (
       <div>
         <Header />
         <form className="wallet-style">
-          <label htmlFor="expenses">
+          <label htmlFor="value">
             Valor
-            <input id="expenses" />
+            <input id="value" onChange={ this.handleChange } type="number" />
           </label>
           <label htmlFor="description">
             Descrição
-            <input id="description" />
+            <input id="description" onChange={ this.handleChange } />
           </label>
           <label htmlFor="currency">
             Moeda
-            <select id="currency">
+            <select id="currency" onChange={ this.handleChange }>
               {
-                data.map((currencies) => <option key="currencies">{ currencies }</option>)
+                data.map((currencies) => (
+                  <option key={ currencies }>
+                    {
+                      currencies
+                    }
+                  </option>
+                ))
               }
             </select>
           </label>
-          <SelectPayment />
-          <label htmlFor="tag">
-            Tag
-            <select id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <SelectPayment onchange={ this.handleChange } />
+          <SelectTag onchange={ this.handleChange } />
+          <AddExpense onclick={ this.addExpenses } />
         </form>
       </div>
     );
   }
 }
 
-export default Wallet;
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+  expenses: wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currentExpense: (expense) => dispatch(saveExpense(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+
+Wallet.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentExpense: PropTypes.func.isRequired,
+};
