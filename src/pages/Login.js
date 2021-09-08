@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { buttonLogin as buttonLoginEvent } from '../actions/index';
-import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -35,7 +35,6 @@ class Login extends React.Component {
     const emailValid = email.includes('@') && email.includes('.com');
     const cinco = 5;
     const passwordValid = password.length > cinco;
-    // console.log(emailValid, passwordValid, email, password);
 
     if (emailValid && passwordValid) {
       this.setState({ isValid: false });
@@ -95,7 +94,6 @@ class Login extends React.Component {
 
 Login.propTypes = {
   buttonLogin: PropTypes.func.isRequired,
-  history: PropTypes.objectOf().isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
