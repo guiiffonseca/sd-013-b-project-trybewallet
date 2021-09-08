@@ -1,7 +1,16 @@
 import React from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
 function App() {
-  return <div>Hello, TrybeWallet!</div>;
+  const history = useHistory();
+  return (
+    <Switch>
+      <Route exact path="/" component={ () => <Login history={ history } /> } />
+      <Route exact path="/carteira" component={ Wallet } />
+    </Switch>
+  );
 }
 
 export default App;
