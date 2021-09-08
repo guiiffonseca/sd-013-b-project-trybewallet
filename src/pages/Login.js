@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import actionLogin from '../actions';
+import actionLogin from '../actions/actionLogin';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,7 +30,6 @@ class Login extends React.Component {
       this.setState({
         ableButton: false,
       });
-      // console.log(ableButton);
     } else {
       this.setState({
         ableButton: true,
@@ -39,13 +38,10 @@ class Login extends React.Component {
   }
 
   handleChange({ target }) {
-    // const { senha } = this.state;
     this.setState({
       [target.name]: target.value,
 
     }, this.verifyInfos);
-
-    // console.log(senha);
   }
 
   render() {

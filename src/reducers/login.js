@@ -1,4 +1,4 @@
-import LOGIN_OK from '../actions/types';
+const LOGIN_OK = 'LOGIN_OK';
 
 const initialState = { email: '' };
 

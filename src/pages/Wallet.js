@@ -1,36 +1,65 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { setExchangeRatesThunk as setExchangeRatesThunkAction,
+  setExpenseAction } from '../actions/actionWallet';
 import FormDespesas from '../components/FormDespesas';
 import Header from '../components/Header';
+import User from '../components/User';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      moedas: {},
-    };
+    this.onClickUser = this.onClickUser.bind(this);
   }
 
-  componentDidMount() {
-    this.getMoedas();
+  onClickUser(obj) {
+    const { expenses, setExchangeRatesThunk } = this.props;
+    const { value, currency, method, tag, description } = obj;
+    const objeto = {
+      id: expenses.length,
+      value,
+      currency,
+      description,
+      method,
+      tag,
+      exchangeRates: {},
+    };
+
+    setExchangeRatesThunk(objeto);
   }
 
   getMoedas() {
     const url = 'https://economia.awesomeapi.com.br/json/all';
-    fetch(url)
+    const moedas = fetch(url)
       .then((response) => response.json())
-      .then((json) => this.setState({ moedas: json }));
+      .then((json) => json);
+    return moedas;
   }
 
   render() {
-    const { moedas } = this.state;
-    // console.log(moedas);
     return (
       <main>
         <Header />
-        <FormDespesas moedas={ moedas } />
+        <FormDespesas onClickUser={ this.onClickUser } />
+        <User />
       </main>
     );
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  setExchangeRatesThunk: PropTypes.func.isRequired,
+  expenses: PropTypes.shape(PropTypes.any).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setExpense: (payload) => dispatch(setExpenseAction(payload)),
+  setExchangeRatesThunk: (payload) => dispatch(setExchangeRatesThunkAction(payload)),
+});
+
+const mapStateToProps = ({ wallet: { expenses } }) => ({
+  expenses,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

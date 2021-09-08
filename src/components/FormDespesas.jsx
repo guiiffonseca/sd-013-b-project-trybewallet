@@ -1,54 +1,94 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setCurrenciesActionThunk } from '../actions/actionWallet';
+import Select from './Select';
 
 class FormDespesas extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { currenciesDispatch } = this.props;
+    currenciesDispatch();
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
-    const { moedas } = this.props;
-    const arrayMoedas = Object.entries(moedas);
+    const { value, description, currency, method, tag } = this.state;
+    const { onClickUser, currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
           Valor:
-          <input type="text" id="valor" name="valor" />
+          <input
+            type="text"
+            id="valor"
+            name="value"
+            value={ value }
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="descrição">
           Descrição:
-          <input type="text" id="descrição" name="descrição" />
+          <input
+            type="text"
+            id="descrição"
+            name="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select name="moeda" id="moeda">
-            {arrayMoedas.map((moeda) => (
-              moeda[0] === 'USDT' ? null
-                : <option key={ moeda[0] } value={ moeda[0] }>{moeda[0]}</option>
+          <select
+            name="currency"
+            id="moeda"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
+            {currencies.map((moeda) => (
+              moeda === 'USDT' ? null
+                : <option key={ moeda } value={ moeda }>{moeda}</option>
             ))}
           </select>
         </label>
-        <label htmlFor="pagamento">
-          Método de pagamento:
-          <select name="pagamento" id="pagamento">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de Crédito</option>
-            <option value="debito">Cartão de Débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select name="tag" id="tag">
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saúde">Saúde</option>
-          </select>
-        </label>
+        <Select method={ method } tag={ tag } handleChange={ this.handleChange } />
+        <button
+          type="button"
+          onClick={ () => onClickUser(this.state) }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
 FormDespesas.propTypes = {
-  moedas: PropTypes.shape(PropTypes.object).isRequired,
+  onClickUser: PropTypes.func.isRequired,
+  currenciesDispatch: PropTypes.func.isRequired,
+  currencies: PropTypes.shape(PropTypes.string).isRequired,
 };
 
-export default FormDespesas;
+const mapDispatchToProps = (dispatch) => ({
+  currenciesDispatch: (payload) => dispatch(setCurrenciesActionThunk(payload)),
+});
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(FormDespesas);
