@@ -1,11 +1,8 @@
 import { BUTTON_LOGIN } from '../actions/index';
 
 const USER_LOGIN = {
-  userLogin: {
-    email: '',
-    password: '',
-  },
-
+  email: 'alguem@gmail.com',
+  password: '',
 };
 
 const userLoginReducer = (state = USER_LOGIN, action) => {
@@ -14,10 +11,8 @@ const userLoginReducer = (state = USER_LOGIN, action) => {
   case BUTTON_LOGIN:
     return {
       ...state,
-      userLogin: {
-        email: payload.email,
-        password: payload.password,
-      },
+      email: payload.email,
+      password: payload.password,
     };
   default:
     return state;

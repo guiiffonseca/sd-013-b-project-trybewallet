@@ -29,10 +29,10 @@ class Login extends React.Component {
   verificaLogin() {
     const { email, password } = this.state;
 
-    const emailValid = (email.includes('@') && email.includes('.com'));
+    const emailValid = email.includes('@') && email.includes('.com');
     const cinco = 5;
-    const passwordValid = (password.length > cinco);
-    console.log(emailValid, passwordValid, email, password);
+    const passwordValid = password.length > cinco;
+    // console.log(emailValid, passwordValid, email, password);
 
     if (emailValid && passwordValid) {
       this.setState({ isValid: false });
@@ -76,15 +76,14 @@ class Login extends React.Component {
             onChange={ handleChange }
           />
         </label>
-        <div>
-          <button
-            type="button"
-            onClick={ handleClick }
-            disabled={ isValid }
-          >
-            Entrar
-          </button>
-        </div>
+        <button
+          type="submit"
+          value="Entrar"
+          onClick={ handleClick }
+          disabled={ isValid }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
