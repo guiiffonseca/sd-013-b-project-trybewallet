@@ -1,5 +1,3 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária
-
 const LOGIN = 'LOGIN';
 const GET_CURRENCIES = 'GET_CURRENCIES';
 

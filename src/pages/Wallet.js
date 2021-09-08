@@ -21,9 +21,11 @@ class Wallet extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (dispatch) => ({
   edit: dispatch.wallet.edit,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   editOption: (option) => dispatch(editBool(option)),
 });
