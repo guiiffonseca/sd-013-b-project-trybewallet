@@ -1,8 +1,16 @@
 import React from 'react';
-/* import React */
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchMoedas } from '../actions/Index';
 
 class FormDespesas extends React.Component {
+  componentDidMount() {
+    const { addMoedas } = this.props;
+    addMoedas();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor-despesa">
@@ -13,7 +21,6 @@ class FormDespesas extends React.Component {
             name="valor"
           />
         </label>
-
         <label htmlFor="descrição-despesa">
           Descrição Despesa
           <input
@@ -22,14 +29,13 @@ class FormDespesas extends React.Component {
             name="descrição-despesa"
           />
         </label>
-
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda">
-            <option name="moeda">Tipo de Moeda</option>
+            {currencies.map((elemento) => (
+              <option key={ elemento } value={ elemento }>{elemento}</option>))}
           </select>
         </label>
-
         <label htmlFor="selecionar-pagamento">
           Método de Pagamento
           <select name="pagamento" id="selecionar-pagamento">
@@ -38,7 +44,6 @@ class FormDespesas extends React.Component {
             <option value="débito">Cartão de débito</option>
           </select>
         </label>
-
         <label htmlFor="selecionar-tag">
           Tag
           <select name="pagamento" id="selecionar-tag">
@@ -53,4 +58,20 @@ class FormDespesas extends React.Component {
     );
   }
 }
-export default FormDespesas;
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addMoedas: () => dispatch(fetchMoedas()),
+});
+
+FormDespesas.propTypes = {
+  addMoedas: PropTypes.func,
+  currencies: PropTypes.objectOf(PropTypes.object),
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormDespesas);
+
+// Com a ajuda da Camila Dornas consegui realizar o Requisito 7;
