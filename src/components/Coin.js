@@ -3,20 +3,20 @@ import React from 'react';
 
 class Coin extends React.Component {
   render() {
-    const { currencies } = this.props;
+    const { currencies, onChange } = this.props;
     return (
       <div>
         <label htmlFor="moeda">
           Moeda
           <select
-            name="moeda"
+            name="currency"
             id="moeda"
+            onChange={ onChange }
           >
             {currencies.map((item) => (
               <option value={ item } key={ item }>
                 { item }
               </option>
-
             ))}
             Moeda
           </select>
@@ -28,6 +28,7 @@ class Coin extends React.Component {
 
 Coin.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Coin;

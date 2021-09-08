@@ -1,14 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class Tags extends React.Component {
   render() {
+    const { onChange } = this.props;
     return (
       <div>
         <label htmlFor="selectTag">
           Tag
           <select
-            name="selectTag"
+            name="tag"
             id="selectTag"
+            onChange={ onChange }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -21,5 +24,9 @@ class Tags extends React.Component {
     );
   }
 }
+
+Tags.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
 
 export default Tags;

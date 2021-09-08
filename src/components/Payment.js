@@ -1,24 +1,32 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class Payment extends React.Component {
   render() {
+    const { onChange, method } = this.props;
     return (
-      <div>
-        <label htmlFor="metodo">
-          Método de pagamento
-          <select
-            name="method"
-            id="metodo"
-          >
-            Método de pagamento
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="CartãoDeCrédito">Cartão de crédito</option>
-            <option value="CartãoDeDébito">Cartão de débito</option>
-          </select>
-        </label>
-      </div>
+
+      <label htmlFor="method">
+        Método de pagamento
+        <select
+          name="method"
+          id="method"
+          onChange={ onChange }
+          value={ method }
+        >
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
+        </select>
+      </label>
+
     );
   }
 }
+
+Payment.propTypes = {
+  method: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default Payment;

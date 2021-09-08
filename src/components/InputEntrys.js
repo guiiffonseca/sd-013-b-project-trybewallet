@@ -1,16 +1,18 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class InputEntrys extends React.Component {
   render() {
+    const { onChange } = this.props;
     return (
       <div>
         <label htmlFor="valor">
           Valor
           <input
             id="valor"
-            type="number"
-            name="valor"
-            value="Valor"
+            type="text"
+            name="value"
+            onChange={ onChange }
           />
         </label>
 
@@ -19,13 +21,17 @@ class InputEntrys extends React.Component {
           <input
             id="descrição"
             type="text"
-            name="descrição"
-            value="Descrição"
+            name="description"
+            onChange={ onChange }
           />
         </label>
       </div>
     );
   }
 }
+
+InputEntrys.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
 
 export default InputEntrys;
