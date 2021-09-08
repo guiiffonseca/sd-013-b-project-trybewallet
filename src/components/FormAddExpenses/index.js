@@ -2,23 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCurrenciesThunk } from '../../actions';
+import { getCurrenciesThunk, setExpensesThunk } from '../../actions';
 import Input from '../Input';
 import Select from '../Select';
 
-const optionsPaymentMethod = [
-  { money: 'Dinheiro' },
-  { creditCard: 'Cartão de crédito' },
-  { debitCard: 'Cartão de débito' },
-];
+const optionsPaymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
-const categoryOptions = [
-  { food: 'Alimentação' },
-  { leisure: 'Lazer' },
-  { work: 'Trabalho' },
-  { transport: 'Transporte' },
-  { cheers: 'Saúde' },
-];
+const categoryOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class FormAddExpenses extends Component {
   constructor(props) {
@@ -26,15 +16,16 @@ class FormAddExpenses extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
-      paymentMethod: '',
-      category: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      id: 0,
     };
     this.handleChanges = this.handleChanges.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    console.log('passou aq');
     const { setCurrencies } = this.props;
     setCurrencies();
   }
@@ -46,10 +37,28 @@ class FormAddExpenses extends Component {
     });
   }
 
+  handleClick() {
+    const { setExpenses } = this.props;
+    const { id } = this.state;
+    const newId = id + 1;
+    setExpenses({ ...this.state });
+    this.setState({ id: newId });
+  }
+
+  renderButton() {
+    return (
+      <button
+        type="button"
+        onClick={ this.handleClick }
+      >
+        Adicionar despesa
+      </button>
+    );
+  }
+
   render() {
     const { currencies } = this.props;
-    console.log(currencies);
-    const { value, description, currency, paymentMethod, category } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <Input
@@ -78,20 +87,21 @@ class FormAddExpenses extends Component {
         />
         <Select
           labelText="Método de pagamento"
-          value={ paymentMethod }
-          name="paymentMethod"
-          id="paymentMethod"
+          value={ method }
+          name="method"
+          id="method"
           onChange={ this.handleChanges }
           options={ optionsPaymentMethod }
         />
         <Select
           labelText="Tag"
-          value={ category }
-          name="category"
-          id="category"
+          value={ tag }
+          name="tag"
+          id="tag"
           onChange={ this.handleChanges }
           options={ categoryOptions }
         />
+        {this.renderButton()}
       </form>
     );
   }
@@ -103,10 +113,12 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(getCurrenciesThunk()),
+  setExpenses: (payload) => dispatch(setExpensesThunk(payload)),
 });
 
 FormAddExpenses.propTypes = {
   setCurrencies: PropTypes.func.isRequired,
+  setExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf,
 };
 

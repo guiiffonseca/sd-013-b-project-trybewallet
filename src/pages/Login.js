@@ -15,14 +15,7 @@ class Login extends React.Component {
     };
 
     this.handleChanges = this.handleChanges.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  onSubmit() {
-    const { email } = this.state;
-    const { history, setUser } = this.props;
-    setUser(email);
-    history.push('/carteira');
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChanges({ target }) {
@@ -30,6 +23,13 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { history, setUser } = this.props;
+    setUser(email);
+    history.push('/carteira');
   }
 
   isToActivateButton() {
@@ -71,7 +71,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ !this.isToActivateButton() }
-            onClick={ this.onSubmit }
+            onClick={ this.handleClick }
           >
             Entrar
           </button>

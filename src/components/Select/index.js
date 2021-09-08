@@ -6,16 +6,14 @@ export default class Select extends Component {
   render() {
     const { labelText, value, name, id, onChange, options } = this.props;
 
-    const newOptions = options.map((option) => {
-      const valueOption = Object.keys(option)[0];
-      return (
-        <option
-          value={ valueOption }
-          key={ valueOption }
-        >
-          { option[valueOption] }
-        </option>);
-    });
+    const newOptions = options.map((option) => (
+      <option
+        value={ option }
+        key={ option }
+      >
+        { option }
+      </option>
+    ));
 
     return (
       <label htmlFor={ name }>
