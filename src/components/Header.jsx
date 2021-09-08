@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+//  CR de Lucas Caribe me ajudou a montar essa logica:
+
 class Header extends React.Component {
   totalExpenses() {
     const { expenses } = this.props;
