@@ -1,53 +1,64 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { requestThunk } from '../actions';
+import { requestThunk, requestAdd } from '../actions';
+import Input from '../component/inputs';
+
+let soma = 0;
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cambio: 'BRL',
-      gastoTotal: 0,
+      id: 0,
+      value: 0,
+      description: "Hot Dog",
+      currency: "USD",
+      method: "Dinheiro",
+      tag: "Alimentação",
+      exchangeRates: {},
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    const { request } = this.props;
-    request();
+  handleChange({ target }) {
+    const { id, value } = target;
+    this.setState({ [id]: value });
+  }
+
+  handleClick() {
+    const { request, saveGlobal } = this.props;
+    // request();
+    saveGlobal(this.state);
+    soma = 187.12;
+    // this.setState({
+    //   soma,
+    // });
   }
 
   render() {
-    const { email, currencies } = this.props;
-    const { cambio, gastoTotal } = this.state;
-    const currencie = Object.keys(currencies);
-    const current = currencie.filter((cu) => cu !== 'USDT');
+    const { email } = this.props;
+    // const { gastoTotal } = this.state;
     return (
+      // "id": 0,
+      // "value": "3",
+      // "description": "Hot Dog",
+      // "currency": "USD",
+      // "method": "Dinheiro",
+      // "tag": "Alimentação",
+      // "exchangeRates": {
       <div>
-        Trybe Wallet
         <div>
           <p data-testid="email-field">{ `Usuario: ${email}` }</p>
-          <p data-testid="header-currency-field">{ `Cambio: ${cambio}` }</p>
-          <p data-testid="total-field">{ `Gasto Total: ${gastoTotal}` }</p>
+          <p data-testid="header-currency-field">{ `Cambio: BRL` }</p>
+          <p data-testid="total-field">{ `Gasto Total: ${soma}` }</p>
         </div>
         <form>
-          <label htmlFor="valor">
-            Valor:
-            <input type="text" id="valor" />
-          </label>
-          <label htmlFor="descrição">
-            Descrição:
-            <input type="text" id="descrição" />
-          </label>
-          <label htmlFor="moeda">
-            Moeda:
-            <select type="region" id="moeda">
-              {current.map((moeda) => <option key={ moeda }>{ moeda }</option>)}
-            </select>
-          </label>
-          <label htmlFor="pagamento">
+          <Input onChange={ this.handleChange } />
+          <label htmlFor="method">
             Método de pagamento:
-            <select id="pagamento">
+            <select id="method" onChange={ this.handleChange }>
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -55,7 +66,7 @@ class Wallet extends React.Component {
           </label>
           <label htmlFor="tag">
             Tag:
-            <select id="tag">
+            <select id="tag" onChange={ this.handleChange }>
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -63,6 +74,7 @@ class Wallet extends React.Component {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
+          <input type='submit' onClick={ this.handleClick } value='Adicionar despesa' />
         </form>
       </div>
     );
@@ -70,18 +82,20 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
   request: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-  email: state.user.email,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   request: () => dispatch(requestThunk()),
+  saveGlobal: (payload) => dispatch(requestAdd(payload)),
+});
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

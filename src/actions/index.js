@@ -34,3 +34,15 @@ export const requestThunk = () => (dispatch) => {
     console.log(error);
   }
 };
+
+export const requestAdd = (payload) => (dispatch) => {
+  try {
+    apiMoeda().then((moeda) => {
+      delete moeda.USDT;
+      payload.exchangeRates = moeda;
+      dispatch(actionWallet(payload));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
