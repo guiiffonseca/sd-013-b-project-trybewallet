@@ -1,4 +1,4 @@
-import apiMoeda from '../serviço/index';
+import apiMoeda from 'src/serviço/index.js';
 // Coloque aqui suas action
 export const USER_INFO = 'USER_INFO';
 export const REQUESTWALLET = 'REQUESTWALLET';
