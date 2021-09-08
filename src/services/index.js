@@ -1,11 +1,7 @@
-export default function fetchMoedas() {
-  return (dispatch) => {
-    // dispatch(requestMoedas());
-    fetch(API)
-      .then((response) => response.json())
-      .then((moedas) => {
-        console.log(moedas);
-        dispatch(receiveMoedas(moedas));
-      });
-  };
+const API = 'https://economia.awesomeapi.com.br/json/all';
+
+export default function fetchTaxas() {
+  return fetch(API)
+    .then((response) => response.json())
+    .then((moedas) => moedas);
 }
