@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+// import walletReducer from '../../reducers/wallet';
 
 class Header extends React.Component {
   constructor() {
@@ -36,8 +37,9 @@ Header.propTypes = {
   email: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
+  expenses: wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);
