@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 class SelectCurrency extends React.Component {
   constructor(props) {
@@ -7,7 +6,6 @@ class SelectCurrency extends React.Component {
     this.state = {
       currenciesKeys: [],
     };
-    // this.currencyFetch = this.currencyFetch.bind(this);
   }
 
   componentDidMount() {
@@ -39,10 +37,5 @@ class SelectCurrency extends React.Component {
     );
   }
 }
-
-// Input.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   label: PropTypes.string.isRequired,
-// };
 
 export default SelectCurrency;
