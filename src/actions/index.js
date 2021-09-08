@@ -1,6 +1,4 @@
 // Coloque aqui suas action
-import apiMoeda from './api';
-
 export const USER_INFO = 'USER_INFO';
 export const REQUESTWALLET = 'REQUESTWALLET';
 export const WALLET_INFO = 'WALLET_INFO';
@@ -19,6 +17,13 @@ export const requestWallet = (payload) => ({
   type: REQUESTWALLET,
   payload,
 });
+
+function apiMoeda() {
+  const moeda = fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((moe) => moe);
+  return moeda;
+}
 
 export const requestThunk = () => (dispatch) => {
   try {
