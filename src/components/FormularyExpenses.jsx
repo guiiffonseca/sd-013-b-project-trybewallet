@@ -1,24 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setCurrencies, fetchCurrencieThunk, exchangeRatesThunk } from '../actions';
 
 class FormularyExpenses extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: '',
       description: '',
-      currency: [],
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderInput = this.renderInput.bind(this);
     this.renderSelect = this.renderSelect.bind(this);
     this.optionsCurrency = this.optionsCurrency.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.requisitionApi();
+    const { fetchCurrencie } = this.props;
     this.optionsCurrency();
+    fetchCurrencie();
   }
 
   handleChange({ target }) {
@@ -28,19 +34,22 @@ class FormularyExpenses extends React.Component {
     });
   }
 
-  async requisitionApi() {
-    const request = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const response = await request.json();
-    const currency = Object.keys(response).filter((coin) => coin);
-    currency.splice(1, 1);
-    this.setState({
-      currency,
-    });
+  handleSubmit() {
+    const { SET_EXPENSES } = this.props;
+    SET_EXPENSES(this.state);
+    this.setState((previouState) => ({
+      id: previouState.id + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    }));
   }
 
   optionsCurrency() {
-    const { currency } = this.state;
-    const options = currency.map((moeda) => (
+    const { currencies } = this.props;
+    const options = currencies.map((moeda) => (
       <option
         key={ moeda }
         id={ moeda }
@@ -90,7 +99,7 @@ class FormularyExpenses extends React.Component {
             value={ currency }
             name="currency"
             id="currency"
-            // onChange={ this.handleChange }
+            onChange={ this.handleChange }
           >
             {this.optionsCurrency()}
           </select>
@@ -127,9 +136,28 @@ class FormularyExpenses extends React.Component {
       <form>
         {this.renderInput()}
         {this.renderSelect()}
+        <button type="button" onClick={ this.handleSubmit }>Adicionar despesas </button>
+        <button data-testid="delete-bdn" type="button">Deletar</button>
       </form>
     );
   }
 }
 
-export default FormularyExpenses;
+const mapDispatchToProps = (dispatch) => ({
+  SET_CURRENCIES: (payload) => dispatch(setCurrencies(payload)),
+  fetchCurrencie: () => dispatch(fetchCurrencieThunk()),
+  SET_EXPENSES: (payload) => dispatch(exchangeRatesThunk(payload)),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+FormularyExpenses.propTypes = {
+  fetchCurrencie: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf.isRequired,
+  map: PropTypes.func.isRequired,
+  SET_EXPENSES: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormularyExpenses);
