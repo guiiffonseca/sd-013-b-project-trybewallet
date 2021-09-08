@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import currencies from '../api/currencyApi';
+import { asyncAddExpense as asyncAddExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -9,9 +10,20 @@ class Wallet extends React.Component {
 
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.renderCurrenciesOptions = this.renderCurrenciesOptions.bind(this);
+    this.addExpenseClick = this.addExpenseClick.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.calcTotalExpenses = this.calcTotalExpenses.bind(this);
 
     this.state = {
       cur: {},
+      form: {
+        id: 0,
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      },
     };
   }
 
@@ -19,37 +31,112 @@ class Wallet extends React.Component {
     this.fetchCurrencies();
   }
 
+  onInputChange(e) {
+    const { name, value } = e.target;
+    const { form } = this.state;
+    this.setState({ form: { ...form, [name]: value } });
+  }
+
   async fetchCurrencies() {
     const data = await currencies();
     this.setState({ cur: data });
+  }
+
+  calcTotalExpenses() {
+    const { expenses } = this.props;
+    let sum = 0;
+    if (expenses.length > 0) {
+      expenses.forEach((x) => {
+        const cur = x.currency;
+        const { ask } = x.exchangeRates[cur];
+        sum += x.value * ask;
+        console.log(cur);
+      });
+    }
+    return sum;
+  }
+
+  addExpenseClick() {
+    const { asyncAddExpense } = this.props;
+    const { state } = this;
+    const { form } = this.state;
+    asyncAddExpense(form);
+    this.setState({
+      ...state,
+      form: {
+        id: form.id + 1,
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      },
+    });
   }
 
   renderCurrenciesOptions() {
     const { cur } = this.state;
     let options;
     if (Object.keys(cur).length === 0) options = [''];
-    else {
-      options = Object.keys(cur);
-      const USDT_INDEX = options.indexOf('USDT');
-      options.splice(USDT_INDEX, 1);
-    }
+    else options = Object.keys(cur);
 
     return options.map((x) => <option name={ x } value={ x } key={ x }>{x}</option>);
   }
 
+  renderValueDescCur() {
+    const { value, description, method } = this.state;
+    return (
+      <>
+        <label htmlFor="valor">
+          Valor
+          <input
+            type="number"
+            id="valor"
+            value={ value }
+            name="value"
+            onChange={ this.onInputChange }
+          />
+
+        </label>
+        <label htmlFor="descricao">
+          Descrição
+          <input
+            type="text"
+            id="descricao"
+            name="description"
+            value={ description }
+            onChange={ this.onInputChange }
+          />
+        </label>
+
+        <label htmlFor="currency">
+          Moeda
+          <select
+            id="currency"
+            name="currency"
+            value={ method }
+            onChange={ this.onInputChange }
+          >
+            {this.renderCurrenciesOptions()}
+          </select>
+        </label>
+      </>
+    );
+  }
+
   renderPaymentOptions() {
     return (
-      <select id="paymentmethod">
-        <option id="dinheiro" name="dinheiro" value="dinheiro">Dinheiro</option>
-        <option id="credito" name="credito" value="credito">Cartão de Crédito</option>
-        <option id="debito" name="debito" value="debito">Cartão de Débito</option>
+      <select id="paymentmethod" name="method" onChange={ this.onInputChange }>
+        <option id="dinheiro" value="Dinheiro">Dinheiro</option>
+        <option id="credito" value="Cartão de crédito">Cartão de crédito</option>
+        <option id="debito" value="Cartão de débito">Cartão de débito</option>
       </select>
     );
   }
 
   renderTagOptions() {
     return (
-      <select id="tag">
+      <select id="tag" name="tag" onChange={ this.onInputChange }>
         <option
           id="alimentacao"
           name="alimentacao"
@@ -58,10 +145,10 @@ class Wallet extends React.Component {
           Alimentação
 
         </option>
-        <option id="lazer" name="lazer" value="lazer">Lazer</option>
-        <option id="trabalho" name="trabalho" value="trabalho">Trabalho</option>
-        <option id="transporte" name="transporte" value="transporte">Transporte</option>
-        <option id="saude" name="saude" value="saude">Saúde</option>
+        <option id="lazer" value="Lazer">Lazer</option>
+        <option id="trabalho" value="Trabalho">Trabalho</option>
+        <option id="transporte" value="Transporte">Transporte</option>
+        <option id="saude" value="Saúde">Saúde</option>
       </select>
     );
   }
@@ -72,27 +159,12 @@ class Wallet extends React.Component {
       <div>
         <header>
           <div data-testid="email-field">{email}</div>
-          <div data-testid="total-field">0</div>
+          <div data-testid="total-field">{this.calcTotalExpenses()}</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <div>
           <form>
-            <label htmlFor="valor">
-              Valor
-              <input type="number" id="valor" />
-
-            </label>
-            <label htmlFor="descricao">
-              Descrição
-              <input type="text" id="descricao" />
-            </label>
-
-            <label htmlFor="currency">
-              Moeda
-              <select id="currency">
-                {this.renderCurrenciesOptions()}
-              </select>
-            </label>
+            {this.renderValueDescCur()}
 
             <label htmlFor="paymentmethod">
               Método de pagamento
@@ -104,6 +176,12 @@ class Wallet extends React.Component {
               {this.renderTagOptions()}
             </label>
 
+            <button
+              type="button"
+              onClick={ this.addExpenseClick }
+            >
+              Adicionar despesa
+            </button>
           </form>
         </div>
       </div>
@@ -113,10 +191,17 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  asyncAddExpense: (expense) => dispatch(asyncAddExpenseAction(expense)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  asyncAddExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
