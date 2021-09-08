@@ -1,5 +1,6 @@
-import apiMoeda from '../services/api';
 // Coloque aqui suas action
+import apiMoeda from './api';
+
 export const USER_INFO = 'USER_INFO';
 export const REQUESTWALLET = 'REQUESTWALLET';
 export const WALLET_INFO = 'WALLET_INFO';
