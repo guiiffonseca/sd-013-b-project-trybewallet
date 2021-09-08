@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
-import { getCurrenciesThunk } from '../actions/index';
+import { getCurrenciesThunk, addExpensesThunk } from '../actions/index';
+
+const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const category = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class ExpensesForm extends React.Component {
   constructor(props) {
@@ -11,11 +14,15 @@ class ExpensesForm extends React.Component {
 
     this.state = {
       expenses: '',
+      id: 0,
       description: '',
       currency: 'BRL',
+      methods: paymentMethods[0],
+      tags: category[0],
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   componentDidMount() {
@@ -28,11 +35,17 @@ class ExpensesForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleOnClick() {
+    const { addExpenses } = this.props;
+    addExpenses(this.state);
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
+  }
+
   render() {
-    const { expenses, description, currency } = this.state;
+    const { expenses, description, currency, methods, tags } = this.state;
     const { currencies } = this.props;
-    const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const category = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
         <Input
@@ -62,16 +75,17 @@ class ExpensesForm extends React.Component {
           label="Método de Pagamento"
           name="paymentMethod"
           options={ paymentMethods }
-          value={ paymentMethods }
+          value={ methods }
           onChange={ this.handleOnChange }
         />
         <Select
           label="Tag"
           name="tag"
           options={ category }
-          value={ category }
+          value={ tags }
           onChange={ this.handleOnChange }
         />
+        <button type="button" onClick={ this.handleOnClick }>Adicionar despesa</button>
       </form>
     );
   }
@@ -80,6 +94,7 @@ class ExpensesForm extends React.Component {
 ExpensesForm.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
@@ -88,6 +103,7 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrenciesThunk()),
+  addExpenses: (state) => dispatch(addExpensesThunk(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
