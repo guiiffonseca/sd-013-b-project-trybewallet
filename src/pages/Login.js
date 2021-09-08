@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { buttonLogin as buttonLoginEvent } from '../actions/index';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -18,12 +19,14 @@ class Login extends React.Component {
     this.verificaLogin = this.verificaLogin.bind(this);
   }
 
-  async handleChange({ target }) {
+  handleChange({ target }) {
     const { name, value } = target;
-    await this.setState({
+    this.setState({
       [name]: value,
+    },
+    () => {
+      this.verificaLogin();
     });
-    this.verificaLogin();
   }
 
   verificaLogin() {
@@ -42,11 +45,10 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { history, buttonLogin } = this.props;
+    const { buttonLogin } = this.props;
     const { email, password } = this.state;
 
     buttonLogin({ email, password });
-    history.push('/carteira');
   }
 
   render() {
@@ -76,14 +78,16 @@ class Login extends React.Component {
             onChange={ handleChange }
           />
         </label>
-        <button
-          type="submit"
-          value="Entrar"
-          onClick={ handleClick }
-          disabled={ isValid }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            value="Entrar"
+            onClick={ handleClick }
+            disabled={ isValid }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }

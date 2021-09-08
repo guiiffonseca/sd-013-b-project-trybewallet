@@ -1,7 +1,7 @@
 import { BUTTON_LOGIN } from '../actions/index';
 
 const USER_LOGIN = {
-  email: 'alguem@gmail.com',
+  email: 'alguem@email.com',
   password: '',
 };
 
