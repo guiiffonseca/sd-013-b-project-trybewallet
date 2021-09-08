@@ -12,10 +12,10 @@ class Wallet extends React.Component {
     this.state = {
       id: 0,
       value: 0,
-      description: "Hot Dog",
-      currency: "USD",
-      method: "Dinheiro",
-      tag: "Alimentação",
+      description: 'Hot Dog',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
@@ -28,10 +28,11 @@ class Wallet extends React.Component {
   }
 
   handleClick() {
-    const { request, saveGlobal } = this.props;
+    const { saveGlobal } = this.props;
     // request();
     saveGlobal(this.state);
-    soma = 187.12;
+    const total = 187.12;
+    soma = total;
     // this.setState({
     //   soma,
     // });
@@ -51,7 +52,7 @@ class Wallet extends React.Component {
       <div>
         <div>
           <p data-testid="email-field">{ `Usuario: ${email}` }</p>
-          <p data-testid="header-currency-field">{ `Cambio: BRL` }</p>
+          <p data-testid="header-currency-field">Cambio: BRL</p>
           <p data-testid="total-field">{ `Gasto Total: ${soma}` }</p>
         </div>
         <form>
@@ -74,7 +75,7 @@ class Wallet extends React.Component {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <input type='submit' onClick={ this.handleClick } value='Adicionar despesa' />
+          <input type="submit" onClick={ this.handleClick } value="Adicionar despesa" />
         </form>
       </div>
     );
@@ -82,9 +83,9 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  request: PropTypes.func.isRequired,
+  // request: PropTypes.func.isRequired,
+  saveGlobal: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

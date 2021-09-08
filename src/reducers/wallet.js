@@ -10,7 +10,7 @@ function wallet(state = INICIAL_STATE, action) {
   case WALLET_INFO:
     return {
       ...state,
-      expenses: [ ...state.expenses,{
+      expenses: [...state.expenses, {
         ...action.payload,
         id: state.expenses.length,
       }],
