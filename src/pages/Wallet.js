@@ -20,7 +20,7 @@ class Wallet extends React.Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'Cartão de crédito',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
 
@@ -34,7 +34,9 @@ class Wallet extends React.Component {
   }
 
   async fetchApi() {
-    const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const fetchCurrencies = await fetch(
+      'https://economia.awesomeapi.com.br/json/all',
+    );
     const currencies = await fetchCurrencies.json();
     const currenciesList = Object.keys(currencies);
     currenciesList.splice(1, 1);
@@ -51,7 +53,9 @@ class Wallet extends React.Component {
   }
 
   async fetchExchangeRates() {
-    const fetchRates = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const fetchRates = await fetch(
+      'https://economia.awesomeapi.com.br/json/all',
+    );
     const rates = await fetchRates.json();
     return rates;
   }
@@ -73,35 +77,40 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, currency, tag, method, value, description } = this.state;
     return (
       <div>
         <Header />
         <form className="wallet-style">
           <label htmlFor="value">
             Valor
-            <input id="value" onChange={ this.handleChange } type="number" />
+            <input
+              id="value"
+              onChange={ this.handleChange }
+              type="number"
+              value={ value }
+            />
           </label>
           <label htmlFor="description">
             Descrição
-            <input id="description" onChange={ this.handleChange } />
+            <input
+              id="description"
+              onChange={ this.handleChange }
+              value={ description }
+            />
           </label>
           <label htmlFor="currency">
             Moeda
-            <select id="currency" onChange={ this.handleChange }>
-              {
-                data.map((currencies) => (
-                  <option key={ currencies }>
-                    {
-                      currencies
-                    }
-                  </option>
-                ))
-              }
+            <select id="currency" onChange={ this.handleChange } value={ currency }>
+              {data.map((currencies) => (
+                <option key={ currencies } value={ currencies }>
+                  {currencies}
+                </option>
+              ))}
             </select>
           </label>
-          <SelectPayment onchange={ this.handleChange } />
-          <SelectTag onchange={ this.handleChange } />
+          <SelectPayment onchange={ this.handleChange } method={ method } />
+          <SelectTag onchange={ this.handleChange } tag={ tag } />
           <AddExpense onclick={ this.addExpenses } />
         </form>
       </div>

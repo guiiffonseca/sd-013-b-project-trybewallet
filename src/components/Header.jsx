@@ -15,7 +15,11 @@ class Header extends Component {
 
   sumTotalExpenses() {
     const { expensesList } = this.props;
-    expensesList.reduce((acc, { value }) => acc + value, 0);
+    return expensesList.reduce((acc, { value, exchangeRates, currency }) => {
+      const convertedCurrency = Number(value) * exchangeRates[currency].ask;
+
+      return acc + convertedCurrency;
+    }, 0);
   }
 
   render() {
@@ -31,15 +35,11 @@ class Header extends Component {
           <p data-testid="header-currency-field">BRL</p>
         </div>
         <div className="flex">
-          <p>Total expenses:</p>
-          <p data-testid="total-field">0</p>
-        </div>
-        <div className="flex">
           <p>Logged in:</p>
           <p data-testid="email-field">{ currentEmail }</p>
         </div>
         <div className="flex">
-          <p>Total Expenses</p>
+          <p>Total Expenses:</p>
           <p data-testid="total-field">
             {
               totalExpenses
@@ -60,5 +60,5 @@ export default connect(mapStateToProps, null)(Header);
 
 Header.propTypes = {
   currentEmail: PropTypes.string.isRequired,
-  expensesList: PropTypes.number.isRequired,
+  expensesList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

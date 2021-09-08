@@ -35,6 +35,7 @@ class Login extends React.Component {
     const { email, login } = this.state;
     const { history, currentEmail } = this.props;
     currentEmail(email, login);
+    console.log(history);
     history.push('/carteira');
   }
 
@@ -102,6 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.string).isRequired,
-  currentEmail: PropTypes.string.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentEmail: PropTypes.func.isRequired,
 };
