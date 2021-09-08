@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import store from '../store';
 
 class Login extends React.Component {
   constructor() {
@@ -9,6 +11,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -18,6 +21,10 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    console.log(store.getState());
   }
 
   render() {
@@ -42,13 +49,16 @@ class Login extends React.Component {
             value={ password }
           />
           <br />
-          <button
-            type="button"
-            id="input-button"
-            disabled={ !/\S+@\S+\.\S+/.test(email) || password.length < MIN_PASSWORD }
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              type="button"
+              id="input-button"
+              onClick={ this.handleClick }
+              disabled={ !/\S+@\S+\.\S+/.test(email) || password.length < MIN_PASSWORD }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
