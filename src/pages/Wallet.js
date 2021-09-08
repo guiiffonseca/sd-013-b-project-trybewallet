@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Form from '../components/Form';
 import Header from '../components/Header';
 
@@ -14,8 +13,4 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
-export default connect(mapStateToProps)(Wallet);
+export default Wallet;

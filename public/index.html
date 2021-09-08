@@ -41,3 +41,20 @@
     -->
   </body>
 </html>
+<!-- 
+const handleDifficulty = (difficulty) => {
+  const hardValue = 3;
+  const mediumValue = 2;
+  const easyValue = 1;
+  if (difficulty === 'hard') return hardValue;
+  if (difficulty === 'medium') return mediumValue;
+  if (difficulty === 'easy') return easyValue;
+};
+
+const handlePoints = (timeLeft, difficulty) => {
+  const correctAnswer = 10;
+  const totalPoints = parseFloat(localStorage.getItem('points'));
+  const difficultyValue = handleDifficulty(difficulty);
+  const currentPoints = correctAnswer + (timeLeft * difficultyValue) + totalPoints;
+  localStorage.setItem('points', JSON.stringify(currentPoints));
+}; -->

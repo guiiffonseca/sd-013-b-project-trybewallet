@@ -1,4 +1,4 @@
-import { SET_EMAIL } from '../actions';
+const SET_EMAIL = 'SET_EMAIL';
 
 const INITIAL_STATE = {
   email: '',
