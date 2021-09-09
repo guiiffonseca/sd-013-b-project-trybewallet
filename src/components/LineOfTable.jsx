@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class LineOfTable extends React.Component {
   render() {
-    const { textLine, typeTable } = this.props;
+    const { textLine, typeTable, id } = this.props;
     if (typeTable === 'th') {
       return (
         <tr>
@@ -13,7 +13,10 @@ export default class LineOfTable extends React.Component {
     }
     return (
       <tr>
-        {textLine.map((description, index) => <td key={ index }>{description}</td>)}
+        {textLine
+          .map((description, index) => (
+            <td id={ id } key={ index }>{description}</td>
+          ))}
       </tr>
     );
   }
@@ -22,4 +25,5 @@ export default class LineOfTable extends React.Component {
 LineOfTable.propTypes = {
   textLine: PropTypes.arrayOf(PropTypes.string).isRequired,
   typeTable: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

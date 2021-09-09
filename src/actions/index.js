@@ -7,14 +7,15 @@ const addCurrency = (payload) => (
 );
 const responseApiOk = () => ({ type: 'API_OK' });
 const expenditure = (payload) => ({ type: 'ACTUAL_CURRENCY', expenditure: payload });
-const totalExpenditure = (payload) => ({ type: 'TOTAL', totalExpenditure: payload || 0 });
+const totalExpenditure = (payload) => ({ type: 'TOTAL', currency: payload });
+const deleteExpense = (payload) => ({ type: 'DELETE', delete: payload });
 
 function fetchCurrency() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(responseApiOk());
-    return responseApi()
-      .then((response) => dispatch(addCurrency(response)));
+    const response = await responseApi();
+    return dispatch(addCurrency(response));
   };
 }
 
-export { addValue, fetchCurrency, expenditure, totalExpenditure };
+export { addValue, fetchCurrency, expenditure, totalExpenditure, deleteExpense };

@@ -37,13 +37,10 @@ class ExpenseForm extends React.Component {
     };
     responseApi()
       .then((response) => {
-        const actualCurrencyExpense = parseFloat(response[state.currencyOption].ask);
-        console.log(actualCurrencyExpense);
-        dispatch(totalExpenditure(parseFloat(state
-          .valueExpense) * actualCurrencyExpense));
         dispatch(expenditure(
           { ...actualCurrency, exchangeRates: response },
         ));
+        dispatch(totalExpenditure());
       });
   }
 
