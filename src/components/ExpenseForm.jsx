@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import getCodeCountries from '../API';
+import { saveExpensesThunk } from '../actions';
+import Table from './Table';
 
 class ExpenseForm extends React.Component {
   constructor() {
@@ -7,13 +11,15 @@ class ExpenseForm extends React.Component {
 
     this.state = {
       value: '',
-      allCurrency: [],
-      currency: 'USD',
-      paymentMethod: 'Dinheiro',
-      tag: 'Alimentação',
       description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+      // id: 0,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddExpense = this.handleAddExpense.bind(this);
   }
 
   componentDidMount() {
@@ -22,11 +28,11 @@ class ExpenseForm extends React.Component {
 
   async showCodeCountries() {
     const results = await getCodeCountries();
-    const resultsArray = Object.keys(results);
-    const finalResults = resultsArray.filter((_result, index) => index !== 1);
-    console.log(finalResults);
+    // Peguei essa dica de deletar uma chave do objeto com o Rodrigo Augusto
+    delete results.USDT;
+    // console.log(results);
     this.setState({
-      allCurrency: finalResults,
+      exchangeRates: results,
     });
   }
 
@@ -37,11 +43,28 @@ class ExpenseForm extends React.Component {
     });
   }
 
+  handleAddExpense() {
+    const { saveExpenses } = this.props;
+    // this.setState(({ id }) => ({
+    //   id: id + 1,
+    // }));
+    saveExpenses(this.state);
+    // this.setState({
+    //   value: '',
+    //   description: '',
+    //   currency: 'USD',
+    //   method: 'Dinheiro',
+    //   tag: 'Alimentação',
+    //   exchangeRates: {},
+    // });
+  }
+
   renderValue() {
     const { value } = this.state;
     return (
       <label htmlFor="value">
         Valor:
+        {' '}
         <input
           type="text"
           name="value"
@@ -58,6 +81,7 @@ class ExpenseForm extends React.Component {
     return (
       <label htmlFor="description">
         Descrição:
+        {' '}
         <input
           type="text"
           name="description"
@@ -70,35 +94,40 @@ class ExpenseForm extends React.Component {
   }
 
   renderCurrency() {
-    const { allCurrency, currency } = this.state;
+    const { exchangeRates, currency } = this.state;
+    // console.log(exchangeRates);
     return (
       <label htmlFor="currency">
         Moeda:
+        {' '}
         <select
           name="currency"
           id="currency"
           value={ currency }
           onChange={ this.handleChange }
         >
-          { allCurrency.map((code) => (
-            <option key={ code } value={ code }>
-              { code }
-            </option>
-          )) }
+          {
+            Object.keys(exchangeRates).map((code) => (
+              <option key={ code } value={ code }>
+                { code }
+              </option>
+            ))
+          }
         </select>
       </label>
     );
   }
 
-  renderPaymentMethod() {
-    const { paymentMethod } = this.state;
+  renderMethod() {
+    const { method } = this.state;
     return (
-      <label htmlFor="paymentMethod">
+      <label htmlFor="method">
         Método de pagamento:
+        {' '}
         <select
-          name="paymentMethod"
-          id="paymentMethod"
-          value={ paymentMethod }
+          name="method"
+          id="method"
+          value={ method }
           onChange={ this.handleChange }
         >
           <option value="dinheiro">Dinheiro</option>
@@ -114,6 +143,7 @@ class ExpenseForm extends React.Component {
     return (
       <label htmlFor="tag">
         Tag:
+        {' '}
         <select
           name="tag"
           id="tag"
@@ -137,12 +167,27 @@ class ExpenseForm extends React.Component {
           { this.renderValue() }
           { this.renderDescription() }
           { this.renderCurrency() }
-          { this.renderPaymentMethod() }
+          { this.renderMethod() }
           { this.renderTag() }
         </form>
+        <button
+          type="button"
+          onClick={ this.handleAddExpense }
+        >
+          Adicionar despesa
+        </button>
+        <Table />
       </div>
     );
   }
 }
 
-export default ExpenseForm;
+ExpenseForm.propTypes = {
+  saveExpenses: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveExpenses: (expenses) => dispatch(saveExpensesThunk(expenses)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseForm);
