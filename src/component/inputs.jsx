@@ -13,7 +13,7 @@ class Input extends React.Component {
     const { onChange, currencies } = this.props;
     const currencie = Object.keys(currencies);
     const current = currencie.filter((cu) => cu !== 'USDT');
-    return(
+    return (
       <>
         <label htmlFor="value">
           Valor:
@@ -21,8 +21,7 @@ class Input extends React.Component {
             type="number"
             id="value"
             onChange={ onChange }
-          >
-          </input>
+          />
         </label>
         <label htmlFor="description">
           Descrição:
@@ -30,8 +29,7 @@ class Input extends React.Component {
             type="text"
             id="description"
             onChange={ onChange }
-          >
-          </input>
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
@@ -40,10 +38,9 @@ class Input extends React.Component {
           </select>
         </label>
       </>
-    )
+    );
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
   request: () => dispatch(requestThunk()),
