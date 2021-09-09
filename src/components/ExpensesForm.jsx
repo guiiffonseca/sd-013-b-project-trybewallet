@@ -52,7 +52,7 @@ class ExpensesForm extends React.Component {
         Moeda:
         <select
           id="moeda"
-          name="moeda"
+          name="currency"
           onChange={ this.handleChange }
           value={ currency }
         >

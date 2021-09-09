@@ -7,12 +7,12 @@ import ExpensesForm from '../components/ExpensesForm';
 class Wallet extends React.Component {
   render() {
     const { email, total } = this.props;
-
+    const totalCheck = total > 0 ? total : 0;
     return (
       <div>
         <header>
           <div data-testid="email-field">{ email }</div>
-          <div data-testid="total-field">{`Total: ${total}`}</div>
+          <div data-testid="total-field">{ totalCheck }</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <ExpensesForm />
