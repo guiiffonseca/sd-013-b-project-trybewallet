@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { requestThunk, requestAdd } from '../actions';
 import Input from '../component/inputs';
 
-let soma = 0;
-
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +18,7 @@ class Wallet extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.soma = this.soma.bind(this);
   }
 
   handleChange({ target }) {
@@ -27,20 +26,27 @@ class Wallet extends React.Component {
     this.setState({ [id]: value });
   }
 
+  // Função vinda do code-review do colega Ricardo Antonio (https://github.com/tryber/sd-013-b-project-trybewallet/commit/e03a7187a9ad0613a6b543baeb0a62ac6112baf0)
+  soma() {
+    const { expenses } = this.props;
+    let somaTotal = 0;
+    expenses.forEach(({ value, currency, exchangeRates }) => {
+      // Parsefloat é uma HOF que retorna number de ponto flutuante de uma string. TOMAR CUIDADO POIS É BEM DOIDA ESSA FUNÇÃO.
+      // Pega o Array de Obj e repete a logica interna para cada um Obj passando o proprio Obj como argumento.
+      somaTotal += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
+    });
+    // ToFixed(2) limita a 2 os numeros apos o ponto decimal.
+    return somaTotal.toFixed(2);
+  }
+
   handleClick() {
     const { saveGlobal } = this.props;
-    // request();
     saveGlobal(this.state);
-    const total = 187.12;
-    soma = total;
-    // this.setState({
-    //   soma,
-    // });
   }
 
   render() {
     const { email } = this.props;
-    // const { gastoTotal } = this.state;
+    const gastoTotal = this.soma();
     return (
       // "id": 0,
       // "value": "3",
@@ -53,7 +59,7 @@ class Wallet extends React.Component {
         <div>
           <p data-testid="email-field">{ `Usuario: ${email}` }</p>
           <p data-testid="header-currency-field">Cambio: BRL</p>
-          <p data-testid="total-field">{ `Gasto Total: ${soma}` }</p>
+          <p data-testid="total-field">{ `Gasto Total: ${gastoTotal}` }</p>
         </div>
         <form>
           <Input onChange={ this.handleChange } />
@@ -83,9 +89,9 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  // request: PropTypes.func.isRequired,
   saveGlobal: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
