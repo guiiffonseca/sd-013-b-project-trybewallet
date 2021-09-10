@@ -27,8 +27,9 @@ class Table extends React.Component {
               <td>{ `${fixo}` }</td>
               <td>{ `${total}` }</td>
               <td>Real</td>
-              </tr>);
-            })}
+            </tr>
+            );
+          })}
       </table>
     );
   }
