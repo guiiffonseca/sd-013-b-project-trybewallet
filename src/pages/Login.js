@@ -1,5 +1,10 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { setEmail as setEmailAction } from '../actions';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -11,14 +16,19 @@ class Login extends React.Component {
       validatePassword: false,
     };
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
   }
 
-  // handleChange({ target }) {
-  //   const { name, value } = target;
-  //   this.setState({ [name]: value });
-  // }
+  handleClick() {
+    const { email } = this.state;
+    const { history, setEmail } = this.props;
+
+    setEmail(email);
+
+    history.push('/carteira');
+  }
 
   // solução usada para validação do email com regex
   // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
@@ -66,7 +76,11 @@ class Login extends React.Component {
               required
             />
           </label>
-          <button type="button" disabled={ !validateEmail || !validatePassword }>
+          <button
+            type="button"
+            disabled={ !validateEmail || !validatePassword }
+            onClick={ this.handleClick }
+          >
             Entrar
           </button>
         </fieldset>
@@ -75,4 +89,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (email) => dispatch(setEmailAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
