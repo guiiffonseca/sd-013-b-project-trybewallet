@@ -47,17 +47,17 @@ class Table extends React.Component {
     const { wallet: { expenses } } = this.props;
     const tabelaDespesas = expenses.map((element) => {
       const {
-        descrição, method, moeda, id,
+        description, method, currency, id,
         tag, value, exchangeRates } = element;
       const valorNumero = (Number(value)).toFixed(2);
-      const moedaConversao = (Number(exchangeRates.ask)).toFixed(2);
+      const moedaConversao = (Number(exchangeRates.ask || 0)).toFixed(2);
 
       return (
         <tr key={ id }>
-          <td>{ descrição }</td>
+          <td>{ description }</td>
           <td>{ tag }</td>
           <td>{ method }</td>
-          <td>{ `${moeda} ${parseFloat((value || 0)).toFixed(2)}` }</td>
+          <td>{ `${currency} ${parseFloat((value || 0)).toFixed(2)}` }</td>
           <td>{ exchangeRates.name }</td>
           <td>{ parseFloat((exchangeRates.ask || 0)).toFixed(2) }</td>
           <td>{ (valorNumero * moedaConversao).toFixed(2) }</td>

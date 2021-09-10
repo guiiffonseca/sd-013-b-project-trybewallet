@@ -13,8 +13,8 @@ class Forms extends React.Component {
       expenses: [],
       expense: {
         value: 0,
-        descrição: '',
-        moeda: 'USD',
+        description: '',
+        currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',
       },
@@ -38,34 +38,34 @@ class Forms extends React.Component {
         ...prevState.expense,
         id: counter,
         [name]: value,
-        exchangeRates: currencies[expense.moeda],
+        exchangeRates: currencies[expense.currency],
       },
     }));
   }
 
   addExpenses() {
     const { expenses, expense, counter } = this.state;
-    const { moeda, valor } = expense;
+    const { currency, value } = expense;
     expenses.push(expense);
-    this.updateDespesas(moeda, valor);
+    this.updateDespesas(currency, value);
     const newCounter = counter + 1;
     this.setState((prevState) => ({ ...prevState,
       expense: {
-        valor: 0,
-        descrição: '',
-        moeda: 'USD',
-        pagamento: 'Dinheiro',
-        tag: 'Lazer',
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
       },
       counter: newCounter }));
   }
 
-  async updateDespesas(moeda, valor) {
+  async updateDespesas(currency, value) {
     const data = await getCurrencies();
     const { despesa } = this.state;
     const { dispatchSetWalletValue } = this.props;
-    const valorNumero = (Number(valor)).toFixed(2);
-    const moedaConversao = (Number(data[moeda].ask)).toFixed(2);
+    const valorNumero = (Number(value)).toFixed(2);
+    const moedaConversao = (Number(data[currency].ask)).toFixed(2);
     this.setState({
       despesa: despesa + (valorNumero * moedaConversao),
     }, () => { dispatchSetWalletValue(this.state); });
@@ -86,12 +86,12 @@ class Forms extends React.Component {
         />
         <Input
           label="Descrição"
-          name="descrição"
+          name="description"
           onChange={ this.handleChange }
         />
         <Select
           label="Moeda"
-          name="moeda"
+          name="currency"
           ops={ Object.keys(currencies) }
           onChange={ this.handleChange }
         />
