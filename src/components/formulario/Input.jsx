@@ -8,8 +8,9 @@ class Input extends React.Component {
       <label htmlFor={ name }>
         { label }
         <input
-          type="text"
+          id={ name }
           name={ name }
+          type="text"
           onChange={ onChange }
         />
       </label>

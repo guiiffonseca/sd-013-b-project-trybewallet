@@ -2,31 +2,27 @@
 import { SET_WALLET_VALUE, GET_API_SUCCESS } from '../actions/index';
 
 const initialState = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
+  despesa: 0,
 };
 
-const reducerWallet = (state = initialState, action) => {
+const wallet = (state = initialState, action) => {
   switch (action.type) {
   case SET_WALLET_VALUE:
     return {
       ...state,
-      wallet: {
-        ...state.wallet,
-        expenses: [action.payload.wallet.expenses] },
+      expenses: action.payload.expenses,
+      despesa: (action.payload.despesa || 0).toFixed(2),
     };
   case GET_API_SUCCESS:
     return {
       ...state,
-      wallet: {
-        ...state.wallet,
-        currencies: [action.payload.currencies] },
+      currencies: action.payload.currencies,
     };
   default:
     return state;
   }
 };
 
-export default reducerWallet;
+export default wallet;

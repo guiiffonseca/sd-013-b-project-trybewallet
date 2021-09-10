@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { email, despesa } = this.props;
+    const { user: { email }, wallet: { despesa } } = this.props;
     return (
       <header className="header">
         <div className="left-header">
@@ -14,7 +15,7 @@ class Header extends React.Component {
             { `Email: ${email}` }
           </span>
           <span className="span" data-testid="total-field">
-            {`Despesa Total: R$ ${despesa}`}
+            { `Despesa Total: R$ ${despesa || 0}`}
           </span>
           <span className="span" data-testid="header-currency-field">
             BRL
@@ -30,4 +31,9 @@ Header.propTypes = {
   despesa: PropTypes.number,
 }.isRequired;
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  wallet: state.wallet,
+});
+
+export default connect(mapStateToProps, null)(Header);

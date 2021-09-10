@@ -19,7 +19,6 @@ export const getApiSuccess = (payload) => ({
 export const getApiThunk = () => async (dispatch) => {
   const response = await getCurrencies();
   delete response.USDT;
-  delete response.DOGE;
   const payload = {
     currencies: response,
   };

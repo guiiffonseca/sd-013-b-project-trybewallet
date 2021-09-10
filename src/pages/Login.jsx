@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setLoginValue, getApiThunk } from '../actions/index';
+import { setLoginValue } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: {
-        email: '',
-        password: '',
-      },
+      email: '',
+      password: '',
       emailValid: false,
       passValid: false,
     };
@@ -18,11 +16,6 @@ class Login extends React.Component {
     this.onSubmitLog = this.onSubmitLog.bind(this);
     this.passwordTest = this.passwordTest.bind(this);
     this.emailTest = this.emailTest.bind(this);
-  }
-
-  componentDidMount() {
-    const { getApi } = this.props;
-    getApi();
   }
 
   onSubmitLog() {
@@ -61,10 +54,7 @@ class Login extends React.Component {
     // fonte:https:stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
     this.setState((prevState) => ({
       ...prevState,
-      user: {
-        ...prevState.user,
-        [name]: value,
-      },
+      [name]: value,
     }));
     if (name === 'email') {
       this.emailTest(value);
@@ -114,7 +104,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  getApi: PropTypes.func.isRequired,
   dispatchSetLoginValue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -123,7 +112,6 @@ Login.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchSetLoginValue: (payload) => dispatch(setLoginValue(payload)),
-  getApi: () => dispatch(getApiThunk()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

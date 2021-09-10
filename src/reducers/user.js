@@ -2,24 +2,19 @@
 import { SET_LOGIN_VALUE } from '../actions/index';
 
 const initialState = {
-  user: {
-    email: '',
-    password: '',
-  },
+  email: '',
 };
 
-const reducerUser = (state = initialState, action) => {
+const user = (state = initialState, action) => {
   switch (action.type) {
   case SET_LOGIN_VALUE:
     return {
-      user: {
-        email: action.payload.user.email,
-        password: action.payload.user.password,
-      },
+      ...state,
+      email: action.payload.email,
     };
   default:
     return state;
   }
 };
 
-export default reducerUser;
+export default user;
