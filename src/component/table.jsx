@@ -17,7 +17,8 @@ class Table extends React.Component {
             const moeda = exchangeRates[currency];
             const fixo = parseFloat(moeda.ask).toFixed(2);
             total = (parseFloat(value) * parseFloat(moeda.ask)).toFixed(2);
-            return (<tr key={ id }>
+            return (
+            <tr key={ id }>
               <td>{ description }</td>
               <td>{ tag }</td>
               <td>{ method }</td>
