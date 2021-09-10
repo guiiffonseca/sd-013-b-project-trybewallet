@@ -2,14 +2,15 @@ import { fetchCurrencies, fetchExchanges } from '../utils';
 
 // action types
 export const SAVE_EMAIL = 'SAVE_EMAIL';
-export const SET_EXPENSES = 'SET_EXPENSES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
 export const GET_EXCHANGES = 'GET_EXCHANGES';
 export const GET_EXCHANGES_SUCCESS = 'GET_EXCHANGES_SUCCESS';
 export const GET_EXCHANGES_ERROR = 'GET_EXCHANGES_ERROR';
+export const SET_EXPENSES = 'SET_EXPENSES';
 export const GET_AMOUNT = 'GET_AMOUNT';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 // action creators
 export const saveEmailAction = (payload) => ({ type: SAVE_EMAIL, payload });
@@ -18,6 +19,11 @@ export const setExpensesAction = (payload) => ({ type: SET_EXPENSES, payload });
 
 export const getAmount = (payload) => ({
   type: GET_AMOUNT,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 

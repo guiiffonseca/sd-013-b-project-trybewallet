@@ -6,6 +6,7 @@ import {
   GET_EXCHANGES,
   GET_EXCHANGES_SUCCESS,
   GET_AMOUNT,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const WALLET_INITIAL_STATE = {
@@ -27,21 +28,19 @@ const setWallet = (state = WALLET_INITIAL_STATE, action) => {
     return { ...state, isLoading: true };
   case GET_CURRENCIES_SUCCESS:
     return {
-      ...state,
-      isLoading: false,
-      currencies: action.payload,
+      ...state, isLoading: false, currencies: action.payload,
     };
   case GET_EXCHANGES:
     return { ...state, isLoading: true };
   case GET_EXCHANGES_SUCCESS:
     return {
-      ...state,
-      isLoading: false,
+      ...state, isLoading: false,
     };
   case GET_AMOUNT:
-    return {
-      ...state, amount: action.payload,
-    };
+    return { ...state, amount: action.payload };
+  case DELETE_EXPENSE:
+    return { ...state,
+      expenses: [...state.expenses.filter(({ id }) => id !== action.payload)] };
   default:
     return state;
   }

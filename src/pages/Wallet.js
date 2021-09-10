@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchExchangesThunk } from '../actions';
 import Input from '../components/Input';
 import FormSelects from './FormSelects';
+import Table from './Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -91,6 +92,7 @@ class Wallet extends React.Component {
             </button>
           </fieldset>
         </form>
+        <Table />
       </div>
     );
   }
