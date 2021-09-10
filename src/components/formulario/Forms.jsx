@@ -16,7 +16,7 @@ class Forms extends React.Component {
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
-        tag: 'Alimentação',
+        tag: 'Lazer',
       },
       despesa: 0,
       counter: 0,
@@ -55,7 +55,7 @@ class Forms extends React.Component {
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
-        tag: 'Alimentação',
+        tag: 'Lazer',
       },
       counter: newCounter }));
   }
