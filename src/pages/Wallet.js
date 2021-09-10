@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestThunk, requestAdd } from '../actions';
 import Input from '../component/inputs';
+import Table from '../component/table';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -48,13 +49,6 @@ class Wallet extends React.Component {
     const { email } = this.props;
     const gastoTotal = this.soma();
     return (
-      // "id": 0,
-      // "value": "3",
-      // "description": "Hot Dog",
-      // "currency": "USD",
-      // "method": "Dinheiro",
-      // "tag": "Alimentação",
-      // "exchangeRates": {
       <div>
         <div>
           <p data-testid="email-field">{ `Usuario: ${email}` }</p>
@@ -83,6 +77,7 @@ class Wallet extends React.Component {
           </label>
           <input type="submit" onClick={ this.handleClick } value="Adicionar despesa" />
         </form>
+        <Table />
       </div>
     );
   }
