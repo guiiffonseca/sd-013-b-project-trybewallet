@@ -18,17 +18,17 @@ class Table extends React.Component {
             const fixo = parseFloat(moeda.ask).toFixed(2);
             total = (parseFloat(value) * parseFloat(moeda.ask)).toFixed(2);
             return (
-            <tr key={ id }>
-              <td>{ description }</td>
-              <td>{ tag }</td>
-              <td>{ method }</td>
-              <td>{ value }</td>
-              <td>{ currency }</td>
-              <td>{ moeda.name }</td>
-              <td>{ `${fixo}` }</td>
-              <td>{ `${total}` }</td>
-              <td>Real</td>
-            </tr>
+              <tr key={ id }>
+                <td>{ description }</td>
+                <td>{ tag }</td>
+                <td>{ method }</td>
+                <td>{ value }</td>
+                <td>{ currency }</td>
+                <td>{ moeda.name }</td>
+                <td>{ `${fixo}` }</td>
+                <td>{ `${total}` }</td>
+                <td>Real</td>
+              </tr>
             );
           })}
       </table>
