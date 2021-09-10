@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import HeaderWallet from '../components/HeaderWallet';
 import FormWallet from '../components/FormWallet';
-import { requestApi } from '../actions/index';
+import { requestCurrenciesApi } from '../actions/index';
 import '../styles/wallet.css';
 
 class Wallet extends React.Component {
@@ -16,7 +16,7 @@ class Wallet extends React.Component {
     const filteredCurrencies = arrayOfCurrencies
       .filter((currency) => currency !== 'USDT');
     return filteredCurrencies.map((currency, index) => (
-      <option key={ `currency${index}` }>{ currency }</option>
+      <option key={ `currency${index}` } value={ currency }>{ currency }</option>
     ));
   }
 
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveCurrencies: () => dispatch(requestApi()),
+  saveCurrencies: () => dispatch(requestCurrenciesApi()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
