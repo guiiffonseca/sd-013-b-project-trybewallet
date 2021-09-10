@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import '../App.css';
+import '../App.css';
 
 class Table extends React.Component {
   render() {
