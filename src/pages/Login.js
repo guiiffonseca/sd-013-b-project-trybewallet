@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setEmail as emailAction } from '../actions';
+import { setEmail as emailAction, setExpenses } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -29,6 +29,7 @@ class Login extends React.Component {
     const { email } = this.state;
     const { setEmail } = this.props;
     setEmail(email);
+    setExpenses(0);
   }
 
   render() {
