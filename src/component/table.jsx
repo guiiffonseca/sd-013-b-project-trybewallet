@@ -49,6 +49,7 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
+  editExpense: PropTypes.func.isRequired,
   expenses: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
