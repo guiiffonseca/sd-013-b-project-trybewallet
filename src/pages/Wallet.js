@@ -94,22 +94,13 @@ class Wallet extends Component {
 
   updateTotal() {
     const { expenses } = this.props;
-    if (expenses.length === 0) {
-      return 0;
-    }
-    if (expenses.length >= 1) {
-      let total = 0;
-      for (let index = 0; index < expenses.length; index += 1) {
-        const { value, currency, exchangeRates } = expenses[index];
-        const convertValue = (parseInt(value, 10) * exchangeRates[currency].ask);
-        total += convertValue;
-      }
-      return Math.floor(total * 100) / 100;
-    }
+    const total = expenses.reduce((accumulator, { value, currency, exchangeRates }) => (
+      accumulator + (parseInt(value, 10) * exchangeRates[currency].ask)), 0);
+    return Math.floor(total * 100) / 100;
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     const { toAdd } = this.state;
     return (
       <div>
@@ -117,7 +108,9 @@ class Wallet extends Component {
           <p>TrybeWallet</p>
           <div data-testid="email-field">{ email }</div>
           <div data-testid="header-currency-field">BRL</div>
-          <div data-testid="total-field">{ this.updateTotal() }</div>
+          <div data-testid="total-field">
+            { expenses.length >= 1 ? this.updateTotal() : 0 }
+          </div>
         </header>
         <AddForm
           changeFunc={ this.handleChange }

@@ -6,44 +6,63 @@ import HeaderTable from './HeaderTable';
 import { removeExpenseAction } from '../actions';
 
 class ExpensesTable extends Component {
+  constructor() {
+    super();
+
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete({ target }) {
+    const { removeExpense } = this.props;
+    removeExpense(target.id);
+  }
+
   render() {
-    const { expenses, removeExpense } = this.props;
+    const { expenses } = this.props;
     return (
       <div>
         <table>
           <HeaderTable />
-          { expenses.map((expense) => (
-            <tr key={ expense.id }>
-              <th>
-                { expense.description }
-              </th>
-              <th>
-                { expense.tag }
-              </th>
-              <th>
-                { expense.method }
-              </th>
-              <th>
-                { expense.value }
-              </th>
-              <th>
-                { expense.currency }
-              </th>
-              <th>
-                { expense.currency }
-              </th>
-              <th>
-                { expense.currency }
-              </th>
-              <th>
-                Real
-              </th>
-              <button type="button">Editar</button>
-              <button type="button" data-testid="delete-btn" onClick={ removeExpense }>
-                Excluir
-              </button>
-            </tr>
-          )) }
+          { expenses
+            .map(({ id, description, tag, method, value, currency, exchangeRates }) => (
+              <tr key={ id }>
+                <td>
+                  { description }
+                </td>
+                <td>
+                  { tag }
+                </td>
+                <td>
+                  { method }
+                </td>
+                <td>
+                  { value }
+                </td>
+                <td>
+                  { (exchangeRates[currency].name).split('/')[0] }
+                </td>
+                <td>
+                  { Math.floor(exchangeRates[currency].ask * 100) / 100 }
+                </td>
+                <td>
+                  { Math.floor(
+                    (parseInt(value, 10) * exchangeRates[currency].ask) * 100,
+                  ) / 100 }
+                </td>
+                <td>
+                  Real
+                </td>
+                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ this.handleDelete }
+                  id={ id }
+                >
+                  Excluir
+                </button>
+              </tr>
+            )) }
         </table>
       </div>
     );
@@ -55,7 +74,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  removeExpense: (value) => dispatch(removeExpenseAction(value)),
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

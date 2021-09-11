@@ -23,7 +23,7 @@ function walletReducer(state = INITIAL_STATE, action) {
   case REMOVE_EXPENSE:
     return ({
       ...state,
-      expenses: expenses.filter((expense) => expense.id !== [action.payload.id]) });
+      expenses: expenses.filter((expense) => expense.id !== Number(action.payload)) });
   default:
     return state;
   }
