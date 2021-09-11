@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setLoginValue } from '../actions';
+import { setLoginEmail, setLoginPassword } from '../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -69,9 +69,10 @@ class Login extends Component {
   }
 
   validLogin() {
-    const { history, dispatchSetValue } = this.props;
-    const { email } = this.state;
-    dispatchSetValue(email);
+    const { history, dispatchSetEmail, dispatchSetPassword } = this.props;
+    const { email, password } = this.state;
+    dispatchSetEmail(email);
+    dispatchSetPassword(password);
     history.push('/carteira');
   }
 
@@ -79,52 +80,65 @@ class Login extends Component {
     const { email, password, inputEmail, inputPassword } = this.state;
 
     return (
-      <form>
+      <div className="login-container">
+        <form className="login-area">
+          <b className="login-title"> Trybe Wallet </b>
+          <label htmlFor="email">
+            <b>Email</b>
+            <br />
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className="login-inputs"
+              data-testid="email-input"
+              height="200px"
+              value={ email }
+              onChange={ this.handleChange }
+              placeholder="exemplo@exemplo.com"
+            />
+          </label>
 
-        <label htmlFor="email">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            data-testid="email-input"
-            value={ email }
-            onChange={ this.handleChange }
-            placeholder="exemplo@exemplo.com"
-          />
-        </label>
+          <label htmlFor="password">
+            <b>Senha</b>
+            <br />
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className="login-inputs"
+              data-testid="password-input"
+              value={ password }
+              onChange={ this.handleChange }
+            />
+          </label>
 
-        <label htmlFor="password">
-          <input
-            id="password"
-            name="password"
-            type="password"
-            data-testid="password-input"
-            value={ password }
-            onChange={ this.handleChange }
-          />
-        </label>
+          <button
+            type="button"
+            className="login-inputs"
+            onClick={ this.validLogin }
+            disabled={ !inputEmail || !inputPassword }
+          >
+            Entrar
+          </button>
 
-        <button
-          type="button"
-          onClick={ this.validLogin }
-          disabled={ !inputEmail || !inputPassword }
-        >
-          Entrar
-        </button>
-
-      </form>
+        </form>
+      </div>
     );
   }
 }
 
 Login.propTypes = {
-  dispatchSetValue: PropTypes.func,
+  dispatchSetEmail: PropTypes.func,
+  dispatchSetPassword: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSetValue: (localState) => dispatch(setLoginValue(localState)) });
+  dispatchSetEmail: (payload) => dispatch(setLoginEmail(payload)),
+  dispatchSetPassword: (payload) => dispatch(setLoginPassword(payload)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);
