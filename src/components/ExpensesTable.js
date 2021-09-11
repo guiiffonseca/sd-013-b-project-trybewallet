@@ -42,12 +42,12 @@ class ExpensesTable extends Component {
                   { (exchangeRates[currency].name).split('/')[0] }
                 </td>
                 <td>
-                  { Math.floor(exchangeRates[currency].ask * 100) / 100 }
+                  { (parseFloat(exchangeRates[currency].ask)).toFixed(2) }
                 </td>
                 <td>
-                  { Math.floor(
-                    (parseInt(value, 10) * exchangeRates[currency].ask) * 100,
-                  ) / 100 }
+                  { parseFloat(
+                    (parseInt(value, 10) * exchangeRates[currency].ask).toFixed(2),
+                  )}
                 </td>
                 <td>
                   Real

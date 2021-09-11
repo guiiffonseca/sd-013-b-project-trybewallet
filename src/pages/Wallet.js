@@ -82,7 +82,7 @@ class Wallet extends Component {
     addExpense(newExpense);
     this.setState({
       toAdd: {
-        id: parseInt(id, 10) + 1,
+        id: id + 1,
         value: 0,
         description: '',
         currency: firstCurrency,
