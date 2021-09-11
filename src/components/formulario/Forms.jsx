@@ -29,7 +29,7 @@ class Forms extends React.Component {
   }
 
   handleChange(e) {
-    const { counter, expense } = this.state;
+    const { counter } = this.state;
     const { wallet: { currencies } } = this.props;
     const { name, value } = e.target;
     this.setState((prevState) => ({
@@ -38,7 +38,7 @@ class Forms extends React.Component {
         ...prevState.expense,
         id: counter,
         [name]: value,
-        exchangeRates: currencies[expense.currency],
+        exchangeRates: currencies,
       },
     }));
   }
@@ -64,10 +64,8 @@ class Forms extends React.Component {
     const data = await getCurrencies();
     const { despesa } = this.state;
     const { dispatchSetWalletValue } = this.props;
-    const valorNumero = (Number(value)).toFixed(2);
-    const moedaConversao = (Number(data[currency].ask)).toFixed(2);
     this.setState({
-      despesa: despesa + (valorNumero * moedaConversao),
+      despesa: despesa + (Number(value) * Number(data[currency].ask)),
     }, () => { dispatchSetWalletValue(this.state); });
   }
 

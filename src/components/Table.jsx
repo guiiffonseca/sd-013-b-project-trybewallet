@@ -19,7 +19,7 @@ class Table extends React.Component {
     const { wallet: { expenses, despesa }, dispatchSetWalletValue } = this.props;
     const { id } = target.parentNode;
     const valorSub = expenses[id].valor;
-    console.log(expenses[id].valor);
+    console.log(expenses[id]);
     delete expenses[id];
     this.setState({
       expenses,
@@ -49,18 +49,16 @@ class Table extends React.Component {
       const {
         description, method, currency, id,
         tag, value, exchangeRates } = element;
-      const valorNumero = (Number(value)).toFixed(2);
-      const moedaConversao = (Number(exchangeRates.ask || 0)).toFixed(2);
-
+      const moedaUsada = exchangeRates[currency];
       return (
         <tr key={ id }>
           <td>{ description }</td>
           <td>{ tag }</td>
           <td>{ method }</td>
-          <td>{ `${currency} ${parseFloat((value || 0)).toFixed(2)}` }</td>
-          <td>{ exchangeRates.name }</td>
-          <td>{ parseFloat((exchangeRates.ask || 0)).toFixed(2) }</td>
-          <td>{ (valorNumero * moedaConversao).toFixed(2) }</td>
+          <td>{ value }</td>
+          <td>{ !moedaUsada.name ? 'undefined' : moedaUsada.name.split('/')[0] }</td>
+          <td>{ Number(moedaUsada.ask || 0).toFixed(2) }</td>
+          <td>{ (Number(value) * Number(moedaUsada.ask || 0)).toFixed(2) }</td>
           <td>Real</td>
           <td id={ id }>
             <button
@@ -68,7 +66,7 @@ class Table extends React.Component {
               data-testid="delete-btn"
               onClick={ this.deleteLine }
             >
-              Butão
+              DELETAR
             </button>
           </td>
         </tr>
