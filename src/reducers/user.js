@@ -1,20 +1,13 @@
-import { REQUEST_LOGIN, SET_EMAIL } from '../actions';
+import { SET_LOGIN_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-    isFetching: false,
-  },
+  email: '',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case REQUEST_LOGIN:
-    return { ...state, isFetching: true };
-  case SET_EMAIL:
-    return { ...state, user: action.payload, isFetching: false };
-  // case SET_EMAIL:
-  //   return { ...state, error: action.payload, isFetching: false };
+  case SET_LOGIN_EMAIL:
+    return { ...state, email: action.payload };
   default:
     return state;
   }

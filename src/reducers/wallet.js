@@ -1,16 +1,14 @@
-import { WALLET } from '../actions';
+import { UPDATE_WALLET } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    isFetching: false,
-  },
+  currencies: [],
+  expenses: [],
+  isFetching: false,
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case WALLET:
+  case UPDATE_WALLET:
     return { ...state, isFetching: true };
   // case WALLET_SUCCESS:
   //   return { ...state, wallet: action.payload, isFetching: false };

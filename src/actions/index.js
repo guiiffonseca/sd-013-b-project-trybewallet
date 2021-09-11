@@ -1,13 +1,12 @@
-export const REQUEST_LOGIN = 'REQUEST_LOGIN';
-export const SET_EMAIL = 'SET_EMAIL';
-export const WALLET = 'WALLET';
+export const SET_LOGIN_EMAIL = 'SET_LOGIN_EMAIL';
+export const UPDATE_WALLET = 'UPDATE_WALLET';
 
-export const requestLogin = (payload) => (
+export const setLoginValue = (payload) => (
   {
-    type: REQUEST_LOGIN, payload,
+    type: SET_LOGIN_EMAIL, payload,
   });
 
 export const updatedWallet = (payload) => (
   {
-    type: WALLET, payload,
+    type: UPDATE_WALLET, payload,
   });
