@@ -1,8 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeExpenseAction } from '../actions/actionWallet';
 
 class User extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onclick = this.onclick.bind(this);
+  }
+
+  onclick({ target }) { // função pra remover uma determinada despesa
+    const { parentNode: { parentNode: { id } } } = target;
+    const { removeExpense } = this.props;
+    removeExpense(parseInt(id, 10));
+    // return parentNode.remove();
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -20,21 +34,30 @@ class User extends Component {
             <th>Editar/Excluir</th>
           </tr>
           {expenses.map((expense) => (
-            <tr key={ expense.id }>
-              {console.log(expense.exchangeRates[expense.currency].name)}
+            <tr key={ expense.id } id={ expense.id }>
               <td>{ expense.description }</td>
               <td>{ expense.tag }</td>
-              <td>{ expense.exchangeRates[expense.currency].name }</td>
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
-              <td>{ expense.currency }</td>
+              <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
               <td>
                 { Math.round(
                   expense.exchangeRates[expense.currency].ask * 100,
                 ) / 100 }
               </td>
-              <td>{ expense.value * expense.exchangeRates[expense.currency].ask }</td>
+              <td>
+                {
+                  (
+                    expense.value * expense.exchangeRates[expense.currency].ask
+                  ).toFixed(2)
+                }
+              </td>
               <td>Real</td>
+              <td>
+                <button type="button" data-testid="delete-btn" onClick={ this.onclick }>
+                  Excluir
+                </button>
+              </td>
             </tr>
           ))}
         </table>
@@ -45,10 +68,15 @@ class User extends Component {
 
 User.propTypes = {
   expenses: PropTypes.shape(PropTypes.array).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (payload) => dispatch(removeExpenseAction(payload)),
+});
 
 const mapStateToProps = ({ wallet }) => ({
   expenses: wallet.expenses,
 });
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(User);

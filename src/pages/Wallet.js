@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { setExchangeRatesThunk as setExchangeRatesThunkAction,
-  setExpenseAction } from '../actions/actionWallet';
+import { setExchangeRatesThunk as setExchangeRatesThunkAction, setIdcontrolAction,
+} from '../actions/actionWallet';
 import FormDespesas from '../components/FormDespesas';
 import Header from '../components/Header';
 import User from '../components/User';
@@ -14,10 +14,10 @@ class Wallet extends React.Component {
   }
 
   onClickUser(obj) {
-    const { expenses, setExchangeRatesThunk } = this.props;
+    const { idControl, setExchangeRatesThunk, setId } = this.props;
     const { value, currency, method, tag, description } = obj;
     const objeto = {
-      id: expenses.length,
+      id: idControl,
       value,
       currency,
       description,
@@ -27,6 +27,7 @@ class Wallet extends React.Component {
     };
 
     setExchangeRatesThunk(objeto);
+    setId();
   }
 
   getMoedas() {
@@ -50,16 +51,18 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   setExchangeRatesThunk: PropTypes.func.isRequired,
-  expenses: PropTypes.shape(PropTypes.any).isRequired,
+  idControl: PropTypes.number.isRequired,
+  setId: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setExpense: (payload) => dispatch(setExpenseAction(payload)),
   setExchangeRatesThunk: (payload) => dispatch(setExchangeRatesThunkAction(payload)),
+  setId: () => dispatch(setIdcontrolAction()),
 });
 
-const mapStateToProps = ({ wallet: { expenses } }) => ({
+const mapStateToProps = ({ wallet: { expenses, idControl } }) => ({
   expenses,
+  idControl,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

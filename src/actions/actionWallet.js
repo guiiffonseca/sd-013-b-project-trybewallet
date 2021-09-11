@@ -1,7 +1,9 @@
 const SET_EXPENSE = 'SET_EXPENSE';
 const SET_CURRENCIES = 'SET_CURRENCIES';
+const SET_IDCONTROL = 'SET_IDCONTROL';
+const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
-export const setExpenseAction = (payload) => ({
+const setExpenseAction = (payload) => ({
   type: SET_EXPENSE, payload,
 });
 
@@ -23,3 +25,11 @@ export const setExchangeRatesThunk = (payload) => async (dispatch) => {
   payload.exchangeRates = { ...response };
   dispatch(setExpenseAction(payload));
 };
+
+export const setIdcontrolAction = () => ({
+  type: SET_IDCONTROL,
+});
+
+export const removeExpenseAction = (payload) => ({
+  type: REMOVE_EXPENSE, payload,
+});
