@@ -5,6 +5,7 @@ import HeaderWallet from '../components/HeaderWallet';
 import FormWallet from '../components/FormWallet';
 import { requestCurrenciesApi } from '../actions/index';
 import '../styles/wallet.css';
+import TableExpense from '../components/TableExpense';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -30,6 +31,7 @@ class Wallet extends React.Component {
           currencies={ currencies }
           renderCurrencies={ this.renderCurrencies }
         />
+        <TableExpense />
       </main>
     );
   }

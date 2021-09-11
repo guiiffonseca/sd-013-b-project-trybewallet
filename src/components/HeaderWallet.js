@@ -21,7 +21,7 @@ class HeaderWallet extends Component {
     return (
       <div className="header-container">
         <span data-testid="email-field">{`Email: ${email}`}</span>
-        <span data-testid="total-field">{`Despesa total: R$ ${total}`}</span>
+        <span data-testid="total-field">{`Despesa total: R$ ${total.toFixed(2)}`}</span>
         <span data-testid="header-currency-field">BRL</span>
       </div>
     );
