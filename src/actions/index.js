@@ -2,6 +2,7 @@
 export const USER_INFO = 'USER_INFO';
 export const REQUESTWALLET = 'REQUESTWALLET';
 export const WALLET_INFO = 'WALLET_INFO';
+export const NOVOEXPENSE = 'NOVOEXPENSE';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -15,6 +16,11 @@ export const actionWallet = (payload) => ({
 
 export const requestWallet = (payload) => ({
   type: REQUESTWALLET,
+  payload,
+});
+
+export const novoExpense = (payload) => ({
+  type: NOVOEXPENSE,
   payload,
 });
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { novoExpense } from '../actions';
 
 class Table extends React.Component {
   render() {
+    const { editExpense } = this.props;
     const { expenses } = this.props;
     let total = 0;
     const titulos = [
@@ -28,6 +30,16 @@ class Table extends React.Component {
                 <td>{ `${fixo}` }</td>
                 <td>{ `${total}` }</td>
                 <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    // Tentei fazer de forma direta mas não consegui. Com o code-review do colega Eric (https://github.com/tryber/sd-012-project-trybewallet/commit/d856dff7bc0c28812337669dc0caad3e958d9787) vi que tinha que ter uma arrow function chamando outra função.
+                    onClick={ () => { editExpense(id); } }
+                  >
+                    Editar/Excluir
+                  </button>
+                </td>
               </tr>
             );
           })}
@@ -40,8 +52,12 @@ Table.propTypes = {
   expenses: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  editExpense: (payload) => dispatch(novoExpense(payload)),
+});
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

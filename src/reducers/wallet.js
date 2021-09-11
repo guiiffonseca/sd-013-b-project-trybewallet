@@ -1,4 +1,4 @@
-import { WALLET_INFO, REQUESTWALLET } from '../actions';
+import { WALLET_INFO, REQUESTWALLET, NOVOEXPENSE } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INICIAL_STATE = {
@@ -19,6 +19,11 @@ function wallet(state = INICIAL_STATE, action) {
     return {
       ...state,
       currencies: action.payload,
+    };
+  case NOVOEXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.payload),
     };
   default:
     return state;
