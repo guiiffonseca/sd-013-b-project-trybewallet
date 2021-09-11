@@ -4,13 +4,13 @@ body {
   font-size: 16px;
 }
 
-.login-container {      
+.login-container {
   display: flex;
-  flex-direction:row;
-  justify-content: space-around;  
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-.login-area {  
+.login-area {
   align-items: center;
   background-color: white;
   border: 2px solid rgba(0, 0, 0, 0.125);
@@ -19,7 +19,7 @@ body {
   flex-direction: column;
   font-size: 16px;
   height: 350px;
-  justify-content: space-around;  
+  justify-content: space-around;
   margin: 120px;
   padding-bottom: 20px;
   width: 350px;
@@ -39,14 +39,14 @@ body {
   width: 250px;
 }
 
-.header-container {      
-  border: 10px solid rgba(0, 0, 0, 0.125);  
-  display: flex;  
-  flex-direction:row;
+.header-container {   
+  border: 10px solid rgba(0, 0, 0, 0.125);
+  display: flex;
+  flex-direction: row;
   font-size: 24px;
   font-weight: 500;
-  justify-content: space-between;  
+  justify-content: space-between;
   padding: 24px 30px; 
 }
 
-/* color: #6c757d; */  
+/* color: #6c757d; */
