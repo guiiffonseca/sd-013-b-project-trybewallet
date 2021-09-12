@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import store from '../store';
+import PropTypes from 'prop-types';
+import { setEmail as emailAction, setExpenses } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -24,12 +26,16 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    console.log(store.getState());
+    const { email } = this.state;
+    const { setEmail } = this.props;
+    setEmail(email);
+    setExpenses(0);
   }
 
   render() {
     const { email, password } = this.state;
     const MIN_PASSWORD = 6;
+    console.log(email);
     return (
       <div>
         <form>
@@ -65,4 +71,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (payload) => dispatch(emailAction(payload)),
+});
+
+Login.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
