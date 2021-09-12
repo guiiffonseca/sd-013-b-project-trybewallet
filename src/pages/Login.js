@@ -35,7 +35,6 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const MIN_PASSWORD = 6;
-    console.log(email);
     return (
       <div>
         <form>
