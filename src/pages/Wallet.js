@@ -6,15 +6,6 @@ import Header from '../components/header';
 import ExpensesForm from '../components/expenses-form';
 
 class Wallet extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   // this.convertObjToArray = this.convertObjToArray.bind(this);
-
-  //   // this.state = {
-  //   // };
-  // }
-
   componentDidMount() {
     const { setCurrencies } = this.props;
     setCurrencies();
@@ -36,12 +27,10 @@ class Wallet extends Component {
 
 Wallet.propTypes = {
   setCurrencies: PropTypes.func,
-  allCurrencies: PropTypes.object,
   isFetchingStatus: PropTypes.bool,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  allCurrencies: state.wallet.currencies,
   isFetchingStatus: state.wallet.isFetching,
 });
 
