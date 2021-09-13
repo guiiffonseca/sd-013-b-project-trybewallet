@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 
 class SelectTag extends Component {
   render() {
     return (
       <label htmlFor="tag">
-        Tag
+        Tag:
+        {' '}
         <select
           id="tag"
+          className="expensives-form-long-inputs"
           name="tag"
         >
           <option value="">Selecione</option>

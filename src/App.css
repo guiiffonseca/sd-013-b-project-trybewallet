@@ -40,13 +40,46 @@ body {
 }
 
 .header-container {
-  border: 10px solid rgba(0, 0, 0, 0.125);
+  border: 3px solid #6a6a6d;
+  color: #6a6a6d;
   display: flex;
   flex-direction: row;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
   justify-content: space-between;
-  padding: 24px 30px;
+  padding: 15px 15px;
 }
 
-/* color: #6c757d; */
+.expenses-form {
+  align-items: center;
+  background-color: #6a6a6d;
+  border: 5px rgba(0, 0, 0, 0.125);
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  font-size: 14px;
+  font-weight: 400;
+  justify-content: space-between;
+  padding: 15px 15px;
+}
+
+.expensives-form-short-inputs {
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 4px;
+  font-size: 12px;
+  height: 20px;
+  text-align: center;
+  width: 85px;
+}
+
+.expensives-form-long-inputs {
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 4px;
+  font-size: 12px;
+  height: 20px;
+  text-align: center;
+  width: 150px;
+}

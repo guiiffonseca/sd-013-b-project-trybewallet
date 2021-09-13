@@ -1,4 +1,4 @@
-import { UPDATE_WALLET } from '../actions';
+import { REQUEST_CURRENCIES, GET_CURRENCIES, FAILED_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -8,12 +8,12 @@ const INITIAL_STATE = {
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case UPDATE_WALLET:
+  case REQUEST_CURRENCIES:
     return { ...state, isFetching: true };
-  // case WALLET_SUCCESS:
-  //   return { ...state, wallet: action.payload, isFetching: false };
-  // case WALLET_FAILED:
-  //   return { ...state, error: action.payload, isFetching: false };
+  case GET_CURRENCIES:
+    return { ...state, currencies: action.payload, isFetching: false };
+  case FAILED_CURRENCIES:
+    return { ...state, error: action.payload, isFetching: false };
   default:
     return state;
   }
