@@ -4,6 +4,7 @@ export const SET_USER = 'SET_USER';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_EXPENSES = 'SET_EXPENSES';
 export const UPDATE_EXPENSES = 'UPDATE_EXPENSES';
+export const SET_EDIT_OPTIONS = 'SET_EDIT_OPTIONS';
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -35,5 +36,10 @@ export const getCurrenciesThunk = () => async (dispatch) => {
 
 export const updateExpenses = (payload) => ({
   type: UPDATE_EXPENSES,
+  payload,
+});
+
+export const setEditOptions = (payload) => ({
+  type: SET_EDIT_OPTIONS,
   payload,
 });

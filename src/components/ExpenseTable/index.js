@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { updateExpenses as updateExpensesAction } from '../../actions';
+import {
+  setEditOptions as setEditOptionsAction,
+  updateExpenses as updateExpensesAction,
+} from '../../actions';
 
 const titles = [
   'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
   'Valor convertido', 'Moeda de conversão', 'Editar/Excluir',
 ];
 class ExpenseTable extends Component {
-  handleClick(wantedId) {
+  handleClickEdit(wantedId) {
+    const { setEditOptions, expenses } = this.props;
+    const expenseIndex = expenses.findIndex(({ id }) => id === wantedId);
+    const invalidIndex = -1;
+    if (expenseIndex !== invalidIndex) {
+      setEditOptions({ expenseIndex, isToEditExpense: true });
+    }
+  }
+
+  handleClickDelete(wantedId) {
     const { updateExpenses, expenses } = this.props;
     const index = expenses.findIndex(({ id }) => id === wantedId);
     const invalidIndex = -1;
@@ -50,7 +62,15 @@ class ExpenseTable extends Component {
               <td>
                 <button
                   type="button"
-                  onClick={ () => this.handleClick(id) }
+                  onClick={ () => this.handleClickEdit(id) }
+                  data-testid="edit-btn"
+                >
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={ () => this.handleClickDelete(id) }
                   data-testid="delete-btn"
                 >
                   Excluir
@@ -68,6 +88,7 @@ class ExpenseTable extends Component {
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf.isRequired,
   updateExpenses: PropTypes.func.isRequired,
+  setEditOptions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
@@ -76,6 +97,7 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateExpenses: (payload) => dispatch(updateExpensesAction(payload)),
+  setEditOptions: (payload) => dispatch(setEditOptionsAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
