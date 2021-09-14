@@ -36,6 +36,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     });
   }
   case SUBMIT_EDITION: {
+    console.log(action.payload);
     return ({
       ...state,
       expenses: action.payload,

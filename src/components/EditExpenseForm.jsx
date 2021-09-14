@@ -46,7 +46,7 @@ class EditExpenseForm extends Component {
 
   handleClick() {
     const { expenses, submitEdition, editingExpense: { exchangeRates } } = this.props;
-    const arrExpenses = expenses;
+    const arrExpenses = [...expenses];
     const { id, cost, description, currencyChecked, method, tag } = this.state;
     const expenseObj = {
       id,

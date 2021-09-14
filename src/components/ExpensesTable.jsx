@@ -117,7 +117,6 @@ class ExpensesTable extends Component {
 
   render() {
     const { expenses } = this.props;
-    console.log(expenses);
     return (
       <div>
         { this.renderTable(expenses) }
