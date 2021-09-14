@@ -22,7 +22,7 @@ function addTotal(state, action) {
   });
   total += parseFloat(action.payload.value) * parseFloat(action
     .payload.exchangeRates[action.payload.currency].ask);
-  return total;
+  return total.toFixed(2);
 }
 
 export default function wallet(state = INITIAL_STATE, action) {
