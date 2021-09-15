@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import SelectOptions from './SelectOptions';
 
 const tagOptionst = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -109,5 +110,9 @@ const mapStateToProps = (state) => ({
   moedasArray: state.wallet.currencies,
   loading: state.wallet.loading,
 });
+
+ExpenseForms.propTypes = {
+  moedasArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default connect(mapStateToProps)(ExpenseForms);
