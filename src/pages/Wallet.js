@@ -2,20 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpenseForms from '../components/ExpensesForm';
-import { setMoedas as setMoedasAction } from '../actions';
+import { fetchMoedas } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { setMoedas } = this.props;
-
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((data) => data.json())
-      .then((data) => setMoedas(data));
+    const { fetchMoedasAction } = this.props;
+    fetchMoedasAction();
   }
 
   render() {
     const { email } = this.props;
-
     return (
       <>
         <header>
@@ -37,17 +33,15 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
-  moedas: state.wallet.moedas,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMoedasAction: () => dispatch(fetchMoedas()),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  setMoedas: PropTypes.func.isRequired,
-  moedas: PropTypes.objectOf(PropTypes.object).isRequired,
+  fetchMoedasAction: PropTypes.func.isRequired,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  setMoedas: (payload) => dispatch(setMoedasAction(payload)),
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

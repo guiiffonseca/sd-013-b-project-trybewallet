@@ -3,12 +3,21 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   moedas: {},
+  loading: false,
 };
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'SET_MOEDAS':
     return { ...state, moedas: action.payload };
+  case 'SET_MOEDAS_FAIL':
+    return { ...state, moedas: action.payload };
+  case 'SET_LOADING_TRUE':
+    return { ...state, loading: true };
+  case 'SET_LOADING_FALSE':
+    return { ...state, loading: false };
+  case 'SET_MOEDAS_ARRAY':
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }
