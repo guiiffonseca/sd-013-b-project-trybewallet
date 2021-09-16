@@ -23,7 +23,7 @@ class FormAddValue extends Component {
           Moeda:
           {' '}
           <select id="coin">
-          {currenciesFilter.map((value) => (
+            {currenciesFilter.map((value) => (
               <option value={ value } key={ value }>
                 { value }
                 {' '}
