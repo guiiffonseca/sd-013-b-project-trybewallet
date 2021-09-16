@@ -1,29 +1,28 @@
 import React from 'react';
 
 class Form extends React.Component {
-
   render() {
     return (
       <form id="transaction-data">
         <label htmlFor="expenses">
-        Valor:
+          Valor:
           <input type="text" id="expenses" name="expenses" />
         </label>
         <br />
         <label htmlFor="description">
-        Descrição:
+          Descrição:
           <input type="text" id="description" name="description" />
         </label>
         <br />
         <label htmlFor="currency">
-        Moeda:
+          Moeda:
           <select id="currency" form="transaction-data" name="currency">
             <option>xablau</option>
           </select>
         </label>
         <br />
         <label htmlFor="payment-method">
-        Método de Pagamento:
+          Método de Pagamento:
           <select id="payment-method" form="transaction-data" name="payment-method">
             <option>Dinheiro</option>
             <option>Cartão de Crédito</option>
@@ -32,7 +31,7 @@ class Form extends React.Component {
         </label>
         <br />
         <label htmlFor="tag">
-        Tag:
+         Tag:
           <select id="tag" form="transaction-data" name="tag">
             <option>Alimentação</option>
             <option>Lazer</option>
