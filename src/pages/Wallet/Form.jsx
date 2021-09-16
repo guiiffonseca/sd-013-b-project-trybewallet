@@ -31,7 +31,7 @@ class Form extends React.Component {
         </label>
         <br />
         <label htmlFor="tag">
-         Tag:
+          Tag:
           <select id="tag" form="transaction-data" name="tag">
             <option>Alimentação</option>
             <option>Lazer</option>
