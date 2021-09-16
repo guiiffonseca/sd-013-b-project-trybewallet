@@ -45,7 +45,8 @@ class ExpensesTable extends React.Component {
 
   deleteExpense({ target }) {
     const { setExpensesFunc, allExpenses } = this.props;
-    const newExpenses = allExpenses.filter((expense) => expense.id !== parseInt(target.id, 10));
+    const newExpenses = allExpenses
+      .filter((expense) => expense.id !== parseInt(target.id, 10));
     setExpensesFunc(newExpenses);
   }
 
