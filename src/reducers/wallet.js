@@ -1,8 +1,9 @@
-import { RECEIVE_API } from '../actions';
+import { RECEIVE_API, RECEIVE_NEW_ITEM, UPDATE_TOTAL } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  total: 0,
 };
 
 const updateEmail = (state = INITIAL_STATE, action) => {
@@ -11,6 +12,16 @@ const updateEmail = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currencies: action.state,
+    };
+  case RECEIVE_NEW_ITEM:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
+    };
+  case UPDATE_TOTAL:
+    return {
+      ...state,
+      total: action.state,
     };
   default:
     return state;
