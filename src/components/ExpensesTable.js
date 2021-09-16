@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setExpenses } from '../actions';
 
 const headers = [
   'Descrição',
@@ -15,6 +16,12 @@ const headers = [
 ];
 
 class ExpensesTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.deleteExpense = this.deleteExpense.bind(this);
+  }
+
   formatedValues(xpense) {
     const { description, tag, method, value, currency, exchangeRates } = xpense;
 
@@ -33,8 +40,13 @@ class ExpensesTable extends React.Component {
       convertedValue,
       currencyBase,
     ];
-
     return (novaOrdem.map((item) => <td key={ item }>{item}</td>));
+  }
+
+  deleteExpense({ target }) {
+    const { setExpensesFunc, allExpenses } = this.props;
+    const newExpenses = allExpenses.filter((expense) => expense.id !== parseInt(target.id, 10));
+    setExpensesFunc(newExpenses);
   }
 
   render() {
@@ -48,6 +60,17 @@ class ExpensesTable extends React.Component {
         {allExpenses.map((expense) => (
           <tr key={ expense }>
             {this.formatedValues(expense)}
+            <div>
+              <button type="button" id={ expense.id }>Editar</button>
+              <button
+                type="button"
+                id={ expense.id }
+                data-testid="delete-btn"
+                onClick={ this.deleteExpense }
+              >
+                Excluir
+              </button>
+            </div>
           </tr>
         ))}
       </table>
@@ -63,4 +86,8 @@ const mapStateToProps = ({ wallet }) => ({
   allExpenses: wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesTable);
+const mapDispatchToProps = (dispatch) => ({
+  setExpensesFunc: (newXpenses) => dispatch(setExpenses(newXpenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
