@@ -11,16 +11,16 @@ class Wallet extends React.Component {
     };
     this.getCurrencies = this.getCurrencies.bind(this);
   }
-  
+
+  componentDidMount() {
+    this.getCurrencies();
+  }
+
   getCurrencies() {
     const linkAPI = 'https://economia.awesomeapi.com.br/json/all';
     fetch(linkAPI)
       .then((value) => value.json())
-      .then((value) => this.setState({ currencies: value }))
-  }
-
-  componentDidMount() {
-    this.getCurrencies();
+      .then((value) => this.setState({ currencies: value }));
   }
 
   render() {
@@ -33,7 +33,7 @@ class Wallet extends React.Component {
         <span data-testid="total-field">0</span>
         <span data-testid="header-currency-field"> BRL</span>
         <br />
-      <Form currencies={ currencies }/>
+        <Form currencies={ currencies } />
       </div>
     );
   }

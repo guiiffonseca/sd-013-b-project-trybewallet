@@ -18,8 +18,6 @@ class Login extends React.Component {
 
   handleChange({ target }) {
     const { name, value } = target;
-    // const button = target.parentNode.lastChild;
-    // const { email, password } = this.state;
     this.setState({
       [name]: value,
     });
@@ -75,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  setEmail: PropTypes.func.isRequired,
+  newEmail: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
