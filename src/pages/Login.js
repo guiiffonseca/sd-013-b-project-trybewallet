@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setEmail, setExpenses } from '../actions';
+import Form from './Login/Form';
 
 class Login extends React.Component {
   constructor() {
@@ -34,36 +35,12 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const MIN_PASSWORD = 6;
     return (
-      <div>
-        <form>
-          <input
-            type="email"
-            name="email"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-            value={ email }
-          />
-          <br />
-          <input
-            type="password"
-            name="password"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-            value={ password }
-          />
-          <br />
-          <Link to="/carteira">
-            <button
-              type="button"
-              id="input-button"
-              onClick={ this.handleClick }
-              disabled={ !/\S+@\S+\.\S+/.test(email) || password.length < MIN_PASSWORD }
-            >
-              Entrar
-            </button>
-          </Link>
-        </form>
-      </div>
+      <Form
+        email={ email }
+        password={ password }
+        handleChange={ this.handleChange }
+        handleClick={ this.handleClick }
+      />
     );
   }
 }
