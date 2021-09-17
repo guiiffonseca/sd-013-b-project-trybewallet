@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setEmail, setExpenses } from '../actions';
 import Form from './Login/Form';
@@ -33,7 +32,6 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const MIN_PASSWORD = 6;
     return (
       <Form
         email={ email }
