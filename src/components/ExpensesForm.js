@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectOptions from './SelectOptions';
 
+import { fetchMoedas as fetchMoedasAct, setExpense as setExpenseAct } from '../actions';
+
 const tagOptionst = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 const expenseFormsOptions = [
   'Dinheiro',
@@ -16,7 +18,7 @@ class ExpenseForms extends React.Component {
 
     this.state = {
       expense: '',
-      expenseDescription: '',
+      description: '',
       currency: '',
       method: '',
       tag: '',
@@ -24,12 +26,37 @@ class ExpenseForms extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
+    this.handleClickSubmit = this.handleClickSubmit.bind(this);
+    this.createExpense = this.createExpense.bind(this);
   }
 
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
     });
+  }
+
+  createExpense() {
+    const { expense, description, currency, method, tag } = this.state;
+    const { expensesStore, setExpense, moedas } = this.props;
+    const idNUmber = (expensesStore.length > 0 ? expensesStore.length : 0);
+    const exchangeRates = moedas;
+    const expenseObj = { id: idNUmber,
+      value: expense,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates };
+    const payload = expensesStore.concat(expenseObj);
+    return setExpense(payload);
+  }
+
+  handleClickSubmit(e) {
+    const { fetchMoedas } = this.props;
+    fetchMoedas();
+    e.preventDefault();
+    this.createExpense();
   }
 
   renderSelects() {
@@ -77,7 +104,7 @@ class ExpenseForms extends React.Component {
   }
 
   render() {
-    const { expense, expenseDescription } = this.state;
+    const { expense, description } = this.state;
     return (
       <form>
         <label htmlFor="expense">
@@ -90,17 +117,23 @@ class ExpenseForms extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="expenseDescription">
+        <label htmlFor="description">
           Descrição
           <input
             type="text"
-            name="expenseDescription"
-            id="expenseDescription"
-            value={ expenseDescription }
+            name="description"
+            id="description"
+            value={ description }
             onChange={ this.handleChange }
           />
         </label>
         {this.renderSelects()}
+        <button
+          type="submit"
+          onClick={ this.handleClickSubmit }
+        >
+          Adicionar Despesa
+        </button>
       </form>
     );
   }
@@ -109,10 +142,21 @@ class ExpenseForms extends React.Component {
 const mapStateToProps = (state) => ({
   moedasArray: state.wallet.currencies,
   loading: state.wallet.loading,
+  expensesStore: state.wallet.expenses,
+  moedas: state.wallet.moedas,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMoedas: () => dispatch(fetchMoedasAct()),
+  setExpense: (payload) => dispatch(setExpenseAct(payload)),
 });
 
 ExpenseForms.propTypes = {
   moedasArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expensesStore: PropTypes.arrayOf(PropTypes.object).isRequired,
+  moedas: PropTypes.objectOf(PropTypes.object).isRequired,
+  setExpense: PropTypes.func.isRequired,
+  fetchMoedas: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(ExpenseForms);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForms);

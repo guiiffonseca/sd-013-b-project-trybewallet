@@ -5,13 +5,33 @@ import ExpenseForms from '../components/ExpensesForm';
 import { fetchMoedas } from '../actions';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.sumTotal = this.sumTotal.bind(this);
+  }
+
   componentDidMount() {
     const { fetchMoedasAction } = this.props;
     fetchMoedasAction();
   }
 
+  sumTotal() {
+    const { expenses } = this.props;
+    // const { value, currency, exchangeRates } = expenses;
+    let soma = 0;
+    console.log(expenses);
+    console.log(expenses[0].exchangeRates[expenses[0].currency].ask);
+
+    expenses.forEach((atual) => {
+      soma += atual.value * atual.exchangeRates[atual.currency].ask;
+      return soma;
+    });
+    return soma.toFixed(2);
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     return (
       <>
         <header>
@@ -19,7 +39,7 @@ class Wallet extends React.Component {
             { email }
           </div>
           <div data-testid="total-field">
-            0
+            {expenses.length > 0 ? this.sumTotal() : 0}
           </div>
           <div data-testid="header-currency-field">
             BRL
@@ -42,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   fetchMoedasAction: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf().isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

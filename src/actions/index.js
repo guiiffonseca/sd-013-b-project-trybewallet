@@ -8,6 +8,7 @@ const SET_LOADING_TRUE = 'SET_LOADING_TRUE';
 const SET_LOADING_FALSE = 'SET_LOADING_FALSE';
 
 const SET_MOEDAS_ARRAY = 'SET_MOEDAS_ARRAY';
+const SET_EXPENSE = 'SET_EXPENSE';
 
 export const REQUEST_MOEDAS = 'REQUEST_MOEDAS';
 export const SET_LOGGED = 'SET_LOGGED';
@@ -45,6 +46,11 @@ export const setMoedas = (payload) => ({
 
 export const setMoedasArray = (payload) => ({
   type: SET_MOEDAS_ARRAY,
+  payload,
+});
+
+export const setExpense = (payload) => ({
+  type: SET_EXPENSE,
   payload,
 });
 

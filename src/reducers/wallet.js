@@ -18,6 +18,8 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, loading: false };
   case 'SET_MOEDAS_ARRAY':
     return { ...state, currencies: action.payload };
+  case 'SET_EXPENSE':
+    return { ...state, expenses: action.payload };
   default:
     return state;
   }
