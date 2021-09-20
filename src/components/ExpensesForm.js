@@ -19,7 +19,7 @@ class ExpenseForms extends React.Component {
     this.state = {
       expense: '',
       description: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     };
