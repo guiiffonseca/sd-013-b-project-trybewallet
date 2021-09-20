@@ -11,7 +11,6 @@ class HeaderWallet extends Component {
 
     this.state = {
       sum: 0,
-      currentCurrency: 'BRL',
     };
   }
 
@@ -20,7 +19,6 @@ class HeaderWallet extends Component {
     if (expenses.length > 0) {
       this.sumArray();
     }
-    console.log(this.props);
     dispatch(fetchCurrencies());
   }
 
@@ -35,8 +33,8 @@ class HeaderWallet extends Component {
   }
 
   render() {
-    const { email } = this.props;
-    const { sum, currentCurrency } = this.state;
+    const { email, currentCurrency } = this.props;
+    const { sum } = this.state;
     return (
       <div>
         <div>TrybeWallet</div>
@@ -66,6 +64,7 @@ class HeaderWallet extends Component {
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   expenses: wallet.expenses,
+  currentCurrency: wallet.currentCurrency,
 });
 
 HeaderWallet.propTypes = {
