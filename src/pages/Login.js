@@ -22,7 +22,6 @@ class Login extends React.Component {
     const emailInput = document.getElementById('emailInput').value;
     setLogged(true);
     setEmail(emailInput);
-    console.log('test');
   }
 
   handleButtonLock() {

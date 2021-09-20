@@ -22,7 +22,6 @@ class Wallet extends React.Component {
     let sum = 0;
 
     expenses.map((crr) => {
-      console.log(crr);
       sum += Number(crr.value) * Number(crr.exchangeRates[crr.currency].ask);
       return sum;
     });
