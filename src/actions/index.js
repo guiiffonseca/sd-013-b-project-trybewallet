@@ -31,6 +31,7 @@ export const fetchCurrenciesAPI = () => async (dispatch) => {
   const currenciesResponse = await (await fetch(urlAPI)).json();
   delete currenciesResponse.USDT;
 
+  // MUITO OBRIGADO ROD, PELA AJUDA
   dispatch({
     type: ALL_ACTIONS.SET_CURRENCIES,
     payload: Object.keys(currenciesResponse),

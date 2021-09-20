@@ -28,6 +28,7 @@ class SelectCurrencies extends React.Component {
         Moeda:
         <select id="input-currencies" onChange={ this.handleChange }>
           { currencies.map((currencie) => {
+            // MUITO OBRIGADO ROD, PELA AJUDA
             if (currencie === value) {
               return (
                 <option selected key={ currencie } id={ currencie }>
