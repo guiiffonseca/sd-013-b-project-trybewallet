@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpenseForms from '../components/ExpensesForm';
 import { fetchMoedas } from '../actions';
+import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends React.Component {
   constructor() {
@@ -18,16 +19,15 @@ class Wallet extends React.Component {
 
   sumTotal() {
     const { expenses } = this.props;
-    // const { value, currency, exchangeRates } = expenses;
-    let soma = 0;
-    console.log(expenses);
-    console.log(expenses[0].exchangeRates[expenses[0].currency].ask);
+    let sum = 0;
 
-    expenses.forEach((atual) => {
-      soma += atual.value * atual.exchangeRates[atual.currency].ask;
-      return soma;
+    expenses.map((crr) => {
+      console.log(crr);
+      sum += Number(crr.value) * Number(crr.exchangeRates[crr.currency].ask);
+      return sum;
     });
-    return soma.toFixed(2);
+
+    return sum.toFixed(2);
   }
 
   render() {
@@ -46,6 +46,7 @@ class Wallet extends React.Component {
           </div>
         </header>
         <ExpenseForms />
+        <ExpenseTable />
       </>);
   }
 }
@@ -62,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   fetchMoedasAction: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf().isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

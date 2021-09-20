@@ -52,10 +52,9 @@ class ExpenseForms extends React.Component {
     return setExpense(payload);
   }
 
-  handleClickSubmit(e) {
+  handleClickSubmit() {
     const { fetchMoedas } = this.props;
     fetchMoedas();
-    e.preventDefault();
     this.createExpense();
   }
 
@@ -105,6 +104,7 @@ class ExpenseForms extends React.Component {
 
   render() {
     const { expense, description } = this.state;
+    // const { fetchMoedas } = this.props;
     return (
       <form>
         <label htmlFor="expense">
@@ -129,7 +129,7 @@ class ExpenseForms extends React.Component {
         </label>
         {this.renderSelects()}
         <button
-          type="submit"
+          type="button"
           onClick={ this.handleClickSubmit }
         >
           Adicionar Despesa
