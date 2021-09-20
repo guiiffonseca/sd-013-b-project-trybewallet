@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setPayment } from '../actions';
 
+const options = {
+  cash: 'Dinheiro',
+  credit: 'Cartão de crédito',
+  debit: 'Cartão de débito',
+};
+
 class SelectPaymentType extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
     this.updatePayment = this.updatePayment.bind(this);
-  }
-
-  componentDidMount() {
-    this.updatePayment('Cartão de crédito');
   }
 
   updatePayment(payment) {
@@ -26,19 +28,26 @@ class SelectPaymentType extends React.Component {
   }
 
   render() {
+    const { value } = this.props;
+
     return (
       <label htmlFor="input-payment-type">
         Método de pagamento:
         <select id="input-payment-type" onChange={ this.handleChange }>
-          <option name="credit" id="credit">
-            Cartão de crédito
-          </option>
-          <option name="cash" id="cash">
-            Dinheiro
-          </option>
-          <option name="debit" id="debit">
-            Cartão de débito
-          </option>
+          {Object.entries(options).map(([optionKey, optionValue]) => {
+            if (value === optionValue) {
+              return (
+                <option name={ optionKey } id={ optionKey } selected>
+                  {optionValue}
+                </option>
+              );
+            }
+            return (
+              <option key={ optionKey } name={ optionKey } id={ optionKey }>
+                {optionValue}
+              </option>
+            );
+          })}
         </select>
       </label>
     );

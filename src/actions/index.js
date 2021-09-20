@@ -1,30 +1,26 @@
-const SET_EMAIL = 'SET_EMAIL';
-const SET_EXPENSES = 'SET_EXPENSES';
-const SET_CURRENCIES = 'SET_CURRENCIES';
-const SET_VALUE = 'SET_VALUE';
-const SET_DESCRIPTION = 'SET_DESCRIPTION';
-const SET_CURRENCY = 'SET_CURRENCY';
-const SET_PAYMENT = 'SET_PAYMENT';
-const SET_TAG = 'SET_TAG';
-const SET_EXCHANGERATES = 'SET_EXCHANGERATES';
-
 export const ALL_ACTIONS = {
-  SET_EMAIL,
-  SET_EXPENSES,
-  SET_CURRENCIES,
-  SET_VALUE,
-  SET_DESCRIPTION,
-  SET_CURRENCY,
-  SET_PAYMENT,
-  SET_TAG,
-  SET_EXCHANGERATES,
+  SET_EMAIL: 'SET_EMAIL',
+  SET_EXPENSES: 'SET_EXPENSES',
+  SET_CURRENCIES: 'SET_CURRENCIES',
+  SET_VALUE: 'SET_VALUE',
+  SET_DESCRIPTION: 'SET_DESCRIPTION',
+  SET_CURRENCY: 'SET_CURRENCY',
+  SET_PAYMENT: 'SET_PAYMENT',
+  SET_TAG: 'SET_TAG',
+  SET_EXCHANGERATES: 'SET_EXCHANGERATES',
+  SET_EXPENSE_DEFAULT: 'SET_EXPENSE_DEFAULT',
+  SET_EDIT_EXPENSE: 'SET_EDIT_EXPENSE',
+  SET_ID_EDIT: 'SET_ID_EDIT',
 };
 
+// USER
 export const setEmail = (payload) => ({
   type: ALL_ACTIONS.SET_EMAIL,
   payload,
 });
+// USER
 
+// WALLET
 export const setExpenses = (payload) => ({
   type: ALL_ACTIONS.SET_EXPENSES,
   payload,
@@ -33,16 +29,16 @@ export const setExpenses = (payload) => ({
 export const fetchCurrenciesAPI = () => async (dispatch) => {
   const urlAPI = 'https://economia.awesomeapi.com.br/json/all';
   const currenciesResponse = await (await fetch(urlAPI)).json();
-  const currenciesNoUSDT = Object.entries(currenciesResponse)
-    .filter((key) => key[0] !== 'USDT');
-  const currenciesEdit = currenciesNoUSDT.map((i) => ({ [i[0]]: i[1] }));
+  delete currenciesResponse.USDT;
 
   dispatch({
     type: ALL_ACTIONS.SET_CURRENCIES,
-    payload: currenciesEdit,
+    payload: Object.keys(currenciesResponse),
   });
 };
+// WALLET
 
+// EXPENSE
 export const setValue = (payload) => ({
   type: ALL_ACTIONS.SET_VALUE,
   payload,
@@ -78,3 +74,23 @@ export const setExchangerates = () => async (dispatch) => {
     payload: currenciesResponse,
   });
 };
+
+export const setExpenseDefaultTag = (payload) => ({
+  type: ALL_ACTIONS.SET_EXPENSE_DEFAULT,
+  payload,
+});
+
+// EXPENSE
+
+// EDIT EXPENSE
+export const setEditExpense = (payload) => ({
+  type: ALL_ACTIONS.SET_EDIT_EXPENSE,
+  payload,
+});
+
+export const setIDEdit = (payload) => ({
+  type: ALL_ACTIONS.SET_ID_EDIT,
+  payload,
+});
+
+// EDIT EXPENSE

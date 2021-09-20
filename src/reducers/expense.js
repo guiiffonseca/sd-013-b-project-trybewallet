@@ -3,13 +3,13 @@ import { ALL_ACTIONS } from '../actions';
 const INITIAL_STATE = {
   value: 0,
   description: '',
-  currency: '',
-  method: '',
-  tag: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
   exchangeRates: {},
 };
 
-const user = (state = INITIAL_STATE, { type, payload }) => {
+const expense = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
   case ALL_ACTIONS.SET_VALUE:
     return {
@@ -41,9 +41,11 @@ const user = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       exchangeRates: payload,
     };
+  case ALL_ACTIONS.SET_EXPENSE_DEFAULT:
+    return INITIAL_STATE;
   default:
     return state;
   }
 };
 
-export default user;
+export default expense;

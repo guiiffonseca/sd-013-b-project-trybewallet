@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 import user from './user';
 import wallet from './wallet';
 import expense from './expense';
+import editExpense from './editExpense';
 
 const rootReducer = combineReducers({
   user,
   wallet,
   expense,
+  editExpense,
 });
 
 export default rootReducer;

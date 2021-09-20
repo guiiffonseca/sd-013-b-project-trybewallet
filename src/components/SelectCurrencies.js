@@ -11,10 +11,6 @@ class SelectCurrencies extends React.Component {
     this.updateCurrency = this.updateCurrency.bind(this);
   }
 
-  componentDidMount() {
-    this.updateCurrency('USD');
-  }
-
   updateCurrency(currency) {
     const { setCurrency: setCurrencyFunc } = this.props;
 
@@ -26,16 +22,22 @@ class SelectCurrencies extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, value } = this.props;
     return (
       <label htmlFor="input-currencies">
         Moeda:
         <select id="input-currencies" onChange={ this.handleChange }>
-          { currencies.map((currenciesObj) => {
-            const c = Object.keys(currenciesObj).map((currency) => currency);
+          { currencies.map((currencie) => {
+            if (currencie === value) {
+              return (
+                <option selected key={ currencie } id={ currencie }>
+                  { currencie }
+                </option>
+              );
+            }
             return (
-              <option key={ c } id={ c }>
-                { c }
+              <option key={ currencie } id={ currencie }>
+                { currencie }
               </option>
             );
           }) }

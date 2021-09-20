@@ -15,11 +15,11 @@ class SimpleInput extends React.Component {
   }
 
   render() {
-    const { id, label } = this.props;
+    const { id, label, value } = this.props;
     return (
       <label htmlFor={ id }>
         { label }
-        <input id={ id } onChange={ this.handleChange } />
+        <input value={ value } id={ id } onChange={ this.handleChange } />
       </label>
     );
   }

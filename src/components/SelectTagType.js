@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setTag } from '../actions';
 
+const options = {
+  food: 'Alimentação',
+  entertainment: 'Lazer',
+  work: 'Trabalho',
+  transport: 'Transporte',
+  health: 'Saúde',
+};
+
 class TagType extends React.Component {
   constructor(props) {
     super(props);
 
     this.updateTag = this.updateTag.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateTag('Alimentação');
   }
 
   updateTag(tag) {
@@ -26,25 +30,26 @@ class TagType extends React.Component {
   }
 
   render() {
+    const { value } = this.props;
+
     return (
       <label htmlFor="input-tag-type">
         Tag:
         <select id="input-tag-type" onChange={ this.handleChange }>
-          <option name="food" id="food">
-            Alimentação
-          </option>
-          <option name="lazer" id="lazer">
-            Lazer
-          </option>
-          <option name="work" id="work">
-            Trabalho
-          </option>
-          <option name="transport" id="transport">
-            Transporte
-          </option>
-          <option name="health" id="health">
-            Saúde
-          </option>
+          {Object.entries(options).map(([optionKey, optionValue]) => {
+            if (value === optionValue) {
+              return (
+                <option name={ optionKey } id={ optionKey }>
+                  {optionValue}
+                </option>
+              );
+            }
+            return (
+              <option key={ optionKey } name={ optionKey } id={ optionKey }>
+                {optionValue}
+              </option>
+            );
+          })}
         </select>
       </label>
     );
