@@ -22,7 +22,7 @@ class ExpenseTable extends React.Component {
     const { ask, name } = item.exchangeRates[currency];
     console.log(name);
 
-    const valorConvertido = Number(value) * Number(ask);
+    const valorConv = Number(value) * Number(ask);
     return (
       <tr key={ description }>
         <td className="tableData">{description}</td>
@@ -30,9 +30,9 @@ class ExpenseTable extends React.Component {
         <td className="tableData">{method}</td>
         <td className="tableData">{value}</td>
         <td className="tableData">{name}</td>
-        <td className="tableData">{Math.floor(ask * 100) / 100}</td>
-        <td className="tableData">{Math.floor(valorConvertido * 100) / 100}</td>
-        <td className="tableData">Real Brasileiro</td>
+        <td className="tableData" id="ask">{Math.round(ask * 100) / 100}</td>
+        <td className="tableData" id="valorConv">{Math.floor(valorConv * 100) / 100}</td>
+        <td className="tableData">Real</td>
         <td className="tableData">
           <button id="editBtn" type="button">edit</button>
           <button id="removeBtn" type="button">remove</button>
