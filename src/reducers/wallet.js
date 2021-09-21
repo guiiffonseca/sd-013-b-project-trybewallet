@@ -13,7 +13,7 @@ const wallet = (state = initialState, action) => {
     return {
       ...state,
       expenses: action.payload.expenses,
-      despesa: (action.payload.despesa || 0).toFixed(2),
+      despesa: Number((action.payload.despesa || 0)).toFixed(2),
     };
   case GET_API_SUCCESS:
     return {

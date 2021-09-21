@@ -29,25 +29,37 @@ class Forms extends React.Component {
   }
 
   handleChange(e) {
+    const { wallet: { expenses } } = this.props;
     const { counter } = this.state;
-    const { wallet: { currencies } } = this.props;
     const { name, value } = e.target;
     this.setState((prevState) => ({
       ...prevState,
+      expenses,
       expense: {
         ...prevState.expense,
         id: counter,
         [name]: value,
-        exchangeRates: currencies,
       },
     }));
   }
 
-  addExpenses() {
-    const { expenses, expense, counter } = this.state;
-    const { currency, value } = expense;
+  async addExpenses() {
+    const data = await getCurrencies();
+    this.setState((prevState) => ({
+      ...prevState,
+      expense: {
+        ...prevState.expense,
+        exchangeRates: data,
+      },
+    }));
+    this.updateDespesas(data);
+  }
+
+  updateDespesas(data) {
+    const { counter, expenses, expense } = this.state;
     expenses.push(expense);
-    this.updateDespesas(currency, value);
+    const { currency, value } = expense;
+    const { wallet: { despesa }, dispatchSetWalletValue } = this.props;
     const newCounter = counter + 1;
     this.setState((prevState) => ({ ...prevState,
       expense: {
@@ -57,16 +69,10 @@ class Forms extends React.Component {
         method: 'Dinheiro',
         tag: 'Lazer',
       },
-      counter: newCounter }));
-  }
-
-  async updateDespesas(currency, value) {
-    const data = await getCurrencies();
-    const { despesa } = this.state;
-    const { dispatchSetWalletValue } = this.props;
-    this.setState({
-      despesa: despesa + (Number(value) * Number(data[currency].ask)),
-    }, () => { dispatchSetWalletValue(this.state); });
+      counter: newCounter,
+      despesa:
+        (Number(despesa) + (Number(value) * Number(data[currency].ask))).toFixed(2),
+    }), () => { dispatchSetWalletValue(this.state); });
   }
 
   render() {
@@ -114,7 +120,8 @@ class Forms extends React.Component {
 Forms.propTypes = {
   wallet: PropTypes.shape({
     expenses: PropTypes.arrayOf(PropTypes.string),
-    currencies: PropTypes.arrayOf(PropTypes.string),
+    currencies: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    despesa: PropTypes.string,
   }).isRequired,
   dispatchSetWalletValue: PropTypes.func.isRequired,
 };

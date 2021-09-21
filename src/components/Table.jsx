@@ -18,14 +18,19 @@ class Table extends React.Component {
   deleteLine({ target }) {
     const { wallet: { expenses, despesa }, dispatchSetWalletValue } = this.props;
     const { id } = target.parentNode;
-    const valorSub = expenses[id].valor;
-    console.log(expenses[id]);
-    delete expenses[id];
+    // funcão find pesquisa a despesa com o mesmo id e retorna para element
+    const element = expenses.find((expense) => expense.id === Number(id));
+
+    const { value, currency, exchangeRates } = element;
+    const valorSub = (value * exchangeRates[currency].ask).toFixed(2);
+
+    // mentoria Gabs: ao invés de utilizar o splice() e o indexOf() para remover
+    // um elemento do array, melhor utilizar o filter para retornar o array sem
+    // o elemento que desejo excluir.
     this.setState({
-      expenses,
+      expenses: expenses.filter((expense) => expense.id !== Number(id)),
       despesa: despesa - valorSub,
-    }, () => { dispatchSetWalletValue(this.state); });
-    console.log('to querendo deletar aqui');
+    }, () => dispatchSetWalletValue(this.state));
   }
 
   createrTR() {
