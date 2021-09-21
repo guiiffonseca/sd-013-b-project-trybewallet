@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-class Form extends React.Component {
+class LoginForm extends React.Component {
   render() {
     const { email, password,
       handleChange,
@@ -41,11 +41,11 @@ class Form extends React.Component {
   }
 }
 
-Form.propTypes = {
+LoginForm.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 
-export default Form;
+export default LoginForm;

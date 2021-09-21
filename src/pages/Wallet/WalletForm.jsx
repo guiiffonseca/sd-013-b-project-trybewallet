@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Form extends React.Component {
+class WalletForm extends React.Component {
   render() {
     return (
       <form id="transaction-data">
@@ -45,4 +45,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default WalletForm;
