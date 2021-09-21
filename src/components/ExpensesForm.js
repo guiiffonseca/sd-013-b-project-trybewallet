@@ -20,8 +20,8 @@ class ExpenseForms extends React.Component {
       expense: '',
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -104,7 +104,6 @@ class ExpenseForms extends React.Component {
 
   render() {
     const { expense, description } = this.state;
-    // const { fetchMoedas } = this.props;
     return (
       <form>
         <label htmlFor="expense">

@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeExpense as removeExpenseA } from '../actions';
 
 class ExpenseTable extends React.Component {
   constructor() {
     super();
-
     this.setTableHeaders = this.setTableHeaders.bind(this);
     this.setTableData = this.setTableData.bind(this);
+    this.renderTableBody = this.renderTableBody.bind(this);
+    this.removeParentNode = this.removeParentNode.bind(this);
+    this.subtractTotal = this.subtractTotal.bind(this);
+    this.findById = this.findById.bind(this);
   }
 
   setTableHeaders(item) {
@@ -17,14 +21,13 @@ class ExpenseTable extends React.Component {
       </th>);
   }
 
-  setTableData(item) {
+  setTableData(item, index) {
     const { description, tag, method, value, currency } = item;
     const { ask, name } = item.exchangeRates[currency];
-    console.log(name);
-
     const valorConv = Number(value) * Number(ask);
+
     return (
-      <tr key={ description }>
+      <tr key={ description } className="expenseRow" id={ index }>
         <td className="tableData">{description}</td>
         <td className="tableData">{tag}</td>
         <td className="tableData">{method}</td>
@@ -35,9 +38,61 @@ class ExpenseTable extends React.Component {
         <td className="tableData">Real</td>
         <td className="tableData">
           <button id="editBtn" type="button">edit</button>
-          <button id="removeBtn" type="button">remove</button>
+          <button
+            id="removeBtn"
+            type="button"
+            data-testid="delete-btn"
+            onClick={ this.removeParentNode }
+          >
+            remove
+
+          </button>
         </td>
       </tr>
+    );
+  }
+
+  subtractTotal(value) {
+    const totalField = document.getElementById('total');
+    const subtraction = Number(totalField.innerHTML) - value;
+    totalField.innerHTML = subtraction;
+  }
+
+  findById(array, id) {
+    return array.find((crr) => crr.id === id);
+  }
+
+  removeParentNode(event) {
+    const { id } = event.target.parentNode.parentNode;
+    const { expenses, removeExpense } = this.props;
+    const { value, currency } = expenses[id];
+    console.log(this.findById(expenses, Number(id)));
+
+    const { ask } = expenses[id].exchangeRates[currency];
+    const finalValue = value * ask;
+    removeExpense(expenses.splice(id, 1));
+    document.getElementById(id).remove();
+
+    console.log(Math.round(finalValue * 100) / 100);
+
+    this.subtractTotal(finalValue.toFixed(2));
+  }
+
+  renderTableBody() {
+    const { expenses } = this.props;
+
+    if (expenses.length === 0) {
+      return <tbody />;
+    }
+    return (
+      <tbody>
+        {
+          expenses.map((crr, i) => (
+            this.setTableData(crr, i)
+          ))
+        }
+
+      </tbody>
     );
   }
 
@@ -47,20 +102,23 @@ class ExpenseTable extends React.Component {
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão',
       'Editar/Excluir'];
     const { setTableHeaders } = this;
-    const { expenses } = this.props;
+
     return (
       <table>
         <thead>
           {tableHeaderArr.map((crr) => setTableHeaders(crr))}
         </thead>
-        <tbody>
-          {expenses.map((crr) => this.setTableData(crr))}
-        </tbody>
+        { this.renderTableBody() }
+
       </table>
 
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (payload) => dispatch(removeExpenseA(payload)),
+});
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
@@ -68,6 +126,7 @@ const mapStateToProps = (state) => ({
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(ExpenseTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);

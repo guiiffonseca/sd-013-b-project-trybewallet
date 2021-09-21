@@ -17,6 +17,10 @@ class Wallet extends React.Component {
     fetchMoedasAction();
   }
 
+  componentDidUpdate() {
+    this.sumTotal();
+  }
+
   sumTotal() {
     const { expenses } = this.props;
     let sum = 0;
@@ -37,7 +41,7 @@ class Wallet extends React.Component {
           <div data-testid="email-field">
             { email }
           </div>
-          <div data-testid="total-field">
+          <div data-testid="total-field" id="total">
             {expenses.length > 0 ? this.sumTotal() : 0}
           </div>
           <div data-testid="header-currency-field">
