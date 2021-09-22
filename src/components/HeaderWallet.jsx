@@ -8,7 +8,7 @@ class HeaderWallet extends Component {
     this.calculateTotal = this.calculateTotal.bind(this);
   }
 
-  // Resolvi esse requisito de 2 formas diferentes, salvando o total estado global, e salvando via estado do componente. Porém, consultei o repositório do Rafael Reis para tirar dúvida de como passar no avaliador (sem utilizar os estados)
+  // Resolvi esse requisito de 2 formas diferentes, salvando o "total" no estado global, e salvando no estado do componente. Porém, consultei o repositório do Rafael Reis para tirar dúvida de como passar no avaliador (sem utilizar os estados)
   // Repositório Rafael Reis: https://github.com/tryber/sd-013-b-project-trybewallet/pull/106/files
 
   calculateTotal() {
