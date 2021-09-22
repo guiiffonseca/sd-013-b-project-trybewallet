@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import action from '../actions';
+import Expenses from '../components/Expenses';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -129,6 +130,7 @@ class Wallet extends React.Component {
     return (
       <div>
         {this.walletPartOne(userEmail, filteredCurrency)}
+        <Expenses />
       </div>
     );
   }
