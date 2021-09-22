@@ -4,29 +4,29 @@ import { connect } from 'react-redux';
 
 class SelectCurrencyForm extends Component {
   render() {
-    const { currencies, loadingCurrencies, selectCurrency, handleChange } = this.props;
+    const { currencies, loadingCurrencies, currency, handleChange } = this.props;
 
     return (
       <label htmlFor="select-currency">
         Moeda
         <select
           id="select-currency"
-          name="selectCurrency"
-          value={ selectCurrency }
+          name="currency"
+          value={ currency }
           onChange={ handleChange }
         >
           {
             loadingCurrencies && currencies
-              .map((currency) => {
-                if (currency[0] === 'USDT') {
+              .map((eachCurrency) => {
+                if (eachCurrency[0] === 'USDT') {
                   return null;
                 }
                 return (
                   <option
-                    key={ currency[0] }
-                    value={ currency[0] }
+                    key={ eachCurrency[0] }
+                    value={ eachCurrency[0] }
                   >
-                    {currency[0]}
+                    {eachCurrency[0]}
                   </option>
                 );
               })
@@ -45,7 +45,7 @@ const mapStateToProps = ({ wallet }) => ({
 SelectCurrencyForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any),
   loadingCurrencies: PropTypes.bool,
-  selectCurrency: PropTypes.string,
+  currency: PropTypes.string,
   handleChange: PropTypes.func,
 }.isRequired;
 

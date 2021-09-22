@@ -1,5 +1,3 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-
 import ACTIONS from '../actions/index';
 
 const INITIAL_STATE = {
@@ -11,15 +9,24 @@ const INITIAL_STATE = {
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case ACTIONS.SHOW_EXPENSES:
-    return state.expenses;
   case ACTIONS.SELECTED_CURRENCY:
     return { ...state, currentCurrency: action.currentCurrency };
-  case ACTIONS.RECEIVED_CURRENCIES:
+  case ACTIONS.REQUEST_CURRENCIES:
     return {
       ...state,
       currencies: [...Object.entries(action.currencies)],
       loadingCurrencies: true };
+  case ACTIONS.ADD_EXPENSES:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        {
+          ...action.expenses,
+          id: state.expenses.length,
+        },
+      ],
+    };
   default:
     return state;
   }

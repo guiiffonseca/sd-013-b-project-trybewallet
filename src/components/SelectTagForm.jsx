@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 class SelectTagForm extends Component {
   render() {
-    const { selectTag, handleChange } = this.props;
+    const { tag, handleChange } = this.props;
 
     return (
       <label htmlFor="select-tag">
         Tag
         <select
           id="select-tag"
-          name="selectTag"
-          value={ selectTag }
+          name="tag"
+          value={ tag }
           onChange={ handleChange }
         >
-          <option selected value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );
@@ -27,8 +26,8 @@ class SelectTagForm extends Component {
 }
 
 SelectTagForm.propTypes = {
-  selectTag: PropTypes.string,
+  tag: PropTypes.string,
   handleChange: PropTypes.func,
 }.isRequired;
 
-export default connect(null, null)(SelectTagForm);
+export default SelectTagForm;

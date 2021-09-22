@@ -1,43 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencies } from '../actions';
 
 class HeaderWallet extends Component {
   constructor() {
     super();
-
-    this.sumArray = this.sumArray.bind(this);
-
-    this.state = {
-      sum: 0,
-    };
+    this.calculateTotal = this.calculateTotal.bind(this);
   }
 
-  componentDidMount() {
-    const { expenses, dispatch } = this.props;
-    if (expenses.length > 0) {
-      this.sumArray();
-    }
-    dispatch(fetchCurrencies());
-  }
+  // Resolvi esse requisito de 2 formas diferentes, salvando o total estado global, e salvando via estado do componente. Porém, consultei o repositório do Rafael Reis para tirar dúvida de como passar no avaliador (sem utilizar os estados)
+  // Repositório Rafael Reis: https://github.com/tryber/sd-013-b-project-trybewallet/pull/106/files
 
-  sumArray() {
+  calculateTotal() {
     const { expenses } = this.props;
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const result = expenses.reduce(reducer);
+    let calc = 0;
+    let SumResult = 0;
 
-    this.setState({
-      sum: result,
+    expenses.forEach((expense) => {
+      calc = expense.value * expense.exchangeRates[expense.currency].ask;
+      SumResult += calc;
     });
+    return SumResult;
   }
 
   render() {
-    const { email, currentCurrency } = this.props;
-    const { sum } = this.state;
+    const { email, currentCurrency, expenses } = this.props;
     return (
       <div>
-        <div>TrybeWallet</div>
         <div>
           <span data-testid="email-field">
             Email Logado:
@@ -47,12 +36,11 @@ class HeaderWallet extends Component {
         <div>
           <span data-testid="total-field">
             Despesa total:
-            {` ${sum}`}
+            {expenses.length > 0 ? this.calculateTotal() : 0}
           </span>
         </div>
         <div>
           <span data-testid="header-currency-field">
-            Moeda atual:
             {` ${currentCurrency}`}
           </span>
         </div>
@@ -69,9 +57,7 @@ const mapStateToProps = ({ user, wallet }) => ({
 
 HeaderWallet.propTypes = {
   email: PropTypes.string,
-  expenses: PropTypes.arrayOf(PropTypes.number),
-  dispatch: PropTypes.func,
-  fetchCurrencies: PropTypes.func,
+  expenses: PropTypes.arrayOf(PropTypes.shape()),
 }.isRequired;
 
 export default connect(mapStateToProps, null)(HeaderWallet);

@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import InputValueForm from './InputValueForm';
+import InputDescriptionForm from './InputDescriptionForm';
 import SelectCurrencyForm from './SelectCurrencyForm';
-import { selectedCurrency as selectedCurrencyAction } from '../actions';
 import SelectPaymentForm from './SelectPaymentForm';
 import SelectTagForm from './SelectTagForm';
+
+import { selectedCurrency as selectedCurrencyAction,
+  fetchCurrencies as fetchCurrenciesAction,
+  addExpenses as addExpensesAction } from '../actions';
 
 class WalletForm extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
-      valueField: 0,
-      describeField: '',
-      selectCurrency: 'USD',
-      selectPayment: 'dinheiro',
-      selectTag: 'alimentacao',
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
+  }
+
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
   handleChange({ target }) {
@@ -25,58 +40,76 @@ class WalletForm extends Component {
     });
   }
 
+  handleClick() {
+    const { addExpenses } = this.props;
+    addExpenses(this.state);
+    this.setState({ // reseta os campos value e description
+      description: '',
+      value: 0,
+    });
+  }
+
   render() {
     const {
-      valueField,
-      describeField,
-      selectCurrency,
-      selectPayment,
-      selectTag } = this.state;
+      value,
+      description,
+      currency,
+      method,
+      tag } = this.state;
+    const { currencies, loadingCurrencies } = this.props;
 
     return (
       <div>
         <form>
-          <label htmlFor="value-field">
-            Valor
-            <input
-              type="number"
-              name="valueField"
-              id="value-field"
-              value={ valueField }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <label htmlFor="describe-field">
-            Descrição
-            <textarea
-              name="describeField"
-              id="describe-field"
-              cols="30"
-              rows="1"
-              value={ describeField }
-              onChange={ this.handleChange }
-            />
-          </label>
+          <InputValueForm
+            value={ value }
+            handleChange={ this.handleChange }
+          />
+          <InputDescriptionForm
+            description={ description }
+            handleChange={ this.handleChange }
+          />
           <SelectCurrencyForm
-            value={ selectCurrency }
+            currencies={ currencies }
+            loadingCurrencies={ loadingCurrencies }
+            value={ currency }
             handleChange={ this.handleChange }
           />
           <SelectPaymentForm
-            value={ selectPayment }
+            value={ method }
             handleChange={ this.handleChange }
           />
           <SelectTagForm
-            value={ selectTag }
+            value={ tag }
             handleChange={ this.handleChange }
           />
+          <button
+            name="Adicionar despesa"
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
   }
 }
 
-const mapDispatchtoProps = (dispatch) => ({
-  selectedCurrency: (state) => dispatch(selectedCurrencyAction(state)),
+const mapStateToProps = ({ wallet }) => ({
+  id: wallet.expenses,
+  currencies: wallet.currencies,
+  loadingCurrencies: wallet.loadingCurrencies,
 });
 
-export default connect(null, mapDispatchtoProps)(WalletForm);
+const mapDispatchtoProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
+  selectedCurrency: (state) => dispatch(selectedCurrencyAction(state)),
+  addExpenses: (state) => dispatch(addExpensesAction(state)),
+});
+
+WalletForm.propTypes = {
+  wallet: PropTypes.shape(PropTypes.shape()),
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchtoProps)(WalletForm);
