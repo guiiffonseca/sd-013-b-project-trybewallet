@@ -43,7 +43,8 @@ class ExpenseForms extends React.Component {
     const { expensesStore, setExpense, moedas } = this.props;
     const idNUmber = (expensesStore.length > 0 ? expensesStore.length : 0);
     const exchangeRates = moedas;
-    const expenseObj = { id: idNUmber,
+    const expenseObj = {
+      id: String(idNUmber),
       value: expense,
       description,
       currency,

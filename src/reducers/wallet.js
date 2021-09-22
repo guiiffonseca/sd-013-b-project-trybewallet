@@ -20,6 +20,8 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, currencies: action.payload };
   case 'SET_EXPENSE':
     return { ...state, expenses: action.payload };
+  case 'REMOVE_EXPENSE':
+    return { ...state, expenses: action.payload };
   default:
     return state;
   }
