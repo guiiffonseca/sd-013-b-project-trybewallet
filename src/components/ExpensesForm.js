@@ -30,12 +30,14 @@ class ExpenseForms extends React.Component {
     this.createExpense = this.createExpense.bind(this);
   }
 
+  // muda os states dinamicamente
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
     });
   }
 
+  // cria um objeto no EXPENSES do redux
   createExpense() {
     const { expense, description, currency, method, tag } = this.state;
     const { expensesStore, setExpense, moedas } = this.props;
@@ -52,12 +54,14 @@ class ExpenseForms extends React.Component {
     return setExpense(payload);
   }
 
+  // faz requisição a api e chama createExpense()
   handleClickSubmit() {
     const { fetchMoedas } = this.props;
     fetchMoedas();
     this.createExpense();
   }
 
+  // retorna os SELECT'S da tela
   renderSelects() {
     const { moedasArray } = this.props;
     const { currency, method, tag } = this.state;
@@ -104,6 +108,7 @@ class ExpenseForms extends React.Component {
 
   render() {
     const { expense, description } = this.state;
+    // const { fetchMoedas } = this.props;
     return (
       <form>
         <label htmlFor="expense">

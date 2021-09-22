@@ -12,11 +12,13 @@ class Login extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // Desabilita o botão ao montar a tela
   componentDidMount() {
     const button = document.getElementById('loginButton');
     button.disabled = true;
   }
 
+  // pega o valor do campo "EMAIL" e seta no REDUX
   handleClick() {
     const { setEmail, setLogged } = this.props;
     const emailInput = document.getElementById('emailInput').value;
@@ -24,6 +26,7 @@ class Login extends React.Component {
     setEmail(emailInput);
   }
 
+  // pega o valor de "EMAIL" e "SENHA" e habilita o botão caso passe na validação
   handleButtonLock() {
     const emailInput = document.getElementById('emailInput').value;
     const passwordInput = document.getElementById('passwordInput').value;

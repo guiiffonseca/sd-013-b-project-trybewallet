@@ -12,15 +12,13 @@ class Wallet extends React.Component {
     this.sumTotal = this.sumTotal.bind(this);
   }
 
+  // faz o fetch ao montar o componente
   componentDidMount() {
     const { fetchMoedasAction } = this.props;
     fetchMoedasAction();
   }
 
-  componentDidUpdate() {
-    this.sumTotal();
-  }
-
+  // soma o total das despesas
   sumTotal() {
     const { expenses } = this.props;
     let sum = 0;
@@ -41,7 +39,7 @@ class Wallet extends React.Component {
           <div data-testid="email-field">
             { email }
           </div>
-          <div data-testid="total-field" id="total">
+          <div data-testid="total-field">
             {expenses.length > 0 ? this.sumTotal() : 0}
           </div>
           <div data-testid="header-currency-field">
