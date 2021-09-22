@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class ExpenseItems extends Component {
   render() {
     const { expense } = this.props;
-    const { description, method, tag, value, currency, exchangeRates } = expense;
+    const { description, methods, tags, currency, exchangeRates, expenses } = expense;
 
     const [currencyName] = exchangeRates[currency].name.split('/');
     const ask = parseFloat(exchangeRates[currency].ask);
@@ -13,12 +13,12 @@ export default class ExpenseItems extends Component {
     return (
       <tr>
         <td>{ description }</td>
-        <td>{ tag }</td>
-        <td>{ method }</td>
-        <td>{ value }</td>
+        <td>{ tags }</td>
+        <td>{ methods }</td>
+        <td>{ expenses }</td>
         <td>{ currencyName }</td>
         <td>{ askToFixed }</td>
-        <td>{ value * ask }</td>
+        <td>{ expenses * askToFixed }</td>
         <td>Real</td>
       </tr>
     );

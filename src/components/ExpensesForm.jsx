@@ -16,7 +16,7 @@ class ExpensesForm extends React.Component {
       expenses: '',
       id: 0,
       description: '',
-      currency: 'BRL',
+      currency: 'USD',
       methods: paymentMethods[0],
       tags: category[0],
     };
@@ -49,7 +49,7 @@ class ExpensesForm extends React.Component {
     return (
       <form>
         <Input
-          type="text"
+          type="number"
           label="Valor"
           name="expenses"
           id={ expenses }

@@ -20,10 +20,10 @@ class Login extends React.Component {
     this.checkValidPassword = this.checkValidPassword.bind(this);
   }
 
-  handleOnChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
+  // handleOnChange({ target }) {
+  //   const { name, value } = target;
+  //   this.setState({ [name]: value });
+  // }
 
   // Source: https://github.com/tryber/sd-013-b-project-trybewallet/pull/44
   checkValidEmail({ target }) {
