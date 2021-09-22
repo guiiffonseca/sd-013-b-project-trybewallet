@@ -73,14 +73,14 @@ class ExpensesForm extends React.Component {
         />
         <Select
           label="Método de Pagamento"
-          name="paymentMethod"
+          name="methods"
           options={ paymentMethods }
           value={ methods }
           onChange={ this.handleOnChange }
         />
         <Select
           label="Tag"
-          name="tag"
+          name="tags"
           options={ category }
           value={ tags }
           onChange={ this.handleOnChange }

@@ -9,9 +9,9 @@ class Header extends Component {
     this.sumTotal = this.sumTotal.bind(this);
   }
 
-  sumTotal(expenses) {
-    return expenses.reduce((acc, { value, exchangeRates, currency }) => (
-      acc + value * parseFloat(exchangeRates[currency].ask)
+  sumTotal(value) {
+    return value.reduce((acc, { expenses, exchangeRates, currency }) => (
+      acc + expenses * parseFloat(exchangeRates[currency].ask)
     ), 0);
   }
 
