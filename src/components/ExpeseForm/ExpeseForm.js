@@ -1,63 +1,103 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+  fetchCurrencies as reduxFetchCurrencies,
+  setExpense as reduxSetExpense,
+  fetchExchangeRates as reduxFetchExchangeRates,
+} from '../../actions';
 
 class ExpeseForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currencies: [],
+      value: 0,
+      description: '',
+      method: 'Cartão de crédito',
+      tag: 'Comida',
+      currency: 'USD',
     };
 
-    this.fetchCurrencies = this.fetchCurrencies.bind(this);
+    this.renderCurrencies = this.renderCurrencies.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-    this.fetchCurrencies();
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
-  async fetchCurrencies() {
-    const { data } = await axios.get('https://economia.awesomeapi.com.br/json/all');
-    const currencies = Object.keys(data);
-    const currenciesFiltered = currencies.filter((currency) => currency !== 'USDT');
-    this.setState({ currencies: currenciesFiltered });
+  onClick(e) {
+    const { fetchExchangeRates, setExpense } = this.props;
+    e.preventDefault();
+    setExpense(this.state);
+    fetchExchangeRates();
+  }
+
+  handleChange(e) {
+    const { target } = e;
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  renderCurrencies(currencies) {
+    return (
+      <label htmlFor="currency">
+        Moeda
+        <select name="currency" id="currency" onChange={ this.handleChange }>
+          {currencies.map((currency) => (
+            <option key={ currency } value={ currency }>
+              {currency}
+            </option>
+          ))}
+        </select>
+      </label>
+    );
   }
 
   render() {
-    const { currencies } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <span>
           <label htmlFor="value">
             Valor
-            <input type="text" name="value" id="value" />
+            <input
+              type="text"
+              name="value"
+              id="value"
+              onChange={ this.handleChange }
+            />
           </label>
         </span>
-
         <label htmlFor="description">
           Descrição
-          <input type="text" name="description" id="description" />
+          <input
+            type="text"
+            name="description"
+            id="description"
+            onChange={ this.handleChange }
+          />
         </label>
 
-        <label htmlFor="currency">
-          Moeda
-          <select name="currency" id="currency">
-            {currencies.map((currency) => (<option key={ currency }>{currency}</option>))}
-          </select>
-        </label>
-
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento
-          <select name="payment" id="payment">
+          <select name="method" id="method" onChange={ this.handleChange }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
           </select>
         </label>
 
+        {this.renderCurrencies(currencies)}
+
         <label htmlFor="tag">
           Tag
-          <select name="tag" id="tag">
+          <select name="tag" id="tag" onChange={ this.handleChange }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -65,10 +105,20 @@ class ExpeseForm extends Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button type="submit">Adicionar</button>
+        <button type="submit" onClick={ this.onClick }>Adicionar despesa</button>
       </form>
     );
   }
 }
 
-export default ExpeseForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(reduxFetchCurrencies()),
+  setExpense: (expense) => dispatch(reduxSetExpense(expense)),
+  fetchExchangeRates: () => dispatch(reduxFetchExchangeRates()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpeseForm);

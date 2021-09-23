@@ -31,6 +31,7 @@ class Header extends Component {
 
 const mapStateToProp = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProp)(Header);

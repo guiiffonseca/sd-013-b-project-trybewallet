@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateEmail } from '../../actions';
+import { fetchCurrencies, fetchCurrencies as reduxFetchCurrencies, updateEmail } from '../../actions';
 import './style.css';
 
 const checkEmail = (email) => {

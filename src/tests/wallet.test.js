@@ -58,7 +58,7 @@ describe('5 - Crie um header para a página de carteira contendo as seguintes ca
   });
 });
 
-describe.only('6 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+describe('6 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByLabelText(/valor/i);
@@ -127,23 +127,23 @@ describe('7 - Implemente a lógica para preencher as opções do campo "Moedas",
       name: /moeda/i,
     });
 
-    // const coinOptions = within(currencyInput).getAllByRole('option');
-    // const coinOptionsValues = coinOptions.map((coinOption) => coinOption.value);
+    const coinOptions = within(currencyInput).getAllByRole('option');
+    const coinOptionsValues = coinOptions.map((coinOption) => coinOption.value);
 
-    // const expectedCoinOptions = [
-    //   'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
-    //   'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
-    // ];
+    const expectedCoinOptions = [
+      'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
+      'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
+    ];
 
-    // expect(coinOptionsValues).toEqual(expectedCoinOptions);
+    expect(coinOptionsValues).toEqual(expectedCoinOptions);
 
-    // expect(mockedExchange).toBeCalled();
-    // expect(mockedExchange).toBeCalledWith('https://economia.awesomeapi.com.br/json/all');
-    // expect(currencyInput).toBeInTheDocument();
+    expect(mockedExchange).toBeCalled();
+    expect(mockedExchange).toBeCalledWith('https://economia.awesomeapi.com.br/json/all');
+    expect(currencyInput).toBeInTheDocument();
   });
 });
 
-describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
+describe.only('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
   test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
 
