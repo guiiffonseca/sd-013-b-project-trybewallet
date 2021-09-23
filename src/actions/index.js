@@ -19,7 +19,7 @@ const requestCurrencies = () => ({
 });
 
 const receiveCurrencies = (currencies) => ({
-  type: RECEIVE_CURRENCIES,
+  type: GET_CURRENCIES,
   currencies,
 });
 

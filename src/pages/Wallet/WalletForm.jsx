@@ -2,6 +2,8 @@ import React from 'react';
 
 class WalletForm extends React.Component {
   render() {
+    const { currencies } = this.props;
+   // console.log(Object.keys(currencies));
     return (
       <form id="transaction-data">
         <label htmlFor="expenses">
@@ -17,7 +19,13 @@ class WalletForm extends React.Component {
         <label htmlFor="currency">
           Moeda:
           <select id="currency" form="transaction-data" name="currency">
-            <option>xablau</option>
+            { 
+              Object.keys(currencies)
+                .filter((currency) => currency.length < 4)
+                .map((fiat) => (
+                  <option key={ fiat }>{ fiat }</option>
+                ))
+            } 
           </select>
         </label>
         <br />
