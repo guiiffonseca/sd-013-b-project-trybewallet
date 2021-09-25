@@ -7,6 +7,7 @@ import InputDescriptionForm from './InputDescriptionForm';
 import SelectCurrencyForm from './SelectCurrencyForm';
 import SelectPaymentForm from './SelectPaymentForm';
 import SelectTagForm from './SelectTagForm';
+import TableExpensesList from './TableExpensesList';
 
 import { selectedCurrency as selectedCurrencyAction,
   fetchCurrencies as fetchCurrenciesAction,
@@ -91,6 +92,7 @@ class WalletForm extends Component {
             Adicionar despesa
           </button>
         </form>
+        <TableExpensesList />
       </div>
     );
   }
@@ -102,7 +104,7 @@ const mapStateToProps = ({ wallet }) => ({
   loadingCurrencies: wallet.loadingCurrencies,
 });
 
-const mapDispatchtoProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
   selectedCurrency: (state) => dispatch(selectedCurrencyAction(state)),
   addExpenses: (state) => dispatch(addExpensesAction(state)),
@@ -112,4 +114,4 @@ WalletForm.propTypes = {
   wallet: PropTypes.shape(PropTypes.shape()),
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchtoProps)(WalletForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
