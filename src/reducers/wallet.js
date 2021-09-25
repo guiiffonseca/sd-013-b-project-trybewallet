@@ -27,6 +27,11 @@ function userReducer(state = INITIAL_STATE, action) {
         },
       ],
     };
+  case ACTIONS.DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.id),
+    };
   default:
     return state;
   }

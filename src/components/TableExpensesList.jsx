@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import EditDeleteForm from './EditDeleteForm';
 
 class TableExpensesList extends Component {
   render() {
     const { expenses } = this.props;
-    // const teste = 'dolar americano/real brasileiro';
-    // const result = teste.split('/')[1];
-    // console.log(teste, result);
+
     return (
       <table>
         <thead>
@@ -45,7 +44,7 @@ class TableExpensesList extends Component {
                   }
                 </td>
                 <td>Real</td>
-                <td>Editar/Excluir</td>
+                <td><EditDeleteForm id={ expense.id } /></td>
               </tr>
             ))
           }

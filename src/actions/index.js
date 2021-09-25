@@ -4,6 +4,7 @@ const ACTIONS = {
   SELECTED_CURRENCY: 'SELECTED_CURRENCY',
   REQUEST_CURRENCIES: 'REQUEST_CURRENCIES',
   ADD_EXPENSES: 'ADD_EXPENSES',
+  DELETE_EXPENSE: 'DELETE_EXPENSE',
 };
 
 const API_URL = 'https://economia.awesomeapi.com.br/json/all';
@@ -33,6 +34,8 @@ export const addExpenses = (expenses) => async (dispatch) => {
     expenses,
   });
 };
+
+export const deleteExpense = (id) => ({ type: ACTIONS.DELETE_EXPENSE, id });
 
 export default ACTIONS;
 
