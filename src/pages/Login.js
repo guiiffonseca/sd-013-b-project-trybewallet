@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { saveUserInfo } from '../actions';
 
 class Login extends React.Component {
@@ -26,13 +27,6 @@ class Login extends React.Component {
       this.setState({ disabled: false });
     }
   }
-
-  // handleSubmit() {
-  //   const { emailInputed } = this.props;
-  //   const { email } = this.state;
-  //   console.log(email);
-  //   emailInputed(email);
-  // }
 
   render() {
     const { disabled, email } = this.state;
@@ -68,3 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  emailInputed: PropTypes.func.isRequired,
+};
