@@ -9,7 +9,7 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenses: 0,
+      expenses: [0],
     };
   }
 
@@ -19,7 +19,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, moedas } = this.props;
+    const { email, currencies } = this.props;
     const { expenses } = this.state;
     return (
       <div>
@@ -28,7 +28,7 @@ class Wallet extends React.Component {
         <span data-testid="total-field">{expenses}</span>
         <span data-testid="header-currency-field"> BRL</span>
         <br />
-        <WalletForm currencies={ moedas } />
+        <WalletForm currencies={ currencies } />
       </div>
     );
   }
@@ -37,7 +37,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
-  moedas: state.wallet.currencies,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrencies: PropTypes.func.isRequired,
-  moedas: PropTypes.objectOf(PropTypes.object).isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
