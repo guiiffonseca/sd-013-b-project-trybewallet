@@ -24,6 +24,12 @@ class WalletForm extends React.Component {
       .then(() => delete this.state.exchangeRates.DOGE);
   }
 
+  componentDidMount() {
+    const { saveExpenses } = this.props;
+    this.fetchExchangeRates();
+    saveExpenses([]);
+  }
+
   render() {
     const { currencies } = this.props;
     const MAX_LENGTH = 4;
