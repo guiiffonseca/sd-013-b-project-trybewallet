@@ -7,9 +7,8 @@ class Header extends React.Component {
   render() {
     return (
       <h1 className="header">TrybeWallet</h1>
-  )};
+    );
+  }
 }
 
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Header);
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
