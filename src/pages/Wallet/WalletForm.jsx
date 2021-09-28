@@ -72,9 +72,13 @@ class WalletForm extends React.Component {
           <input type="text" id="description" name="description" />
         </label>
         <br />
-        <label htmlFor="currency">
+        <label htmlFor="select-currency">
           Moeda:
-          <select id="currency" form="transaction-data" name="currency">
+          <select
+            id="select-currency"
+            form="transaction-data"
+            name="currency"
+          >
             {
               Object.keys(currencies)
                 .filter((currency) => currency.length < MAX_LENGTH)
@@ -104,6 +108,13 @@ class WalletForm extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
+        <br />
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+            Adicionar despesa
+        </button>
       </form>
     );
   }
