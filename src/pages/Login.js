@@ -1,32 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { storeUsers } from '../actions/index';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
     this.state = {
       email: '',
       password: '',
-
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
-
-  // verifyEmail(email) {
-  //   const regex = /(.*)@(.*).com/;
-  //   return regex.test(email);
-  // }
-
-  // verifyPassword(password) {
-  //   const MIN_LENGTH_PASSWORD = 6;
-  //   (password.length >= MIN_LENGTH_PASSWORD);
-  // }
-
-  // loginValidator({ email, password }) {
-  //   return verifyEmail(email) && verifyPassword(password);
-  // }
 
   handleChange({ target }) {
     const { name } = target;
@@ -37,8 +24,9 @@ export default class Login extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    // const history = useHistory()
-    const { history } = this.props;
+    const { history, dispatchSetValue } = this.props;
+    const { email } = this.state;
+    dispatchSetValue(email);
     history.push('/carteira');
   }
 
@@ -56,7 +44,7 @@ export default class Login extends Component {
       <div>
         <form>
           <input
-            type="text"
+            type="email"
             name="email"
             data-testid="email-input"
             value={ email }
@@ -83,7 +71,14 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
+  dispatchSetValue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (value) => dispatch(storeUsers(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
