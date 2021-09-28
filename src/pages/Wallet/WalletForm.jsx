@@ -66,12 +66,6 @@ class WalletForm extends React.Component {
           Valor:
           <input type="text" id="expenses" name="expenses" />
         </label>
-        <br />
-        <label htmlFor="description">
-          Descrição:
-          <input type="text" id="description" name="description" />
-        </label>
-        <br />
         <label htmlFor="select-currency">
           Moeda:
           <select
@@ -88,7 +82,6 @@ class WalletForm extends React.Component {
             }
           </select>
         </label>
-        <br />
         <label htmlFor="payment-method">
           Método de Pagamento:
           <select id="payment-method" form="transaction-data" name="payment-method">
@@ -97,7 +90,6 @@ class WalletForm extends React.Component {
             <option>Cartão de Débito</option>
           </select>
         </label>
-        <br />
         <label htmlFor="tag">
           Tag:
           <select id="tag" form="transaction-data" name="tag">
@@ -108,7 +100,10 @@ class WalletForm extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-        <br />
+        <label htmlFor="description">
+          Descrição:
+          <input type="text" id="description" name="description" />
+        </label>
         <button
           type="button"
           onClick={ this.handleClick }
