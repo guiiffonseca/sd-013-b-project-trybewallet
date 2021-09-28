@@ -55,53 +55,7 @@ class WalletForm extends React.Component {
 }
 
 WalletForm.propTypes = {
-  currencies: PropTypes.shape({
-    USD: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    AUD: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    BTC: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    CAD: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    CHF: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    CNY: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    DOGE: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    ETH: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    EUR: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    GBP: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    ILS: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    JPY: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    LTC: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    USDT: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-    XRP: PropTypes.objectOf(
-      PropTypes.string,
-    ),
-  }).isRequired,
-};
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+}
 
 export default WalletForm;
