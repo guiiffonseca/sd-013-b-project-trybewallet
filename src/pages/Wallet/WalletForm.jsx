@@ -12,24 +12,24 @@ class WalletForm extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
   componentDidMount() {
     const { saveExpenses } = this.props;
     this.fetchExchangeRates();
     saveExpenses([]);
   }
-  
-    fetchExchangeRates() {
-      const { expenseCount } = this.state;
-      fetch('https://economia.awesomeapi.com.br/json/all')
-        .then((data) => data.json())
-        .then((jsonData) => this.setState({
-          exchangeRates: jsonData,
-          expenseCount: expenseCount + 1,
-        }))
-        .then(() => delete this.state.exchangeRates.USDT)
-        .then(() => delete this.state.exchangeRates.DOGE);
-    }
+
+  fetchExchangeRates() {
+    const { expenseCount } = this.state;
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((data) => data.json())
+      .then((jsonData) => this.setState({
+        exchangeRates: jsonData,
+        expenseCount: expenseCount + 1,
+      }))
+      .then(() => delete this.state.exchangeRates.USDT)
+      .then(() => delete this.state.exchangeRates.DOGE);
+  }
 
   handleClick({ target }) {
     const { saveExpenses, expenses } = this.props;
@@ -131,6 +131,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 WalletForm.propTypes = {
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  saveExpenses: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
