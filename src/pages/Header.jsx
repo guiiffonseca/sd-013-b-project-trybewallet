@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setExpenses } from '../actions';
 import '../styles/Wallet.css';
 
 class Header extends React.Component {
@@ -10,5 +11,14 @@ class Header extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  saveExpenses: (payload) => dispatch(setExpenses(payload)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
