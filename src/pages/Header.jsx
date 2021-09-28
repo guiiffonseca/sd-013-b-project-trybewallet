@@ -21,4 +21,10 @@ const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (payload) => dispatch(setExpenses(payload)),
 });
 
+Header.propTypes = {
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveExpenses: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
