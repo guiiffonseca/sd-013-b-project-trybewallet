@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { setExpenses } from '../../actions';
 
 class WalletForm extends React.Component {
@@ -68,4 +69,4 @@ WalletForm.propTypes = {
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
-export default WalletForm;
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
