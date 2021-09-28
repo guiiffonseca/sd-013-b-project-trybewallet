@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { setExpenses } from '../../actions';
 
 class WalletForm extends React.Component {
   render() {
@@ -53,6 +54,15 @@ class WalletForm extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  saveExpenses: (payload) => dispatch(setExpenses(payload)),
+});
 
 WalletForm.propTypes = {
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
