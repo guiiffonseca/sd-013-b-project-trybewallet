@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setExpenses } from '../../actions';
+import Expenses from './WalletForm/Expenses';
+import Description from './WalletForm/Description';
+import PaymentMethod from './WalletForm/PaymentMethod';
+import SelectCurrency from './WalletForm/SelectCurrency';
+import Tag from './WalletForm/Tag';
 
 class WalletForm extends React.Component {
   constructor(props) {
@@ -59,29 +64,13 @@ class WalletForm extends React.Component {
 
   render() {
     const { currencies } = this.props;
-    const MAX_LENGTH = 4;
     return (
       <form id="transaction-data">
         <label htmlFor="expenses">
           Valor:
           <input type="text" id="expenses" name="expenses" />
         </label>
-        <label htmlFor="select-currency">
-          Moeda:
-          <select
-            id="select-currency"
-            form="transaction-data"
-            name="currency"
-          >
-            {
-              Object.keys(currencies)
-                .filter((currency) => currency.length < MAX_LENGTH)
-                .map((fiat) => (
-                  <option key={ fiat }>{ fiat }</option>
-                ))
-            }
-          </select>
-        </label>
+        <SelectCurrency />
         <label htmlFor="payment-method">
           Método de Pagamento:
           <select id="payment-method" form="transaction-data" name="payment-method">
