@@ -6,10 +6,11 @@ import getCodeCountries from '../API';
 
 export const LOGIN = 'LOGIN';
 
-export const login = (email) => ({
+export const login = (email, totalExpenses) => ({
   type: LOGIN,
   payload: {
     email,
+    totalExpenses,
   },
 });
 
@@ -21,6 +22,17 @@ export const addExpenses = (expenses) => ({
   type: ADD_EXPENSES,
   payload: {
     expenses,
+  },
+});
+
+// Action deleteExpenses
+
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+
+export const deleteExpenses = (id) => ({
+  type: DELETE_EXPENSES,
+  payload: {
+    id,
   },
 });
 

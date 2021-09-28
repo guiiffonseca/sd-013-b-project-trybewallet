@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getCodeCountries from '../API';
 import { saveExpensesThunk } from '../actions';
+// import Header from './Header';
 import Table from './Table';
 
 class ExpenseForm extends React.Component {
@@ -16,6 +17,7 @@ class ExpenseForm extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
+      // totalExpenses: 0,
       // id: 0,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -95,7 +97,6 @@ class ExpenseForm extends React.Component {
 
   renderCurrency() {
     const { exchangeRates, currency } = this.state;
-    // console.log(exchangeRates);
     return (
       <label htmlFor="currency">
         Moeda:

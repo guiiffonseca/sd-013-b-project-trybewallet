@@ -11,6 +11,7 @@ class Login extends React.Component {
       email: '',
       password: '',
       disabled: true,
+      totalExpenses: 0,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,10 +35,10 @@ class Login extends React.Component {
 
   handleSubmit() {
     const { history, login } = this.props;
-    const { email } = this.state;
+    const { email, totalExpenses } = this.state;
     history.push('/carteira');
 
-    login(email);
+    login(email, totalExpenses);
   }
 
   render() {
@@ -90,7 +91,7 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(loginAction(email)),
+  login: (email, totalExpenses) => dispatch(loginAction(email, totalExpenses)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
