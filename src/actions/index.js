@@ -18,9 +18,9 @@ const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
 });
 
-const receiveCurrencies = (currencies) => ({
+const receiveCurrencies = (payload) => ({
   type: GET_CURRENCIES,
-  currencies,
+  payload,
 });
 
 export function getCurrencies() {
