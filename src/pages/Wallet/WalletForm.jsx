@@ -10,6 +10,7 @@ class WalletForm extends React.Component {
       expenseCount: 0,
       exchangeRates: {},
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   fetchExchangeRates() {
@@ -28,6 +29,32 @@ class WalletForm extends React.Component {
     const { saveExpenses } = this.props;
     this.fetchExchangeRates();
     saveExpenses([]);
+  }
+
+  handleClick({ target }) {
+    const { saveExpenses, expenses } = this.props;
+    const { exchangeRates, expenseCount } = this.state;
+    const currency = document.getElementById('select-currency').value;
+    const purchaseValue = Number(document.getElementById('expenses').value);
+    const purchaseDescription = document.getElementById('description').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+    const tag = document.getElementById('tag').value;
+    this.fetchExchangeRates();
+
+    const data = {
+      id: expenseCount - 1,
+      value: purchaseValue,
+      description: purchaseDescription,
+      currency,
+      method: paymentMethod,
+      tag,
+      exchangeRates,
+    };
+    // setExpenses();
+    console.log(expenses);
+    saveExpenses([...expenses, data])
+    console.log(expenses);
+    // setExpenses();
   }
 
   render() {
