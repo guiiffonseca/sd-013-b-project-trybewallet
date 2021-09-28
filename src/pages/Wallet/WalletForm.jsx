@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { setExpenses } from '../../actions';
 
 class WalletForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expenseCount: 0,
+      exchangeRates: {},
+    };
+  }
 
   fetchExchangeRates() {
     const { expenseCount } = this.state;
