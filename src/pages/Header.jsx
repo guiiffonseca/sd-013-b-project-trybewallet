@@ -6,8 +6,11 @@ import '../styles/Wallet.css';
 
 class Header extends React.Component {
   render() {
+    const { currencies, expenses } = this.props;
     return (
-      <h1 className="header">TrybeWallet</h1>
+      <div>
+        <h1 className="header">TrybeWallet</h1>
+      </div>
     );
   }
 }
