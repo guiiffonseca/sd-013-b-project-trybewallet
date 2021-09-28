@@ -31,7 +31,7 @@ class WalletForm extends React.Component {
       .then(() => delete this.state.exchangeRates.DOGE);
   }
 
-  handleClick({ target }) {
+  handleClick() {
     const { saveExpenses, expenses } = this.props;
     const { exchangeRates, expenseCount } = this.state;
     const currency = document.getElementById('select-currency').value;
@@ -52,7 +52,7 @@ class WalletForm extends React.Component {
     };
     // setExpenses();
     console.log(expenses);
-    saveExpenses([...expenses, data])
+    saveExpenses([...expenses, data]);
     console.log(expenses);
     // setExpenses();
   }
@@ -113,7 +113,7 @@ class WalletForm extends React.Component {
           type="button"
           onClick={ this.handleClick }
         >
-            Adicionar despesa
+          Adicionar despesa
         </button>
       </form>
     );
@@ -131,7 +131,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 WalletForm.propTypes = {
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
