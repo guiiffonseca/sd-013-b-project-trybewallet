@@ -20,15 +20,15 @@ class WalletForm extends React.Component {
   }
 
   fetchExchangeRates() {
-    const { expenseCount } = this.state;
+    const { expenseCount, exchangeRates } = this.state;
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
       .then((jsonData) => this.setState({
         exchangeRates: jsonData,
         expenseCount: expenseCount + 1,
       }))
-      .then(() => delete this.state.exchangeRates.USDT)
-      .then(() => delete this.state.exchangeRates.DOGE);
+      .then(() => delete exchangeRates.USDT)
+      .then(() => delete exchangeRates.DOGE);
   }
 
   handleClick() {
