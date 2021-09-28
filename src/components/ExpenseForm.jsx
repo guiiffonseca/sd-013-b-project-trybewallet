@@ -3,8 +3,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getCodeCountries from '../API';
 import { saveExpensesThunk } from '../actions';
-// import Header from './Header';
 import Table from './Table';
+
+const PAY_METHODS = [
+  'Dinheiro',
+  'Cartão de crédito',
+  'Cartão de débito',
+];
+
+const TAG = [
+  'Alimentação',
+  'Lazer',
+  'Trabalho',
+  'Transporte',
+  'Saúde',
+];
 
 class ExpenseForm extends React.Component {
   constructor() {
@@ -131,9 +144,16 @@ class ExpenseForm extends React.Component {
           value={ method }
           onChange={ this.handleChange }
         >
-          <option value="dinheiro">Dinheiro</option>
-          <option value="cartao-de-credito">Cartão de crédito</option>
-          <option value="cartao-de-debito">Cartão de débito</option>
+          {
+            PAY_METHODS.map((payMethod, index) => (
+              <option
+                key={ index }
+                value={ payMethod }
+              >
+                {payMethod}
+              </option>
+            ))
+          }
         </select>
       </label>
     );
@@ -151,11 +171,16 @@ class ExpenseForm extends React.Component {
           value={ tag }
           onChange={ this.handleChange }
         >
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          {
+            TAG.map((item, index) => (
+              <option
+                key={ index }
+                value={ item }
+              >
+                { item }
+              </option>
+            ))
+          }
         </select>
       </label>
     );

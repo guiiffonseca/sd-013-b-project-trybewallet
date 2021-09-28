@@ -3,7 +3,6 @@ import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
-  totalExpenses: 0,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -12,7 +11,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       email: action.payload.email,
-      totalExpenses: action.payload.totalExpenses,
     };
   default:
     return state;
