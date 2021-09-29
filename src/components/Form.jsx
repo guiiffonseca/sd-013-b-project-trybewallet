@@ -1,76 +1,98 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchExpense } from '../actions';
+import ExpBtn from './FormExpBtn';
 
-class Form extends Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getAwesome = this.getAwesome.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      typeOfCurrency: [],
+      id: 0,
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
     };
   }
 
-  componentDidMount() {
-    this.getAwesome();
-  }
-
-  async getAwesome() {
-    const URL = 'https://economia.awesomeapi.com.br/json/all';
-    const fetchAwesomeAPI = await fetch(URL);
-    const parseJSON = await fetchAwesomeAPI.json();
-    const getCurrency = Object.keys(parseJSON);
-    const noUSDT = getCurrency.filter((curr) => curr !== 'USDT');
+  handleChange({ target: { name, value } }) {
     this.setState({
-      typeOfCurrency: [...noUSDT],
+      [name]: value,
     });
   }
 
+  handleClick() {
+    const { addExp, expenses } = this.props;
+    const expensesLength = expenses.length;
+
+    addExp(this.state);
+
+    if (expensesLength >= 0) {
+      this.setState({ id: expensesLength + 1 });
+    }
+  }
+
   render() {
-    const { typeOfCurrency } = this.state;
+    const { currencies } = this.props;
 
     return (
       <form>
         <label htmlFor="value">
           Valor
-          <input type="text" id="value" />
+          <input type="text" id="value" name="value" onChange={ this.handleChange } />
         </label>
-        <label htmlFor="description">
+        <label htmlFor="i">
           Descrição
-          <input type="text" id="description" />
+          <input type="text" id="i" name="description" onChange={ this.handleChange } />
         </label>
         <label htmlFor="currency">
           Moeda
-          <select
-            id="currency"
-          >
-            {typeOfCurrency.map((currency) => (
-              <option key={ currency } value={ currency }>
-                { currency }
-              </option>
+          <select id="currency" name="currency" onChange={ this.handleChange }>
+            {currencies.map((currency) => (
+              <option key={ currency } value={ currency }>{ currency }</option>
             ))}
           </select>
         </label>
-        <label htmlFor="paymethod">
+        <label htmlFor="payment">
           Método de pagamento
-          <select id="paymethod">
-            <option value="Dinheiro"> Dinheiro </option>
-            <option value="Cartão de crédito"> Cartão de crédito </option>
-            <option value="Cartão de débito"> Cartão de débito </option>
+          <select id="payment" name="method" onChange={ this.handleChange }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag
-          <select id="tag">
-            <option value="Alimentação"> Alimentação </option>
-            <option value="Lazer"> Lazer </option>
-            <option value="Trabalho"> Trabalho </option>
-            <option value="Transporte"> Transporte </option>
-            <option value="Saúde"> Saúde </option>
+          <select id="tag" name="tag" onChange={ this.handleChange }>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <ExpBtn handler={ this.handleClick } />
       </form>
     );
   }
 }
-export default Form;
+
+Form.propTypes = {
+  addExp: PropTypes.func,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addExp: (expense) => dispatch(fetchExpense(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

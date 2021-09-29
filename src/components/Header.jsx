@@ -1,23 +1,37 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userLogin } from '../actions';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.AllExpenses = this.AllExpenses.bind(this);
+  }
+
+  AllExpenses() {
+    let total = 0;
+    const { expenses } = this.props;
+
+    expenses.forEach(({ value, currency, exchangeRates }) => {
+      total += exchangeRates[currency].ask * value; // incrementa o valor atual já com a cotação
+    });
+    return total;
+  }
+
   render() {
     const { email } = this.props;
-    const currency = 'BRL';
-    const expenses = 0;
+
     return (
       <header>
-        <p data-testid="header-currency-field">
-          {` Choosen Currency: ${currency}`}
-        </p>
         <p data-testid="email-field">
-          {` E-mail: ${email}`}
+          { email }
         </p>
         <p data-testid="total-field">
-          {` Total Expenses: ${expenses}`}
+          { this.AllExpenses() }
+        </p>
+        <p data-testid="header-currency-field">
+          BRL
         </p>
       </header>
     );
@@ -25,15 +39,12 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  email: PropTypes.string.isRequired,
-};
+  email: PropTypes.string,
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  saveLogin: (email) => dispatch(userLogin(email)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, null)(Header);

@@ -1,30 +1,46 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { userLogin } from '../actions';
 import Header from '../components/Header';
 import Form from '../components/Form';
+import TableExp from '../components/TableExp';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getData = this.getData.bind(this);
+
+    this.state = {
+      currencies: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  async getData() {
+    const URL = 'https://economia.awesomeapi.com.br/json/all';
+    const fetchAPI = await fetch(URL);
+    const parseJSON = await fetchAPI.json();
+
+    const getCurrencies = Object.keys(parseJSON);
+    const removedUSDT = getCurrencies.filter((target) => target !== 'USDT');
+
+    this.setState({
+      currencies: [...removedUSDT],
+    });
+  }
+
   render() {
+    const { currencies } = this.state;
+
     return (
-      <div>
-        <Form />
+      <div className="wallet-page">
         <Header />
-      </div>
-    );
+        <Form currencies={ currencies } />
+        <TableExp />
+      </div>);
   }
 }
 
-Wallet.propTypes = {
-  email: PropTypes.string,
-}.isRequired;
-
-const mapStateToProps = ({ user: { email } }) => ({
-  email,
-});
-const mapDispatchToProps = (dispatch) => ({
-  saveLogin: (email) => dispatch(userLogin(email)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+export default Wallet;
