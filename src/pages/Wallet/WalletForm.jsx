@@ -14,7 +14,7 @@ class WalletForm extends React.Component {
     this.state = {
       expenseCount: 0,
       exchangeRates: {},
-      expenses: 0,
+      value: 0,
       currency: 'USD',
       tag: '',
       paymentMethod: 'Dinheiro',

@@ -5,12 +5,12 @@ class Expenses extends React.Component {
   render() {
     const { onChange, value } = this.props;
     return (
-      <label htmlFor="expenses">
+      <label htmlFor="value">
         Valor:
         <input
           type="text"
-          id="expenses"
-          name="expenses"
+          id="value"
+          name="value"
           onChange={ onChange }
           value={ value }
         />
