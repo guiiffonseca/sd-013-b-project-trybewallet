@@ -31,9 +31,7 @@ class WalletForm extends React.Component {
       .then((jsonData) => this.setState({
         exchangeRates: jsonData,
         expenseCount: expenseCount + 1,
-      }))
-      .then(() => delete exchangeRates.USDT)
-      .then(() => delete exchangeRates.DOGE);
+      }));
   }
 
   handleClick() {
@@ -55,9 +53,7 @@ class WalletForm extends React.Component {
       tag,
       exchangeRates,
     };
-    console.log(expenses);
     saveExpenses([...expenses, data]);
-    console.log(expenses);
   }
 
   render() {
