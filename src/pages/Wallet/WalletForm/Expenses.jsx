@@ -3,7 +3,14 @@ import React from 'react';
 class Expenses extends React.Component {
   render() {
     return (
-      <span>Here goes your component</span>
+      <label htmlFor="expenses">
+        Valor:
+        <input
+          type="text"
+          id="expenses"
+          name="expenses"
+        />
+      </label>
     );
   }
 }
