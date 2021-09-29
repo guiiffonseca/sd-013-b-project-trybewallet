@@ -1,4 +1,5 @@
 import React from 'react';
+import PurchaseData from './PurchaseTable/PurchaseData';
 
 class PurchaseTable extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class PurchaseTable extends React.Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
+          <PurchaseData />
         </table>
       </div>
     );

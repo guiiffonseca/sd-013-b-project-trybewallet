@@ -1,36 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setExpenses } from '../../actions';
+import { setExpenses } from '../../../actions';
 
 class PurchaseTable extends React.Component {
   render() {
+    const { expenses } = this.props;
+    console.log( expenses );
     return(
-      <p>Ei, Copini! Tô aqui!</p>
+  //  { expenses.map((expense) => (
+  //      <tr key={ expense.id }>
+  //        <td key={ `${expense.id}-descrição` }>{ expense.description }</td>
+  //        <td key={ `${expense.id}-tag` }>{ expense.tag }</td>
+  //        <td key={ `${expense.id}-método` }>{ expense.metdod }</td>
+  //        <td key={ `${expense.id}-valor` }>{ expense.value }</td>
+  //        <td key={ `${expense.id}-moeda` }>{ expense.currency }</td>
+  //        <td key={ `${expense.id}-nome da moeda` }>{
+  //          expense.exchangeRates[expense.currency].name
+  //        }</td>
+  //        <td key={ `${expense.id}-câmbio` }>{
+  //          expense.exchangeRates[expense.currency].ask
+  //        }</td>
+  //        <td key={ `${expense.id}-moeda de conversão` }>Real</td>
+  //        <td key={ `${expense.id}-cancelar` }>Cancelar compra</td>
+  //      </tr>
+  //    ))
+  //  }
+      <p>0</p>
     );
   }
 }
-
-        {/* { 
-          expenses.map((expense) => (
-            <tr key={ expense.id }>
-              <th key={ `${expense.id}-descrição` }>{ expense.description }</th>
-              <th key={ `${expense.id}-tag` }>{ expense.tag }</th>
-              <th key={ `${expense.id}-método` }>{ expense.method }</th>
-              <th key={ `${expense.id}-valor` }>{ expense.value }</th>
-              <th key={ `${expense.id}-moeda` }>{ expense.currency }</th>
-              <th key={ `${expense.id}-nome da moeda` }>{
-                expense.exchangeRates[expense.currency].name
-              }</th>
-              <th key={ `${expense.id}-câmbio` }>{
-                expense.exchangeRates[expense.currency].ask
-              }</th>
-              <th key={ `${expense.id}-moeda de conversão` }>Real</th>
-              <th key={ `${expense.id}-cancelar` }>Cancelar compra</th>
-            </tr>
-          ))
-        }   */}
-
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,

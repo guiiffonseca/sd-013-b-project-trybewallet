@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Description extends React.Component {
   render() {
+    const { onChange, value } = this.props;
     return (
       <label htmlFor="description">
         Descrição:
@@ -9,6 +11,8 @@ class Description extends React.Component {
           type="text"
           id="description"
           name="description"
+          onChange={ onChange }
+          value={ value }
         />
       </label>
     );

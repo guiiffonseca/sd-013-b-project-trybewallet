@@ -14,14 +14,20 @@ class WalletForm extends React.Component {
     this.state = {
       expenseCount: 0,
       exchangeRates: {},
+      expenses: 0,
+      currency: 'USD',
+      tag: '',
+      paymentMethod: 'Dinheiro',
+      description: 'Alimentação',
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const { saveExpenses, addExpenses } = this.props;
     this.fetchExchangeRates();
-    saveExpenses([]);
+    // saveExpenses([]);
     addExpenses(0);
   }
 
@@ -35,42 +41,51 @@ class WalletForm extends React.Component {
       }));
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
   handleClick() {
-    const { saveExpenses, addExpenses, expenses } = this.props;
-    const { exchangeRates, expenseCount } = this.state;
-    const currency = document.getElementById('select-currency').value;
-    const purchaseValue = Number(document.getElementById('expenses').value);
-    const purchaseDescription = document.getElementById('description').value;
-    const paymentMethod = document.getElementById('payment-method').value;
-    const tag = document.getElementById('tag').value;
+    const { saveExpenses } = this.props;
+    // const { exchangeRates, expenseCount } = this.state;
+    // const currency = document.getElementById('select-currency').value;
+    // const purchaseValue = Number(document.getElementById('expenses').value);
+    // const purchaseDescription = document.getElementById('description').value;
+    // const paymentMethod = document.getElementById('payment-method').value;
+    // const tag = document.getElementById('tag').value;
+    const { expenses, currency, tag, paymentMethod,
+      description } = this.state;
     this.fetchExchangeRates();
 
-    const data = {
-      id: expenseCount - 1,
-      value: purchaseValue,
-      description: purchaseDescription,
-      currency,
-      method: paymentMethod,
-      tag,
-      exchangeRates,
-    };
-    saveExpenses(expenses.concat(data));
-    let totalExpenses = 0;
-    for (let index = 0; index < expenses.length; index += 1) {
-      totalExpenses += expenses[index].value
-      * expenses[index].exchangeRates[expenses[index].currency].ask;
-    }
-    addExpenses(Math.round(100 * totalExpenses) / 100);
+    // const data = {
+    //   id: expenseCount - 1,
+    //   value: purchaseValue,
+    //   description: purchaseDescription,
+    //   currency,
+    //   method: paymentMethod,
+    //   tag,
+    //   exchangeRates,
+    // };
+    saveExpenses(this.state);
+    // let totalExpenses = 0;
+    // for (let index = 0; index < expenses.length; index += 1) {
+    //   totalExpenses += expenses[index].value
+    //   * expenses[index].exchangeRates[expenses[index].currency].ask;
+    // }
+    // addExpenses(Math.round(100 * totalExpenses) / 100);
   }
 
   render() {
+    const { expenses, currency, tag,
+      paymentMethod, description } = this.state;
     return (
       <form id="transaction-data">
-        <Expenses />
-        <SelectCurrency />
-        <PaymentMethod />
-        <Tag />
-        <Description />
+        <Expenses value={ expenses } onChange={ this.handleChange } />
+        <SelectCurrency value={ currency } onChange={ this.handleChange } />
+        <PaymentMethod value={ paymentMethod } onChange={ this.handleChange } />
+        <Tag value={ tag } onChange={ this.handleChange } />
+        <Description value={ description } onChange={ this.handleChange } />
         <button
           type="button"
           onClick={ this.handleClick }

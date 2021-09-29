@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class SelectCurrency extends React.Component {
   render() {
-    const { currencies } = this.props;
+    const { currencies, onChange, value } = this.props;
     const MAX_LENGTH = 3;
     return (
       <label htmlFor="select-currency">
@@ -13,6 +13,8 @@ class SelectCurrency extends React.Component {
           id="select-currency"
           form="transaction-data"
           name="currency"
+          onChange={ onChange }
+          value={ value }
         >
           {
             Object.keys(currencies)

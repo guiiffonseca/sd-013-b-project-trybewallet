@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Tag extends React.Component {
   render() {
+    const { onChange, value } = this.props;
     return (
       <label htmlFor="tag">
         Tag:
@@ -9,6 +11,8 @@ class Tag extends React.Component {
           id="tag"
           form="transaction-data"
           name="tag"
+          onChange={ onChange }
+          value={ value }
         >
           <option>Alimentação</option>
           <option>Lazer</option>
