@@ -7,13 +7,6 @@ import PurchaseTable from './Wallet/PurchaseTable';
 import { getCurrencies as fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expenses: [0],
-    };
-  }
-
   componentDidMount() {
     const { getCurrencies } = this.props;
     const totalExpenses = document.getElementById('total-expenses');
@@ -26,8 +19,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
-    const { expenses } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <Header />
@@ -49,7 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
