@@ -1,5 +1,6 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_EXPENSES = 'SET_EXPENSES';
+export const SUM_EXPENSES = 'SUM_EXPENSES';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
@@ -11,6 +12,11 @@ export const setEmail = (payload) => ({
 
 export const setExpenses = (payload) => ({
   type: SET_EXPENSES,
+  payload,
+});
+
+export const sumExpenses = (payload) => ({
+  type: SUM_EXPENSES,
   payload,
 });
 

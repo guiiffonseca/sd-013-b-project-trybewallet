@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setExpenses } from '../../actions';
+import { setExpenses, sumExpenses } from '../../actions';
 import Expenses from './WalletForm/Expenses';
 import Description from './WalletForm/Description';
 import PaymentMethod from './WalletForm/PaymentMethod';
@@ -19,20 +19,10 @@ class WalletForm extends React.Component {
   }
 
   componentDidMount() {
-    const { saveExpenses } = this.props;
+    const { saveExpenses, addExpenses } = this.props;
     this.fetchExchangeRates();
     saveExpenses([]);
-  }
-
-  componentDidUpdate() {
-    const { expenses } = this.props;
-    let totalExpenses = document.getElementById('total-expenses');
-    let currentExpenses = Number(0);
-    for (const expense of expenses) {
-      currentExpenses += Number(expense.value 
-      + expense.exchangeRates[expense.currency].ask);
-    }
-    totalExpenses.innerHTML = currentExpenses;
+    addExpenses(0);
   }
 
   fetchExchangeRates() {
@@ -46,7 +36,7 @@ class WalletForm extends React.Component {
   }
 
   handleClick() {
-    const { saveExpenses, expenses } = this.props;
+    const { saveExpenses, addExpenses, expenses } = this.props;
     const { exchangeRates, expenseCount } = this.state;
     const currency = document.getElementById('select-currency').value;
     const purchaseValue = Number(document.getElementById('expenses').value);
@@ -65,6 +55,12 @@ class WalletForm extends React.Component {
       exchangeRates,
     };
     saveExpenses([...expenses, data]);
+    let totalExpenses = 0;
+    for (const expense of expenses) {
+      totalExpenses += expense.value
+      * expense.exchangeRates[expense.currency].ask;
+    }
+    addExpenses(Math.round(100 * totalExpenses) / 100);
   }
 
   render() {
@@ -93,11 +89,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (payload) => dispatch(setExpenses(payload)),
+  addExpenses: (payload) => dispatch(sumExpenses(payload)),
 });
 
 WalletForm.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
