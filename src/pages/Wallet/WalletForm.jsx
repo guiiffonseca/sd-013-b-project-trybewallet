@@ -16,9 +16,9 @@ class WalletForm extends React.Component {
       exchangeRates: {},
       value: 0,
       currency: 'USD',
-      tag: '',
       method: 'Dinheiro',
-      description: 'Alimentação',
+      tag: 'Alimentação',
+      description: '',
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -28,7 +28,6 @@ class WalletForm extends React.Component {
     const { saveExpenses, addExpenses } = this.props;
     this.fetchExchangeRates();
     // saveExpenses([]);
-    addExpenses(0);
   }
 
   fetchExchangeRates() {
@@ -47,15 +46,14 @@ class WalletForm extends React.Component {
   }
 
   handleClick() {
-    const { saveExpenses } = this.props;
-    // const { exchangeRates, expenseCount } = this.state;
+    const { saveExpenses, addExpenses, expenses } = this.props;
+    const { exchangeRates, expenseCount,
+      value, description, tag, method, currency } = this.state;
     // const currency = document.getElementById('select-currency').value;
     // const purchaseValue = Number(document.getElementById('expenses').value);
     // const purchaseDescription = document.getElementById('description').value;
     // const paymentMethod = document.getElementById('payment-method').value;
     // const tag = document.getElementById('tag').value;
-    const { expenses, currency, tag, paymentMethod,
-      description } = this.state;
     this.fetchExchangeRates();
 
     // const data = {
@@ -67,7 +65,17 @@ class WalletForm extends React.Component {
     //   tag,
     //   exchangeRates,
     // };
-    saveExpenses(this.state);
+    saveExpenses({
+      id: expenseCount -1,
+      value,
+      description,
+      tag,
+      currency,
+      method,
+      exchangeRates,
+    });
+
+    addExpenses((Math.ceil(100 * Number(value) * Number(exchangeRates[currency].ask)) / 100));
     // let totalExpenses = 0;
     // for (let index = 0; index < expenses.length; index += 1) {
     //   totalExpenses += expenses[index].value
