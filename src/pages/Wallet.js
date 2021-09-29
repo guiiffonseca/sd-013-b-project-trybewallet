@@ -14,10 +14,6 @@ class Wallet extends React.Component {
     getCurrencies();
   }
 
-  componentDidUpdate() {
-
-  }
-
   render() {
     const { currencies } = this.props;
     return (

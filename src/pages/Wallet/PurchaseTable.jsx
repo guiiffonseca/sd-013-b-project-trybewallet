@@ -7,7 +7,9 @@ class PurchaseTable extends React.Component {
   render() {
     const { expenses } = this.props;
     return (
-      <div>
+      <div
+        id="purchase-table"
+      >
         {expenses.length}
       </div>
     );

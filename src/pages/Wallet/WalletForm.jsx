@@ -24,8 +24,12 @@ class WalletForm extends React.Component {
     saveExpenses([]);
   }
 
+  componentDidUpdate() {
+    
+  }
+
   fetchExchangeRates() {
-    const { expenseCount, exchangeRates } = this.state;
+    const { expenseCount } = this.state;
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
       .then((jsonData) => this.setState({
@@ -85,7 +89,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 WalletForm.propTypes = {
-  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
 };
