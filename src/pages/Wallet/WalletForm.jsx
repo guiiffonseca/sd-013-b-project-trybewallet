@@ -25,7 +25,14 @@ class WalletForm extends React.Component {
   }
 
   componentDidUpdate() {
-    
+    const { expenses } = this.props;
+    let totalExpenses = document.getElementById('total-expenses');
+    let currentExpenses = Number(0);
+    for (const expense of expenses) {
+      currentExpenses += Number(expense.value 
+      + expense.exchangeRates[expense.currency].ask);
+    }
+    totalExpenses.innerHTML = currentExpenses;
   }
 
   fetchExchangeRates() {
