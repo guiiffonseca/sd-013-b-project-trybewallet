@@ -3,7 +3,18 @@ import React from 'react';
 class PaymentMethod extends React.Component {
   render() {
     return (
-      <span>Here goes your component</span>
+      <label htmlFor="payment-method">
+        Método de Pagamento:
+        <select
+          id="payment-method"
+          form="transaction-data"
+          name="payment-method"
+        >
+          <option>Dinheiro</option>
+          <option>Cartão de Crédito</option>
+          <option>Cartão de Débito</option>
+        </select>
+      </label>
     );
   }
 }
