@@ -54,11 +54,11 @@ class WalletForm extends React.Component {
       tag,
       exchangeRates,
     };
-    saveExpenses([...expenses, data]);
+    saveExpenses(expenses.concat(data));
     let totalExpenses = 0;
-    for (const expense of expenses) {
-      totalExpenses += expense.value
-      * expense.exchangeRates[expense.currency].ask;
+    for (let index = 0; index < expenses.length; index += 1) {
+      totalExpenses += expenses[index].value
+      * expenses[index].exchangeRates[expenses[index].currency].ask;
     }
     addExpenses(Math.round(100 * totalExpenses) / 100);
   }
