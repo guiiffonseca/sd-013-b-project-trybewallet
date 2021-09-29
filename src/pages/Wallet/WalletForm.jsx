@@ -55,44 +55,19 @@ class WalletForm extends React.Component {
       tag,
       exchangeRates,
     };
-    // setExpenses();
     console.log(expenses);
     saveExpenses([...expenses, data]);
     console.log(expenses);
-    // setExpenses();
   }
 
   render() {
-    const { currencies } = this.props;
     return (
       <form id="transaction-data">
-        <label htmlFor="expenses">
-          Valor:
-          <input type="text" id="expenses" name="expenses" />
-        </label>
+        <Expenses />
         <SelectCurrency />
-        <label htmlFor="payment-method">
-          Método de Pagamento:
-          <select id="payment-method" form="transaction-data" name="payment-method">
-            <option>Dinheiro</option>
-            <option>Cartão de Crédito</option>
-            <option>Cartão de Débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select id="tag" form="transaction-data" name="tag">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input type="text" id="description" name="description" />
-        </label>
+        <PaymentMethod />
+        <Tag />
+        <Description />
         <button
           type="button"
           onClick={ this.handleClick }
