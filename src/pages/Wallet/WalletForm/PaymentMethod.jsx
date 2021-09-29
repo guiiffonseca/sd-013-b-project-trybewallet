@@ -5,12 +5,12 @@ class PaymentMethod extends React.Component {
   render() {
     const { onChange, value } = this.props;
     return (
-      <label htmlFor="payment-method">
+      <label htmlFor="method">
         Método de Pagamento:
         <select
-          id="payment-method"
+          id="method"
           form="transaction-data"
-          name="paymentMethod"
+          name="method"
           onChange={ onChange }
           value={ value }
         >
