@@ -31,4 +31,8 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
+SelectCurrency.propTypes = {
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
 export default connect(mapStateToProps, null)(SelectCurrency);
