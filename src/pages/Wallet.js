@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import WalletForm from './Wallet/WalletForm';
 import Header from './Wallet/Header';
+import PurchaseTable from './Wallet/PurchaseTable';
 import { getCurrencies as fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
@@ -15,7 +16,13 @@ class Wallet extends React.Component {
 
   componentDidMount() {
     const { getCurrencies } = this.props;
+    const totalExpenses = document.getElementById('total-expenses');
+    totalExpenses.innerHTML = 0;
     getCurrencies();
+  }
+
+  componentDidUpdate() {
+
   }
 
   render() {
@@ -24,11 +31,8 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        <span data-testid="email-field">{email}</span>
-        <span data-testid="total-field">{expenses}</span>
-        <span data-testid="header-currency-field"> BRL</span>
-        <br />
         <WalletForm currencies={ currencies } />
+        <PurchaseTable />
       </div>
     );
   }
