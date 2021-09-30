@@ -1,4 +1,5 @@
 import React from 'react';
+import PurchaseHeader from './PurchaseTable/PurchaseHeader';
 import PurchaseData from './PurchaseTable/PurchaseData';
 
 class PurchaseTable extends React.Component {
@@ -8,17 +9,7 @@ class PurchaseTable extends React.Component {
         id="purchase-table"
       >
         <table>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
+          <PurchaseHeader />
           <PurchaseData />
         </table>
       </div>
