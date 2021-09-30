@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { inputEmail as actionUserEmail } from '../actions/index';
+import '../style/loginStylesheet.css';
 
 class Login extends Component {
   constructor(props) {
@@ -64,33 +65,38 @@ class Login extends Component {
     const { email, password, validForm } = this.state;
 
     return (
-      <fieldset className="login-form">
-        <label htmlFor="emailInput">
-          Email:
-          <input
-            type="email"
-            data-testid="email-input"
-            name="email"
-            id="emailInput"
-            onChange={ this.handleChange }
-            value={ email }
-          />
-        </label>
-        <label htmlFor="passwordInput">
-          Password:
-          <input
-            type="password"
-            data-testid="password-input"
-            name="password"
-            id="passwordInput"
-            onChange={ this.handleChange }
-            value={ password }
-          />
-        </label>
-        <button type="submit" disabled={ !validForm } onClick={ this.handleBtnClick }>
-          Entrar
-        </button>
-      </fieldset>
+      <div className="login">
+        <form>
+          <label htmlFor="emailInput">
+            Email:
+            <input
+              type="email"
+              data-testid="email-input"
+              name="email"
+              id="emailInput"
+              onChange={ this.handleChange }
+              value={ email }
+            />
+          </label>
+          <label htmlFor="passwordInput">
+            Password:
+            <input
+              type="password"
+              data-testid="password-input"
+              name="password"
+              id="passwordInput"
+              onChange={ this.handleChange }
+              value={ password }
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={ !validForm }
+            onClick={ this.handleBtnClick }>
+            Entrar
+          </button>
+        </form>
+      </div>
     );
   }
 }
