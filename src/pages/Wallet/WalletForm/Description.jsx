@@ -19,4 +19,9 @@ class Description extends React.Component {
   }
 }
 
+Description.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 export default Description;
