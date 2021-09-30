@@ -26,9 +26,6 @@ class WalletForm extends React.Component {
   }
 
   componentDidMount() {
-    const { saveExpenses, addExpenses } = this.props;
-    const { currencies } = this.state;
-    // this.fetchExchangeRates();
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
       .then((jsonData) => this.setState({
@@ -56,28 +53,12 @@ class WalletForm extends React.Component {
   }
 
   handleClick() {
-    const { saveExpenses, addExpenses, expenses } = this.props;
+    const { saveExpenses, addExpenses } = this.props;
     const { exchangeRates, expenseCount,
       value, description, tag, method, currency } = this.state;
-    // const currency = document.getElementById('select-currency').value;
-    // const purchaseValue = Number(document.getElementById('expenses').value);
-    // const purchaseDescription = document.getElementById('description').value;
-    // const paymentMethod = document.getElementById('payment-method').value;
-    // const tag = document.getElementById('tag').value;
-    
     this.fetchExchangeRates();
-
-    // const data = {
-    //   id: expenseCount - 1,
-    //   value: purchaseValue,
-    //   description: purchaseDescription,
-    //   currency,
-    //   method: paymentMethod,
-    //   tag,
-    //   exchangeRates,
-    // };
     saveExpenses({
-      id: expenseCount -1,
+      id: expenseCount - 1,
       value,
       description,
       tag,
@@ -85,14 +66,8 @@ class WalletForm extends React.Component {
       method,
       exchangeRates,
     });
-
-    addExpenses( (Math.ceil(100 * Number(value) * Number(exchangeRates[currency].ask)) / 100) );
-    // let totalExpenses = 0;
-    // for (let index = 0; index < expenses.length; index += 1) {
-    //   totalExpenses += expenses[index].value
-    //   * expenses[index].exchangeRates[expenses[index].currency].ask;
-    // }
-    // addExpenses(Math.round(100 * totalExpenses) / 100);
+    addExpenses(Math.ceil(100 * Number(value) 
+      * Number(exchangeRates[currency].ask)) / 100);
   }
 
   render() {
@@ -135,6 +110,7 @@ WalletForm.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
+  defCurrencies: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
