@@ -30,7 +30,6 @@ const mapStateToProps = (state) => ({
 });
 
 Wallet.propTypes = {
-  getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
