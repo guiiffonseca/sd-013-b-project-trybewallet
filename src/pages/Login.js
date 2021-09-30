@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { inputEmail as actionUserEmail } from '../actions/index';
-import '../style/loginStylesheet.css';
 
 class Login extends Component {
   constructor(props) {
@@ -92,7 +91,8 @@ class Login extends Component {
           <button
             type="submit"
             disabled={ !validForm }
-            onClick={ this.handleBtnClick }>
+            onClick={ this.handleBtnClick }
+          >
             Entrar
           </button>
         </form>
