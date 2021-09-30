@@ -23,4 +23,9 @@ class PaymentMethod extends React.Component {
   }
 }
 
+PaymentMethod.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 export default PaymentMethod;
