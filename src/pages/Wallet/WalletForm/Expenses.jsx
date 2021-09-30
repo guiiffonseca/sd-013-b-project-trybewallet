@@ -19,4 +19,9 @@ class Expenses extends React.Component {
   }
 }
 
+Expenses.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 export default Expenses;
