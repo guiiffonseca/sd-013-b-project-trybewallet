@@ -5,19 +5,15 @@ class PurchaseTable extends React.Component {
     return (
     //  { expenses.map((expense) => (
     //      <tr key={ expense.id }>
-    //        <td key={ `${expense.id}-descrição` }>{ expense.description }</td>
-    //        <td key={ `${expense.id}-tag` }>{ expense.tag }</td>
-    //        <td key={ `${expense.id}-método` }>{ expense.metdod }</td>
-    //        <td key={ `${expense.id}-valor` }>{ expense.value }</td>
-    //        <td key={ `${expense.id}-moeda` }>{ expense.currency }</td>
-    //        <td key={ `${expense.id}-nome da moeda` }>{
-    //          expense.exchangeRates[expense.currency].name
-    //        }</td>
-    //        <td key={ `${expense.id}-câmbio` }>{
-    //          expense.exchangeRates[expense.currency].ask
-    //        }</td>
-    //        <td key={ `${expense.id}-moeda de conversão` }>Real</td>
-    //        <td key={ `${expense.id}-cancelar` }>Cancelar compra</td>
+    //        <td>{ expense.description }</td>
+    //        <td>{ expense.tag }</td>
+    //        <td>{ expense.metdod }</td>
+    //        <td>{ expense.value }</td>
+    //        <td>{ expense.currency }</td>
+    //        <td>{ expense.exchangeRates[expense.currency].name }</td>
+    //        <td>{ expense.exchangeRates[expense.currency].ask }</td>
+    //        <td>Real</td>
+    //        <td>Cancelar compra</td>
     //      </tr>
     //    ))
     //  }
