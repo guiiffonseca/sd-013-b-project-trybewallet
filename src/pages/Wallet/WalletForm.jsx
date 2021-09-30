@@ -12,7 +12,7 @@ class WalletForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenseCount: 0,
+      expenseCount: 1,
       exchangeRates: {},
       value: 0,
       currency: 'USD',
@@ -27,8 +27,14 @@ class WalletForm extends React.Component {
 
   componentDidMount() {
     const { saveExpenses, addExpenses } = this.props;
-    this.fetchExchangeRates();
-    // saveExpenses([]);
+    const { currencies } = this.state;
+    // this.fetchExchangeRates();
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((data) => data.json())
+      .then((jsonData) => this.setState({
+        currencies: jsonData,
+        exchangeRates: jsonData,
+      }));
   }
 
   fetchExchangeRates() {
@@ -91,11 +97,15 @@ class WalletForm extends React.Component {
 
   render() {
     const { expenses, currency, tag,
-      paymentMethod, description } = this.state;
+      paymentMethod, description, currencies } = this.state;
     return (
       <form id="transaction-data">
         <Expenses value={ expenses } onChange={ this.handleChange } />
-        <SelectCurrency value={ currency } onChange={ this.handleChange } />
+        <SelectCurrency
+          value={ currency }
+          onChange={ this.handleChange }
+          currencies={ currencies }
+        />
         <PaymentMethod value={ paymentMethod } onChange={ this.handleChange } />
         <Tag value={ tag } onChange={ this.handleChange } />
         <Description value={ description } onChange={ this.handleChange } />
