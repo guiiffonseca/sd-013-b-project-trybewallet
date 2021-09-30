@@ -25,4 +25,9 @@ class Tag extends React.Component {
   }
 }
 
+Tag.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 export default Tag;
