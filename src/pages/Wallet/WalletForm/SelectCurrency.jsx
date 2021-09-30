@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class SelectCurrency extends React.Component {
@@ -29,13 +28,9 @@ class SelectCurrency extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   currencies: state.wallet.currencies,
-// });
-
 SelectCurrency.propTypes = {
-  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
-// export default connect(mapStateToProps, null)(SelectCurrency);
 export default SelectCurrency;
