@@ -1,4 +1,4 @@
-import { SET_EXPENSES, SUM_EXPENSES, GET_CURRENCIES } from '../actions';
+import { SET_EXPENSES, SUM_EXPENSES, SET_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   expenses: [],
@@ -18,7 +18,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       summation: state.summation + action.payload,
     };
-  case GET_CURRENCIES:
+  case SET_CURRENCIES:
     return {
       ...state,
       currencies: action.payload,

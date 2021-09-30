@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setExpenses, sumExpenses } from '../../actions';
+import { setExpenses, sumExpenses, setCurrencies } from '../../actions';
 import Expenses from './WalletForm/Expenses';
 import Description from './WalletForm/Description';
 import PaymentMethod from './WalletForm/PaymentMethod';
@@ -16,6 +16,7 @@ class WalletForm extends React.Component {
       exchangeRates: {},
       value: 0,
       currency: 'USD',
+      currencies: {},
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
@@ -27,17 +28,21 @@ class WalletForm extends React.Component {
   componentDidMount() {
     const { saveExpenses, addExpenses } = this.props;
     this.fetchExchangeRates();
+    console.log(this.state);
     // saveExpenses([]);
   }
 
   fetchExchangeRates() {
-    const { expenseCount } = this.state;
+    const { defCurrencies } = this.props;
+    const { expenseCount, currencies } = this.state;
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
       .then((jsonData) => this.setState({
         exchangeRates: jsonData,
         expenseCount: expenseCount + 1,
-      }));
+        currencies: jsonData,
+      }))
+      .then(() => defCurrencies(currencies));
   }
 
   handleChange({ target }) {
@@ -55,7 +60,7 @@ class WalletForm extends React.Component {
     // const paymentMethod = document.getElementById('payment-method').value;
     // const tag = document.getElementById('tag').value;
     
-    // this.fetchExchangeRates();
+    this.fetchExchangeRates();
 
     // const data = {
     //   id: expenseCount - 1,
@@ -114,6 +119,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (payload) => dispatch(setExpenses(payload)),
   addExpenses: (payload) => dispatch(sumExpenses(payload)),
+  defCurrencies: (payload) => dispatch(setCurrencies(payload)),
 });
 
 WalletForm.propTypes = {

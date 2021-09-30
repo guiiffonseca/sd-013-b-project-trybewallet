@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import WalletForm from './Wallet/WalletForm';
 import Header from './Wallet/Header';
 import PurchaseTable from './Wallet/PurchaseTable';
-import { getCurrencies as fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
-  componentDidMount() {
-    const { getCurrencies } = this.props;
-    getCurrencies();
-  }
+  // componentDidMount() {
+  //   const { getCurrencies } = this.props;
+  //   getCurrencies();
+  // }
 
   render() {
     const { currencies } = this.props;
@@ -30,13 +29,9 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(fetchCurrencies()),
-});
-
 Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, null)(Wallet);
