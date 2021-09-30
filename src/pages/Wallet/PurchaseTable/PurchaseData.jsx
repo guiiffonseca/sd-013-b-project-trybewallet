@@ -6,7 +6,6 @@ import { setExpenses } from '../../../actions';
 class PurchaseTable extends React.Component {
   render() {
     const { expenses } = this.props;
-    console.log( expenses );
     return(
   //  { expenses.map((expense) => (
   //      <tr key={ expense.id }>

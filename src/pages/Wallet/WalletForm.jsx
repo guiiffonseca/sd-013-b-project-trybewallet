@@ -28,7 +28,6 @@ class WalletForm extends React.Component {
   componentDidMount() {
     const { saveExpenses, addExpenses } = this.props;
     this.fetchExchangeRates();
-    console.log(this.state);
     // saveExpenses([]);
   }
 
