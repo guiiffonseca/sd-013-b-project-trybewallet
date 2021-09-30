@@ -17,8 +17,8 @@ class Wallet extends React.Component {
       currenciesList: [],
       allCurrencies: {},
       atualCurrency: 'USD',
-      paymentMethod: 'Dinheiro',
-      tag: 'Alimentação',
+      // paymentMethod: 'Dinheiro',
+      // tag: 'Alimentação',
       totalField: 0,
     };
 
@@ -47,7 +47,7 @@ class Wallet extends React.Component {
   }
 
   calculateExpenses(prevState, expensesValue = '0', atualCurrency) {
-    console.log(prevState, Number(expensesValue), atualCurrency);
+    // console.log(prevState, Number(expensesValue), atualCurrency);
     return (prevState + (Number(expensesValue) * atualCurrency.ask));
   }
 
