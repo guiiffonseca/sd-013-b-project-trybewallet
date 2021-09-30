@@ -31,6 +31,7 @@ class SelectCurrency extends React.Component {
 SelectCurrency.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default SelectCurrency;

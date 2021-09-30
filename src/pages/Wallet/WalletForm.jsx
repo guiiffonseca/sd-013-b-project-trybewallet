@@ -66,7 +66,7 @@ class WalletForm extends React.Component {
       method,
       exchangeRates,
     });
-    addExpenses(Math.ceil(100 * Number(value) 
+    addExpenses(Math.ceil(100 * Number(value)
       * Number(exchangeRates[currency].ask)) / 100);
   }
 
@@ -107,7 +107,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 WalletForm.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
   defCurrencies: PropTypes.func.isRequired,
