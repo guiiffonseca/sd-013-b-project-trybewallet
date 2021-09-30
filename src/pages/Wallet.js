@@ -9,8 +9,6 @@ import { getCurrencies as fetchCurrencies } from '../actions';
 class Wallet extends React.Component {
   componentDidMount() {
     const { getCurrencies } = this.props;
-    const totalExpenses = document.getElementById('total-expenses');
-    totalExpenses.innerHTML = 0;
     getCurrencies();
   }
 

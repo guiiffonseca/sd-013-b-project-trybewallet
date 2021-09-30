@@ -11,12 +11,12 @@ const wallet = (state = INITIAL_STATE, action) => {
   case SET_EXPENSES:
     return {
       ...state,
-      expenses: [ ...state.expenses, action.payload ] ,
+      expenses: [...state.expenses, action.payload],
     };
   case SUM_EXPENSES:
     return {
       ...state,
-      summation: action.payload,
+      summation: state.summation + action.payload,
     };
   case GET_CURRENCIES:
     return {

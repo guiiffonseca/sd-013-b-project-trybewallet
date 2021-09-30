@@ -15,8 +15,8 @@ class PaymentMethod extends React.Component {
           value={ value }
         >
           <option>Dinheiro</option>
-          <option>Cartão de Crédito</option>
-          <option>Cartão de Débito</option>
+          <option>Cartão de crédito</option>
+          <option>Cartão de débito</option>
         </select>
       </label>
     );

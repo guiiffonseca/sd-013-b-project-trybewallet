@@ -54,7 +54,8 @@ class WalletForm extends React.Component {
     // const purchaseDescription = document.getElementById('description').value;
     // const paymentMethod = document.getElementById('payment-method').value;
     // const tag = document.getElementById('tag').value;
-    this.fetchExchangeRates();
+    
+    // this.fetchExchangeRates();
 
     // const data = {
     //   id: expenseCount - 1,
@@ -75,7 +76,7 @@ class WalletForm extends React.Component {
       exchangeRates,
     });
 
-    addExpenses((Math.ceil(100 * Number(value) * Number(exchangeRates[currency].ask)) / 100));
+    addExpenses( (Math.ceil(100 * Number(value) * Number(exchangeRates[currency].ask)) / 100) );
     // let totalExpenses = 0;
     // for (let index = 0; index < expenses.length; index += 1) {
     //   totalExpenses += expenses[index].value
