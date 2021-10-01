@@ -41,6 +41,7 @@ export const getCurrencyThunk = (expense) => async (dispatch) => {
     totalExpenses = [...totalExpenses, currentExpenses];
     dispatch(setExchangeRatesSucces(totalExpenses));
   } else {
+    console.log(response);
     dispatch(getCurrencySuccess(response));
   }
 };

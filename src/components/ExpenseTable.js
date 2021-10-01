@@ -4,13 +4,6 @@ import { connect } from 'react-redux';
 import { updateExpensesSuccess } from '../actions/index';
 
 class ExpenseTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentExpenses: [],
-    };
-  }
-
   renderDescription(description) {
     return (
       <td>{description}</td>
@@ -57,7 +50,7 @@ class ExpenseTable extends Component {
     if (expenses) return <td>Real</td>;
   }
 
-  renderButton(index) {
+  renderButton(index1) {
     const { expenses, dispatchSetExpenses } = this.props;
     return (
       <th>
@@ -65,11 +58,8 @@ class ExpenseTable extends Component {
           type="button"
           data-testid="delete-btn"
           onClick={ () => {
-            expenses.splice(index, 1);
-            this.setState({
-              currentExpenses: expenses,
-            });
-            dispatchSetExpenses(this.state);
+            const newExpenses = expenses.filter((__, index2) => index2 === index1);
+            dispatchSetExpenses(...newExpenses);
           } }
         >
           Deletar

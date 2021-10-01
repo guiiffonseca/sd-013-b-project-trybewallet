@@ -11,9 +11,13 @@ const INITIAL_STATE = {
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SET_EXCHANGE_RATES_SUCCES || UPDATE_EXPENSES_SUCCESS:
+  case SET_EXCHANGE_RATES_SUCCES:
     return { ...state,
       expenses: action.payload,
+    };
+  case UPDATE_EXPENSES_SUCCESS:
+    return { ...state,
+      expenses: state.expenses.filter((e) => e.id !== action.payload.id),
     };
   case GET_CURRENCY_SUCCESS:
     return { ...state,
