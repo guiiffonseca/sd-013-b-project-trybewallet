@@ -2,7 +2,7 @@
 import { ACTIONS } from '../actions';
 
 const INICIAL_STATE = {
-  currencies: [],
+  currencies: ['BRL'],
   expenses: [],
 };
 
