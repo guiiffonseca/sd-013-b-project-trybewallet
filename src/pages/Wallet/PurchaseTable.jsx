@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import PurchaseHeader from './PurchaseTable/PurchaseHeader';
 import PurchaseData from './PurchaseTable/PurchaseData';
-import { connect } from 'react-redux';
 
 class PurchaseTable extends React.Component {
   render() {
@@ -22,5 +23,9 @@ class PurchaseTable extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+PurchaseTable.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps, null)(PurchaseTable);
