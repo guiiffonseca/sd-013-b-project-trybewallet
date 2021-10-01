@@ -4,56 +4,111 @@ import PropTypes from 'prop-types';
 import { fetchMoedas } from '../actions/Index';
 
 class FormDespesas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   componentDidMount() {
     const { addMoedas } = this.props;
     addMoedas();
   }
 
-  render() {
+  handleSubmit(event) {
+    event.preventDefault();
+    const { expenses, addMoedas } = this.props;
+    const { id } = this.state;
+    this.setState((state) => ({ id: state.id + 1 }));
+    const newExpenses = { ...this.state, id };
+    const expenseAtual = { expenses, newExpenses };
+    addMoedas(expenseAtual);
+    console.log(this.state);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+    /* console.log(this.state); */
+  }
+
+  renderCurrencies() {
     const { currencies } = this.props;
-    return (
-      <form>
-        <label htmlFor="valor-despesa">
-          Valor
-          <input
-            type="text"
-            id="valor-despesa"
-            name="valor"
-          />
-        </label>
-        <label htmlFor="descrição-despesa">
-          Descrição Despesa
-          <input
-            type="text"
-            id="descrição-despesa"
-            name="descrição-despesa"
-          />
-        </label>
-        <label htmlFor="moeda">
+    if (Object.keys(currencies).length !== 0) {
+      const TAMANHOMOEDAS = 3;
+      const arrayCurrency = Object.keys(currencies)
+        .filter((elemento) => elemento.length === TAMANHOMOEDAS);
+      return (
+        <label htmlFor="currency">
           Moeda
-          <select name="moeda" id="moeda">
-            {currencies.map((elemento) => (
+          <select name="currency" id="currency" onChange={ this.handleChange }>
+            {arrayCurrency.map((elemento) => (
               <option key={ elemento } value={ elemento }>{elemento}</option>))}
           </select>
         </label>
-        <label htmlFor="selecionar-pagamento">
+      );
+    }
+  }
+
+  // Devido o problema da quantidade máxima de linhas,  criei essa função para auxiliar no formulário.
+  renderTag() {
+    return (
+      <label htmlFor="tag">
+        Tag
+        <select name="tag" id="tag" onChange={ this.handleChange }>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
+  render() {
+    return (
+      <form>
+        <label htmlFor="value">
+          Valor
+          <input
+            type="text"
+            id="value"
+            name="value"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição
+          <input
+            type="text"
+            id="description"
+            name="description"
+            onChange={ this.handleChange }
+          />
+        </label>
+        {this.renderCurrencies()}
+        <label htmlFor="method">
           Método de Pagamento
-          <select name="pagamento" id="selecionar-pagamento">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="crédito">Cartão de crédito</option>
-            <option value="débito">Cartão de débito</option>
+          <select
+            name="method"
+            id="method"
+            onChange={ this.handleChange }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="selecionar-tag">
-          Tag
-          <select name="pagamento" id="selecionar-tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
+        {this.renderTag()}
+        <button type="button" onClick={ this.handleSubmit }>Adicionar Despesa</button>
       </form>
     );
   }
@@ -61,10 +116,11 @@ class FormDespesas extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addMoedas: () => dispatch(fetchMoedas()),
+  addMoedas: (value) => dispatch(fetchMoedas(value)),
 });
 
 FormDespesas.propTypes = {
