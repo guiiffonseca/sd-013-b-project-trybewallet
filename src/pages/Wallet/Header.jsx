@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { roundCurrency } from '../../functions';
 import '../../styles/Wallet.css';
 
 class Header extends React.Component {
@@ -14,7 +15,7 @@ class Header extends React.Component {
           id="total-expenses"
           data-testid="total-field"
         >
-          {summation > 0 ? summation : 0}
+          {summation > 0 ? roundCurrency(summation) : 0}
         </span>
         <span data-testid="header-currency-field"> BRL</span>
       </div>
