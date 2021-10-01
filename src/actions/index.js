@@ -12,6 +12,6 @@ export const getExpenses = (expenses) => ({
   type: ACTIONS.GET_EXPENSES, expenses,
 });
 
-export const getScore = (currencies) => ({
+export const getCurrencies = (currencies) => ({
   type: ACTIONS.GET_CURRENCIES, currencies,
 });

@@ -31,9 +31,10 @@ class ExpenseLoader extends React.Component {
 
   showCurrOptions() {
     const { currencies } = this.props;
-    console.log(currencies); // exibir options
     return (
-      <option value="Currency Option">Currency Option</option>
+      currencies.map((element) => (
+        <option key={ element } value={ `${element}` }>{element}</option>
+      ))
     );
   }
 
