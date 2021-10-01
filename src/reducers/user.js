@@ -2,7 +2,7 @@
 import { ACTIONS } from '../actions';
 
 const INICIAL_STATE = {
-  email: '',
+  email: 'email@email.com',
 };
 
 export default function reducer(state = INICIAL_STATE, action) {

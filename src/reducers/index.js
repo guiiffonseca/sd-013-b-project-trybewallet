@@ -5,7 +5,6 @@ import userReducer from './user';
 import walletReducer from './wallet';
 
 const rootReducer = combineReducers({
-  endPoint: 'https://economia.awesomeapi.com.br/json/all',
   user: userReducer,
   wallet: walletReducer,
 });
