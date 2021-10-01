@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  justify-content: right;
+  margin: 8px;
+}
+
+.header span {
+  padding-left: 8px;
+}
+
+.header .email {
+  padding-right: 5em;
+}
