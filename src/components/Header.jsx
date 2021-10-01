@@ -20,18 +20,13 @@ class Header extends React.Component {
     return total;
   }
 
-  showCurrencies() {
-    const { currencies } = this.props;
-    return currencies[0];
-  }
-
   render() {
     const { email } = this.props;
     return (
       <div className="header">
         <span data-testid="email-field" className="email">{ email }</span>
         <span data-testid="total-field">{ this.showExpenses() }</span>
-        <span data-testid="header-currency-field">{ this.showCurrencies() }</span>
+        <span data-testid="header-currency-field">BRL</span>
       </div>
     );
   }
@@ -40,13 +35,11 @@ class Header extends React.Component {
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
-  currencies: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, null)(Header);
