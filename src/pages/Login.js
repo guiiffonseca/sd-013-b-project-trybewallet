@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setEmail, setExpenses } from '../actions';
+import { setEmail } from '../actions';
 import LoginForm from './Login/LoginForm';
 
 class Login extends React.Component {
@@ -10,7 +10,6 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      expenses: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,10 +24,9 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { email, expenses } = this.state;
-    const { newEmail, startExpenses } = this.props;
+    const { email } = this.state;
+    const { newEmail } = this.props;
     newEmail(email);
-    startExpenses(expenses);
   }
 
   render() {
@@ -46,12 +44,10 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   newEmail: (payload) => dispatch(setEmail(payload)),
-  startExpenses: (payload) => dispatch(setExpenses(payload)),
 });
 
 Login.propTypes = {
   newEmail: PropTypes.func.isRequired,
-  startExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

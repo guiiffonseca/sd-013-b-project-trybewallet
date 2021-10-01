@@ -13,7 +13,7 @@ class PurchaseTable extends React.Component {
       >
         <table>
           <PurchaseHeader />
-          { expenses.length > 0 ? <PurchaseData /> : false }
+          { expenses.length > 0 && <PurchaseData /> }
         </table>
       </div>
     );
