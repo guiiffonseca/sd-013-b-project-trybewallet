@@ -5,8 +5,8 @@ export const ACTIONS = {
   EMAIL: 'EMAIL',
 };
 
-export const getEmail = () => ({
-  type: ACTIONS.EMAIL });
+export const getEmail = (email) => ({
+  type: ACTIONS.EMAIL, email });
 
 export const getExpenses = (expenses) => ({
   type: ACTIONS.GET_EXPENSES, expenses,
