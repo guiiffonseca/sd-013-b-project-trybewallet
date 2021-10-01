@@ -23,7 +23,14 @@ class PurchaseData extends React.Component {
                 { Math.ceil(100 * askPrice * expense.value) / 100 }
               </td>
               <td>Real</td>
-              <td>Cancelar compra</td>
+              <td>
+                <button
+                  data-testid="delete-btn"
+                  type="button"
+                >
+                  Cancelar compra
+                </button>
+              </td>
             </tr>
           );
         })}
