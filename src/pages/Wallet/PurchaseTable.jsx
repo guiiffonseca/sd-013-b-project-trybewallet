@@ -1,10 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { updateExpenses, sumExpenses } from '../../actions';
 import PurchaseHeader from './PurchaseTable/PurchaseHeader';
 import PurchaseData from './PurchaseTable/PurchaseData';
 
 class PurchaseTable extends React.Component {
+  constructor() {
+    super();
+    this.deleteEntry = this.deleteEntry.bind(this);
+  }
+
+  deleteEntry({ target }) {
+    const { update, addExpenses, expenses } = this.props;
+    const id = target.name;
+    let oldExpenses = expenses.concat();
+    oldExpenses.splice(id, 1);
+    const newExpenses = oldExpenses;
+    update(newExpenses);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -13,7 +28,7 @@ class PurchaseTable extends React.Component {
       >
         <table>
           <PurchaseHeader />
-          { expenses.length > 0 && <PurchaseData /> }
+          { expenses.length > 0 && <PurchaseData deleteEntry={ this.deleteEntry } /> }
         </table>
       </div>
     );
@@ -24,8 +39,14 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  update: (payload) => dispatch(updateExpenses(payload)),
+  addExpenses: (payload) => dispatch(sumExpenses(payload)),
+});
+
+
 PurchaseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps, null)(PurchaseTable);
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseTable);

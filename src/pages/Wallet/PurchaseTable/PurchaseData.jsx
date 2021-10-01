@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class PurchaseData extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteEntry } = this.props;
     return (
       <tbody>
         { expenses.map((expense) => {
@@ -27,6 +27,8 @@ class PurchaseData extends React.Component {
                 <button
                   data-testid="delete-btn"
                   type="button"
+                  onClick={ deleteEntry }
+                  name={ expense.id }
                 >
                   Cancelar compra
                 </button>
@@ -45,6 +47,7 @@ const mapStateToProps = (state) => ({
 
 PurchaseData.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteEntry: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, null)(PurchaseData);
