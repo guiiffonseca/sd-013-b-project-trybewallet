@@ -14,7 +14,7 @@ class PurchaseTable extends React.Component {
   deleteEntry({ target }) {
     const { update, addExpenses, expenses } = this.props;
     const id = target.name;
-    let oldExpenses = expenses.concat();
+    const oldExpenses = expenses.concat();
     oldExpenses.splice(id, 1);
     const newExpenses = oldExpenses;
     update(newExpenses);
