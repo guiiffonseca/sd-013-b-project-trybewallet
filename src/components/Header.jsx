@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './header.css';
 
-const ENDPOINT = 'https://economia.awesomeapi.com.br/json/all';
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
-  }
-
-  fetchAPI() {
-    return ENDPOINT;
   }
 
   showExpenses() {
