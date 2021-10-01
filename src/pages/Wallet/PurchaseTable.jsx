@@ -44,9 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
   addExpenses: (payload) => dispatch(sumExpenses(payload)),
 });
 
-
 PurchaseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PurchaseTable);
