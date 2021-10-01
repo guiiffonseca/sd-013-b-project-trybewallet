@@ -1,5 +1,7 @@
-const price = (expense) => (
-  expense.value * expense[expense.currency].ask
+const price = (expenses) => (
+  expenses.map((expense) => (
+    expense.value * expense[expense.currency].ask
+  ))
 );
 
 const summation = (array) => (
