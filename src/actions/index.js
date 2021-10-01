@@ -6,6 +6,8 @@ export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const GET_EXCHANGE = 'GET_EXCHANGE';
 export const GET_EXCHANGE_SUCCESS = 'GET_EXCHANGE_SUCCESS';
 export const GET_EXCHANGE_ERROR = 'GET_EXCHANGE_ERROR';
+export const SUM_EXPENSE = 'SUM_EXPENSE';
+export const DELETE = 'DELETE';
 
 export const loginSubmit = (payload) => ({
   type: LOGIN,
@@ -72,3 +74,15 @@ export function getExchangeFromAPI(state) {
     }
   };
 }
+
+export const sumExpense = (total) => ({
+  type: SUM_EXPENSE,
+  total,
+});
+
+export const deleteFromList = (id, value, ask) => ({
+  type: DELETE,
+  id,
+  value,
+  ask,
+});

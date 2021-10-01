@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { currenciesFromApi, getExchangeFromAPI, getExpenses } from '../actions';
+import {
+  currenciesFromApi, getExchangeFromAPI, getExpenses } from '../actions';
 
 class ExpensesForm extends React.Component {
   constructor() {
@@ -151,6 +152,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

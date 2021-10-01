@@ -6,14 +6,30 @@ import ExpensesForm from '../components/ExpensesForm';
 import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.totalSum = this.totalSum.bind(this);
+  }
+
+  totalSum() {
+    const { expenses } = this.props;
+    let totalAdd = 0;
+    expenses.forEach((expense) => {
+      totalAdd += parseFloat(expense.value)
+      * parseFloat(expense.exchangeRates[expense.currency].ask);
+      return totalAdd.toFixed(2);
+    });
+    return totalAdd.toFixed(2);
+  }
+
   render() {
-    const { email, total } = this.props;
-    const totalCheck = total > 0 ? total : 0;
+    const { email } = this.props;
+
     return (
       <div>
         <header>
           <div data-testid="email-field">{ email }</div>
-          <div data-testid="total-field">{ totalCheck }</div>
+          <div data-testid="total-field">{ this.totalSum() }</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <ExpensesForm />
@@ -25,11 +41,12 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
   total: state.wallet.expensesTotal,
 });
 
