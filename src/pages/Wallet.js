@@ -6,11 +6,6 @@ import Header from './Wallet/Header';
 import PurchaseTable from './Wallet/PurchaseTable';
 
 class Wallet extends React.Component {
-  // componentDidMount() {
-  //   const { getCurrencies } = this.props;
-  //   getCurrencies();
-  // }
-
   render() {
     const { currencies } = this.props;
     return (
