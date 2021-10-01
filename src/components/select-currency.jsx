@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 
 class SelectCurrency extends Component {
   render() {
-    const { allCurrencies } = this.props;
+    const { allCurrencies, currency, onChange } = this.props;
     // const currenciesArray = Object.values(allCurrencies);
 
     return (
-      <label htmlFor="moeda">
+      <label htmlFor="currency">
         Moeda:
         {' '}
         <select
-          id="moeda"
+          id="currency"
           className="expensives-form-short-inputs"
-          name="moeda"
-          // value={  }
-          // onChange={ handleChange }
+          name="currency"
+          value={ currency }
+          onChange={ onChange }
         >
-          {allCurrencies.map((currency, index) => (
-            <option key={ index } value={ currency }>{currency}</option>
+          {allCurrencies.map((item, index) => (
+            <option key={ index } value={ item }>{item}</option>
           ))}
         </select>
       </label>
@@ -29,6 +29,7 @@ class SelectCurrency extends Component {
 
 SelectCurrency.propTypes = {
   allCurrencies: PropTypes.object,
+  handleChange: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({

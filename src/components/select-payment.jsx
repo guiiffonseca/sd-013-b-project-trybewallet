@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SelectPayment extends Component {
   render() {
+    const { method, onChange } = this.props;
+
     return (
-      <label htmlFor="metodo-pgto">
+      <label htmlFor="method">
         Método de pagamento:
         {' '}
         <select
-          id="metodo-pgto"
+          id="method"
           className="expensives-form-long-inputs"
-          name="metodo-pgto"
+          name="method"
+          value={ method }
+          onChange={ onChange }
         >
           <option value="">Selecione</option>
           <option value="dinheiro">Dinheiro</option>
@@ -22,7 +27,7 @@ class SelectPayment extends Component {
 }
 
 SelectPayment.propTypes = ({
-  // email: PropTypes.string,
+  handleChange: PropTypes.func,
 }).isRequired;
 
 export default SelectPayment;

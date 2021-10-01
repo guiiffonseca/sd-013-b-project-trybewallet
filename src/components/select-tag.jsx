@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 
 class SelectTag extends Component {
   render() {
+    const { tag, onChange } = this.props;
+
     return (
       <label htmlFor="tag">
         Tag:
@@ -12,6 +14,8 @@ class SelectTag extends Component {
           id="tag"
           className="expensives-form-long-inputs"
           name="tag"
+          value={ tag }
+          onChange={ onChange }
         >
           <option value="">Selecione</option>
           <option value="alimentacao">Alimentação</option>
@@ -26,7 +30,7 @@ class SelectTag extends Component {
 }
 
 SelectTag.propTypes = ({
-  // email: PropTypes.string,
+  handleChange: PropTypes.func,
 }).isRequired;
 
 // const mapStateToProps = ({ user: { email } }) => ({ email });

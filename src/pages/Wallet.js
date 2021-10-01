@@ -12,22 +12,22 @@ class Wallet extends Component {
   }
 
   render() {
-    const { isFetchingStatus } = this.props;
+    // const { isFetchingStatus } = this.props;
 
     return (
-      isFetchingStatus ? <p>Loading</p> : (
-        <div>
-          <Header />
-          <ExpensesForm />
-        </div>
-      )
+      // isFetchingStatus ? <p>Loading</p> : (
+      <div>
+        <Header />
+        <ExpensesForm />
+      </div>
     );
+    // );
   }
 }
 
 Wallet.propTypes = {
-  setCurrencies: PropTypes.func,
   isFetchingStatus: PropTypes.bool,
+  setCurrencies: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
