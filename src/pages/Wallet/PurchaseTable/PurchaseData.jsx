@@ -16,15 +16,17 @@ class PurchaseData extends React.Component {
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
               <td>{ expense.exchangeRates[expense.currency].name }</td>
-              <td>{ Math.ceil(100 * askPrice) / 100 }</td>
-              <td>{
-                Math.ceil(100 * askPrice * expense.value) / 100 
-              }</td>
+              <td>
+                { Math.ceil(100 * askPrice) / 100 }
+              </td>
+              <td>
+                { Math.ceil(100 * askPrice * expense.value) / 100 }
+              </td>
               <td>Real</td>
               <td>Cancelar compra</td>
             </tr>
-          );})
-        }
+          );
+        })}
       </tbody>
     );
   }
