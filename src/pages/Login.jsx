@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import { getEmail } from '../actions';
-// import { savePlayer } from '../services/saveToLocal';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,7 +9,6 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      // password: '',
       isEmailValid: false,
       isPassValid: false,
     };
@@ -20,32 +17,6 @@ class Login extends React.Component {
     this.verifyEmail = this.verifyEmail.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
   }
-  /*
-  async onClick() {
-    const { tokenData, history, addNameAndEmail, addImage } = this.props;
-    const { name, email } = this.state;
-
-    const response = await fetchToken();
-    tokenData(response);
-
-    const responseImage = await fetchImage(email);
-    addImage(responseImage);
-
-    addNameAndEmail(name, email);
-    savePlayer(name, email);
-    history.push('/game');
-  }
-
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState(() => ({ [name]: value }), this.infoCheck);
-  }
-
-  infoCheck() {
-    const { name, email } = this.state;
-    const isDisable = !(name.length > 0 && email.length > 0);
-    this.setState({ isDisable });
-  } */
 
   submitLogin(e) {
     e.preventDefault();
@@ -56,7 +27,6 @@ class Login extends React.Component {
   }
 
   verifyEmail({ target }) {
-    // const { email, isEmailValid } = this.state;
     const validation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (validation.test(target.value)) {
       this.setState({ email: target.value, isEmailValid: true });
@@ -109,12 +79,6 @@ class Login extends React.Component {
     );
   }
 }
-
-/*  <Link to="/settings">
-    <button type="button" data-testid="btn-settings">
-      Configurações
-    </button>
-  </Link> */
 
 Login.propTypes = {
   addEmail: PropTypes.func.isRequired,
