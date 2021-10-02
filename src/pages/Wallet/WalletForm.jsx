@@ -66,7 +66,7 @@ class WalletForm extends React.Component {
       method,
       exchangeRates,
     });
-    addExpenses(Math.ceil(100 * Number(value)
+    addExpenses((100 * Number(value)
       * Number(exchangeRates[currency].ask)) / 100);
   }
 
