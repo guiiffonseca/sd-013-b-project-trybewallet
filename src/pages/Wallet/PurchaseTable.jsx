@@ -19,7 +19,7 @@ class PurchaseTable extends React.Component {
     addExpenses(
       (-DECIMALS * Number(oldExpenses[id].value)
       * Number(oldExpenses[id].exchangeRates[oldExpenses[id].currency]
-        .ask)) / DECIMALS
+        .ask)) / DECIMALS,
     );
     oldExpenses.splice(id, 1);
     const newExpenses = oldExpenses;
