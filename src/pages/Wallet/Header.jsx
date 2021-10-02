@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { roundCurrency } from '../../functions';
+import { price } from '../../functions';
 import '../../styles/Wallet.css';
 
 class Header extends React.Component {
   render() {
-    const { email, summation } = this.props;
+    const { email, summation, expenses } = this.props;
+    const totalSummation = price(expenses);
     return (
       <div>
         <h1 className="header">TrybeWallet</h1>
@@ -15,7 +16,7 @@ class Header extends React.Component {
           id="total-expenses"
           data-testid="total-field"
         >
-          {summation > 0 ? roundCurrency(summation) : 0}
+          {totalSummation}
         </span>
         <span data-testid="header-currency-field"> BRL</span>
       </div>
