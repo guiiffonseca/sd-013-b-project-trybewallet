@@ -5,21 +5,24 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      total: 0,
       currency: 'BRL',
     };
   }
 
   render() {
-    const { total, currency } = this.state;
-    const { email } = this.props;
+    const { currency } = this.state;
+    const { email, expenses } = this.props;
     return (
       <div>
         <div data-testid="email-field">
           {email}
         </div>
         <div data-testid="total-field">
-          {total}
+          {expenses.reduce((acc, curr) => {
+            const conversion = Number(curr.exchangeRates[curr.currency].ask);
+            const expense = curr.value;
+            return acc + (expense * conversion);
+          }, 0)}
         </div>
         <div data-testid="header-currency-field">
           {currency}

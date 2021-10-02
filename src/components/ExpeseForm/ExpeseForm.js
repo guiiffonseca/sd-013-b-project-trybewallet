@@ -6,6 +6,7 @@ import {
   setExpense as reduxSetExpense,
   fetchExchangeRates as reduxFetchExchangeRates,
 } from '../../actions';
+import fetchData from '../../services/services';
 
 class ExpeseForm extends Component {
   constructor(props) {
@@ -29,11 +30,13 @@ class ExpeseForm extends Component {
     fetchCurrencies();
   }
 
-  onClick(e) {
+  async onClick(e) {
     const { fetchExchangeRates, setExpense } = this.props;
     e.preventDefault();
-    setExpense(this.state);
-    fetchExchangeRates();
+    const expense = this.state;
+    const exchangeRates = await fetchData('https://economia.awesomeapi.com.br/json/all');
+    setExpense({ ...expense, exchangeRates });
+    // fetchExchangeRates(expense);
   }
 
   handleChange(e) {
@@ -118,7 +121,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(reduxFetchCurrencies()),
   setExpense: (expense) => dispatch(reduxSetExpense(expense)),
-  fetchExchangeRates: () => dispatch(reduxFetchExchangeRates()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpeseForm);

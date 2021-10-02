@@ -28,10 +28,6 @@ const walletReducer = (state = INIT_STATE, action) => {
         { id: state.expenses.length, ...action.payload },
       ],
     };
-  // case SET_EXCHANGE_RATES:
-  //   return {
-  //     ...state,
-  //   };
   default:
     return state;
   }

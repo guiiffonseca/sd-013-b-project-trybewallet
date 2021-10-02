@@ -1,5 +1,6 @@
 // Coloque aqui suas actions
 import axios from 'axios';
+import fetchData from '../services/services';
 
 export const LOGIN = 'LOGIN';
 export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
@@ -14,24 +15,12 @@ export const setCurrencies = (currencies) => ({
   payload: currencies,
 });
 
-export const setExchangeRates = (rates) => ({
-  type: SET_EXCHANGE_RATES,
-  payload: rates,
-});
-
 export const fetchCurrencies = () => async (dispatch) => {
   const require = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await require.json();
   const dataList = Object.keys(data);
   const currencies = dataList.filter((currency) => currency !== 'USDT');
-  console.log(currencies);
   dispatch(setCurrencies(currencies));
-};
-
-export const fetchExchangeRates = () => async (dispatch) => {
-  const require = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const data = await require.json();
-  dispatch(setExchangeRates(data));
 };
 
 export const setExpense = (expense) => ({ type: SET_EXPENSE, payload: expense });
