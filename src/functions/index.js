@@ -7,7 +7,7 @@ const sum = (array) => (
 );
 
 const roundCurrency = (value) => (
-  Math.ceil(100 * value) / 100
+  Math.round(100 * value) / 100
 );
 
 export { price, sum, roundCurrency };
