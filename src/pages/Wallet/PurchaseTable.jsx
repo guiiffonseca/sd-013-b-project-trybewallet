@@ -15,10 +15,11 @@ class PurchaseTable extends React.Component {
     const { update, addExpenses, expenses } = this.props;
     const id = target.name;
     const oldExpenses = expenses.concat();
+    const DECIMALS = 100;
     addExpenses(
-      (- 100 * Number(oldExpenses[id].value)
+      (-DECIMALS * Number(oldExpenses[id].value)
       * Number(oldExpenses[id].exchangeRates[oldExpenses[id].currency]
-        .ask)) / 100
+        .ask)) / DECIMALS
     );
     oldExpenses.splice(id, 1);
     const newExpenses = oldExpenses;
@@ -52,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 PurchaseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   update: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PurchaseTable);
