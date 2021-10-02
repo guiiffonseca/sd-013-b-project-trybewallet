@@ -15,6 +15,11 @@ class PurchaseTable extends React.Component {
     const { update, addExpenses, expenses } = this.props;
     const id = target.name;
     const oldExpenses = expenses.concat();
+    addExpenses(
+      (- 100 * Number(oldExpenses[id].value)
+      * Number(oldExpenses[id].exchangeRates[oldExpenses[id].currency]
+        .ask)) / 100
+    );
     oldExpenses.splice(id, 1);
     const newExpenses = oldExpenses;
     update(newExpenses);
