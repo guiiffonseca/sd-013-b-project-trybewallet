@@ -28,7 +28,7 @@ class PurchaseData extends React.Component {
                   data-testid="delete-btn"
                   type="button"
                   onClick={ deleteEntry }
-                  name={ expense.id }
+                  name={ expenses.indexOf(expense) }
                 >
                   Cancelar compra
                 </button>
