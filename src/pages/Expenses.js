@@ -10,6 +10,10 @@ export default class Expenses extends Component {
     this.renderCoins = this.renderCoins.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchCoins();
+  }
+
   async fetchCoins() {
     const data = await fetchApi();
     const response = Object.keys(data);
@@ -22,9 +26,9 @@ export default class Expenses extends Component {
     const { coins } = this.state;
 
     return (
-      <label htmlFor="moeda">
+      <label htmlFor>
         Moeda
-        <select id="moeda" name="moeda">
+        <select id="coin" name="coin">
           {coins.map((name, index) => (
             <option key={ index } value={ name }>{name}</option>
           ))}
@@ -73,3 +77,13 @@ export default class Expenses extends Component {
     );
   }
 }
+
+// Expenses.propTypes = {
+//   coins: PropTypes.string.isRequired,
+// };
+
+// const mapStateToProps = (state) => ({
+//   coins: state.user.coins,
+// });
+
+// export default connect(mapStateToProps)(Expenses);

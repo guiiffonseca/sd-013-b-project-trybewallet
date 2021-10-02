@@ -5,10 +5,9 @@ const INITIAL_STATE = {
   password: '',
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_USERS:
-    console.log(action.payload);
     return { ...state,
       email: action.payload };
   default:
@@ -16,4 +15,4 @@ const reducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default reducer;
+export default userReducer;
