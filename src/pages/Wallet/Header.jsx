@@ -6,7 +6,7 @@ import '../../styles/Wallet.css';
 
 class Header extends React.Component {
   render() {
-    const { email, summation, expenses } = this.props;
+    const { email, expenses } = this.props;
     const totalSummation = price(expenses);
     return (
       <div>
@@ -28,12 +28,11 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
-  summation: state.wallet.summation,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  summation: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);
