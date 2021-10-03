@@ -1,10 +1,9 @@
-// import axios from 'axios';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   fetchCurrencies as reduxFetchCurrencies,
   setExpense as reduxSetExpense,
-  fetchExchangeRates as reduxFetchExchangeRates,
 } from '../../actions';
 import fetchData from '../../services/services';
 
@@ -31,7 +30,7 @@ class ExpeseForm extends Component {
   }
 
   async onClick(e) {
-    const { fetchExchangeRates, setExpense } = this.props;
+    const { setExpense } = this.props;
     e.preventDefault();
     const expense = this.state;
     const exchangeRates = await fetchData('https://economia.awesomeapi.com.br/json/all');
@@ -112,6 +111,12 @@ class ExpeseForm extends Component {
     );
   }
 }
+
+ExpeseForm.propTypes = {
+  fetchCurrencies: PropTypes.func.isRequired,
+  setExpense: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(String).isRequired,
+};
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,

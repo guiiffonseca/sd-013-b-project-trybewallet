@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeExpense as reduxRemoveExpense, removeExpense } from '../../actions';
+import { removeExpense as reduxRemoveExpense } from '../../actions';
 
 const columns = [
   'Descrição',
@@ -35,7 +36,9 @@ function Table(props) {
     <table>
       <thead>
         <tr>
-          {columns.map((column) => <th key={ column }>{column}</th>)}
+          {columns.map((column) => (
+            <th key={ column }>{column}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -46,11 +49,22 @@ function Table(props) {
             <td>{expense.method}</td>
             <td>{expense.value}</td>
             <td>{currencyTrans[expense.currency]}</td>
-            <td>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-            <td>{(Number(expense.exchangeRates[expense.currency].ask) * Number(expense.value)).toFixed(2)}</td>
+            <td>
+              {Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+            </td>
+            <td>
+              {(
+                Number(expense.exchangeRates[expense.currency].ask)
+                * Number(expense.value)
+              ).toFixed(2)}
+            </td>
             <td>Real</td>
             <td>
-              <button type="button" data-testid="delete-btn" onClick={ () => removeExpense(expenses, expense) }>
+              <button
+                type="button"
+                data-testid="delete-btn"
+                onClick={ () => removeExpense(expenses, expense) }
+              >
                 Delete
               </button>
             </td>
@@ -61,6 +75,13 @@ function Table(props) {
     </table>
   );
 }
+
+Table.propTypes = {
+  expenses: PropTypes.shape({
+    map: PropTypes.func.isRequired,
+  }).isRequired,
+  removeExpense: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,

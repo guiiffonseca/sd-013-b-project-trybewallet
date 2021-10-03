@@ -1,7 +1,3 @@
-// Coloque aqui suas actions
-import axios from 'axios';
-import fetchData from '../services/services';
-
 export const LOGIN = 'LOGIN';
 export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
