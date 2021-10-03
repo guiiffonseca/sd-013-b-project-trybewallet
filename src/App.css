@@ -79,9 +79,10 @@ h1 h5 {
   align-self: flex-start;
   display: flex;
 }
+
 .table {
+  background-color: lightblue;
   display: flex;
-  background-color:lightblue;
 }
 
 table, th, td {
