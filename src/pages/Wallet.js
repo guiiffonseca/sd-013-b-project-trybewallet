@@ -54,7 +54,13 @@ class Wallet extends React.Component {
           <InputPagtSelect value={ method } onChange={ this.handlerChange } />
           <InputDespSelect value={ tag } onChange={ this.handlerChange } />
 
-          <button type="button" onClick={ this.addDespesas }>Adicionar despesa</button>
+          <button
+            className="buttonAdd"
+            type="button"
+            onClick={ this.addDespesas }
+          >
+            Adicionar despesa
+          </button>
 
         </form>
         <Table />

@@ -40,6 +40,23 @@
   }
 }
 
+.buttonAdd {
+  background-color: tomato;
+  border-radius: 15px;
+  color: whitesmoke;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.bottonExclu {
+  background-color: red;
+  border-radius: 15px;
+  border-color: blue;
+  color: whitesmoke;
+  font-size: 15px;
+  font-style: italic;
+}
+
 .forms {
   display: flex;
 }
@@ -47,6 +64,7 @@
 .formValue {
   background-color: lawngreen;
   display: flex;
+  justify-content: space-evenly;
 }
 
 .fieldset {
@@ -68,15 +86,16 @@ h1 h5 {
 }
 
 .header {
+  align-items: center;
   background-color: #282c34;
   color: white;
   display: flex;
   font-size: calc(10px + 2vmin);
   height: 150px;
+  justify-content: space-around;
 }
 
 .moedaTotal {
-  align-self: flex-start;
   display: flex;
 }
 
@@ -85,6 +104,10 @@ h1 h5 {
   display: flex;
 }
 
-table th td {
+table,th,td {
   border: 1px solid black;
+}
+
+table {
+  width: 100%;
 }

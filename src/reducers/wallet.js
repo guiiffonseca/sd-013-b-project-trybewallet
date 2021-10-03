@@ -1,4 +1,4 @@
-import { SET_DESPESAS } from '../actions';
+import { SET_DESPESAS, EXCLUIR_DESPESAS } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 // Referenc do desse reducer em Mentoria Técnicas no zoon
@@ -14,6 +14,8 @@ function wallet(state = INITIAL_STATE, action) {
   case SET_DESPESAS:
     return { ...state,
       expenses: [...state.expenses, action.payload] };
+  case EXCLUIR_DESPESAS:
+    return { ...state, expenses: [...action.payload] };
   default:
     return state;
   }
