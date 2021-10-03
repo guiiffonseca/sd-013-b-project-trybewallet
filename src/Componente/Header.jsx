@@ -3,30 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
-/* constructor() {
-    super();
-
-    this.addValueTotal = this.addValueTotal.bind(this);
-  } */
-
-  /* addValueTotal() {
-    const { expenses } = this.props;
-    let cont = 0;
-    if (expenses.length > 0) {
-      expenses.forEach(({ value, currency, exchangeRates }) => {
-        cont += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
-      });
-    }
-    return cont.toFixed(2);
-  } */
-
   render() {
     const { expenses } = this.props;
     const { email } = this.props;
     let cont = 0;
-
+    // referenc usar forEach em Mentoria Tecnicas zoon
     expenses.forEach(({ value, currency, exchangeRates }) => {
-      console.log(expenses);
       cont += parseFloat(value) * parseFloat(exchangeRates[currency].ask);
     });
 

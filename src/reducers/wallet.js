@@ -1,6 +1,7 @@
 import { SET_DESPESAS } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+// Referenc do desse reducer em Mentoria Técnicas no zoon
 const INITIAL_STATE = {
 
   currencies: [],
