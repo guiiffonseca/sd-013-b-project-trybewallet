@@ -32,7 +32,7 @@ class InputSelectMoed extends React.Component {
       <label htmlFor="select">
         Moeda:
         <select
-          name="moeda"
+          name="currency"
           id="select"
           value={ value }
           onChange={ onChange }
@@ -47,8 +47,9 @@ class InputSelectMoed extends React.Component {
   }
 }
 
+// referenc checagen de prop https://pt-br.reactjs.org/docs/typechecking-with-proptypes.html
 InputSelectMoed.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

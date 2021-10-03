@@ -9,23 +9,24 @@ class InputPagtSelect extends React.Component {
       <label htmlFor="pagto">
         Método de pagamento:
         <select
-          name="formPagto"
+          name="method"
           id="pagto"
           value={ value }
           onChange={ onChange }
         >
-          <option value="" disabled selected>Selecione forma de Pagamento</option>
-          <option value="dinheiro">Dinheiro</option>
-          <option value="crédito">Cartão de crédito</option>
-          <option value="débito">Cartão de débito</option>
+
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
   }
 }
 
+// referenc checagen de prop https://pt-br.reactjs.org/docs/typechecking-with-proptypes.html
 InputPagtSelect.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 export default InputPagtSelect;

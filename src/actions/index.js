@@ -1,4 +1,7 @@
+import { getDespesas } from '../Api';
+
 // Coloque aqui suas actions
+
 export const SET_USEREMAIL = 'SET_USEREMAIL';
 export const SET_DESPESAS = 'SET_DESPESAS';
 
@@ -13,3 +16,12 @@ export const setDespesas = (payload) => ({
   payload,
 
 });
+
+export const getDespesasThunk = (expenses) => async (dispatch) => {
+  getDespesas().then((object) => {
+    delete object.DOGE;
+    delete object.USDT;
+    expenses.exchangeRates = object;
+    dispatch(setDespesas(expenses));
+  });
+};

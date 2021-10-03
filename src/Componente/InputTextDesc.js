@@ -10,7 +10,7 @@ class InputTextDesc extends React.Component {
         Descrição:
         <input
           type="text"
-          name="descricao"
+          name="description"
           id="descri"
           value={ value }
           onChange={ onChange }
@@ -20,8 +20,9 @@ class InputTextDesc extends React.Component {
   }
 }
 
+// referenc checagen de prop https://pt-br.reactjs.org/docs/typechecking-with-proptypes.html
 InputTextDesc.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 export default InputTextDesc;

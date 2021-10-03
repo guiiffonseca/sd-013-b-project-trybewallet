@@ -79,3 +79,11 @@ h1 h5 {
   align-self: flex-start;
   display: flex;
 }
+.table {
+  display: flex;
+  background-color:lightblue;
+}
+
+table, th, td {
+  border:1px solid black;
+}

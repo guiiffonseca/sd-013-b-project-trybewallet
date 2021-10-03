@@ -9,3 +9,13 @@ async function getMoedas() {
   }
 }
 export default getMoedas;
+
+export async function getDespesas() {
+  try {
+    const fetchDespesas = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const moedas = await fetchDespesas.json();
+    return moedas;
+  } catch (error) {
+    return (error);
+  }
+}

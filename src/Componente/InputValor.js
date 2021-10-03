@@ -6,12 +6,12 @@ class InputValor extends React.Component {
     const { value, onChange } = this.props;
     return (
 
-      <label htmlFor="value">
+      <label htmlFor="valor">
         Valor:
         <input
           type="number"
-          name="valor"
-          id="value"
+          name="value"
+          id="valor"
           min="1"
           value={ value }
           onChange={ onChange }
@@ -21,8 +21,9 @@ class InputValor extends React.Component {
   }
 }
 
+// referenc checagen de prop https://pt-br.reactjs.org/docs/typechecking-with-proptypes.html
 InputValor.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
