@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class SelectCurrency extends Component {
   render() {
     const { allCurrencies, currency, onChange } = this.props;
-    // const currenciesArray = Object.values(allCurrencies);
 
     return (
       <label htmlFor="currency">
