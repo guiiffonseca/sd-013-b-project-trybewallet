@@ -36,7 +36,6 @@ class ExpeseForm extends Component {
     const expense = this.state;
     const exchangeRates = await fetchData('https://economia.awesomeapi.com.br/json/all');
     setExpense({ ...expense, exchangeRates });
-    // fetchExchangeRates(expense);
   }
 
   handleChange(e) {
@@ -70,7 +69,7 @@ class ExpeseForm extends Component {
           <label htmlFor="value">
             Valor
             <input
-              type="text"
+              type="number"
               name="value"
               id="value"
               onChange={ this.handleChange }

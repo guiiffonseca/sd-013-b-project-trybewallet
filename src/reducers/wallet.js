@@ -3,8 +3,8 @@
 import {
   FETCH_CURRENCIES,
   SET_CURRENCIES,
-  SET_EXCHANGE_RATES,
   SET_EXPENSE,
+  REMOVE_EXPENSE,
 } from '../actions/index';
 
 const INIT_STATE = { currencies: [], expenses: [] };
@@ -27,6 +27,11 @@ const walletReducer = (state = INIT_STATE, action) => {
         ...state.expenses,
         { id: state.expenses.length, ...action.payload },
       ],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.payload,
     };
   default:
     return state;
