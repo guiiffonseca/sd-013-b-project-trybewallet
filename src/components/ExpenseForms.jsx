@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchingCurrencies as fetchThunk } from '../actions/index';
+import { fetchingCurrencies as fetchThunk, fetchingExpenses } from '../actions/index';
 
 const paymentMethods = [
-  { value: 'money', text: 'Dinheiro' },
-  { value: 'credit', text: 'Cartão de Crédito' },
-  { value: 'debit', text: 'Cartão de Débito' },
+  { value: 'Dinheiro', text: 'Dinheiro' },
+  { value: 'Cartão de crédito', text: 'Cartão de Crédito' },
+  { value: 'Cartão de débito', text: 'Cartão de Débito' },
 ];
 
 const tags = [
-  { value: 'food', text: 'Alimentação' },
-  { value: 'work', text: 'Trabalho' },
-  { value: 'transport', text: 'Transporte' },
-  { value: 'heath', text: 'Saúde' },
-  { value: 'lazer', text: 'Lazer' },
+  { value: 'Alimentação', text: 'Alimentação' },
+  { value: 'Trabalho', text: 'Trabalho' },
+  { value: 'Transporte', text: 'Transporte' },
+  { value: 'Saúde', text: 'Saúde' },
+  { value: 'Lazer', text: 'Lazer' },
 
 ];
 
@@ -26,8 +26,8 @@ class ExpenseForms extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      methodPay: 'Dinheiro',
-      tag: 'Alimentação',
+      method: '',
+      tag: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,6 +36,7 @@ class ExpenseForms extends Component {
     this.currencies = this.currencies.bind(this);
     this.paymentMethods = this.paymentMethods.bind(this);
     this.renderTag = this.renderTag.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,13 @@ class ExpenseForms extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    const { expenses, gettingExpenses } = this.props;
+    const id = expenses.length;
+    console.log(this.state);
+    gettingExpenses({ ...this.state, id });
   }
 
   value() {
@@ -102,14 +110,14 @@ class ExpenseForms extends Component {
   }
 
   paymentMethods() {
-    const { methodPay } = this.state;
+    const { method } = this.state;
     return (
       <label htmlFor="methodPay">
         Método de pagamento:
         <select
           id="methodPay"
-          name="methodPay"
-          value={ methodPay }
+          name="method"
+          value={ method }
           onChange={ this.handleChange }
         >
           { paymentMethods.map(({ value, text }) => (
@@ -148,6 +156,12 @@ class ExpenseForms extends Component {
           { this.currencies() }
           { this.paymentMethods() }
           { this.renderTag() }
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Adicionar Despesa
+          </button>
         </form>
       </main>
     );
@@ -156,15 +170,19 @@ class ExpenseForms extends Component {
 
 const mapStateToProps = (state) => ({
   moedas: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchingCurrencies: () => dispatch(fetchThunk()),
+  gettingExpenses: (expenses) => dispatch(fetchingExpenses(expenses)),
 });
 
 ExpenseForms.propTypes = {
   moedas: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchingCurrencies: PropTypes.func.isRequired,
+  gettingExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForms);
