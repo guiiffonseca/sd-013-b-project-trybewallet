@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteItem } from '../actions';
 
-class Table extends Component {
+class ExpensesTable extends Component {
   render() {
     const { expenses, deleteSelected } = this.props;
     return (
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-Table.propTypes = {
+ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   deleteSelected: PropTypes.func.isRequired,
 };
@@ -68,4 +68,4 @@ const mapDispatchToProps = (dispatch) => ({
   deleteSelected: (item) => dispatch(deleteItem(item)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

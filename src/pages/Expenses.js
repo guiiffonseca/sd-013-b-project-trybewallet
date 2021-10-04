@@ -106,7 +106,7 @@ class Expenses extends Component {
               <option>Saúde</option>
             </select>
           </label>
-          <button type="submit">Adicionar despesas</button>
+          <button type="submit">Adicionar despesa</button>
         </form>
       </section>
     );

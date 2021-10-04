@@ -8,8 +8,6 @@ import {
 const INITIAL_STATE = {
   currencies: {},
   expenses: [],
-  arrayCurrency: [],
-  error: null,
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
