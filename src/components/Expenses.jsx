@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 class Expenses extends React.Component {
   render() {
     const { expenses } = this.props;
+    console.log(expenses);
     return (
       <table>
         <thead>
@@ -22,9 +23,11 @@ class Expenses extends React.Component {
         </thead>
         <tbody>
           {/* feito com ajuda do John Torres */}
-          {console.log(expenses)}
+          {/* refatorado na monitoria, a tbody não renderizava
+          mas o requisito estava passando */}
           {
-            expenses.map((expense) => (
+            expenses.length !== 0
+            && expenses.expenses.map((expense) => (
               <tr key={ expense.id }>
                 <td>{expense.description}</td>
                 <td>{expense.tag}</td>
@@ -52,7 +55,7 @@ class Expenses extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
+  expenses: state.wallet,
 });
 
 // function mapStateToProps(state) {
