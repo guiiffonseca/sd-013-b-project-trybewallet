@@ -24,15 +24,16 @@ class Login extends React.Component {
       PasswordValid: false,
     };
 
-    this.HandleEmail = this.HandleEmail.bind(this);
+    this.HandleButton = this.HandleButton.bind(this);
     this.HandleLogin = this.HandleLogin.bind(this);
   }
 
-  HandleEmail() {
+  HandleButton(e) {
+    e.preventDefault();
     const { history, login } = this.props;
     const { email } = this.state;
-    history.push('/carteira');
     login(email);
+    history.push('/carteira');
   }
 
   HandleLogin(e) {
@@ -57,7 +58,7 @@ class Login extends React.Component {
               name="email"
               id="email"
               placeholder="Login"
-              onChange={ this.HandleLogin }
+              onChange={ (e) => this.HandleLogin(e) }
               data-testid="email-input"
               required
             />
@@ -68,15 +69,15 @@ class Login extends React.Component {
               name="password"
               id="password"
               placeholder="Password"
-              onChange={ this.HandleLogin }
+              onChange={ (e) => this.HandleLogin(e) }
               data-testid="password-input"
               required
             />
           </label>
           <button
             type="button"
-            disabled={ !(EmailValid && PasswordValid) }
-            onClick={ this.HandleLogin }
+            disabled={ !EmailValid || !PasswordValid }
+            onClick={ this.HandleButton }
             data-testid="login-submit-btn"
           >
             Entrar
