@@ -1,28 +1,61 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { currenciesThunk } from '../actions';
 
 class AddExpense extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: '',
+      currency: 'USD',
+      method: '',
+      tag: '',
+      description: '',
+    };
+  }
+
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
   render() {
+    const { value, description } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
           Valor:
-          <input type="text" id="value" name="value-input" value onChange />
+          <input type="text" id="value" name="value" value={ value } onChange={ this.handleChange } />
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select name="currency-selector" id="currency">
-            <option>teste</option>
+          <select name="currency" id="currency" onChange={ this.handleChange }>
+            {
+              currencies.map((currency) => (
+                <option key={ currency }>{ currency }</option>
+              ))
+            }
           </select>
         </label>
-        <label htmlFor="payment-method">
-          Moeda:
-          <select name="payment-selector" id="payment-method">
+        <label htmlFor="method">
+          Método de pagamento:
+          <select name="method" id="method" onChange={ this.handleChange }>
             <option>teste</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
-          <select name="tag-selector" id="tag">
+          <select name="tag" id="tag" onChange={ this.handleChange }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -32,11 +65,30 @@ class AddExpense extends React.Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input type="text" id="description" name="description-input" value onChange />
+          <input
+            type="text"
+            id="description"
+            name="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
         </label>
       </form>
     );
   }
 }
 
-export default AddExpense;
+AddExpense.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(currenciesThunk()),
+});
+
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
