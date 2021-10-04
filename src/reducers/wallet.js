@@ -9,8 +9,8 @@ function saveWalletInfo(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_INFO:
     return { ...state,
-      currencies: action.payload.currencies,
-      expenses: action.payload.expenses };
+      expenses: [action.payload.expenses],
+      currencies: action.payload.currencies };
   default:
     return state;
   }

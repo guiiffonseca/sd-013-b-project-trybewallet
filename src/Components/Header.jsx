@@ -6,7 +6,7 @@ class Header extends Component {
   render() {
     const { email } = this.props;
     return (
-      <header>
+      <header className="App-header">
         <h1 data-testid="email-field">
           { email }
         </h1>
@@ -17,8 +17,9 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = ({ user: { email } }) => ({
+const mapStateToProps = ({ user: { email }, expenses }) => ({
   email,
+  expenses,
 });
 
 Header.propTypes = {

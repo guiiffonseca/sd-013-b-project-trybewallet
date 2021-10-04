@@ -13,7 +13,6 @@ class Login extends React.Component {
       disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target: { type, value } }) {
