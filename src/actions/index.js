@@ -77,75 +77,9 @@ export const fetchExpensesThunk = (expenses) => async (dispatch) => {
   }
 };
 
-// ---------------
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
-// export const REQUEST_FETCH = 'REQUEST_FETCH';
-// export const SET_CURRENCIES = 'SET_CURRENCIES';
-// export const ERROR_FETCH = 'ERROR_FETCH';
-// export const SET_EXPENSES = 'SET_EXPENSES';
-
-// export const requestFetch = () => (
-//   {
-//     type: REQUEST_FETCH,
-//   });
-
-// export const errorFetch = (error) => (
-//   {
-//     type: ERROR_FETCH, payload: error,
-//   });
-
-// export const setCurrencies = (payload) => (
-//   {
-//     type: SET_CURRENCIES, payload,
-//   });
-
-// export const setExpenses = (error) => (
-//   {
-//     type: SET_EXPENSES, payload: error,
-//   });
-
-// export const fetchExpensesThunk = (expenses) => async (dispatch) => {
-//   dispatch(requestFetch());
-//   try {
-//     const currencies = await fetchAPI();
-//     delete currencies.USDT;
-//     delete currencies.DOGE;
-//     const currenciesList = Object.keys(currencies);
-//     dispatch(setCurrencies(currenciesList));
-
-//     const exchangeRates = await fetchAPI();
-//     delete exchangeRates.USDT;
-//     delete exchangeRates.DOGE;
-//     expenses.exchangeRates = exchangeRates;
-//     dispatch(setExpenses(expenses));
-//     console.log(expenses);
-//   } catch (error) {
-//     dispatch(errorFetch(error.message));
-//   }
-// };
-
-// export const getISSLocationThunk = () => async (dispatch) => {
-//   // action loading
-//   try {
-//     const response = await getCurrentISSLocation();
-//     const payload = {
-//       latitude: Number(response.iss_position.latitude),
-//       longitude: Number(response.iss_position.longitude),
-//     };
-//     dispatch(getISSLocationSuccess(payload));
-//   } catch (error) {
-//     dispatch(getISSLocationError(error));
-//   }
-// };
-
-// export function testeCurrencies() {
-//   return (dispatch) => {
-//     dispatch(requestCurrencies());
-//     return fetch('https://economia.awesomeapi.com.br/json/last/USD,CAD,EUR,GBP,ARS,BTC,LTC,JPY,CHF,AUD,CNY,ILS,ETH,XRP')
-//       .then((response) => response.json()
-//         .then(
-//           (json) => dispatch(getCurrencies(json)),
-//           (error) => dispatch(failedCurrencies(error)),
-//         ));
-//   };
-// }
+export const removeExpense = (payload) => (
+  {
+    type: REMOVE_EXPENSE, payload,
+  });

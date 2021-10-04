@@ -5,6 +5,7 @@ import {
   REQUEST_EXCHANGE,
   SET_EXPENSES,
   FAILED_EXCHANGE,
+  REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -35,35 +36,13 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case FAILED_EXCHANGE:
     return { ...state, error: action.payload };
 
+  case REMOVE_EXPENSE:
+
+    return { ...state, expenses: action.payload };
+
   default:
     return state;
   }
 };
 
-// const walletReducer = (state = INITIAL_STATE, action) => {
-//   switch (action.type) {
-//   case REQUEST_FETCH:
-//     return { ...state, isFetching: true };
-//   case ERROR_FETCH:
-//     return { ...state, error: action.payload, isFetching: false };
-//   case SET_CURRENCIES:
-//     return { ...state, currencies: action.payload, isFetching: false };
-//   // Case elaborado com a ajuda do Rodrigo Agusto (Tribo 13B)
-//   case SET_EXPENSES:
-//     return { ...state,
-//       expenses: [...state.expenses, {
-//         ...action.payload,
-//         id: state.expenses.length,
-//       }],
-//       isFetching: false,
-//     };
-//   default:
-//     return state;
-//   }
-// };
-
-// case GET_EXCHANGE:
-//   console.log(action.payload);
-//   return { ...state, exchangeRates: action.payload, isFetching: false };
-//   // return { ...state, expenses: { ...state.expenses, teste: action.payload }, isFetching: false };
 export default walletReducer;

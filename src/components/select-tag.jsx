@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
 
 class SelectTag extends Component {
   render() {
@@ -32,9 +31,5 @@ class SelectTag extends Component {
 SelectTag.propTypes = ({
   handleChange: PropTypes.func,
 }).isRequired;
-
-// const mapStateToProps = ({ user: { email } }) => ({ email });
-
-// export default connect(mapStateToProps)(Header);
 
 export default SelectTag;

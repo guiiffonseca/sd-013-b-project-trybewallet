@@ -2,31 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddButton from './buttons';
-// import { fetchCurrenciesThunk, fetchExpensesThunk } from '../actions';
+import { removeExpense } from '../actions';
 
 class ExpensesTable extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = LOCAL_STATE;
-  // }
-
-  // componentDidMount() {
-  // }
-
-  // renderSubmitButton() {
-  //   const { value, method, tag } = this.state;
-
-  //   return (
-  //     <AddButton
-  //       className="expensives-form-long-inputs"
-  //       name="Adicionar despesa"
-  //       disabled={ value === '' || method === '' || tag === '' }
-  //       onClick={ (event) => this.onClick(event) }
-  //     />
-  //   );
-  // }
-
   currencyName(expense) {
     const { currency, exchangeRates } = expense;
     return exchangeRates[currency].name;
@@ -44,12 +22,18 @@ class ExpensesTable extends Component {
     return result.toFixed(2);
   }
 
-  editExpensive() {
-    console.log('editando...');
+  editExpense(id) {
+    console.log('editando...', id);
   }
 
-  deleteExpensive() {
-    console.log('deletando...');
+  deleteExpense(id) {
+    const { expenses, dispatchDeleteExpense } = this.props;
+    const updatedExpenses = expenses;
+    updatedExpenses.splice(id, 1);
+    dispatchDeleteExpense(updatedExpenses);
+
+    const inputedExpense = document.getElementById(id);
+    inputedExpense.remove();
   }
 
   renderButtons(expense) {
@@ -58,18 +42,16 @@ class ExpensesTable extends Component {
     return (
       <>
         <AddButton
-          id={ id }
           dataTestId="edit-btn"
-          className="expensives-form-short-inputs"
+          className="expensives-form-long-inputs"
           name="Editar despesa"
-          onClick={ this.editExpensive }
+          onClick={ () => this.editExpense(id) }
         />
         <AddButton
-          id={ id }
-          data-testid="delete-btn"
-          className="expensives-form-short-inputs"
+          dataTestId="delete-btn"
+          className="expensives-form-long-inputs"
           name="Deletar despesa"
-          onClick={ this.deleteExpensive }
+          onClick={ () => this.deleteExpense(id) }
         />
       </>
     );
@@ -79,7 +61,7 @@ class ExpensesTable extends Component {
     const { expenses } = this.props;
     return (
       <div>
-        <table>
+        <table id="expenses-table">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -95,7 +77,7 @@ class ExpensesTable extends Component {
           </thead>
           <tbody>
             {expenses.map((expense) => (
-              <tr key={ expense.id }>
+              <tr id={ expense.id } key={ expense.id }>
                 <td>{expense.description}</td>
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
@@ -118,15 +100,15 @@ ExpensesTable.propTypes = {
   expenses: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   ),
+  dispatchDeleteExpense: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   dispatchSetCurrencies: () => dispatch(fetchCurrenciesThunk()),
-//   dispatchAddExpense: (localState) => dispatch(fetchExpensesThunk(localState)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDeleteExpense: (newState) => dispatch(removeExpense(newState)),
+});
 
-export default connect(mapStateToProps /* , mapDispatchToProps */)(ExpensesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
