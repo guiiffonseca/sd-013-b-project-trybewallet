@@ -5,6 +5,7 @@ export const USER_EMAIL = 'USER_EMAIL';
 export const REQUEST = 'REQUEST';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const ERROR = 'ERROR';
+export const DELETE = 'DELETE';
 
 // login action
 export const inputEmail = (email) => ({
@@ -36,3 +37,9 @@ export const fetchingExpenses = (state) => (dispatch) => {
     dispatch(addExpenses(expenseObj));
   });
 };
+
+export const btnDelete = (id) => ({
+  type: DELETE,
+  payload: id,
+
+});
