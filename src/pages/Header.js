@@ -8,9 +8,9 @@ class Header extends Component {
     return (
       <div>
         <header>
-          <span data-testid="email-field">{ email }</span>
-          <span data-testid="total-field">0</span>
-          <span data-testid="header-currency-field">BRL</span>
+          <p data-testid="email-field">{ email }</p>
+          <p data-testid="total-field">0</p>
+          <p data-testid="header-currency-field">BRL</p>
         </header>
       </div>
     );

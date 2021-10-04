@@ -46,8 +46,8 @@ class Expenses extends Component {
     const { dispatchSetValue, expenses } = this.props;
     let oldExpense = expenses;
     const Id = (oldExpense.length - 1) + 1;
-    const newMovie = { ...currentExpense, id: Id };
-    oldExpense = [...oldExpense, newMovie];
+    const newExpense = { ...currentExpense, id: Id };
+    oldExpense = [...oldExpense, newExpense];
     dispatchSetValue(oldExpense);
   }
 
