@@ -36,7 +36,7 @@ class FormAddValue extends Component {
     });
     newItem(this.state);
     this.setState({
-      value: 0,
+      value: '0',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',

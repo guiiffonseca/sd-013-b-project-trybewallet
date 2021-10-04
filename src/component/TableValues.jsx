@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeItem } from '../actions';
 
 class TableValues extends Component {
+  constructor() {
+    super();
+    this.deleteItem = this.deleteItem.bind(this);
+  }
+
+  deleteItem({ target }) {
+    const { items, deleteItemProps } = this.props;
+    const newItems = items.filter(
+      (value) => parseFloat(value.id) !== parseFloat(target.value),
+    );
+    console.log(newItems);
+    deleteItemProps(newItems);
+  }
+
   render() {
     const { items } = this.props;
     return (
@@ -34,7 +49,14 @@ class TableValues extends Component {
               <td>Real</td>
               <td>
                 <button type="button">Editar</button>
-                <button type="button">Excluir</button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  value={ value.id }
+                  onClick={ this.deleteItem }
+                >
+                  Excluir
+                </button>
               </td>
             </tr>
           );
@@ -46,14 +68,21 @@ class TableValues extends Component {
 
 TableValues.propTypes = {
   items: PropTypes.arrayOf,
+  deleteItemProps: PropTypes.func,
 };
 
 TableValues.defaultProps = {
   items: {},
+  deleteItemProps: undefined,
 };
 
 const mapStateToProps = (state) => ({
   items: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(TableValues);
+const mapDispatchToProps = (dispatch) => ({
+  deleteItemProps: (state) => dispatch(removeItem(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableValues);
+

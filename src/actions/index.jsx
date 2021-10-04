@@ -3,6 +3,7 @@ export const REQUEST_API = 'REQUEST_MOVIES';
 export const RECEIVE_API = 'RECEIVE_API_ACTION';
 export const RECEIVE_NEW_ITEM = 'RECEIVE_NEW_ITEM';
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 
 export const sendEmail = (state) => ({
   type: EMAIL_ACTION,
@@ -25,6 +26,11 @@ export const receiveNewItem = (state) => ({
 
 export const updateTotal = (state) => ({
   type: UPDATE_TOTAL,
+  state,
+});
+
+export const removeItem = (state) => ({
+  type: REMOVE_ITEM,
   state,
 });
 
