@@ -1,5 +1,5 @@
 body {
-  background-color: whitesmoke;
+  background-color: whitesmoke;  
   box-sizing: border-box;
   font-size: 16px;
 }
@@ -11,10 +11,11 @@ body {
 }
 
 .login-area {
-  align-items: center;
-  background-color: white;
+  align-items: center; 
+  background-color: #04AA6D;
   border: 2px solid rgba(0, 0, 0, 0.125);
   border-radius: 50px;
+  color: white;
   display: flex;
   flex-direction: column;
   font-size: 16px;
@@ -30,7 +31,7 @@ body {
 }
 
 .login-inputs {
-  background-color: whitesmoke;
+  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 10px;
   font-size: 16px;
@@ -82,3 +83,25 @@ body {
   text-align: center;
   width: 150px;
 }
+
+table {
+  /* border-collapse: collapse; */
+  text-align: center;
+  width: 100%;
+}
+
+th {
+  background-color: black; 
+  color: whitesmoke;
+  height: 60px;
+}
+
+td {  
+  border: 1px solid black;
+  /* border-bottom: 1px solid #ddd; */
+  color: #6a6a6d;
+  height: 50px;
+}
+
+tr:hover {background-color: rgba(0, 0, 0, 0.125);}
+/* tr:nth-child(even) {background-color: rgba(0, 0, 0, 0.125);} */

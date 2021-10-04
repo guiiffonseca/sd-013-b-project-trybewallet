@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 class AddButton extends Component {
   render() {
-    const { className, disabled, onClick, name } = this.props;
+    const { dataTestId, className, disabled, onClick, name } = this.props;
     return (
       <button
+        data-testid={ dataTestId }
         className={ className }
         type="button"
         disabled={ disabled }
