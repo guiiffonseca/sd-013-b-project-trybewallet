@@ -1,7 +1,7 @@
 export const ACTIONS = {
-  GET_TOKEN: 'GET_TOKEN',
   GET_CURRENCIES: 'GET_CURRENCIES',
   GET_EXPENSES: 'GET_EXPENSES',
+  DEL_EXPENSE: 'DEL_EXPENSE',
   EMAIL: 'EMAIL',
 };
 
@@ -14,4 +14,8 @@ export const getExpenses = (expenses) => ({
 
 export const getCurrencies = (currencies) => ({
   type: ACTIONS.GET_CURRENCIES, currencies,
+});
+
+export const delExpenses = (expenseToDel) => ({
+  type: ACTIONS.DEL_EXPENSE, expenseToDel,
 });

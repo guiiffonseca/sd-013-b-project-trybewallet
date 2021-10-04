@@ -12,6 +12,10 @@ export default function reducer(state = INICIAL_STATE, action) {
     return { ...state, currencies: action.currencies };
   case ACTIONS.GET_EXPENSES:
     return { ...state, expenses: [...state.expenses, action.expenses] };
+  case ACTIONS.DEL_EXPENSE:
+    return { ...state,
+      expenses: [...state.expenses].filter((expense) => expense !== action.expenseToDel),
+    };
   default:
     return state;
   }

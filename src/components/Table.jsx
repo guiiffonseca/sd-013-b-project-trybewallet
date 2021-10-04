@@ -1,12 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { getCurrencies } from '../actions';
+import { delExpenses } from '../actions';
 
 const cabecalho = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
 class Table extends React.Component {
+  showCrudButtons(expense) {
+    const { removeExpense } = this.props;
+    return (
+      <div>
+        <button type="button">Edit</button>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ () => removeExpense(expense) }
+        >
+          Del
+        </button>
+      </div>
+    );
+  }
+
   loadHeader() {
     return (
       <thead>
@@ -38,7 +54,7 @@ class Table extends React.Component {
                 .toFixed(2) }
             </td>
             <td>Real</td>
-            <td>{ expense.description }</td>
+            <td>{ this.showCrudButtons(expense) }</td>
           </tr>
         )) }
       </tbody>
@@ -57,13 +73,15 @@ class Table extends React.Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-/* const mapDispatchToProps = (dispatch) => ({
-}); */
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expense) => dispatch(delExpenses(expense)),
+});
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
