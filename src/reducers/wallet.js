@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 };
 
 function wallet(state = INITIAL_STATE, action) {
-  console.log('teste', state);
   switch (action.type) {
   case CURRENCY_DATA:
     return { ...state,

@@ -8,7 +8,7 @@ const INICIAL_STATE = {
   description: '',
   currency: 'USD',
   method: '',
-  tag: '',
+  tag: 'alimentação',
 };
 
 class Form extends Component {

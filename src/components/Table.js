@@ -8,7 +8,7 @@ class Table extends Component {
     const { expenses, deleteSelected } = this.props;
     return (
       <table>
-        <head>
+        <thead>
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
@@ -20,8 +20,8 @@ class Table extends Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
-        </head>
-        <body>
+        </thead>
+        <tbody>
           {expenses.map((item, index) => (
             <tr key={ index }>
               <td>{item.description}</td>
@@ -50,7 +50,7 @@ class Table extends Component {
               </td>
             </tr>
           ))}
-        </body>
+        </tbody>
       </table>
     );
   }
