@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateEmail } from '../actions';
 
-const caractersEmail = (email) => {
+const caracterEmail = (email) => {
   const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   if (regex.test(email)) return true;
   return false;
 };
 
-const quantiPassword = (password) => {
+const quantPassword = (password) => {
   const passwordMin = 6;
   if (password.length >= passwordMin) return true;
-  return false;
 };
 
 class Login extends React.Component {
@@ -32,17 +31,17 @@ class Login extends React.Component {
     e.preventDefault();
     const { history, login } = this.props;
     const { email } = this.state;
-    login(email);
     history.push('/carteira');
+    login(email);
   }
 
   HandleLogin(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-    if (name === 'email' && caractersEmail(value)) {
+    if (name === 'email' && caracterEmail(value)) {
       this.setState({ EmailValid: true });
     }
-    if (name === 'password' && quantiPassword(value)) {
+    if (name === 'password' && quantPassword(value)) {
       this.setState({ PasswordValid: true });
     }
   }
@@ -55,30 +54,25 @@ class Login extends React.Component {
           <label htmlFor="email">
             <input
               type="email"
+              data-testid="email-input"
               name="email"
-              id="email"
               placeholder="Login"
               onChange={ (e) => this.HandleLogin(e) }
-              data-testid="email-input"
-              required
             />
           </label>
           <label htmlFor="password">
             <input
               type="password"
               name="password"
-              id="password"
               placeholder="Password"
               onChange={ (e) => this.HandleLogin(e) }
               data-testid="password-input"
-              required
             />
           </label>
           <button
             type="button"
             disabled={ !EmailValid || !PasswordValid }
             onClick={ this.HandleButton }
-            data-testid="login-submit-btn"
           >
             Entrar
           </button>
@@ -89,10 +83,10 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
