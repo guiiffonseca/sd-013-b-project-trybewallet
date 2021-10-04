@@ -4,12 +4,18 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    let total = 0;
+    if (expenses.length !== 0) {
+      expenses.forEach((element) => {
+        total += Number(element.value * element.exchangeRates[element.currency].ask);
+      });
+    }
     return (
       <div>
         <header>
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">0</p>
+          <p data-testid="total-field">{total}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
       </div>
@@ -19,10 +25,16 @@ class Header extends Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object),
+};
+
+Header.defaultProps = {
+  expenses: [],
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
+  currencies: state.wallet.currencies,
 });
-
 export default connect(mapStateToProps)(Header);

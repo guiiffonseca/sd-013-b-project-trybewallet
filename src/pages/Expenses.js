@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchApi from '../services/api';
-import { setExpenses } from '../actions/index';
+import { getCurrencyThunk } from '../actions/index';
 
 class Expenses extends Component {
   constructor() {
     super();
     this.state = {
       coins: [],
+      id: 0,
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'DINHEIRO',
+      tag: 'Alimentação',
     };
     this.renderCoins = this.renderCoins.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -41,14 +42,14 @@ class Expenses extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { value, description, currency, method, tag } = this.state;
-    const currentExpense = { value, description, currency, method, tag };
-    const { dispatchSetValue, expenses } = this.props;
-    let oldExpense = expenses;
-    const Id = (oldExpense.length - 1) + 1;
-    const newExpense = { ...currentExpense, id: Id };
-    oldExpense = [...oldExpense, newExpense];
-    dispatchSetValue(oldExpense);
+    const { dispatchSetThunk, expenses } = this.props;
+    const { id } = this.state;
+    this.setState((state) => ({
+      id: state.id + 1,
+    }));
+    const newExpense = { ...this.state, id };
+    const currentExpenses = { expenses, newExpense };
+    dispatchSetThunk(currentExpenses);
   }
 
   renderCoins() {
@@ -78,10 +79,10 @@ class Expenses extends Component {
           <label htmlFor="description">
             Descrição
             <input
-              onChange={ this.handleChange }
-              type="text"
-              name="descrition"
               id="description"
+              type="text"
+              name="description"
+              onChange={ this.handleChange }
             />
           </label>
           { this.renderCoins() }
@@ -113,16 +114,18 @@ class Expenses extends Component {
 }
 
 Expenses.propTypes = {
-  dispatchSetValue: PropTypes.func.isRequired,
+  dispatchSetThunk: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSetValue: (value) => dispatch(setExpenses(value)),
+  dispatchSetThunk: (value) => dispatch(getCurrencyThunk(value)),
 });
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  id: state.wallet.expenses.length,
+  currencies: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

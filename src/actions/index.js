@@ -40,12 +40,12 @@ export const getCurrencyError = (payload) => ({
   payload,
 });
 
-export const getCurrencyThunk = () => async (dispatch) => {
-  dispatch(getCurrency());
-  try {
-    const response = await fetchApi();
+export const getCurrencyThunk = (expenses) => async (dispatch) => {
+  const response = await fetchApi();
+  if (expenses !== undefined) {
+    const payload = { ...expenses, exchangeRates: response };
+    dispatch(setExpenses(payload));
+  } else {
     dispatch(getCurrencySuccess(response));
-  } catch (error) {
-    dispatch(getCurrencyError(error));
   }
 };

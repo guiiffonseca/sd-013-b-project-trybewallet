@@ -9,7 +9,6 @@ const INITIAL_STATE = {
   currencies: {},
   expenses: [],
   arrayCurrency: [],
-  loading: false,
   error: null,
 };
 
@@ -26,13 +25,11 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case GET_CURRENCY_SUCCESS:
     return { ...state,
       currencies: [action.payload],
-      loading: false,
     };
   case GET_CURRENCY_ERROR:
 
     return { ...state,
       error: action.payload.error,
-      loading: false,
     };
   default:
     return state;
