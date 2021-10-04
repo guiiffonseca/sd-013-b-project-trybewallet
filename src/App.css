@@ -50,8 +50,8 @@
 
 .bottonExclu {
   background-color: red;
-  border-radius: 15px;
   border-color: blue;
+  border-radius: 15px;
   color: whitesmoke;
   font-size: 15px;
   font-style: italic;
@@ -104,10 +104,16 @@ h1 h5 {
   display: flex;
 }
 
-table,th,td {
+td {
+  border: 1px solid black;
+}
+
+th {
   border: 1px solid black;
 }
 
 table {
+  border: 1px solid black;
   width: 100%;
+ 
 }
