@@ -15,7 +15,6 @@ class Header extends Component {
         + parseFloat(curr.value)
         * parseFloat(curr.exchangeRates[curr.currency].ask)
     ), 0);
-    console.log(valueTotal);
     return valueTotal.toFixed(2);
   }
 
