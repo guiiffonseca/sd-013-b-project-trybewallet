@@ -1,19 +1,41 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// import { SET_COINS } from '../actions/index';
+import {
+  SET_EXPENSES,
+  GET_CURRENCY,
+  GET_CURRENCY_SUCCESS,
+  GET_CURRENCY_ERROR,
+} from '../actions/index';
 
-// const INITIAL_STATE = {
-//   currency: '',
-// };
+const INITIAL_STATE = {
+  currencies: {},
+  expenses: [],
+  arrayCurrency: [],
+  loading: false,
+  error: null,
+};
 
-// const walletReducer = (state = INITIAL_STATE, action) => {
-//   switch (action.type) {
-//   case SET_COINS:
-//     console.log(action.payload);
-//     return { ...state,
-//       currency: action.payload };
-//   default:
-//     return state;
-//   }
-// };
+const walletReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case GET_CURRENCY:
+    return { ...state,
+      loading: true,
+    };
+  case SET_EXPENSES:
+    return { ...state,
+      expenses: action.payload,
+    };
+  case GET_CURRENCY_SUCCESS:
+    return { ...state,
+      currencies: [action.payload],
+      loading: false,
+    };
+  case GET_CURRENCY_ERROR:
 
-// export default walletReducer;
+    return { ...state,
+      error: action.payload.error,
+      loading: false,
+    };
+  default:
+    return state;
+  }
+};
+export default walletReducer;

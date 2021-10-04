@@ -1,13 +1,23 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import fetchApi from '../services/api';
+import { setExpenses } from '../actions/index';
 
-export default class Expenses extends Component {
+class Expenses extends Component {
   constructor() {
     super();
     this.state = {
       coins: [],
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
     };
     this.renderCoins = this.renderCoins.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -22,13 +32,32 @@ export default class Expenses extends Component {
     this.setState({ coins: response });
   }
 
+  handleChange({ target }) {
+    const { name } = target;
+    this.setState({
+      [name]: target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { value, description, currency, method, tag } = this.state;
+    const currentExpense = { value, description, currency, method, tag };
+    const { dispatchSetValue, expenses } = this.props;
+    let oldExpense = expenses;
+    const Id = (oldExpense.length - 1) + 1;
+    const newMovie = { ...currentExpense, id: Id };
+    oldExpense = [...oldExpense, newMovie];
+    dispatchSetValue(oldExpense);
+  }
+
   renderCoins() {
     const { coins } = this.state;
 
     return (
-      <label htmlFor>
+      <label htmlFor="currency">
         Moeda
-        <select id="coin" name="coin">
+        <select onChange={ this.handleChange } id="currency" name="currency">
           {coins.map((name, index) => (
             <option key={ index } value={ name }>{name}</option>
           ))}
@@ -40,30 +69,35 @@ export default class Expenses extends Component {
   render() {
     return (
       <section>
-        <form>
-          <label htmlFor>
+        <form onSubmit={ this.handleSubmit }>
+          <label htmlFor="value">
             Valor:
-            <input type="text" name="value-input" />
+            <input onChange={ this.handleChange } type="text" name="value" id="value" />
           </label>
 
-          <label htmlFor>
+          <label htmlFor="description">
             Descrição
-            <input type="text" name="desc-input" />
+            <input
+              onChange={ this.handleChange }
+              type="text"
+              name="descrition"
+              id="description"
+            />
           </label>
           { this.renderCoins() }
 
-          <label htmlFor>
+          <label onChange={ this.handleChange } htmlFor="method">
             Método de pagamento:
-            <select>
+            <select id="method" name="method">
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
             </select>
           </label>
 
-          <label htmlFor>
+          <label htmlFor="tag">
             Tag:
-            <select>
+            <select onChange={ this.handleChange } id="tag" name="tag">
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
@@ -71,19 +105,24 @@ export default class Expenses extends Component {
               <option>Saúde</option>
             </select>
           </label>
-
+          <button type="submit">Adicionar despesas</button>
         </form>
       </section>
     );
   }
 }
 
-// Expenses.propTypes = {
-//   coins: PropTypes.string.isRequired,
-// };
+Expenses.propTypes = {
+  dispatchSetValue: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
-// const mapStateToProps = (state) => ({
-//   coins: state.user.coins,
-// });
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (value) => dispatch(setExpenses(value)),
+});
 
-// export default connect(mapStateToProps)(Expenses);
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
