@@ -2,7 +2,7 @@ import {
   SET_EXPENSES,
   GET_CURRENCY,
   GET_CURRENCY_SUCCESS,
-  GET_CURRENCY_ERROR,
+  GET_CURRENCY_ERROR, DELETE_ITEM,
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -31,6 +31,9 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return { ...state,
       error: action.payload.error,
     };
+  case DELETE_ITEM:
+    return { ...state,
+      expenses: state.expenses.filter((expense) => expense !== action.item) };
   default:
     return state;
   }
