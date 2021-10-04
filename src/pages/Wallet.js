@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import TableValues from '../component/TableValues';
 import FormAddValue from '../component/formAddValue';
 import { fetchAPI, updateTotal } from '../actions';
 
@@ -24,9 +25,9 @@ class Wallet extends React.Component {
     const total = itemsTable.reduce((acumulador, valorAtual) => {
       const { value, currency, exchangeRates } = valorAtual;
       const conversao = (parseFloat(value) * exchangeRates[currency].ask);
-      return (acumulador + Math.round(conversao * 100) / 100);
+      return acumulador + conversao;
     }, 0);
-    totalValue(total);
+    totalValue(Math.round(total * 100) / 100);
   }
 
   render() {
@@ -48,6 +49,7 @@ class Wallet extends React.Component {
           </p>
         </div>
         <FormAddValue />
+        <TableValues />
       </div>
     );
   }

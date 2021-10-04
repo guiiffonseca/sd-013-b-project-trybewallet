@@ -11,8 +11,8 @@ class FormAddValue extends Component {
       value: '0',
       description: '',
       currency: 'USD',
-      method: 'dinheiro',
-      tag: 'alimentação',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
     this.addItem = this.addItem.bind(this);
@@ -39,8 +39,8 @@ class FormAddValue extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'dinheiro',
-      tag: 'alimentação',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     });
   }
 
