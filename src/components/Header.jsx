@@ -12,9 +12,10 @@ class Header extends React.Component {
 
   showExpenses() {
     const { expenses } = this.props;
-    const total = expenses.reduce((acc, value) => {
+    const total = expenses.reduce((acc, expense) => {
       let soma = acc;
-      soma += value;
+      console.log(expense);
+      soma += +expense.value * expense.exchangeRates[expense.currency].ask;
       return soma;
     }, 0);
     return total;
@@ -34,7 +35,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({

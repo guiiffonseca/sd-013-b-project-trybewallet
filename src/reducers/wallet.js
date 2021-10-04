@@ -11,7 +11,7 @@ export default function reducer(state = INICIAL_STATE, action) {
   case ACTIONS.GET_CURRENCIES:
     return { ...state, currencies: action.currencies };
   case ACTIONS.GET_EXPENSES:
-    return { ...state, expenses: action.expenses };
+    return { ...state, expenses: [...state.expenses, action.expenses] };
   default:
     return state;
   }

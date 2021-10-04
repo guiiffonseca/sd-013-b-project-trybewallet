@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getExpenses } from '../actions';
 
-// const ENDPOINT = 'https://economia.awesomeapi.com.br/json/all';
+const ENDPOINT = 'https://economia.awesomeapi.com.br/json/all';
 const payOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
@@ -12,27 +12,40 @@ class ExpenseLoader extends React.Component {
     super(props);
 
     this.state = {
-      newExpense: [], // enviar objeto
+      newExpense: {
+        id: props.expenses.length,
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: '',
+      },
     };
-    // this.fetchAPI = this.fetchAPI.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  /*
-  fetchAPI() {
-    return ENDPOINT;
-  } */
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
+    const result = await (await fetch(ENDPOINT)).json();
+    delete result.USDT;
     const { addExpense } = this.props;
     const { newExpense } = this.state;
-    addExpense(newExpense);
+    this.setState({ newExpense: { ...newExpense, id: newExpense.id + 1 } });
+    addExpense({ ...newExpense, exchangeRates: result });
+  }
+
+  handleChange({ target }) {
+    const { newExpense } = this.state;
+    const { name, value } = target;
+    this.setState(() => ({ newExpense: { ...newExpense, [name]: value } }));
   }
 
   showCurrOptions() {
     const { currencies } = this.props;
     return (
-      currencies.map((element) => (
+      Object.keys(currencies).map((element) => (
         <option key={ element } value={ `${element}` }>{element}</option>
       ))
     );
@@ -59,39 +72,62 @@ class ExpenseLoader extends React.Component {
       <form>
         <label htmlFor="valor">
           Valor
-          <input type="text" id="valor" />
+          <input type="text" name="value" id="valor" onChange={ this.handleChange } />
         </label>
         <label htmlFor="describe">
           Descrição
-          <input type="text" id="describe" />
+          <input
+            type="text"
+            name="description"
+            id="describe"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="currency">
+        <label htmlFor="moeda">
           Moeda
-          <select id="currency">{ this.showCurrOptions() }</select>
+          <select
+            id="moeda"
+            name="currency"
+            onChange={ this.handleChange }
+          >
+            { this.showCurrOptions() }
+          </select>
         </label>
         <label htmlFor="payChoose">
           Método de pagamento
-          <select id="payChoose">{ this.showPayOptions() }</select>
+          <select
+            id="payChoose"
+            name="method"
+            onChange={ this.handleChange }
+          >
+            { this.showPayOptions() }
+          </select>
         </label>
         <label htmlFor="tag">
           Tag
-          <select id="tag">{ this.showTagOptions() }</select>
+          <select
+            id="tag"
+            name="tag"
+            onChange={ this.handleChange }
+          >
+            { this.showTagOptions() }
+          </select>
         </label>
-        <button type="submit" onClick={ this.onSubmit }>Enviar</button>
+        <button type="button" onClick={ this.onSubmit }>Adicionar despesa</button>
       </form>
     );
   }
 }
 
 ExpenseLoader.propTypes = {
-  // expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
   addExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
-  // expenses: state.wallet.expenses,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
