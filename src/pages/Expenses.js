@@ -52,7 +52,6 @@ class Expenses extends Component {
 
   renderCoins() {
     const { coins } = this.props;
-    console.log(coins);
     if (coins !== undefined) {
       return (
         <label htmlFor="currency">
@@ -114,8 +113,12 @@ class Expenses extends Component {
 }
 
 Expenses.propTypes = {
+  coins: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
+  dispatchCoins: PropTypes.func.isRequired,
   dispatchSetThunk: PropTypes.func.isRequired,
-  // expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  map: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
