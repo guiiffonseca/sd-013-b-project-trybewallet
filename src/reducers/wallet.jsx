@@ -23,7 +23,7 @@ const updateEmail = (state = INITIAL_STATE, action) => {
       ...state,
       total: action.state,
     };
-    case REMOVE_ITEM:
+  case REMOVE_ITEM:
     return {
       ...state,
       expenses: [...action.state],
