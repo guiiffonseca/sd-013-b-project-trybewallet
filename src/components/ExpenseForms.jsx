@@ -10,11 +10,11 @@ const paymentMethods = [
 ];
 
 const tags = [
-  { value: 'Alimentação', text: 'Alimentação' },
-  { value: 'Trabalho', text: 'Trabalho' },
-  { value: 'Transporte', text: 'Transporte' },
-  { value: 'Saúde', text: 'Saúde' },
-  { value: 'Lazer', text: 'Lazer' },
+  { value: 'Alimentação' },
+  { value: 'Trabalho' },
+  { value: 'Transporte' },
+  { value: 'Saúde' },
+  { value: 'Lazer' },
 
 ];
 
@@ -139,8 +139,8 @@ class ExpenseForms extends Component {
           value={ tag }
           onChange={ this.handleChange }
         >
-          { tags.map(({ text, value }) => (
-            <option key={ value } value={ value }>{ text }</option>
+          { tags.map(({ value }) => (
+            <option key={ value } value={ value }>{ value }</option>
           ))}
         </select>
       </label>
