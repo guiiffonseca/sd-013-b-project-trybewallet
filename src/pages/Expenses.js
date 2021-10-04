@@ -2,18 +2,17 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchApi from '../services/api';
-import { getCurrencyThunk } from '../actions/index';
+import { getCurrencyThunk, renderCoins } from '../actions/index';
 
 class Expenses extends Component {
   constructor() {
     super();
     this.state = {
-      coins: [],
       id: 0,
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'DINHEIRO',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.renderCoins = this.renderCoins.bind(this);
@@ -29,8 +28,8 @@ class Expenses extends Component {
     const data = await fetchApi();
     const response = Object.keys(data);
     response.splice(response.indexOf('USDT'), 1);
-
-    this.setState({ coins: response });
+    const { dispatchCoins } = this.props;
+    dispatchCoins(response);
   }
 
   handleChange({ target }) {
@@ -42,29 +41,30 @@ class Expenses extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { dispatchSetThunk, expenses } = this.props;
+    const { dispatchSetThunk } = this.props;
     const { id } = this.state;
     this.setState((state) => ({
       id: state.id + 1,
     }));
-    const newExpense = { ...this.state, id };
-    const currentExpenses = { expenses, newExpense };
-    dispatchSetThunk(currentExpenses);
+    const expenses = { ...this.state, id };
+    dispatchSetThunk(expenses);
   }
 
   renderCoins() {
-    const { coins } = this.state;
-
-    return (
-      <label htmlFor="currency">
-        Moeda
-        <select onChange={ this.handleChange } id="currency" name="currency">
-          {coins.map((name, index) => (
-            <option key={ index } value={ name }>{name}</option>
-          ))}
-        </select>
-      </label>
-    );
+    const { coins } = this.props;
+    console.log(coins);
+    if (coins !== undefined) {
+      return (
+        <label htmlFor="currency">
+          Moeda
+          <select onChange={ this.handleChange } id="currency" name="currency">
+            {coins.map((name, index) => (
+              <option key={ index } value={ name }>{name}</option>
+            ))}
+          </select>
+        </label>
+      );
+    } return null;
   }
 
   render() {
@@ -115,14 +115,16 @@ class Expenses extends Component {
 
 Expenses.propTypes = {
   dispatchSetThunk: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchSetThunk: (value) => dispatch(getCurrencyThunk(value)),
+  dispatchCoins: (value) => dispatch(renderCoins(value)),
 });
 
 const mapStateToProps = (state) => ({
+  coins: state.wallet.coins,
   expenses: state.wallet.expenses,
   id: state.wallet.expenses.length,
   currencies: state.wallet.currencies,

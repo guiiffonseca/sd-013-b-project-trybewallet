@@ -6,9 +6,10 @@ import { deleteItem } from '../actions';
 class ExpensesTable extends Component {
   render() {
     const { expenses, deleteSelected } = this.props;
+    console.log(expenses);
     return (
       <table>
-        <head>
+        <thead>
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
@@ -20,9 +21,9 @@ class ExpensesTable extends Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
-        </head>
+        </thead>
         <body>
-          {expenses.map((item, index) => (
+          {expenses.expenses.length !== 0 && expenses.expenses.map((item, index) => (
             <tr key={ index }>
               <td>{item.description}</td>
               <td>{item.tag}</td>
@@ -31,11 +32,8 @@ class ExpensesTable extends Component {
               <td>{item.exchangeRates[item.currency].name.split('/')[0]}</td>
               <td>{parseFloat(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
               <td>
-                {
-                  (parseFloat(item.value)
-                  * parseFloat(item.exchangeRates[item.currency].ask))
-                    .toFixed(2)
-                }
+                {(parseFloat(item.value)
+                * parseFloat(item.exchangeRates[item.currency].ask)).toFixed(2)}
               </td>
               <td>Real</td>
               <td>
@@ -56,7 +54,7 @@ class ExpensesTable extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
+  expenses: state.wallet,
 });
 
 ExpensesTable.propTypes = {

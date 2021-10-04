@@ -7,10 +7,17 @@ export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 export const DELETE_ITEM = 'DELETE_ITEM';
+export const RENDER_COINS = 'RENDER_COINS';
 
 export const storeUsers = (payload) => (
   {
     type: SET_USERS, payload,
+  }
+);
+
+export const renderCoins = (payload) => (
+  {
+    type: RENDER_COINS, payload,
   }
 );
 
