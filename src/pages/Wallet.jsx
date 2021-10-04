@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ExpenseLoader from '../components/ExpenseLoader';
 import Header from '../components/Header';
 import { getCurrencies } from '../actions';
+import Table from '../components/Table';
 
 const ENDPOINT = 'https://economia.awesomeapi.com.br/json/all';
 
@@ -25,6 +26,7 @@ class Wallet extends React.Component {
         <h2>TrybeWallet</h2>
         <Header />
         <ExpenseLoader />
+        <Table />
       </div>
     );
   }

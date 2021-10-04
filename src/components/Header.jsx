@@ -14,7 +14,6 @@ class Header extends React.Component {
     const { expenses } = this.props;
     const total = expenses.reduce((acc, expense) => {
       let soma = acc;
-      console.log(expense);
       soma += +expense.value * expense.exchangeRates[expense.currency].ask;
       return soma;
     }, 0);
@@ -26,7 +25,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <span data-testid="email-field" className="email">{ email }</span>
-        <span data-testid="total-field">{ this.showExpenses() }</span>
+        <span data-testid="total-field">{ this.showExpenses().toFixed(2) }</span>
         <span data-testid="header-currency-field">BRL</span>
       </div>
     );
