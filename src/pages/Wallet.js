@@ -50,7 +50,7 @@ class Wallet extends React.Component {
   calculateExpenses(fieldState = 0, expensesValue = '0', atualCurrency) {
     // console.log(fieldState, Number(expensesValue), atualCurrency.ask);
     return Number(
-      fieldState + Number(expensesValue) * Number(atualCurrency),
+      fieldState + Number(expensesValue) * Number(atualCurrency.ask),
     ).toFixed(2);
   }
 
@@ -63,13 +63,13 @@ class Wallet extends React.Component {
     const atualField = this.calculateExpenses(
       0,
       value,
-      allCurrencies[atualCurrency].ask,
+      allCurrencies[atualCurrency],
     );
 
     totalField = this.calculateExpenses(
       fieldState,
       value,
-      allCurrencies[atualCurrency].ask,
+      allCurrencies[atualCurrency],
     );
 
     // Método de capturar os ids com o DOM para setar o estado global foi consultado do código do Amós Rodrigues
@@ -86,7 +86,7 @@ class Wallet extends React.Component {
     this.setState((prevState) => ({
       id: prevState.id + 1,
       fieldState: Number(totalField),
-      atualField: [...prevState.atualField, Number(atualField)],
+      atualField: [...prevState.atualField, atualField],
     }));
     addExpenses({ atualCurrency, expenses });
   }
