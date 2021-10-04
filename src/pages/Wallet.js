@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import AddExpense from '../components/AddExpense';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -18,11 +19,14 @@ class Wallet extends React.Component {
     const { email } = this.props;
 
     return (
-      <header>
-        <h2 data-testid="email-field">{email}</h2>
-        <h2 data-testid="total-field">{`Gastos: ${value}`}</h2>
-        <h2 data-testid="header-currency-field">{`Câmbio: ${currency}`}</h2>
-      </header>
+      <div>
+        <header>
+          <h2 data-testid="email-field">{email}</h2>
+          <h2 data-testid="total-field">{`Gastos: ${value}`}</h2>
+          <h2 data-testid="header-currency-field">{`Câmbio: ${currency}`}</h2>
+        </header>
+        <AddExpense />
+      </div>
     );
   }
 }
