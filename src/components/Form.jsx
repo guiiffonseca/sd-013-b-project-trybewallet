@@ -41,6 +41,7 @@ class Form extends React.Component {
 
   async Countries() {
     const results = await Api();
+    delete results.USDT;
     this.setState({
       exchangeRates: results,
     });
@@ -105,12 +106,11 @@ class Form extends React.Component {
           onChange={ this.handleChange }
         >
           {
-            Object.keys(exchangeRates)
-              .map((code) => (
-                <option key={ code } value={ code }>
-                  { code }
-                </option>
-              ))
+            Object.keys(exchangeRates).map((code) => (
+              <option key={ code } value={ code }>
+                { code }
+              </option>
+            ))
           }
         </select>
       </label>
