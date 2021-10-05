@@ -5,12 +5,12 @@ const INICIAL_STATE = {
   email: '',
 };
 
-const user = (state = INICIAL_STATE, action) => {
-  switch (action.type) {
+const user = (state = INICIAL_STATE, { type, payload }) => {
+  switch (type) {
   case UPDATE_USERS:
     return {
-      ...state,
-      email: action.payload,
+      // ...state,
+      email: payload,
     };
   default:
     return state;
