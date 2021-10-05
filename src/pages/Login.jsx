@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { loginAction } from '../actions';
-import './login.css';
-import myWalletLogo from '../MYWALLET.svg';
 
 class Login extends React.Component {
   constructor() {
