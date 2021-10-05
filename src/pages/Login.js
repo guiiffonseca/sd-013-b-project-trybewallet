@@ -25,7 +25,6 @@ class Login extends React.Component {
   handleButton() {
     const { email, password } = this.state;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
-    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
     const minLength = 5;
     if (validEmail.test(email) && password.length >= minLength) {
       this.setState({ disableButton: false });
