@@ -21,7 +21,6 @@ class Table extends Component {
       <div>
         <table>
           <tbody>
-
             <tr>
               <th>Descrição</th>
               <th>Tag</th>
@@ -46,7 +45,7 @@ class Table extends Component {
                     <td>{this.name(exchangeRates[currency].ask, value)}</td>
                     <td>Real</td>
                     <td>
-                      <button type="button"> Editar/Excluir </button>
+                      <button type="button" data-testid="edit-btn">Editar </button>
                     </td>
                   </tr>
                 ),

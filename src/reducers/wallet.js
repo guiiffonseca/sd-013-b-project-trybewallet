@@ -1,4 +1,4 @@
-import { ADD_INFO } from '../actions';
+import { ADD_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 function saveWalletInfo(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case ADD_INFO:
+  case ADD_EXPENSES:
     return { ...state,
       expenses: [...state.expenses, action.payload.expenses],
       currencies: action.payload.currencies };
