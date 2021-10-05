@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { email, expenses } = this.props;
+    // logica de adicao de valores retirada do repositorio do DiegoDemontier
+    // https://github.com/tryber/sd-013-b-project-trybewallet/blob/diego-demontier-trybe-wallet/src/components/Header.js
+    // https://www.youtube.com/watch?v=sN9QvQAkyug
     let total = 0;
     if (expenses.length !== 0) {
       expenses.forEach((element) => {
@@ -35,6 +38,5 @@ Header.defaultProps = {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
-  currencies: state.wallet.currencies,
 });
 export default connect(mapStateToProps)(Header);

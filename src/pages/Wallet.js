@@ -1,11 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { storeCoins } from '../actions';
 import Expenses from './Expenses';
 import ExpensesTable from './ExpensesTable';
 import Header from './Header';
 
-class Wallet extends React.Component {
+export default class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -22,9 +20,3 @@ class Wallet extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => ({
-  dispatchSetValue: (value) => dispatch(storeCoins(value)),
-});
-
-export default connect(null, mapDispatchToProps)(Wallet);

@@ -26,12 +26,6 @@ export const deleteItem = (item) => ({
   item,
 });
 
-export const storeCoins = (payload) => (
-  {
-    type: SET_COINS, payload,
-  }
-);
-
 export const setExpenses = (payload) => (
   {
     type: SET_EXPENSES,
@@ -45,11 +39,6 @@ export const getCurrency = () => ({
 
 export const getCurrencySuccess = (payload) => ({
   type: GET_CURRENCY_SUCCESS,
-  payload,
-});
-
-export const getCurrencyError = (payload) => ({
-  type: GET_CURRENCY_ERROR,
   payload,
 });
 
