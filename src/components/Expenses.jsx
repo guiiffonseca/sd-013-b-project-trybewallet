@@ -1,7 +1,7 @@
-import PropTypes, { func, shape, number } from 'prop-types';
+import { arrayOf } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateExpenses, UPDATE_EXPENSES } from '../actions/updateExpenses';
+import { updateExpenses } from '../actions/updateExpenses';
 
 class Expenses extends React.Component {
   constructor(props) {
@@ -120,14 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
 // }
 
 Expenses.propTypes = {
-  expenses: shape({
-    expenses: shape({
-      filter: func,
-      map: func
-    }),
-    length: number
-  }),
-  updateAction: func,
-}.isRequired,
+  expenses: arrayOf(),
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
