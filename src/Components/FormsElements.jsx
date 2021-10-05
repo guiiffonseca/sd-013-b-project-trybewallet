@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class FormsElements extends Component {
   render() {
@@ -36,5 +37,10 @@ class FormsElements extends Component {
     );
   }
 }
+
+FormsElements.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  moedas: PropTypes.arrayOf(Array).isRequired,
+};
 
 export default FormsElements;

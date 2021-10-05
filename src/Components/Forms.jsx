@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {createStore} from 'redux';
 import { saveWalletInfo } from '../actions';
 import FormsElements from './FormsElements';
 
@@ -110,9 +109,9 @@ class Forms extends Component {
               name="method"
               onChange={ this.handleChange }
             >
-              <option> Dinheiro </option>
-              <option> Cartão de Crédito </option>
-              <option> Cartão de Débito </option>
+              <option value="Dinheiro"> Dinheiro </option>
+              <option value="Cartão de crédito"> Cartão de Crédito </option>
+              <option value="Cartão de débito"> Cartão de Débito </option>
             </select>
           </label>
           <button
