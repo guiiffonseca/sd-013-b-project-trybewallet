@@ -2,6 +2,7 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_EXPENSE = 'SET_EXPENSE';
+export const FILTER_EXPENSE = 'FILTER_EXPENSE';
 
 export const setEmail = (email) => ({
   type: SET_EMAIL,
@@ -11,11 +12,6 @@ export const setEmail = (email) => ({
 const setCurrencies = (currencies) => ({
   type: SET_CURRENCIES,
   payload: currencies,
-});
-
-const setExpense = (expenses) => ({
-  type: SET_EXPENSE,
-  payload: { expenses },
 });
 
 export const currenciesThunk = () => async (dispatch) => {
@@ -28,6 +24,11 @@ export const currenciesThunk = () => async (dispatch) => {
   dispatch(setCurrencies(currencies));
 };
 
+export const setExpense = (expenses) => ({
+  type: SET_EXPENSE,
+  payload: { expenses },
+});
+
 export const expenseThunk = (expense) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
@@ -36,3 +37,8 @@ export const expenseThunk = (expense) => async (dispatch) => {
 
   dispatch(setExpense({ ...expense, exchangeRates: data }));
 };
+
+export const filterExpense = (expense) => ({
+  type: FILTER_EXPENSE,
+  payload: expense,
+});
