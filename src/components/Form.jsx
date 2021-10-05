@@ -105,11 +105,12 @@ class Form extends React.Component {
           onChange={ this.handleChange }
         >
           {
-            Object.keys(exchangeRates).map((code) => (
-              <option key={ code } value={ code }>
-                { code }
-              </option>
-            ))
+            Object.keys(exchangeRates)
+              .map((code) => (
+                <option key={ code } value={ code }>
+                  { code }
+                </option>
+              ))
           }
         </select>
       </label>
