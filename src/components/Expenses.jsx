@@ -1,26 +1,73 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { updateExpenses, UPDATE_EXPENSES } from '../actions/updateExpenses';
 
 class Expenses extends React.Component {
-  render() {
-    const { expenses } = this.props;
+  constructor(props) {
+    super(props);
+    this.handleDelClick = this.handleDelClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+  }
+
+  handleEditClick(id) {
+    const { expenses, updateAction } = this.props;
     console.log(expenses);
+    const edited = {
+      id,
+      // estadosDosInputsAqui,
+    };
+    // const expensesArray = expenses.expenses.map((exp) => {
+    //   return exp.id === id ? edited : exp;
+    // });
+    // updateAction(expensesArray);
+  }
+
+  handleDelClick(id) {
+    const { expenses, updateAction } = this.props;
+    const expensesArray = expenses.expenses.filter((exp) => exp.id !== id);
+    updateAction(expensesArray);
+    // updateAction(expensesArray);
+  }
+
+  walletButons(expense, deleteFn, editFn) {
+    return (
+      <td>
+        <button type="button" onClick={ () => editFn(expense.id) }>Editar</button>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ () => deleteFn(expense.id) }
+        >
+          Excluir
+        </button>
+      </td>
+    );
+  }
+
+  handleTableHead() {
+    return (
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+      </thead>
+    );
+  }
+
+  render() {
+    const { expenses, updateAction } = this.props;
     return (
       <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
+        { this.handleTableHead() }
         <tbody>
           {/* feito com ajuda do John Torres */}
           {/* refatorado na monitoria, a tbody não renderizava
@@ -44,7 +91,11 @@ class Expenses extends React.Component {
                     .toFixed(2)}
                 </td>
                 <td>Real</td>
-                <td>Editar/Excluir</td>
+                {this.walletButons(
+                  expense,
+                  this.handleDelClick,
+                  this.handleEditClick,
+                )}
               </tr>
             ))
           }
@@ -58,6 +109,10 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  updateAction: (expenses) => dispatch(updateExpenses(expenses)),
+});
+
 // function mapStateToProps(state) {
 //   return {
 //     expenses: state.wallet.expenses,
@@ -67,4 +122,4 @@ const mapStateToProps = (state) => ({
 Expenses.propTypes = {
   expenses: PropTypes.shape().isRequired,
 };
-export default connect(mapStateToProps, null)(Expenses);
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
