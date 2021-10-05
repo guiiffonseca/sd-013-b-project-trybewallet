@@ -10,7 +10,6 @@ const userReducer = (state = INIT_STATE, action) => {
     return {
       ...state,
       email: action.payload.email,
-      totalExpenses: action.payload.totalExpenses,
     };
   default:
     return state;
