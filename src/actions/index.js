@@ -3,6 +3,7 @@ export const UPDATE_CURRENCY = 'UPDATE_CURRENCY';
 export const UPDATE_USERS = 'UPDATE_USERS';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const ADD_EXPENSES = 'ADD EXPENSES';
 
 export const updateCurrency = (payload) => ({
   type: UPDATE_CURRENCY,
@@ -21,4 +22,9 @@ export const updatePassword = (state) => ({
 
 export const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
+});
+
+export const addExpenses = (state) => ({
+  type: ADD_EXPENSES,
+  payload: state,
 });

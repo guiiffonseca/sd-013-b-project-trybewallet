@@ -10,19 +10,16 @@ class SelectCurrency extends Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, cur, onChange } = this.props;
     return (
       <form>
-        <label htmlFor="wallet-currency">
+        <label htmlFor="wallet-cur">
           Moeda
-          <select name="currency" id="wallet-currency">
+          <select name="currency" id="wallet-cur" value={ cur } onChange={ onChange }>
             {currencies.map((currency) => {
               if (currency !== 'USDT') {
                 return (
-                  <option
-                    name={ currency }
-                    key={ currency }
-                  >
+                  <option key={ currency }>
                     {currency}
                   </option>
                 );
@@ -49,6 +46,8 @@ SelectCurrency.propTypes = {
   currencies: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
+  cur: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectCurrency);
