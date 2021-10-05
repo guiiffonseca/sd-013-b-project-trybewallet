@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { func, shape, number } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateExpenses, UPDATE_EXPENSES } from '../actions/updateExpenses';
@@ -10,13 +10,13 @@ class Expenses extends React.Component {
     this.handleEditClick = this.handleEditClick.bind(this);
   }
 
-  handleEditClick(id) {
-    const { expenses, updateAction } = this.props;
-    console.log(expenses);
-    const edited = {
-      id,
-      // estadosDosInputsAqui,
-    };
+  handleEditClick() {
+    // const { expenses, updateAction } = this.props;
+    // console.log(expenses);
+    // const edited = {
+    //   id,
+    //   // estadosDosInputsAqui,
+    // };
     // const expensesArray = expenses.expenses.map((exp) => {
     //   return exp.id === id ? edited : exp;
     // });
@@ -64,7 +64,7 @@ class Expenses extends React.Component {
   }
 
   render() {
-    const { expenses, updateAction } = this.props;
+    const { expenses } = this.props;
     return (
       <table>
         { this.handleTableHead() }
@@ -120,6 +120,14 @@ const mapDispatchToProps = (dispatch) => ({
 // }
 
 Expenses.propTypes = {
-  expenses: PropTypes.shape().isRequired,
-};
+  expenses: shape({
+    expenses: shape({
+      filter: func,
+      map: func
+    }),
+    length: number
+  }),
+  updateAction: func,
+}.isRequired,
+
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
