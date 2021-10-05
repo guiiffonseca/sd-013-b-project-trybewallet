@@ -11,6 +11,7 @@ export default fazerLogin;
 
 export const CURRENCIES = 'CURRENCIES';
 export const EXPENSES_SUCESS = 'EXPENSES_SUCESS';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const receiveMoedas = (payload) => ({
   type: CURRENCIES,
@@ -18,6 +19,11 @@ export const receiveMoedas = (payload) => ({
 
 export const addExpenses = (payload) => ({
   type: EXPENSES_SUCESS,
+  payload,
+});
+
+export const deleteExpenses = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 
