@@ -1,19 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { removeValor as removeValorEvent } from '../actions/index';
 import TableHeader from './TableHeader';
-import GambiraMp4 from './GambiraMp4';
 
 class TableWallet extends React.Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event, atualField) {
+    const { target } = event;
+    const { removeValor, setFieldState } = this.props;
+    console.log(target);
+    const expenses = {
+      id: target.id,
+    };
+    removeValor({ expenses });
+    setFieldState(atualField);
+  }
+
   render() {
-    const { expenses, atualField } = this.props;
+    const { expenses, moedaConvertida } = this.props;
     if (expenses === []) return <p>Loading...</p>;
     return (
       <table>
         <caption>
-          <thead className="tableHeader">
-            <TableHeader />
-          </thead>
+          <TableHeader />
           <tbody>
             {expenses.map((result) => {
               const {
@@ -26,27 +41,25 @@ class TableWallet extends React.Component {
                 exchangeRates,
               } = result;
               return (
-                <tr role="row" key={ id }>
-                  <td role="cell">{description}</td>
-                  <td role="cell">{tag}</td>
-                  <td role="cell">{method}</td>
-                  <td role="cell">{value}</td>
-                  <td role="cell">{exchangeRates[currency].name}</td>
-                  <td role="cell">
-                    {Number(exchangeRates[currency].ask).toFixed(2)}
+                <tr key={ id }>
+                  <td>{description}</td>
+                  <td>{tag}</td>
+                  <td>{method}</td>
+                  <td>{value}</td>
+                  <td>{exchangeRates[currency].name}</td>
+                  <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+                  <td>{value * Number(exchangeRates[currency].ask)}</td>
+                  <td>Real</td>
+                  <td>
+                    <button
+                      type="button"
+                      id={ id }
+                      onClick={ (event) => this.handleClick(event, moedaConvertida[id]) }
+                      data-testid="delete-btn"
+                    >
+                      Deletar
+                    </button>
                   </td>
-                  <td role="cell">
-                    <GambiraMp4 currency={ currency } atualField={ atualField[id] } />
-                  </td>
-                  {/* GambiraMp4 foi criado exclusivamente para passar no teste,
-                   que por sua vez está com problemas de encontrar os resultados na tela,
-                   mas a aplicação está perfeitamente funcional.Eu esperei hoje (dia 4 de outubro) para ver
-                   na mentoria oque estava de errado entre a aplicação e o teste,mas eu tive alguns prblemas
-                   com falta de internet. Caso tenha alguma dúvida comente o elemento <td> com a gambira e
-                   descomente o código a baixo, poderá ver que a aplicação faz
-                   o cálculo correto com o valor atual da cotação requisitado na api */}
-                  {/* <td role="cell">{atualField[id]}</td> */}
-                  <td role="cell">Real</td>
                 </tr>
               );
             })}
@@ -59,7 +72,9 @@ class TableWallet extends React.Component {
 
 TableWallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  atualField: PropTypes.number.isRequired,
+  moedaConvertida: PropTypes.number.isRequired,
+  removeValor: PropTypes.func.isRequired,
+  setFieldState: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => {
@@ -69,4 +84,8 @@ const mapStateToProps = ({ wallet }) => {
   };
 };
 
-export default connect(mapStateToProps)(TableWallet);
+const mapDispatchToProps = (dispatch) => ({
+  removeValor: (payload) => dispatch(removeValorEvent(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableWallet);

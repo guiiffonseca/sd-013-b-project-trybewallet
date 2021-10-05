@@ -21,17 +21,28 @@ class Wallet extends React.Component {
       allCurrencies: {},
       atualCurrency: 'USD',
       fieldState: 0,
-      atualField: [],
+      moedaConvertida: [],
     };
 
     this.getCurrenciesAPI = this.getCurrenciesAPI.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.calculateExpenses = this.calculateExpenses.bind(this);
+    this.setFieldState = this.setFieldState.bind(this);
+    this.calculateTotalValue = this.calculateTotalValue.bind(this);
   }
 
   componentDidMount() {
     this.getCurrenciesAPI();
+  }
+
+  setFieldState(subitraiFieldSate) {
+    this.setState((prevState) => {
+      console.log(prevState.fieldState, subitraiFieldSate);
+      return {
+        fieldState: prevState.fieldState - Number(subitraiFieldSate),
+      };
+    });
   }
 
   async getCurrenciesAPI() {
@@ -48,29 +59,28 @@ class Wallet extends React.Component {
   }
 
   calculateExpenses(fieldState = 0, expensesValue = '0', atualCurrency) {
-    // console.log(fieldState, Number(expensesValue), atualCurrency.ask);
-    return Number(
-      fieldState + Number(expensesValue) * Number(atualCurrency.ask),
-    ).toFixed(2);
+    // const newCurrencyValue = Number(atualCurrency.ask).toFixed(2);
+    console.log(fieldState, Number(expensesValue), Number(atualCurrency.ask));
+    return fieldState + Number(expensesValue) * Number(atualCurrency.ask);
+  }
+
+  calculateTotalValue() {
+    const { expenses } = this.props;
+    if (expenses.length !== 0) {
+      const somaTotal = expenses.reduce((acc, curValue) => {
+        acc += curValue.value * curValue.exchangeRates[curValue.currency].ask;
+        return acc;
+      }, 0);
+      console.log(somaTotal);
+      return somaTotal;
+    }
+    return 0.00;
   }
 
   handleClick() {
     this.getCurrenciesAPI();
-    const { id, atualCurrency, allCurrencies, fieldState } = this.state;
+    const { id, atualCurrency, allCurrencies } = this.state;
     const { addExpenses } = this.props;
-    let { totalField } = this.props;
-    const { value } = document.querySelector('#valor');
-    const atualField = this.calculateExpenses(
-      0,
-      value,
-      allCurrencies[atualCurrency],
-    );
-
-    totalField = this.calculateExpenses(
-      fieldState,
-      value,
-      allCurrencies[atualCurrency],
-    );
 
     // Método de capturar os ids com o DOM para setar o estado global foi consultado do código do Amós Rodrigues
     const expenses = {
@@ -83,11 +93,12 @@ class Wallet extends React.Component {
       value: document.querySelector('#valor').value,
     };
 
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-      fieldState: Number(totalField),
-      atualField: [...prevState.atualField, atualField],
-    }));
+    this.setState(
+      (prevState) => ({
+        id: prevState.id + 1,
+      }),
+      () => this.calculateTotalValue(),
+    );
     addExpenses({ atualCurrency, expenses });
   }
 
@@ -99,42 +110,43 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { handleClick, handleChange } = this;
     const { email, currencies } = this.props;
-    const { id, currenciesList, atualCurrency, fieldState, atualField } = this.state;
-
+    const { id, currenciesList, atualCurrency, moedaConvertida } = this.state;
     return (
       <div>
         <WalletHeader
           id={ id }
           email={ email }
           currencies={ currencies }
-          totalField={ fieldState }
+          calculateTotalValue={ this.calculateTotalValue }
         />
         <form>
           <Input
-            handleChange={ handleChange }
+            handleChange={ this.handleChange }
             labelDescrption="Valor"
             name="valor"
             id="valor"
           />
           <Input
-            handleChange={ handleChange }
+            handleChange={ this.handleChange }
             labelDescrption="Descrição"
             name="descrição"
             id="descrição"
           />
           <SelectCurrencies
             atualCurrency={ atualCurrency }
-            handleChange={ handleChange }
+            handleChange={ this.handleChange }
             currenciesList={ currenciesList }
           />
-          <SelectPaymentMethod handleChange={ handleChange } />
-          <SelectTag handleChange={ handleChange } />
-          <button type="button" onClick={ handleClick }>
+          <SelectPaymentMethod handleChange={ this.handleChange } />
+          <SelectTag handleChange={ this.handleChange } />
+          <button type="button" onClick={ this.handleClick }>
             Adicionar despesa
           </button>
-          <TableWallet atualField={ atualField } />
+          <TableWallet
+            setFieldState={ this.setFieldState }
+            moedaConvertida={ moedaConvertida }
+          />
         </form>
       </div>
     );
@@ -145,16 +157,16 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf().isRequired,
   addExpenses: PropTypes.func.isRequired,
-  totalField: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf().isRequired,
 };
 
 const mapStateToProps = ({ user, wallet }) => {
   const { email } = user;
-  const { currencies, totalField } = wallet;
+  const { expenses, currencies } = wallet;
   return {
     email,
     currencies,
-    totalField,
+    expenses,
   };
 };
 
