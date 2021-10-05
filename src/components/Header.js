@@ -22,7 +22,6 @@ class Header extends React.Component {
     const { email } = this.props;
     return (
       <header>
-        <img className="header-logo" src={ headerLogo } alt="My Wallet Logo" />
         <div className="header-info">
           <h3 className="info-item" data-testid="email-field">
             Email:
