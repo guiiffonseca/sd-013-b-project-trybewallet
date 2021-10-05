@@ -11,8 +11,7 @@ class Wallet extends React.Component {
         <Header />
         <ExpensesForm />
         <ExpensesTable />
-        <Footer />
-      </>
+        </>
     );
   }
 }
