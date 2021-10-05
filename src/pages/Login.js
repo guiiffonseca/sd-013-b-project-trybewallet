@@ -57,7 +57,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   emailInputed: (email) => dispatch(saveUserInfo(email)),
 });
-
+// test
 Login.propTypes = {
   emailInputed: PropTypes.func.isRequired,
 };
