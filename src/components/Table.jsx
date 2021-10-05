@@ -16,9 +16,10 @@ class Table extends React.Component {
           <th>Moeda</th>
           <th>Câmbio utilizado</th>
           <th>Valor convertido</th>
-          <th>Moedas de conversão</th>
+          <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
+
         {
           expenses
             .map(({ id, description, tag, method, value, currency, exchangeRates }) => (
@@ -49,7 +50,7 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
-  map: PropTypes.arrayOf(PropTypes.object),
+  expenses: PropTypes.arrayOf(PropTypes.object),
   deleteExpenses: PropTypes.func,
 }.isRequired;
 
