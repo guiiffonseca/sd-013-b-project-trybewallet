@@ -1,90 +1,104 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { userEmail } from '../actions';
-// import store from '../store';
+import { action } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
+    this.changer = this.changer.bind(this);
+    this.regex = this.regex.bind(this);
+    this.saveLogin = this.saveLogin.bind(this);
+
     this.state = {
       email: '',
       password: '',
+      isDisabled: true,
+      redirect: false,
     };
-
-    this.inputValidation = this.inputValidation.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
 
-  handleChangeEmail({ target }) {
+  changer({ target }) {
     const { name, value } = target;
+    const { email, password } = this.state;
+    const numberFive = 5;
+    const minPasswordLength = numberFive;
     this.setState({
       [name]: value,
     });
+    if (this.regex(email) && (password.length >= minPasswordLength)) {
+      this.setState({
+        isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
+      });
+    }
   }
 
-  inputValidation() {
+  saveLogin(e) {
+    e.preventDefault();
+    const { myDispatch } = this.props;
     const { email, password } = this.state;
-    const minNumberInput = 6;
-    const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;// expre regular para validação de e-mail do stackOverFlow https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
-    if (regex.test(email) && (password.length >= minNumberInput)) {
-      return false;
+    if (email && password) {
+      myDispatch({ type: 'LOGIN', payload: email });
+      this.setState({ redirect: true });
     }
+  }
 
-    return true;
+  regex(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
   }
 
   render() {
-    const { email, password } = this.state;
-    const { stateEmail } = this.props;
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/carteira" />;
+    }
+    const { isDisabled } = this.state;
     return (
-      <form>
+      <form className="login-form">
+        <h1>Trybe Wallet</h1>
         <label htmlFor="email">
-          Insira um e-mail
+          E-mail:
           <input
             type="email"
-            id="email"
             name="email"
-            defaultValue={ email }
-            onChange={ this.handleChangeEmail }
+            onChange={ this.changer }
             data-testid="email-input"
           />
         </label>
         <label htmlFor="password">
-          Digita sua senha
+          Senha:
           <input
             type="password"
-            data-testid="password-input"
-            minLength="6"
             name="password"
-            id="password"
-            onChange={ this.handleChangeEmail }
-            defaultValue={ password }
+            onChange={ this.changer }
+            data-testid="password-input"
           />
         </label>
-        <Link to="/carteira">
-          <button
-            // href="wallet.js"
-            type="button"
-            onClick={ () => stateEmail(email) }
-            disabled={ this.inputValidation() }
-          >
-            Entrar
-          </button>
-        </Link>
+        <button
+          type="button"
+          onClick={ this.saveLogin }
+          disabled={ isDisabled }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
 }
 
-const mapDispatchToprops = (dispatch) => ({
-  stateEmail: (payload) => dispatch(userEmail(payload)),
+const mapDispatchToProps = (dispatch) => ({
+  myDispatch: (state) => dispatch(action(state)),
 });
 
-export default connect(null, mapDispatchToprops)(Login);
-
 Login.propTypes = {
-  stateEmail: PropTypes.func.isRequired,
+  myDispatch: PropTypes.func.isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(Login);
