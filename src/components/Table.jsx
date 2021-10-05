@@ -35,7 +35,7 @@ class Table extends React.Component {
                 <td>
                   <button
                     type="button"
-                    data-testid="delete-bnt"
+                    data-testid="delete-btn"
                     onClick={ () => deleteExpenses(id) }
                   >
                     X
@@ -50,9 +50,9 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object),
-  deleteExpenses: PropTypes.func,
-}.isRequired;
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExpenses: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,

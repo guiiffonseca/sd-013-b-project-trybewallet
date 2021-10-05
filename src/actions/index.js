@@ -1,10 +1,11 @@
 import Api from '../Api';
 
 export const LOGIN = 'LOGIN';
-export const updateEmail = (email) => ({
+export const updateEmail = (email, totalExpenses) => ({
   type: LOGIN,
   payload: {
     email,
+    totalExpenses,
   },
 });
 

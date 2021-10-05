@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveExpensesThunk } from '../actions';
 import Api from '../Api';
+import { saveExpensesThunk } from '../actions';
 import Table from './Table';
 
 const PAY = [
@@ -184,7 +184,7 @@ class Form extends React.Component {
           type="button"
           onClick={ this.handleAddExpense }
         >
-          Adiciona Despesa
+          Adicionar despesa
         </button>
         <Table />
       </div>
