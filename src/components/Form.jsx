@@ -1,19 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { saveExpensesThunk } from '../actions';
 import Api from '../Api';
+import Table from './Table';
+
+const PAY = [
+  'Dinheiro',
+  'Cartão de crédito',
+  'Cartão de débito',
+];
+
+const TAG = [
+  'Alimentação',
+  'Lazer',
+  'Trabalho',
+  'Transporte',
+  'Saúde',
+];
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
       value: '',
-      totalCurrency: [],
-      currency: 'USD',
-      MethodPayment: 'Dinheiro',
-      tag: 'Alimentação',
       description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddExpense = this.handleAddExpense.bind(this);
   }
 
   componentDidMount() {
@@ -22,10 +41,8 @@ class Form extends React.Component {
 
   async Countries() {
     const results = await Api();
-    const Array = Object.keys(results);
-    const FinalResults = Array.filter((_result, index) => index !== 1);
     this.setState({
-      totalCurrency: FinalResults,
+      exchangeRates: results,
     });
   }
 
@@ -36,11 +53,17 @@ class Form extends React.Component {
     });
   }
 
+  handleAddExpense() {
+    const { saveExpenses } = this.props;
+    saveExpenses(this.state);
+  }
+
   renderValue() {
     const { value } = this.state;
     return (
       <label htmlFor="value">
         Valor:
+        {' '}
         <input
           type="text"
           name="value"
@@ -57,6 +80,7 @@ class Form extends React.Component {
     return (
       <label htmlFor="description">
         Descrição:
+        {' '}
         <input
           type="text"
           name="description"
@@ -69,41 +93,51 @@ class Form extends React.Component {
   }
 
   renderCurrency() {
-    const { currency, totalCurrency } = this.state;
+    const { currency, exchangeRates } = this.state;
     return (
       <label htmlFor="currency">
         Moeda:
+        {' '}
         <select
           name="currency"
           id="currency"
           value={ currency }
           onChange={ this.handleChange }
         >
-          vazio
-          { totalCurrency.map((code) => (
-            <option key={ code } value={ code }>
-              { code }
-            </option>
-          ))}
+          {
+            Object.keys(exchangeRates).map((code) => (
+              <option key={ code } value={ code }>
+                { code }
+              </option>
+            ))
+          }
         </select>
       </label>
     );
   }
 
-  renderMethodPayment() {
-    const { MethodPayment } = this.state;
+  renderMethod() {
+    const { method } = this.state;
     return (
-      <label htmlFor="paymentMethod">
+      <label htmlFor="method">
         Método de pagamento:
+        {' '}
         <select
-          name="paymentMethod"
-          id="paymentMethod"
-          value={ MethodPayment }
+          name="method"
+          id="method"
+          value={ method }
           onChange={ this.handleChange }
         >
-          <option value="dinheiro">Dinheiro</option>
-          <option value="cartao-de-credito">Cartão de crédito</option>
-          <option value="cartao-de-debito">Cartão de débito</option>
+          {
+            PAY.map((payMethod, index) => (
+              <option
+                key={ index }
+                value={ payMethod }
+              >
+                {payMethod}
+              </option>
+            ))
+          }
         </select>
       </label>
     );
@@ -114,17 +148,23 @@ class Form extends React.Component {
     return (
       <label htmlFor="tag">
         Tag:
+        {' '}
         <select
           name="tag"
           id="tag"
           value={ tag }
           onChange={ this.handleChange }
         >
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          {
+            TAG.map((item, index) => (
+              <option
+                key={ index }
+                value={ item }
+              >
+                { item }
+              </option>
+            ))
+          }
         </select>
       </label>
     );
@@ -137,12 +177,25 @@ class Form extends React.Component {
           { this.renderValue() }
           { this.renderDescription() }
           { this.renderCurrency() }
-          { this.renderMethodPayment() }
+          { this.renderMethod() }
           { this.renderTag() }
         </form>
+        <button
+          type="button"
+          onClick={ this.handleAddExpense }
+        >
+          Adiciona Despesa
+        </button>
+        <Table />
       </div>
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  saveExpenses: PropTypes.func.isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  saveExpenses: (expenses) => dispatch(saveExpensesThunk(expenses)),
+});
+export default connect(null, mapDispatchToProps)(Form);

@@ -1,18 +1,33 @@
+import { ADD_EXPENSES, DELETE_EXPENSES } from '../actions';
+
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  expenses: [],
+  id: 0,
 };
 
-function wallet(state = INITIAL_STATE, action) {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+  case ADD_EXPENSES:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        {
+          id: state.expenses.length,
+          ...action.payload.expenses,
+        },
+      ],
+    };
+
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload.id),
+    };
+
   default:
     return state;
   }
-}
+};
 
 export default wallet;

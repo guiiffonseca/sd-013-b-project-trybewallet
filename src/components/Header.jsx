@@ -3,22 +3,30 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total: 0,
-      currency: 'BRL',
-    };
+  calculateTotalExpenses() {
+    const { expenses } = this.props;
+    const totalExpenses = expenses.reduce((
+      acc, { exchangeRates, currency, value },
+    ) => acc + exchangeRates[currency].ask * value, 0);
+    return totalExpenses.toFixed(2);
   }
 
   render() {
-    const { total, currency } = this.state;
     const { email } = this.props;
+    const currencyField = 'BRL';
     return (
       <div>
-        <div data-testid="email-field">{ email }</div>
-        <div data-testid="total-field">{ total.toFixed(2) }</div>
-        <div data-testid="header-currency-field">{ `Câmbio: ${currency}` }</div>
+        <span data-testid="email-field">
+          { `email: ${email}` }
+          {' '}
+        </span>
+        <span data-testid="total-field">
+          Despesa total: R$
+          { this.calculateTotalExpenses() }
+        </span>
+        <span data-testid="header-currency-field">
+          { `Câmbio: ${currencyField}` }
+        </span>
       </div>
     );
   }
@@ -26,10 +34,12 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.number.isRequired,
 };
 
 const mapStateToProp = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProp)(Header);
