@@ -1,7 +1,7 @@
-import React from 'react';
-import Header from '../component/Header';
-import formAddValue from '../component/formAddValue';
-import TableValue from '../component/TableValue';
+import React from "react";
+import Header from "../component/Header";
+import formAddValue from "../component/formAddValue";
+import TableValue from "../component/TableValue";
 
 class Wallet extends React.Component {
   render() {
@@ -10,7 +10,7 @@ class Wallet extends React.Component {
         <Header />
         <formAddValue />
         <TableValue />
-        </>
+      </>
     );
   }
 }
