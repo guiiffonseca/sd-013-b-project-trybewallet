@@ -1,10 +1,12 @@
 import React from 'react';
+import Api from '../Api';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
       value: '',
+      totalCurrency: [],
       currency: 'USD',
       MethodPayment: 'Dinheiro',
       tag: 'Alimentação',
@@ -12,6 +14,19 @@ class Form extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.Countries();
+  }
+
+  async Countries() {
+    const results = await Api();
+    const Array = Object.keys(results);
+    const FinalResults = Array.filter((_result, index) => index !== 1);
+    this.setState({
+      totalCurrency: FinalResults,
+    });
   }
 
   handleChange({ target }) {
@@ -37,8 +52,24 @@ class Form extends React.Component {
     );
   }
 
+  renderDescription() {
+    const { description } = this.state;
+    return (
+      <label htmlFor="description">
+        Descrição:
+        <input
+          type="text"
+          name="description"
+          id="description"
+          value={ description }
+          onChange={ this.handleChange }
+        />
+      </label>
+    );
+  }
+
   renderCurrency() {
-    const { currency } = this.state;
+    const { currency, totalCurrency } = this.state;
     return (
       <label htmlFor="currency">
         Moeda:
@@ -49,6 +80,11 @@ class Form extends React.Component {
           onChange={ this.handleChange }
         >
           vazio
+          { totalCurrency.map((code) => (
+            <option key={ code } value={ code }>
+              { code }
+            </option>
+          ))}
         </select>
       </label>
     );
@@ -94,31 +130,15 @@ class Form extends React.Component {
     );
   }
 
-  renderDescription() {
-    const { description } = this.state;
-    return (
-      <label htmlFor="description">
-        Descrição:
-        <input
-          type="text"
-          name="description"
-          id="description"
-          value={ description }
-          onChange={ this.handleChange }
-        />
-      </label>
-    );
-  }
-
   render() {
     return (
       <div>
         <form>
           { this.renderValue() }
+          { this.renderDescription() }
           { this.renderCurrency() }
           { this.renderMethodPayment() }
           { this.renderTag() }
-          { this.renderDescription() }
         </form>
       </div>
     );
