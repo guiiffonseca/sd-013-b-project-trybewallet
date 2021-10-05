@@ -17,7 +17,7 @@ class Header extends React.Component {
     return (
       <div>
         <div data-testid="email-field">{ email }</div>
-        <div data-testid="total-field">{ total }</div>
+        <div data-testid="total-field">{ total.toFixed(2) }</div>
         <div data-testid="header-currency-field">{ currency }</div>
       </div>
     );
