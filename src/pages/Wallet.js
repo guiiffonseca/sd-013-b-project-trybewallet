@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import AddExpense from '../components/AddExpense';
+import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Wallet extends React.Component {
           <h2 data-testid="header-currency-field">BRL</h2>
         </header>
         <AddExpense />
+        <WalletTable />
       </div>
     );
   }
