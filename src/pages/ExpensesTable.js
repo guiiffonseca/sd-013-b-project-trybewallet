@@ -23,7 +23,8 @@ class ExpensesTable extends Component {
           </tr>
         </thead>
         <body>
-          {expenses.expenses.length !== 0 && expenses.expenses.map((item, index) => (
+          {expenses.expenses.map((item, index) => (
+            // feito com a ajuda da paulinha, rafael romano e ricardo antonio na monitoria
             <tr key={ index }>
               <td>{item.description}</td>
               <td>{item.tag}</td>
