@@ -1,65 +1,44 @@
-// action types
-export const USER_LOGIN = 'USER_LOGIN';
-export const REQUEST_API = 'REQUEST_API';
-export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
-export const ADD_EXPENSE = 'ADD_EXPENSE';
-export const DELETE_EXPENSE = 'DELETE_EXPENSE';
-export const EDIT_EXPENSE_BTN = 'EDIT_EXPENSE_BTN';
-export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const EMAIL_ACTION = 'EMAIL_ACTION';
+export const REQUEST_API = 'REQUEST_MOVIES';
+export const RECEIVE_API = 'RECEIVE_API_ACTION';
+export const RECEIVE_NEW_ITEM = 'RECEIVE_NEW_ITEM';
+export const UPDATE_TOTAL = 'UPDATE_TOTAL';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 
-// action creators
-export const loginAction = (email, password) => ({
-  type: USER_LOGIN,
-  payload: { email, password },
-});
-
-export const requestApi = () => ({
-  type: REQUEST_API,
-});
-
-export const receiveCurrencies = (payload) => ({
-  type: RECEIVE_CURRENCIES,
-  payload,
-});
-
-export function fetchApi() {
-  return (dispatch) => {
-    dispatch(requestApi());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json())
-      .then((data) => dispatch(receiveCurrencies(data)))
-      .catch((error) => console.log(error));
-  };
-}
-
-// export function addExpense(data) {
-//   return (dispatch) => {
-//     dispatch(requestApi());
-//     return fetch('https://economia.awesomeapi.com.br/json/all')
-//       .then((response) => response.json())
-//       .then((result) => dispatch({
-//         type: ADD_EXPENSE,
-//         state: { ...data, exchangeRates: result },
-//       }));
-//   };
-// }
-
-export const addExpense = (state) => ({
-  type: ADD_EXPENSE,
+export const sendEmail = (state) => ({
+  type: EMAIL_ACTION,
   state,
 });
 
-export const deleteExpense = (payload) => ({
-  type: DELETE_EXPENSE,
-  payload,
+export const requestAPI = () => ({
+  type: REQUEST_API,
 });
 
-export const enableEditExpense = (payload) => ({
-  type: EDIT_EXPENSE_BTN,
-  payload,
+export const receiveAPI = (state) => ({
+  type: RECEIVE_API,
+  state,
 });
 
-export const editExpense = (payload) => ({
-  type: EDIT_EXPENSE,
-  payload,
+export const receiveNewItem = (state) => ({
+  type: RECEIVE_NEW_ITEM,
+  state,
 });
+
+export const updateTotal = (state) => ({
+  type: UPDATE_TOTAL,
+  state,
+});
+
+export const removeItem = (state) => ({
+  type: REMOVE_ITEM,
+  state,
+});
+
+export function fetchAPI() {
+  return async (dispatch) => {
+    dispatch(requestAPI());
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((value) => dispatch(receiveAPI(value)));
+  };
+}

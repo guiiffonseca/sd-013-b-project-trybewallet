@@ -1,231 +1,122 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { fetchApi, addExpense, editExpense } from '../actions';
+import PropTypes from 'prop-types';
+import { fetchAPI, receiveNewItem } from '../actions';
 
-const label = 'label';
-const editLabel = 'label-edit';
-
-class ExpensesForm extends React.Component {
+class FormAddValue extends Component {
   constructor() {
     super();
-
     this.state = {
       id: 0,
-      value: 0,
+      value: '0',
+      description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-      description: '',
+      exchangeRates: {},
     };
-
-    this.handleInput = this.handleInput.bind(this);
-    this.addExpense = this.addExpense.bind(this);
-    this.renderValue = this.renderValue.bind(this);
-    this.renderCurrency = this.renderCurrency.bind(this);
-    this.renderMethod = this.renderMethod.bind(this);
-    this.renderTag = this.renderTag.bind(this);
-    this.renderDescription = this.renderDescription.bind(this);
-    this.renderButtons = this.renderButtons.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    const { dispatchFetchApi } = this.props;
-    dispatchFetchApi();
-  }
-
-  handleInput(event) {
-    const { value, name } = event.target;
+  handleChange({ target }) {
+    const { name } = target;
+    const { value } = target;
     this.setState({
       [name]: value,
     });
   }
 
-  addExpense() {
-    const { currentRates, dispatchAddExpense, dispatchFetchApi } = this.props;
-    dispatchFetchApi();
-    dispatchAddExpense({ ...this.state, exchangeRates: currentRates });
-    this.setState((previousState) => ({
-      id: previousState.id + 1,
-      value: 0,
+  async addItem() {
+    const { fetch, newItem, itemsTable, currenciesState } = this.props;
+    await fetch();
+    this.setState({
+      id: itemsTable.length,
+      exchangeRates: currenciesState,
+    });
+    newItem(this.state);
+    this.setState({
+      value: '0',
+      description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-      description: '',
-    }));
-  }
-
-  renderValue() {
-    const { value } = this.state;
-    const { enableButton } = this.props;
-    return (
-      <label className={ enableButton ? editLabel : label } htmlFor="value">
-        Valor:
-        <input
-          className="form-input"
-          type="number"
-          name="value"
-          data-testid="value-input"
-          id="value"
-          min="1"
-          value={ value }
-          onChange={ this.handleInput }
-        />
-      </label>
-    );
-  }
-
-  renderCurrency() {
-    const { currency } = this.state;
-    const { currencies, enableButton } = this.props;
-    return (
-      <label className={ enableButton ? editLabel : label } htmlFor="currency">
-        Moeda:
-        <select
-          className="form-input"
-          name="currency"
-          id="currency"
-          data-testid="currency-input"
-          value={ currency }
-          onChange={ this.handleInput }
-        >
-          {currencies
-            .filter((curr) => curr !== 'USDT')
-            .map((curr) => (
-              <option key={ curr } value={ curr }>{ curr }</option>
-            ))}
-        </select>
-      </label>
-    );
-  }
-
-  renderMethod() {
-    const { method } = this.state;
-    const { enableButton } = this.props;
-    return (
-      <label className={ enableButton ? editLabel : label } htmlFor="method">
-        Método de pagamento:
-        <select
-          className="form-input"
-          name="method"
-          id="method"
-          data-testid="method-input"
-          value={ method }
-          onChange={ this.handleInput }
-        >
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
-        </select>
-      </label>
-    );
-  }
-
-  renderTag() {
-    const { tag } = this.state;
-    const { enableButton } = this.props;
-    return (
-      <label className={ enableButton ? editLabel : label } htmlFor="tag">
-        Tag:
-        <select
-          className="form-input"
-          name="tag"
-          id="tag"
-          data-testid="tag-input"
-          value={ tag }
-          onChange={ this.handleInput }
-        >
-          <option>Alimentação</option>
-          <option>Lazer</option>
-          <option>Trabalho</option>
-          <option>Transporte</option>
-          <option>Saúde</option>
-        </select>
-      </label>
-    );
-  }
-
-  renderDescription() {
-    const { description } = this.state;
-    const { enableButton } = this.props;
-    return (
-      <label className={ enableButton ? editLabel : label } htmlFor="description">
-        Descrição
-        <input
-          className="form-input"
-          type="text"
-          name="description"
-          id="description"
-          data-testid="description-input"
-          value={ description }
-          onChange={ this.handleInput }
-        />
-      </label>
-    );
-  }
-
-  renderButtons() {
-    const { enableButton, dispatchEditExpense } = this.props;
-    const { state } = this;
-    if (!enableButton) {
-      return (
-        <button
-          className="form-add-button"
-          type="button"
-          onClick={ this.addExpense }
-        >
-          Adicionar Despesa
-        </button>
-      );
-    }
-    if (enableButton) {
-      return (
-        <button
-          className="form-edit-button"
-          type="button"
-          onClick={ () => dispatchEditExpense(state) }
-        >
-          Editar Despesa
-        </button>
-      );
-    }
+    });
   }
 
   render() {
-    const { enableButton } = this.props;
+    const { currenciesState } = this.props;
+    const currencies = Object.keys(currenciesState);
+    const currenciesFilter = currencies.filter((value) => value !== 'USDT');
     return (
-      <form className={ enableButton ? 'exepenses-edit' : 'exepenses-form' }>
-        { this.renderValue() }
-        { this.renderCurrency() }
-        { this.renderMethod() }
-        { this.renderTag() }
-        { this.renderDescription() }
-        { this.renderButtons() }
+      <form>
+        <label htmlFor="value">
+          Valor:
+          <input type="number" id="value" onChange={ this.handleChange } name="value" />
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <textarea
+            id="description"
+            onChange={ this.handleChange }
+            name="description"
+          />
+        </label>
+        <label htmlFor="currency">
+          Moeda:
+          <select id="currency" onChange={ this.handleChange } name="currency">
+            {currenciesFilter.map((value) => (
+              <option value={ value } key={ value }>
+                { value }
+              </option>))}
+          </select>
+        </label>
+        <label htmlFor="method">
+          Método de pagamento:
+          <select id="method" onChange={ this.handleChange } name="method">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag:
+          <select id="tag" onChange={ this.handleChange } name="tag">
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+        </label>
+        <button type="reset" onClick={ this.addItem }>Adicionar despesa</button>
       </form>
     );
   }
 }
 
+FormAddValue.propTypes = {
+  currenciesState: PropTypes.arrayOf,
+  itemsTable: PropTypes.arrayOf,
+  fetch: PropTypes.func,
+  newItem: PropTypes.func,
+};
+
+FormAddValue.defaultProps = {
+  currenciesState: {},
+  itemsTable: {},
+  fetch: undefined,
+  newItem: undefined,
+};
+
 const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-  currentRates: state.wallet.currentRates,
-  enableButton: state.wallet.enableEdit,
-  expenseToEdit: state.wallet.expenseToEdit,
+  currenciesState: state.wallet.currencies,
+  itemsTable: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchFetchApi: (state) => dispatch(fetchApi(state)),
-  dispatchAddExpense: (expense) => dispatch(addExpense(expense)),
-  dispatchEditExpense: (state) => dispatch(editExpense(state)),
+  fetch: () => dispatch(fetchAPI()),
+  newItem: (state) => dispatch(receiveNewItem(state)),
 });
 
-ExpensesForm.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  dispatchFetchApi: PropTypes.func.isRequired,
-  currentRates: PropTypes.objectOf().isRequired,
-  dispatchAddExpense: PropTypes.func.isRequired,
-  enableButton: PropTypes.bool.isRequired,
-  dispatchEditExpense: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddValue);

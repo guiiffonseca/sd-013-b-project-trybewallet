@@ -1,79 +1,88 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { loginAction } from '../actions';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { sendEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
       email: '',
-      password: '',
+      login: false,
     };
-
-    this.handleInput = this.handleInput.bind(this);
+    this.validaLogin = this.validaLogin.bind(this);
+    this.updateEmail = this.updateEmail.bind(this);
   }
 
-  handleInput(event) {
-    const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-    });
+  validaLogin({ target: { value } }) {
+    const lengthPassword = 6;
+    const validaEmail = /\S+@\S+\.\S+/;
+    const { email } = this.state;
+    if (value.length >= lengthPassword && validaEmail.test(email)) {
+      this.setState({ login: true });
+    }
+  }
+
+  updateEmail({ target: { value } }) {
+    this.setState({ email: value });
   }
 
   render() {
-    const { email, password } = this.state;
-    const { login } = this.props;
-    const emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    // Ref: https://stackoverflow.com/questions/940577/javascript-regular-expression-email-validation
-    const passwordLength = 6;
+    const { login, email } = this.state;
+    const { emailProps } = this.props;
+    console.log(email);
     return (
-      <div className="login-page">
-        <img className="login-logo" src={ myWalletLogo } alt="My Wallet Logo" />
-        <form className="login-form">
-          <h2 className="login-title">Login:</h2>
+      <div>
+        <label htmlFor="email">
+          E-mail:
+          {' '}
           <input
-            className="login-input"
-            type="text"
             data-testid="email-input"
-            name="email"
-            placeholder="E-mail"
-            onChange={ this.handleInput }
-            value={ email }
+            placeholder="Insira seu e-mail"
+            id="email"
+            type="email"
+            onChange={ this.updateEmail }
           />
+        </label>
+        <label htmlFor="password">
+          Senha:
+          {' '}
           <input
-            className="login-input"
-            type="password"
             data-testid="password-input"
-            name="password"
-            placeholder="Senha"
-            onChange={ this.handleInput }
-            value={ password }
+            placeholder="Insira sua senha"
+            id="password"
+            type="password"
+            onChange={ this.validaLogin }
           />
-          <Link to="/carteira">
-            <button
-              className="login-button"
-              type="button"
-              disabled={ !emailFormat.test(email) || password.length < passwordLength }
-              onClick={ () => login(email, password) }
-            >
-              Entrar
-            </button>
-          </Link>
-        </form>
+        </label>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !login }
+            onClick={ () => emailProps(email) }
+          >
+            {' '}
+            Entrar
+            {' '}
+
+          </button>
+        </Link>
+
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  login: (email, password) => dispatch(loginAction(email, password)),
-});
-
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  emailProps: PropTypes.func,
 };
+
+Login.defaultProps = {
+  emailProps: '',
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  emailProps: (state) => dispatch(sendEmail(state)) });
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -1,98 +1,87 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { FaEdit, FaRegTrashAlt } from 'react-icons/fa';
-import { deleteExpense, enableEditExpense } from '../actions';
+import PropTypes from 'prop-types';
+import { removeItem } from '../actions';
 
-class ExpensesTable extends React.Component {
-  delete(id) {
-    const { dispatchDeleteExpense } = this.props;
-    return (
-      <FaRegTrashAlt
-        className="table-icon"
-        type="button"
-        data-testid="delete-btn"
-        onClick={ () => dispatchDeleteExpense(id) }
-      />
-    );
+class TableValues extends Component {
+  constructor() {
+    super();
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
-  edit(id) {
-    const { dispatchEnableEdit } = this.props;
-    return (
-      <FaEdit
-        className="table-icon"
-        type="button"
-        data-testid="edit-btn"
-        onClick={ () => dispatchEnableEdit(id) }
-      />
+  deleteItem({ target }) {
+    const { items, deleteItemProps } = this.props;
+    const newItems = items.filter(
+      (value) => parseFloat(value.id) !== parseFloat(target.value),
     );
+    console.log(newItems);
+    deleteItemProps(newItems);
   }
 
   render() {
-    const { expenses } = this.props;
+    const { items } = this.props;
     return (
-      <section>
-        <table className="expenses-table">
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
+      <table>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+        {items.map((value) => {
+          const { currency, exchangeRates } = value;
+          const cambio = exchangeRates[currency].ask;
+          const conversao = (parseFloat(value.value) * exchangeRates[currency].ask);
+          return (
+            <tr key={ value.id }>
+              <td>{ value.description }</td>
+              <td>{ value.tag }</td>
+              <td>{ value.method }</td>
+              <td>{ value.value }</td>
+              <td>{ exchangeRates[currency].name }</td>
+              <td>{ Math.round(cambio * 100) / 100 }</td>
+              <td>{ Math.round(conversao * 100) / 100 }</td>
+              <td>Real</td>
+              <td>
+                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  value={ value.id }
+                  onClick={ this.deleteItem }
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            { expenses.length > 0 ? (
-              expenses.map((expense) => (
-                <tr key={ expense.id }>
-                  <td>{ expense.description }</td>
-                  <td>{ expense.tag }</td>
-                  <td>{ expense.method }</td>
-                  <td className="align-right">
-                    { expense.value }
-                  </td>
-                  <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
-                  <td className="align-right">
-                    { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2) }
-                  </td>
-                  <td className="align-right">
-                    { (parseFloat(expense.exchangeRates[expense.currency].ask)
-                      * parseFloat(expense.value)).toFixed(2) }
-                  </td>
-                  <td>Real</td>
-                  <td className="align-center">
-                    { this.edit(expense.id) }
-                    { this.delete(expense.id) }
-                  </td>
-                </tr>
-              ))
-            ) : null }
-          </tbody>
-        </table>
-      </section>
+          );
+        })}
+      </table>
     );
   }
 }
 
+TableValues.propTypes = {
+  items: PropTypes.arrayOf,
+  deleteItemProps: PropTypes.func,
+};
+
+TableValues.defaultProps = {
+  items: {},
+  deleteItemProps: undefined,
+};
+
 const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
+  items: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDeleteExpense: (id) => dispatch(deleteExpense(id)),
-  dispatchEnableEdit: (id) => dispatch(enableEditExpense(id)),
+  deleteItemProps: (state) => dispatch(removeItem(state)),
 });
 
-ExpensesTable.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  dispatchDeleteExpense: PropTypes.func.isRequired,
-  dispatchEnableEdit: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(TableValues);
