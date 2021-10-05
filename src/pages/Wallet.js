@@ -9,21 +9,26 @@ class Wallet extends React.Component {
     super(props);
 
     this.state = {
-      value: 0,
-      currency: 'BRL',
+      // value: 0,
+      // currency: 'BRL',
     };
   }
 
   render() {
-    const { value, currency } = this.state;
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    const total = expenses.reduce(
+      (accumulator, { value, exchangeRates, currency }) => (
+        accumulator + Number(value) * Number(exchangeRates[currency].ask)
+      ),
+      0,
+    );
 
     return (
       <div>
         <header>
           <h2 data-testid="email-field">{email}</h2>
-          <h2 data-testid="total-field">{`Gastos: ${value}`}</h2>
-          <h2 data-testid="header-currency-field">{`Câmbio: ${currency}`}</h2>
+          <h2 data-testid="total-field">{`Gastos: ${total}`}</h2>
+          <h2 data-testid="header-currency-field">BRL</h2>
         </header>
         <AddExpense />
       </div>
@@ -33,10 +38,12 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);
