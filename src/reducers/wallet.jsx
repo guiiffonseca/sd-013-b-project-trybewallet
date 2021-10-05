@@ -1,36 +1,63 @@
-import { RECEIVE_API, RECEIVE_NEW_ITEM, UPDATE_TOTAL, REMOVE_ITEM } from '../actions';
+import {
+  REQUEST_API,
+  RECEIVE_CURRENCIES,
+  ADD_EXPENSE,
+  DELETE_EXPENSE,
+  EDIT_EXPENSE_BTN,
+  EDIT_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  total: 0,
+  currentRates: {},
+  enableEdit: false,
+  expenseToEdit: {},
 };
 
-const updateEmail = (state = INITIAL_STATE, action) => {
+function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case RECEIVE_API:
+  case REQUEST_API:
+    return { ...state };
+  case RECEIVE_CURRENCIES:
     return {
       ...state,
-      currencies: action.state,
+      currencies: Object.keys(action.payload),
+      currentRates: action.payload,
     };
-  case RECEIVE_NEW_ITEM:
+  case ADD_EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses, action.state],
+      expenses: [...state.expenses, action.state] };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload),
     };
-  case UPDATE_TOTAL:
+  case EDIT_EXPENSE_BTN:
     return {
       ...state,
-      total: action.state,
+      enableEdit: true,
+      expenseToEdit: state.expenses.find((expense) => expense.id === action.payload),
     };
-  case REMOVE_ITEM:
+  case EDIT_EXPENSE:
     return {
       ...state,
-      expenses: [...action.state],
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === state.expenseToEdit.id) {
+          return {
+            ...action.payload,
+            exchangeRates: expense.exchangeRates,
+            id: expense.id,
+          };
+        }
+        return expense;
+      }),
+      enableEdit: false,
     };
   default:
     return state;
   }
-};
+}
 
-export default updateEmail;
+export default walletReducer;

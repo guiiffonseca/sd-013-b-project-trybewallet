@@ -12,4 +12,6 @@ function App() {
   );
 }
 
+// Contei com a ajuda de colegas para a realização completa desde projeto //
+
 export default App;
