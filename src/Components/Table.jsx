@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeExpenses } from '../actions';
 
 class Table extends Component {
   constructor() {
     super();
     this.name = this.name.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   name(value, secondValue) {
@@ -13,6 +15,11 @@ class Table extends Component {
       return (Math.round(value * secondValue * 100) / 100).toFixed(2);
     }
     return (Math.round(value * 100) / 100).toFixed(2);
+  }
+
+  handleClick(id) {
+    const { remove } = this.props;
+    remove(id);
   }
 
   render() {
@@ -34,8 +41,8 @@ class Table extends Component {
             </tr>
             {expenses
               .map(
-                ({ description, tag, method, value, currency, exchangeRates }, index) => (
-                  <tr key={ index }>
+                ({ description, tag, method, value, currency, exchangeRates, id }) => (
+                  <tr key={ id }>
                     <td>{description}</td>
                     <td>{tag}</td>
                     <td>{method}</td>
@@ -45,7 +52,14 @@ class Table extends Component {
                     <td>{this.name(exchangeRates[currency].ask, value)}</td>
                     <td>Real</td>
                     <td>
-                      <button type="button" data-testid="edit-btn">Editar </button>
+                      <button
+                        // value={ id }
+                        type="button"
+                        data-testid="delete-btn"
+                        onClick={ () => this.handleClick(id) }
+                      >
+                        Deletar
+                      </button>
                     </td>
                   </tr>
                 ),
@@ -61,8 +75,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  remove: (item) => dispatch(removeExpenses(item)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(Array).isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
