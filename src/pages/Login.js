@@ -53,8 +53,6 @@ class Login extends React.Component {
     );
   }
 }
-// mapStateToprops -> Leitura dos dados
-// mapDispatchtoProps -> escrever os dados
 
 const mapDispatchToProps = (dispatch) => ({
   emailInputed: (email) => dispatch(saveUserInfo(email)),
