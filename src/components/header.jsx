@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.sumTotalExpenses = this.sumTotalExpenses.bind(this);
-  }
-
   sumTotalExpenses() {
     const { expenses } = this.props;
     let sumValues = 0;
     expenses.forEach(({ value, currency, exchangeRates }) => {
       sumValues += parseFloat(value) * exchangeRates[currency].ask;
     });
-    return sumValues.toFixed(2);
+    const sumTotal = sumValues.toFixed(2);
+    return sumTotal;
   }
 
   render() {

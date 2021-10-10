@@ -84,6 +84,19 @@ body {
   width: 150px;
 }
 
+.edit-expense {
+  align-items: center;
+  background-color: #04aa6d;
+  border: 5px rgba(0, 0, 0, 0.125);
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  font-weight: 400;
+  justify-content: space-between;
+  padding: 15px;
+}
+
 table {
   text-align: center;
   width: 100%;

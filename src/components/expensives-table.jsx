@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddButton from './buttons';
-import { removeExpense } from '../actions';
+import { deleteExpense, editExpense } from '../actions';
 
 class ExpensesTable extends Component {
   currencyName(expense) {
@@ -23,7 +23,8 @@ class ExpensesTable extends Component {
   }
 
   editExpense(id) {
-    console.log('editando...', id);
+    const { dispatchEditForm } = this.props;
+    dispatchEditForm(id);
   }
 
   deleteExpense(id) {
@@ -34,6 +35,12 @@ class ExpensesTable extends Component {
 
     const inputedExpense = document.getElementById(id);
     inputedExpense.remove();
+
+    // let value = 0;
+    // deletedExpense.forEach((item) => {
+    //   value = (parseFloat(item.value) * item.exchangeRates[item.currency].ask).toFixed(2);
+    // });
+    // dispatchDeleteValue(parseFloat(value));
   }
 
   renderButtons(expense) {
@@ -44,13 +51,13 @@ class ExpensesTable extends Component {
         <AddButton
           dataTestId="edit-btn"
           className="expensives-form-long-inputs"
-          name="Editar despesa"
+          name="Editar"
           onClick={ () => this.editExpense(id) }
         />
         <AddButton
           dataTestId="delete-btn"
           className="expensives-form-long-inputs"
-          name="Deletar despesa"
+          name="Deletar"
           onClick={ () => this.deleteExpense(id) }
         />
       </>
@@ -101,6 +108,7 @@ ExpensesTable.propTypes = {
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   ),
   dispatchDeleteExpense: PropTypes.func,
+  dispatchEditForm: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
@@ -108,7 +116,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDeleteExpense: (newState) => dispatch(removeExpense(newState)),
+  dispatchDeleteExpense: (newEspenses) => dispatch(deleteExpense(newEspenses)),
+  dispatchEditForm: (expenseId) => dispatch(editExpense(expenseId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

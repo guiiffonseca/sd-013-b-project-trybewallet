@@ -1,44 +1,57 @@
 import {
-  REQUEST_CURRENCIES,
+  REQUEST_FETCH,
+  FAILED_FETCH,
   GET_CURRENCIES,
-  FAILED_CURRENCIES,
-  REQUEST_EXCHANGE,
   SET_EXPENSES,
-  FAILED_EXCHANGE,
-  REMOVE_EXPENSE,
+  DELETE_EXPENSE,
+  EDIT_EXPENSE,
+  UPDATE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   error: null,
+  expenseId: 0,
+  editExpense: false,
   expenses: [],
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case REQUEST_CURRENCIES:
+  case REQUEST_FETCH:
     return { ...state };
-  case GET_CURRENCIES:
-    return { ...state, currencies: action.payload };
-  case FAILED_CURRENCIES:
+
+  case FAILED_FETCH:
     return { ...state, error: action.payload };
 
-  case REQUEST_EXCHANGE:
-    return { ...state };
-  // Elaborado com a ajuda de Rodrigo Agusto (Tribo 13B)
+  case GET_CURRENCIES:
+    return { ...state, currencies: action.payload };
+
+  // Elaborado com a ajuda de Rodrigo Augusto (Tribo 13B)
   case SET_EXPENSES:
     return { ...state,
       expenses: [...state.expenses, {
         ...action.payload,
         id: state.expenses.length,
       }],
+      editExpense: false,
     };
-  case FAILED_EXCHANGE:
-    return { ...state, error: action.payload };
 
-  case REMOVE_EXPENSE:
-
+  case DELETE_EXPENSE:
     return { ...state, expenses: action.payload };
+
+  case EDIT_EXPENSE:
+    return { ...state, expenseId: action.payload, editExpense: true };
+
+  // Refer: https://qastack.com.br/programming/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
+  case UPDATE_EXPENSE:
+    return { ...state,
+      expenses: state.expenses.map((item) => (item.id === action.payload.id
+        ? { ...action.payload }
+        : item
+      )),
+      editExpense: false,
+    };
 
   default:
     return state;

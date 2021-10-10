@@ -13,27 +13,28 @@ export const setLoginPassword = (payload) => (
     type: SET_LOGIN_PASSWORD, payload,
   });
 
-export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
-export const GET_CURRENCIES = 'GET_CURRENCIES';
-export const FAILED_CURRENCIES = 'FAILED_CURRENCIES';
+export const REQUEST_FETCH = 'REQUEST_FETCH';
+export const FAILED_FETCH = 'FAILED_FETCH';
 
-export const requestCurrencies = () => (
+export const requestFetch = () => (
   {
-    type: REQUEST_CURRENCIES,
+    type: REQUEST_FETCH,
   });
+
+export const failedFetch = (error) => (
+  {
+    type: FAILED_FETCH, payload: error,
+  });
+
+export const GET_CURRENCIES = 'GET_CURRENCIES';
 
 export const getCurrencies = (payload) => (
   {
     type: GET_CURRENCIES, payload,
   });
 
-export const failedCurrencies = (error) => (
-  {
-    type: FAILED_CURRENCIES, payload: error,
-  });
-
 export const fetchCurrenciesThunk = () => async (dispatch) => {
-  dispatch(requestCurrencies());
+  dispatch(requestFetch());
   try {
     const response = await fetchAPI();
     const CURRENCY_SIZE = 3;
@@ -41,31 +42,19 @@ export const fetchCurrenciesThunk = () => async (dispatch) => {
       currency.length === CURRENCY_SIZE));
     dispatch(getCurrencies(currencies));
   } catch (error) {
-    dispatch(failedCurrencies(error.message));
+    dispatch(failedFetch(error.message));
   }
 };
 
-export const REQUEST_EXCHANGE = 'REQUEST_EXCHANGE';
 export const SET_EXPENSES = 'SET_EXPENSES';
-export const FAILED_EXCHANGE = 'FAILED_EXCHANGE';
-
-export const requestExchangeRates = () => (
-  {
-    type: REQUEST_EXCHANGE,
-  });
 
 export const setExpenses = (payload) => (
   {
     type: SET_EXPENSES, payload,
   });
 
-export const failedExchangeRates = (error) => (
-  {
-    type: FAILED_EXCHANGE, payload: error,
-  });
-
 export const fetchExpensesThunk = (expenses) => async (dispatch) => {
-  dispatch(requestExchangeRates());
+  dispatch(requestFetch());
   try {
     const exchangeRates = await fetchAPI();
     delete exchangeRates.USDT;
@@ -73,13 +62,25 @@ export const fetchExpensesThunk = (expenses) => async (dispatch) => {
     expenses.exchangeRates = exchangeRates;
     dispatch(setExpenses(expenses));
   } catch (error) {
-    dispatch(failedExchangeRates(error.message));
+    dispatch(failedFetch(error.message));
   }
 };
 
-export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
 
-export const removeExpense = (payload) => (
+export const deleteExpense = (payload) => (
   {
-    type: REMOVE_EXPENSE, payload,
+    type: DELETE_EXPENSE, payload,
+  });
+
+export const editExpense = (payload) => (
+  {
+    type: EDIT_EXPENSE, payload,
+  });
+
+export const updateExpense = (payload) => (
+  {
+    type: UPDATE_EXPENSE, payload,
   });
