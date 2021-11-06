@@ -42,7 +42,6 @@ class Form extends Component {
   render() {
     const { currencies } = this.props;
     /* console.log(currencies, 'currencies sem array'); */
-    console.log(Object.values(currencies), 'currencies com array');
     delete currencies.USDT;
     const arrayObjctCurrencies = Object.values(currencies);
     return (

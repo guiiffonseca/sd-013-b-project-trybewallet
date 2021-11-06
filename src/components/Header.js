@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { setEmail, total } = this.props;
-    console.log(total, 'total');
     return (
       <header className="header">
         <div>
@@ -13,12 +12,11 @@ class Header extends Component {
         </div>
         <div>
           <span data-testid="total-field">
-            {
-              total.reduce(
+            {/* total.length !== 0
+              && */ total.reduce(
                 (acc, currenty) => acc + currenty.value * currenty
                   .exchangeRates[currenty.currency].ask, 0,
-              ).toFixed(2)
-            }
+              ).toFixed(2)}
           </span>
         </div>
         <div>

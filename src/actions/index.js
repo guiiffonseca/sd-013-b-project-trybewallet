@@ -2,6 +2,7 @@
 const EMAIL_SUCESS = 'EMAIL_SUCESS';
 export const COIN_SUCESS = 'COIN_SUCESS';
 export const ADD_EXPEND = 'ADD_EXPEND';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const setEmailAction = (email) => ({
   type: EMAIL_SUCESS,
@@ -15,6 +16,11 @@ export const setCoins = (payload) => ({
 
 export const addExpenditure = (payload) => ({
   type: ADD_EXPEND,
+  payload,
+});
+
+export const deleteExpenses = (payload) => ({
+  type: DELETE_EXPENSES,
   payload,
 });
 
