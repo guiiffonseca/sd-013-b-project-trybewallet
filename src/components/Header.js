@@ -12,11 +12,10 @@ class Header extends Component {
         </div>
         <div>
           <span data-testid="total-field">
-            {/* total.length !== 0
-              && */ total.reduce(
-                (acc, currenty) => acc + currenty.value * currenty
-                  .exchangeRates[currenty.currency].ask, 0,
-              ).toFixed(2)}
+            { total.reduce(
+              (acc, currenty) => acc + currenty.value * currenty
+                .exchangeRates[currenty.currency].ask, 0,
+            ).toFixed(2)}
           </span>
         </div>
         <div>

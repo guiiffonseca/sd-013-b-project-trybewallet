@@ -10,19 +10,6 @@ const array = ['Descrição', 'Tag', 'Método de pagamento',
   'Moeda de conversão', 'Editar/Excluir'];
 
 class Table extends Component {
-/* constructor(props) {
-  super(props);
-  this.handleClick = this.handleClick.bind(this);
-} */
-
- /*  handleClick(index) {
-    const { deleteAction, expenses } = this.props;
-   const deleteNewExpensive = expenses.filter((item) => item.id !== index);
-  deleteAction(deleteNewExpensive);
-  console.log(expenses);
-  console.log(expenses.filter((item) => item.id !== index));
-  } */
-
   render() {
     const { expenses, deleteAction } = this.props;
     console.log(expenses, 'expenses');
@@ -36,9 +23,7 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {
-            /* expenses.length !== 0
-            &&  */expenses.map((item, index) => (
+            {expenses.map((item, index) => (
               <tr key={ index }>
                 <td>{ item.description }</td>
                 <td>{ item.tag }</td>
@@ -60,8 +45,7 @@ class Table extends Component {
                     apagar
                   </button>
                 </td>
-              </tr>))
-}
+              </tr>))}
           </tbody>
         </table>
       </div>
@@ -79,5 +63,6 @@ deleteAction: (payload) => dispatch(deleteExpenses(payload)),
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteAction: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
