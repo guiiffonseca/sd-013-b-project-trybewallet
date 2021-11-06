@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { setEmail, total } = this.props;
+    console.log(total, 'total');
     return (
       <header className="header">
         <div>
