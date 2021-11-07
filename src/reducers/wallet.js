@@ -1,4 +1,4 @@
-import { COIN_SUCESS, ADD_EXPEND, DELETE_EXPENSES } from '../actions';
+import { COIN_SUCESS, ADD_EXPEND, DELETE_EXPENSES, EDITE_EXPENSES } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
@@ -27,6 +27,12 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.filter((_, index) => index !== action.payload),
     });
+  case EDITE_EXPENSES:
+    return ({
+      ...state,
+      expenses: state.expenses.find((_, index) => index !== action.payload),
+    });
+
   default:
     return state;
   }
