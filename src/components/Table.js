@@ -34,8 +34,8 @@ class Table extends Component {
                 <td>
                   {
                     Number(item.value * item
-                    .exchangeRates[item.currency].ask)
-                    .toFixed(2)
+                      .exchangeRates[item.currency].ask)
+                      .toFixed(2)
                   }
                 </td>
                 <td>Real</td>
@@ -58,10 +58,10 @@ class Table extends Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
-  });
+});
 
 const mapDispatchToProps = (dispatch) => ({
-deleteAction: (payload) => dispatch(deleteExpenses(payload)),
+  deleteAction: (payload) => dispatch(deleteExpenses(payload)),
 });
 
 Table.propTypes = {
