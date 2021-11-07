@@ -44,6 +44,7 @@ class Table extends Component {
                   <button
                     type="button"
                     onClick={ () => deleteAction(index) }
+                    data-testid="delete-btn"
                   >
                     apagar
                   </button>
